@@ -9,6 +9,7 @@ import hw3_scene from "./hw3_scene";
 export default class MainMenu extends Scene {
     // Layers, for multiple main menu screens
     private mainMenu: Layer;
+    private controls: Layer;
     private about: Layer;
 
     loadScene(){}
@@ -27,6 +28,14 @@ export default class MainMenu extends Scene {
         play.backgroundColor = Color.TRANSPARENT;
         play.onClickEventId = "play";
 
+        // Add Controls Button
+        const controls = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y), text: "Controls"});
+        controls.size.set(200, 50);
+        controls.borderWidth = 2;
+        controls.borderColor = Color.WHITE;
+        controls.backgroundColor = Color.TRANSPARENT;
+        controls.onClickEventId = "controls";
+
         // Add event button
         const about = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 100), text: "About"});
         about.size.set(200, 50);
@@ -34,6 +43,42 @@ export default class MainMenu extends Scene {
         about.borderColor = Color.WHITE;
         about.backgroundColor = Color.TRANSPARENT;
         about.onClickEventId = "about";
+
+
+
+        /* ########## CONTROLS SCREEN ########## */
+        this.controls = this.addUILayer("controls");
+        this.controls.setHidden(true);
+
+        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 250), text: "Controls"});
+        controlsHeader.textColor = Color.WHITE;
+
+        const  movementText= "Move - WASD";
+        const pickupText = "Pickup Item - E";
+        const dropText = "Drop Item - Q";
+        const useText = "Use Item - Left Mouse Click";
+        const equipText = "Equip - 1 and 2";
+
+        const controlsline1 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 150), text: movementText});
+        const controlsline2 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 75), text: pickupText});
+        const controlsline3 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y), text: dropText});
+        const controlsline4 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y + 75), text: useText});
+        const controlsline5 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y + 150), text: equipText});
+
+        controlsline1.textColor = Color.WHITE;
+        controlsline2.textColor = Color.WHITE;
+        controlsline3.textColor = Color.WHITE;
+        controlsline4.textColor = Color.WHITE;
+        controlsline5.textColor = Color.WHITE;
+
+
+        const controlsBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        controlsBack.size.set(200, 50);
+        controlsBack.borderWidth = 2;
+        controlsBack.borderColor = Color.WHITE;
+        controlsBack.backgroundColor = Color.TRANSPARENT;
+        controlsBack.onClickEventId = "menu";
+
 
         /* ########## ABOUT SCREEN ########## */
         this.about = this.addUILayer("about");
@@ -44,7 +89,7 @@ export default class MainMenu extends Scene {
 
         // HOMEWORK 3 - TODO
         // Give yourself credit for your work on this game!
-        const text1 = "This game was created by <YOUR NAME HERE>, Joe Weaver, and Richard McKenna";
+        const text1 = "This game was created by Timothy Hsu, Joe Weaver, and Richard McKenna";
         const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
         const text3 = "Joe Weaver and Richard McKenna.";
 
@@ -65,6 +110,7 @@ export default class MainMenu extends Scene {
 
         // Subscribe to the button events
         this.receiver.subscribe("play");
+        this.receiver.subscribe("controls");
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
 
@@ -96,6 +142,11 @@ export default class MainMenu extends Scene {
                 this.sceneManager.changeScene(hw3_scene, {});
             }
 
+            if(event.type === "controls"){
+                this.controls.setHidden(false);
+                this.mainMenu.setHidden(true);
+            }
+
             if(event.type === "about"){
                 this.about.setHidden(false);
                 this.mainMenu.setHidden(true);
@@ -104,6 +155,7 @@ export default class MainMenu extends Scene {
             if(event.type === "menu"){
                 this.mainMenu.setHidden(false);
                 this.about.setHidden(true);
+                this.controls.setHidden(true);
             }
         }
     }

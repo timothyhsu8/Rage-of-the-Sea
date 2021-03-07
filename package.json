@@ -14,8 +14,16 @@
     "gulp": "^4.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "tsify": "^5.0.0",
-    "typescript": "^3.9.7",
+    "typescript": "^3.9.9",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyhsu8/timhsuCSE380HW3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timothyhsu8/timhsuCSE380HW3/issues"
+  },
+  "homepage": "https://github.com/timothyhsu8/timhsuCSE380HW3#readme"
 }
