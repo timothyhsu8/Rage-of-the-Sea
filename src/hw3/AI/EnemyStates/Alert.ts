@@ -24,6 +24,7 @@ export default class Alert extends EnemyState {
     // Receives options.target
     onEnter(options: Record<string, any>): void {
         this.alertTimer.start();
+        this.path = this.owner.getScene().getNavigationManager().getPath(hw3_Names.NAVMESH, this.owner.position, options.target);
     }
 
     handleInput(event: GameEvent): void {
@@ -47,6 +48,13 @@ export default class Alert extends EnemyState {
         if(this.parent.getPlayerPosition() !== null){
             this.finished(EnemyStates.ATTACKING);
         }
+
+        /* Move in the direction of the noise */
+        if(this.path != null){
+            this.owner.moveOnPath(this.parent.speed * deltaT, this.path);
+            this.owner.rotation = Vec2.UP.angleToCCW(this.path.getMoveDirection(this.owner));
+        }
+            
     }
 
     onExit(): Record<string, any> {
