@@ -5,6 +5,7 @@ import NavigationPath from "../../../Wolfie2D/Pathfinding/NavigationPath";
 import { hw3_Events, hw3_Names } from "../../hw3_constants";
 import EnemyAI, { EnemyStates } from "../EnemyAI";
 import EnemyState from "./EnemyState";
+import Stack from "../../../Wolfie2D/DataTypes/Stack";
 
 export default class Patrol extends EnemyState {
 
@@ -25,6 +26,12 @@ export default class Patrol extends EnemyState {
 
         this.patrolRoute = patrolRoute;
         this.routeIndex = 0;
+
+        let navStack = new Stack<Vec2>(patrolRoute.length);
+        for(let i = 0 ; i < patrolRoute.length ; i++)
+            navStack.push(patrolRoute[i]);
+
+        this.currentPath = new NavigationPath(navStack);
     }
 
     onEnter(options: Record<string, any>): void {}
@@ -56,6 +63,22 @@ export default class Patrol extends EnemyState {
         // If the enemy sees the player, start attacking
         if(this.parent.getPlayerPosition() !== null){
             this.finished(EnemyStates.ATTACKING);
+        }
+
+        else {
+            // Reset navigation path if completed
+            if(this.currentPath.isDone()){
+                let navStack = new Stack<Vec2>(this.patrolRoute.length);
+                for(let i = 0 ; i < this.patrolRoute.length ; i++)
+                    navStack.push(this.patrolRoute[i]);
+
+                this.currentPath = new NavigationPath(navStack);
+            }
+
+            else{
+                this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
+                this.owner.rotation = Vec2.UP.angleToCCW(this.currentPath.getMoveDirection(this.owner));
+            }
         }
     }
 

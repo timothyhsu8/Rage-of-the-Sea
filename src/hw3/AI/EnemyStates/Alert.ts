@@ -39,20 +39,25 @@ export default class Alert extends EnemyState {
      * target position.
      */
     update(deltaT: number): void {
+        if(this.parent.getPlayerPosition() !== null){
+            this.finished(EnemyStates.ATTACKING);
+        }
+        
         if(this.alertTimer.isStopped()){
             // The timer is up, return to the default state
             this.finished(EnemyStates.DEFAULT);
             return;
         }
 
-        if(this.parent.getPlayerPosition() !== null){
-            this.finished(EnemyStates.ATTACKING);
-        }
-
         /* Move in the direction of the noise */
         if(this.path != null){
-            this.owner.moveOnPath(this.parent.speed * deltaT, this.path);
-            this.owner.rotation = Vec2.UP.angleToCCW(this.path.getMoveDirection(this.owner));
+            if(this.path.isDone()){}
+                // probably do something here
+
+            else{
+                this.owner.moveOnPath(this.parent.speed * deltaT, this.path);
+                this.owner.rotation = Vec2.UP.angleToCCW(this.path.getMoveDirection(this.owner));
+            }
         }
             
     }

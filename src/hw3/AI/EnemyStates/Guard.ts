@@ -53,7 +53,6 @@ export default class Guard extends EnemyState {
             } else {
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.route);
                 this.owner.rotation = Vec2.UP.angleToCCW(this.route.getMoveDirection(this.owner));
-
             }
         }
 
