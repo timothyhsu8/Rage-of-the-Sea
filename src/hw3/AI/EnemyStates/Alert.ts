@@ -50,7 +50,7 @@ export default class Alert extends EnemyState {
         }
 
         /* Move in the direction of the noise */
-        if(this.path != null){
+        else if(this.path != null){
             if(this.path.isDone()){}
                 // probably do something here
 

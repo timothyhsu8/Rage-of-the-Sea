@@ -53,19 +53,19 @@ export default class hw3_scene extends Scene {
         // Load the tilemap
         // HOMEWORK 3 - TODO
         // Change this file to be your own tilemap
-        this.load.tilemap("level", "hw3_assets/tilemaps/TopDown_hw3.json");
+        this.load.tilemap("level", "hw3_assets/tilemaps/MyLevel2.json");
 
         // Load the scene info
-        this.load.object("weaponData", "hw3_assets/data/weaponData.json");
+        this.load.object("weaponData", "hw3_assets/data/my_weaponData.json");
 
         // Load the nav mesh
         this.load.object("navmesh", "hw3_assets/data/navmesh.json");
 
         // Load in the enemy info
-        this.load.object("enemyData", "hw3_assets/data/enemy.json");
+        this.load.object("enemyData", "hw3_assets/data/my_enemy.json");
 
         // Load in item info
-        this.load.object("itemData", "hw3_assets/data/items.json");
+        this.load.object("itemData", "hw3_assets/data/my_items.json");
 
         // Load the healthpack sprite
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
