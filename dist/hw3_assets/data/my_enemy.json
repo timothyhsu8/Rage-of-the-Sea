@@ -1,5 +1,5 @@
 {
-    "numEnemies": 0,
+    "numEnemies": 16,
     "enemies": [
         {
             "position": [224, 384],
@@ -20,33 +20,81 @@
             "health": 5
         },
         {
-            "position": [448, 807],
+            "position": [111.7, 521.3],
             "mode": "guard",
-            "guardPosition": [448, 807],
+            "guardPosition": [111.7, 521.3],
             "health": 5
         },
         {
-            "position": [119, 554],
+            "position": [334, 667],
             "mode": "guard",
-            "guardPosition": [119, 554],
+            "guardPosition": [334, 667],
             "health": 5
         },
         {
-            "position": [168, 554],
+            "position": [503.7, 491.7],
             "mode": "guard",
-            "guardPosition": [168, 554],
+            "guardPosition": [503.7, 491.7],
             "health": 5
         },
         {
-            "position": [384, 152],
+            "position": [776, 588.5],
             "mode": "guard",
-            "guardPosition": [384, 152],
+            "guardPosition": [776, 588.5],
             "health": 5
         },
         {
-            "position": [264, 200],
+            "position": [776.3, 696.3],
             "mode": "guard",
-            "guardPosition": [264, 200],
+            "guardPosition": [776.3, 696.3],
+            "health": 5
+        },
+        {
+            "position": [39.3, 237.3],
+            "mode": "guard",
+            "guardPosition": [39.3, 237.3],
+            "health": 5
+        },
+        {
+            "position": [690, 152],
+            "mode": "guard",
+            "guardPosition": [690, 152],
+            "health": 5
+        },
+        {
+            "position": [344.7, 282.4],
+            "mode": "guard",
+            "guardPosition": [344.7, 282.4],
+            "health": 5
+        },
+        {
+            "position": [456.4, 282.7],
+            "mode": "guard",
+            "guardPosition": [456.4, 282.7],
+            "health": 5
+        },
+        {
+            "position": [830.7, 530],
+            "mode": "guard",
+            "guardPosition": [830.7, 530],
+            "health": 5
+        },
+        {
+            "position": [280.7, 41.3],
+            "mode": "guard",
+            "guardPosition": [280.7, 41.3],
+            "health": 5
+        },
+        {
+            "position": [968.7, 950.7],
+            "mode": "guard",
+            "guardPosition": [968.7, 950.7],
+            "health": 5
+        },
+        {
+            "position": [912, 426],
+            "mode": "guard",
+            "guardPosition": [912, 426],
             "health": 5
         }
     ]
