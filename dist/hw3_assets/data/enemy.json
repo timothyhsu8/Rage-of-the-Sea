@@ -1,5 +1,5 @@
 {
-    "numEnemies": 0,
+    "numEnemies": 8,
     "enemies": [
         {
             "position": [224, 384],

@@ -1,24 +1,93 @@
 {
-    "numEnemies": 16,
+    "numEnemies": 29,
     "enemies": [
         {
-            "position": [224, 384],
+            "position": [168,392],
             "mode": "patrol",
-            "route": [12, 13, 17],
+            "route": [3, 12, 13, 12, 10, 11, 10, 2, 8, 9, 8, 1, 4, 7, 4, 5, 6, 5, 16, 17, 16, 0, 14, 14, 15, 14],
             "health": 5
         },
         {
-            "position": [160, 48],
+            "position": [168,776],
             "mode": "patrol",
-            "route": [0, 1, 2, 7, 10, 9, 8, 5, 4, 3],
+            "route": [0, 14, 14, 15, 14, 3, 12, 13, 12, 10, 11, 10, 2, 8, 9, 8, 1, 4, 7, 4, 5, 6, 5, 16, 17, 16],
             "health": 5
         },
         {
-            "position": [32, 736],
+            "position": [680,776],
             "mode": "patrol",
-            "route": [21, 22, 23, 24, 30, 29, 28, 27, 26],
+            "route": [1, 4, 7, 4, 5, 6, 5, 16, 17, 16, 0, 14, 14, 15, 14, 3, 12, 13, 12, 10, 11, 10, 2, 8, 9, 8],
             "health": 5
         },
+        {
+            "position": [680,392],
+            "mode": "patrol",
+            "route": [2, 8, 9, 8, 1, 4, 7, 4, 5, 6, 5, 16, 17, 16, 0, 14, 14, 15, 14, 3, 12, 13, 12, 10, 11, 10],
+            "health": 5
+        },
+        {
+            "position": [520,200],
+            "mode": "patrol",
+            "route": [52, 55, 51, 57, 53, 56, 54, 70],
+            "health": 5
+        },
+        {
+            "position": [600,40],
+            "mode": "patrol",
+            "route": [47, 49, 48, 45, 44, 50
+            ],
+            "health": 5
+        },
+        {
+            "position": [40,56],
+            "mode": "patrol",
+            "route": [60, 61],
+            "health": 5
+        },
+
+        {
+            "position": [1000,696],
+            "mode": "patrol",
+            "route": [18, 21, 26, 22, 20, 19, 35, 23],
+            "health": 5
+        },
+        {
+            "position": [840,920],
+            "mode": "patrol",
+            "route": [20, 19, 35, 23, 18, 21, 26, 22],
+            "health": 5
+        },
+        {
+            "position": [968,984],
+            "mode": "patrol",
+            "route": [25, 24],
+            "health": 5
+        },
+        {
+            "position": [840,376],
+            "mode": "patrol",
+            "route": [27, 39, 28, 39],
+            "health": 5
+        },
+        {
+            "position": [984,488],
+            "mode": "patrol",
+            "route": [32, 33, 30, 33],
+            "health": 5
+        },
+        {
+            "position": [984,264],
+            "mode": "patrol",
+            "route": [42, 43, 40, 41],
+            "health": 5
+        },
+        {
+            "position": [424,504],
+            "mode": "patrol",
+            "route": [64, 65],
+            "health": 5
+        },
+    
         {
             "position": [111.7, 521.3],
             "mode": "guard",
@@ -50,9 +119,9 @@
             "health": 5
         },
         {
-            "position": [39.3, 237.3],
+            "position": [89.83, 215.58],
             "mode": "guard",
-            "guardPosition": [39.3, 237.3],
+            "guardPosition": [89.83, 215.58],
             "health": 5
         },
         {
@@ -80,9 +149,9 @@
             "health": 5
         },
         {
-            "position": [280.7, 41.3],
+            "position": [400.3, 122.71],
             "mode": "guard",
-            "guardPosition": [280.7, 41.3],
+            "guardPosition": [400.3, 122.71],
             "health": 5
         },
         {
@@ -95,6 +164,18 @@
             "position": [912, 426],
             "mode": "guard",
             "guardPosition": [912, 426],
+            "health": 5
+        },
+        {
+            "position": [1001.1, 527.636],
+            "mode": "guard",
+            "guardPosition": [1001.1, 527.636],
+            "health": 5
+        },
+        {
+            "position": [914.5, 160],
+            "mode": "guard",
+            "guardPosition": [914.5, 160],
             "health": 5
         }
     ]
