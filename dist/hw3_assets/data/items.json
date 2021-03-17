@@ -2,30 +2,108 @@
     "items": [
         {
             "type": "healthpack",
-            "position": [440, 760]
+            "position": [687.8, 138.8]
         },
         {
             "type": "healthpack",
-            "position": [472, 760]
+            "position": [422.4, 602.5]
         },
         {
             "type": "healthpack",
-            "position": [262, 151]
+            "position": [400, 283]
+        },
+        {
+            "type": "healthpack",
+            "position": [776.8, 643]
+        },
+        {
+            "type": "healthpack",
+            "position": [151.3, 67.7]
+        },
+        {
+            "type": "healthpack",
+            "position": [31.5, 499.5]
+        },
+        {
+            "type": "healthpack",
+            "position": [991.7, 804.3]
+        },
+
+
+        {
+            "type": "weapon",
+            "weaponType": "knife", 
+            "position": [48, 335.3]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "knife", 
+            "position": [767.7, 526.7]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "knife", 
+            "position": [607.5, 938.7]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "knife", 
+            "position": [31.75, 544.75]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "knife", 
+            "position": [911.75, 426.5]
         },
         {
             "type": "weapon",
             "weaponType": "lasergun", 
-            "position": [200, 967]
+            "position": [422.75, 579.75]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "lasergun", 
+            "position": [912.18, 106.73]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "lasergun", 
+            "position": [32, 522.7]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "lasergun", 
+            "position": [919.3, 804]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "lasergun", 
+            "position": [40, 154]
         },
         {
             "type": "weapon",
             "weaponType": "pistol", 
-            "position": [180, 615]
+            "position": [143.3, 944.7]
         },
         {
             "type": "weapon",
             "weaponType": "pistol", 
-            "position": [312, 263]
+            "position": [607.75, 955.75]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "pistol", 
+            "position": [767.33, 950.7]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "pistol", 
+            "position": [688, 123]
+        },
+        {
+            "type": "weapon",
+            "weaponType": "pistol", 
+            "position": [400, 107.3]
         }
     ]
 }

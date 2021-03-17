@@ -56,16 +56,16 @@ export default class hw3_scene extends Scene {
         this.load.tilemap("level", "hw3_assets/tilemaps/MyLevel.json");
 
         // Load the scene info
-        this.load.object("weaponData", "hw3_assets/data/my_weaponData.json");
+        this.load.object("weaponData", "hw3_assets/data/weaponData.json");
 
         // Load the nav mesh
-        this.load.object("navmesh", "hw3_assets/data/my_navmesh.json");
+        this.load.object("navmesh", "hw3_assets/data/navmesh.json");
 
         // Load in the enemy info
-        this.load.object("enemyData", "hw3_assets/data/my_enemy.json");
+        this.load.object("enemyData", "hw3_assets/data/enemy.json");
 
         // Load in item info
-        this.load.object("itemData", "hw3_assets/data/my_items.json");
+        this.load.object("itemData", "hw3_assets/data/items.json");
 
         // Load the healthpack sprite
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
