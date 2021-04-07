@@ -66,7 +66,10 @@ export default class PlayerController implements BattlerAI {
         this.direction.x = (Input.isPressed("left") ? -1 : 0) + (Input.isPressed("right") ? 1 : 0);
         this.direction.y = (Input.isPressed("forward") ? -1 : 0) + (Input.isPressed("backward") ? 1 : 0);
 
-        // FINAL PROJECT TODO - Floor tile values are hard-coded, try to fix this.
+        /* FINAL PROJECT TODO 
+            - Floor tile values are hard-coded, try to fix this.
+            - ActiveTiles are held in an array, even when there's only one activeTile at a time.
+        */
         /* --HANDLING TILE HIGHLIGHTING OF WHERE PLAYER IS CURRENTLY STANDING-- */
         let currentColRow:Vec2 = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
 
@@ -82,7 +85,6 @@ export default class PlayerController implements BattlerAI {
             this.tilemap.setTileAtRowCol(currentColRow, 2); 
             this.activeTiles.push(currentColRow);
         }
-
 
         if(!this.direction.isZero()){
             // Move the player

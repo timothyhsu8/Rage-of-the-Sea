@@ -127,7 +127,7 @@ export default class hw3_scene extends Scene {
         // Spawn items into the world
         //this.spawnItems();
 
-        // Add a UI for health
+        // UI for healthbar
         this.addUILayer("health");
 
         this.healthDisplay = <Label>this.add.uiElement(UIElementType.LABEL, "health", {position: new Vec2(200, 16), text: "Health: " + (<BattlerAI>this.player._ai).health});
