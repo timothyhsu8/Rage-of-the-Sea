@@ -257,7 +257,8 @@ export default class hw3_scene extends Scene {
             {
                 speed: 100,
                 inventory: inventory,
-                items: this.items
+                items: this.items,
+                tilemap: "Floor"
             });
         this.player.animation.play("IDLE");
     }

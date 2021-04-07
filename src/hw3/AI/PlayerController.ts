@@ -2,6 +2,7 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Timer from "../../Wolfie2D/Timing/Timer";
 import InventoryManager from "../GameSystems/InventoryManager";
 import Healthpack from "../GameSystems/items/Healthpack";
@@ -29,6 +30,12 @@ export default class PlayerController implements BattlerAI {
     // Attacking
     private lookDirection: Vec2;
 
+    // Tilemap
+    tilemap: OrthogonalTilemap;
+
+    // Array of tiles that player is currently standing on
+    activeTiles: Array<Vec2>
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         this.direction = Vec2.ZERO;
@@ -38,16 +45,44 @@ export default class PlayerController implements BattlerAI {
 
         this.items = options.items;
         this.inventory = options.inventory;
+        this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
+        this.activeTiles = new Array<Vec2>();
     }
 
     activate(options: Record<string, any>): void {}
 
     handleEvent(event: GameEvent): void {}
 
+    /* Finds if activeTiles array has specified RowCol tile in it */
+    hasColRow(tileArray: Array<Vec2>, itemToFind: Vec2): number {
+        for(let i = 0 ; i < tileArray.length ; i++)
+            if(tileArray[i].x === itemToFind.x && tileArray[i].y === itemToFind.y)
+                return i;
+        return -1;
+    }
+
     update(deltaT: number): void {
         // Get the movement direction
         this.direction.x = (Input.isPressed("left") ? -1 : 0) + (Input.isPressed("right") ? 1 : 0);
         this.direction.y = (Input.isPressed("forward") ? -1 : 0) + (Input.isPressed("backward") ? 1 : 0);
+
+        // FINAL PROJECT TODO - Floor tile values are hard-coded, try to fix this.
+        /* --HANDLING TILE HIGHLIGHTING OF WHERE PLAYER IS CURRENTLY STANDING-- */
+        let currentColRow:Vec2 = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
+
+        /* De-Highlight tiles that the player is no longer stepping on */
+        for(let i = 0 ; i < this.activeTiles.length ; i++)
+            if(currentColRow.x !== this.activeTiles[i].x || currentColRow.y !== this.activeTiles[i].y){
+                this.tilemap.setTileAtRowCol(this.activeTiles[i], 1);
+                this.activeTiles.splice(i);
+            }
+
+        /* Highlight Tiles that the player is stepping on */
+        if(this.hasColRow(this.activeTiles, currentColRow) === -1){
+            this.tilemap.setTileAtRowCol(currentColRow, 2); 
+            this.activeTiles.push(currentColRow);
+        }
+
 
         if(!this.direction.isZero()){
             // Move the player
