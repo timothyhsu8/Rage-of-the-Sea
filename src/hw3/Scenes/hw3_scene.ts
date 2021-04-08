@@ -73,6 +73,8 @@ export default class hw3_scene extends Scene {
         // Load the healthpack sprite
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
+        this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
+        this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
     }
 
     startScene(){
@@ -128,12 +130,12 @@ export default class hw3_scene extends Scene {
 
         // UI for healthbar
         this.addUILayer("healthbar");
-        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(100, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
+        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
 
         // REMOVE LATER //
-        this.addUILayer("health");
-        this.healthDisplay = <Label>this.add.uiElement(UIElementType.LABEL, "health", {position: new Vec2(200, 16), text: "Health: " + (<BattlerAI>this.player._ai).health});
-        this.healthDisplay.textColor = Color.WHITE;
+        // this.addUILayer("health");
+        // this.healthDisplay = <Label>this.add.uiElement(UIElementType.LABEL, "health", {position: new Vec2(200, 16), text: "Health: " + (<BattlerAI>this.player._ai).health});
+        // this.healthDisplay.textColor = Color.WHITE;
     }
 
     updateScene(deltaT: number): void {
@@ -152,10 +154,10 @@ export default class hw3_scene extends Scene {
             this.sceneManager.changeScene(GameOver);
         }
 
-        // Update Health GUI
-        this.healthDisplay.text = "Health: " + health;
+        // Update Healthbar GUI
+        //this.healthDisplay.text = "Health: " + health;
         this.healthbar.size = new Vec2(health, 5);
-        this.healthbar.position = new Vec2(100 - .5*(100-health), 16);
+        this.healthbar.position = new Vec2(80 - .5*(100-health), 16);
 
         // Debug mode graph
         if(Input.isKeyJustPressed("g")){
@@ -198,7 +200,9 @@ export default class hw3_scene extends Scene {
     createWeapon(type: string): Weapon {
         let weaponType = <WeaponType>RegistryManager.getRegistry("weaponTypes").get(type);
 
+        /* FINAL PROJECT TODO - This is setting the weapon sprite outside the viewport, but ideally it shouldn't have a sprite to begin with */
         let sprite = this.add.sprite(weaponType.spriteKey, "primary");
+        sprite.position = new Vec2(-100, -100);
 
         return new Weapon(sprite, weaponType, this.battleManager);
     }
@@ -253,6 +257,13 @@ export default class hw3_scene extends Scene {
         let inventory = new InventoryManager(this, 2, "inventorySlot", new Vec2(16, 16), 4);
         let startingWeapon = this.createWeapon("knife");
         inventory.addItem(startingWeapon);
+
+        /* Sprite for character portrait */
+        let portrait = this.add.sprite("portrait", "primary");
+        portrait.position = new Vec2(5, 5);
+
+        let portraitborder = this.add.sprite("portraitborder", "primary");
+        portraitborder.position = new Vec2(5, 5);
 
         // Create the player
         this.player = this.add.animatedSprite("player", "primary");
