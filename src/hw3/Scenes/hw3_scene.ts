@@ -22,6 +22,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../Wolfie2D/Utils/Color";
 import Input from "../../Wolfie2D/Input/Input";
 import GameOver from "./GameOver";
+import Graphic from "../../Wolfie2D/Nodes/Graphic";
 
 export default class hw3_scene extends Scene {
     // The player
@@ -44,6 +45,8 @@ export default class hw3_scene extends Scene {
 
     // Player health
     private healthDisplay: Label;
+
+    private healthbar: Graphic;
 
     loadScene(){
         // Load the player and enemy spritesheets
@@ -76,11 +79,7 @@ export default class hw3_scene extends Scene {
         // Add in the tilemap
         let tilemapLayers = this.add.tilemap("level");
 
-        // Get the wall layer
-        // HOMEWORK 3 - TODO
-        /*
-            Modify this line if needed.
-            
+        /*  Get the wall layer
             This line is just getting the wall layer of your tilemap to use for some calculations.
             Make sure it is still doing so.
 
@@ -128,8 +127,11 @@ export default class hw3_scene extends Scene {
         //this.spawnItems();
 
         // UI for healthbar
-        this.addUILayer("health");
+        this.addUILayer("healthbar");
+        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(100, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
 
+        // REMOVE LATER //
+        this.addUILayer("health");
         this.healthDisplay = <Label>this.add.uiElement(UIElementType.LABEL, "health", {position: new Vec2(200, 16), text: "Health: " + (<BattlerAI>this.player._ai).health});
         this.healthDisplay.textColor = Color.WHITE;
     }
@@ -145,12 +147,15 @@ export default class hw3_scene extends Scene {
 
         let health = (<BattlerAI>this.player._ai).health;
 
+        /* Game Over screen on player death */
         if(health === 0){
             this.sceneManager.changeScene(GameOver);
         }
 
-        // Update health gui
+        // Update Health GUI
         this.healthDisplay.text = "Health: " + health;
+        this.healthbar.size = new Vec2(health, 5);
+        this.healthbar.position = new Vec2(100 - .5*(100-health), 16);
 
         // Debug mode graph
         if(Input.isKeyJustPressed("g")){
