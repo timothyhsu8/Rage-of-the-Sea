@@ -61,7 +61,7 @@ export default class Weapon extends Item {
         this.type.doAnimation(user, direction, ...this.assets);
 
         // Apply damage
-        this.battleManager.handleInteraction(userType, this);
+        //this.battleManager.handleInteraction(userType, this);
 
         // Send out an event to alert enemies
         this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});

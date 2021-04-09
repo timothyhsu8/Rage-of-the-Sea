@@ -29,7 +29,7 @@ export default class hw3_scene extends Scene {
     private player: AnimatedSprite;
 
     // A list of enemies
-    //private enemies: Array<AnimatedSprite>;
+    private enemies: Array<AnimatedSprite>;
 
     // The wall layer of the tilemap to use for bullet visualization
     private walls: OrthogonalTilemap;
@@ -116,7 +116,7 @@ export default class hw3_scene extends Scene {
         this.createNavmesh();
 
         // Initialize all enemies
-        //this.initializeEnemies();
+        this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
         //this.battleManager.setPlayer(<BattlerAI>this.player._ai);
@@ -329,49 +329,48 @@ export default class hw3_scene extends Scene {
     // HOMEWORK 3 - TODO
     /**
      * This function creates all enemies from the enemy.json file.
-     * You shouldn't have to modify any code here, but you should edit enemy.json to
-     * make sure more enemies are spawned into the world.
      * 
      * Patrolling enemies are given patrol routes corresponding to the navmesh. The numbers in their route correspond
      * to indices in the navmesh.
      */
-    // initializeEnemies(){
-    //     // Get the enemy data
-    //     const enemyData = this.load.getObject("enemyData");
+    initializeEnemies(){
+        // Get the enemy data
+        const enemyData = this.load.getObject("enemyData");
 
-    //     // Create an enemies array
-    //     this.enemies = new Array(enemyData.numEnemies);
+        // Create an enemies array
+        this.enemies = new Array(enemyData.numEnemies);
 
-    //     // Initialize the enemies
-    //     for(let i = 0; i < enemyData.numEnemies; i++){
-    //         let data = enemyData.enemies[i];
+        // Initialize the enemies
+        for(let i = 0; i < enemyData.numEnemies; i++){
+            let data = enemyData.enemies[i];
 
-    //         // Create an enemy
-    //         this.enemies[i] = this.add.animatedSprite("enemy", "primary");
-    //         this.enemies[i].position.set(data.position[0], data.position[1]);
-    //         this.enemies[i].animation.play("IDLE");
+            // Create an enemy
+            this.enemies[i] = this.add.animatedSprite("enemy", "primary");
+            this.enemies[i].position.set(data.position[0], data.position[1]);
+            this.enemies[i].animation.play("IDLE");
 
-    //         // Activate physics
-    //         this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
+            // Activate physics
+            this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
-    //         if(data.route){
-    //             data.route = data.route.map((index: number) => this.graph.getNodePosition(index));                
-    //         }
+            if(data.route){
+                data.route = data.route.map((index: number) => this.graph.getNodePosition(index));                
+            }
 
-    //         if(data.guardPosition){
-    //             data.guardPosition = new Vec2(data.guardPosition[0], data.guardPosition[1]);
-    //         }
+            if(data.guardPosition){
+                data.guardPosition = new Vec2(data.guardPosition[0], data.guardPosition[1]);
+            }
 
-    //         let enemyOptions = {
-    //             defaultMode: data.mode,
-    //             patrolRoute: data.route,            // This only matters if they're a patroller
-    //             guardPosition: data.guardPosition,  // This only matters if the're a guard
-    //             health: data.health,
-    //             player: this.player,
-    //             weapon: this.createWeapon("weak_pistol")
-    //         }
+            let enemyOptions = {
+                defaultMode: data.mode,
+                patrolRoute: data.route,            // This only matters if they're a patroller
+                guardPosition: data.guardPosition,  // This only matters if the're a guard
+                health: data.health,
+                player: this.player,
+                weapon: this.createWeapon("weak_pistol"),
+                monsterType: data.monsterType
+            }
 
-    //         this.enemies[i].addAI(EnemyAI, enemyOptions);
-    //     }
-    // }
+            this.enemies[i].addAI(EnemyAI, enemyOptions);
+        }
+    }
 }

@@ -11,6 +11,8 @@ import { hw3_Events } from "../hw3_constants";
 import BattlerAI from "./BattlerAI";
 import Alert from "./EnemyStates/Alert";
 import Attack from "./EnemyStates/Attack";
+import MonsterAttack from "./EnemyStates/MonsterAttack";
+import Chase from "./EnemyStates/Chase";
 import Guard from "./EnemyStates/Guard";
 import Patrol from "./EnemyStates/Patrol";
 
@@ -32,17 +34,22 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
-
-        if(options.defaultMode === "guard"){
+        
+        if(options.defaultMode === "chase"){
+            this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
+        }
+        else if(options.defaultMode === "guard"){
             // Guard mode
             this.addState(EnemyStates.DEFAULT, new Guard(this, owner, options.guardPosition));
-        } else {
+        } 
+        else {
             // Patrol mode
             this.addState(EnemyStates.DEFAULT, new Patrol(this, owner, options.patrolRoute));
         }
 
         this.addState(EnemyStates.ALERT, new Alert(this, owner));
         this.addState(EnemyStates.ATTACKING, new Attack(this, owner));
+        this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 
         this.health = options.health;
 
@@ -130,5 +137,11 @@ export enum EnemyStates {
     DEFAULT = "default",
     ALERT = "alert",
     ATTACKING = "attacking",
-    PREVIOUS = "previous"
+    PREVIOUS = "previous",
+    MONSTERATTACK = "monsterattack",
+    CHASE = "chase"
+}
+
+export enum MonsterTypes {
+    KRAKEN = "kraken"
 }
