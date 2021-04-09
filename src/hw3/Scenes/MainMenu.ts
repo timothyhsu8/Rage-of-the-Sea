@@ -5,16 +5,33 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import hw3_scene from "./hw3_scene";
+import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
+
+let char: string = "Diver"
+let equipped: string[] = ["lasergun", "lasergun", "lasergun", "lasergun", "lasergun", "lasergun"];
+let items: string[] = ["knife", "healthpack", "healthpack", "knife", "knife", "knife", "knife"];
+let image: string = "portrait"
+
 
 export default class MainMenu extends Scene {
     // Layers, for multiple main menu screens
+    
     private mainMenu: Layer;
     private controls: Layer;
     private about: Layer;
-
-    loadScene(){}
+    private inventory: Layer;
+    
+    loadScene(){
+        this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
+        this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
+        this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
+    }
 
     startScene(){
+        this.addLayer("primary", 10);
+
         const center = this.viewport.getCenter();
 
         // The main menu
@@ -43,6 +60,13 @@ export default class MainMenu extends Scene {
         about.borderColor = Color.WHITE;
         about.backgroundColor = Color.TRANSPARENT;
         about.onClickEventId = "about";
+
+        const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Inventory"});
+        inventory.size.set(200, 50);
+        inventory.borderWidth = 2;
+        inventory.borderColor = Color.WHITE;
+        inventory.backgroundColor = Color.TRANSPARENT;
+        inventory.onClickEventId = "inventory";
 
 
 
@@ -108,11 +132,32 @@ export default class MainMenu extends Scene {
         aboutBack.backgroundColor = Color.TRANSPARENT;
         aboutBack.onClickEventId = "menu";
 
+
+        this.inventory = this.addUILayer("inventory");
+        this.inventory.setHidden(true);
+
+        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 100), text: char});
+        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 100), text: "Currently Equipped"});
+        const ownedItems = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 450), text: "Owned Items"});
+        inventoryHeader.textColor = Color.WHITE;
+        currentlyEquipped.textColor = Color.WHITE;
+        ownedItems.textColor = Color.WHITE;
+
+        var text = ""
+        for (let x in equipped){
+            text += equipped[x];
+        }
+
+        // const equippedItems = <Slider>this.add.uiElement(UIElementType.SLIDER, "inventory", {position: new Vec2(center.x, center.y - 150), text: text});
+        // const equippedItems = <TextInput>this.add.uiElement(UIElementType.TEXT_INPUT, "inventory", {position: new Vec2(center.x, center.y - 150), text: text});
+        
+
         // Subscribe to the button events
         this.receiver.subscribe("play");
         this.receiver.subscribe("controls");
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
+        this.receiver.subscribe("inventory");
 
         // HOMEWORK 3 - TODO
         /*
@@ -156,6 +201,41 @@ export default class MainMenu extends Scene {
                 this.mainMenu.setHidden(false);
                 this.about.setHidden(true);
                 this.controls.setHidden(true);
+            }
+
+            if(event.type === "inventory"){
+                this.inventory.setHidden(false);
+                this.mainMenu.setHidden(true);
+                let portrait = this.add.sprite(image, "primary");
+                portrait.scale = new Vec2(10,10);
+                portrait.position = new Vec2(200, 200);
+
+                let width = 500;
+                let height = 150;
+                var text = ""
+                for (let x in equipped){
+                    let portrait = this.add.sprite(equipped[x], "primary");
+                    portrait.scale = new Vec2(4,4);
+                    portrait.position = new Vec2(width, height);
+                    width += 200
+                    if (width >= 1400){
+                        height += 100
+                        width = 500
+                    }
+                }                
+
+                width = 500;
+                height = 500;
+                for (let x in items){
+                    let portrait = this.add.sprite(items[x], "primary");
+                    portrait.scale = new Vec2(4,4);
+                    portrait.position = new Vec2(width, height);
+                    width += 200
+                    if (width >= 1400){
+                        height += 100
+                        width = 500
+                    }
+                }
             }
         }
     }
