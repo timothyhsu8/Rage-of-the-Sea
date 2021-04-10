@@ -1,0 +1,15 @@
+{
+    "numAbilities": 1,
+    "abilities": [
+        {
+            "abilityType": "groundslam",
+            "name": "groundslam",
+            "displayName": "Ground Slam",
+            "animationSprite": "groundslam",
+            "spriteKey": "groundslam",
+            "damage": 15,
+            "cooldown": 1000,
+            "useVolume": 0
+        }
+    ]
+}
