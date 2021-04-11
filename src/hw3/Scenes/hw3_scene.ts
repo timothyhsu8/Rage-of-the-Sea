@@ -408,7 +408,6 @@ export default class hw3_scene extends Scene {
                 player: this.player,
                 weapon: this.createWeapon("weak_pistol"),
                 ability: this.createAbility(AbilityTypes.GROUNDSLAM),
-                //abilities: [""],
                 monsterType: data.monsterType
             }
 

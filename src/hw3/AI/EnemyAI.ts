@@ -72,8 +72,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.getPlayerPosition();
     }
 
-    activate(options: Record<string, any>): void {
-    }
+    activate(options: Record<string, any>): void {}
 
     damage(damage: number): void {
         console.log("Took damage");

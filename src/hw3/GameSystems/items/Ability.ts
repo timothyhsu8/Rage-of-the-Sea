@@ -53,7 +53,6 @@ export default class Ability {
             return false;
         }
 
-        //console.log(...this.assets);
         // Do a type specific weapon animation
         this.type.doAnimation(user, direction, ...this.assets);
 

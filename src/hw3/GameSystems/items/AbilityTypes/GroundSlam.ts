@@ -20,14 +20,14 @@ export default class GroundSlam extends AbilityType {
 
         // Move the slice out from the player
         sliceSprite.position = attacker.position.clone().add(direction.scaled(16));
-        
+
         // Play the slice animation w/o loop, but queue the normal animation
         sliceSprite.animation.play("SLICE");
         sliceSprite.animation.queue("NORMAL", true);
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let slice = scene.add.animatedSprite("slice", "primary");
+        let slice = scene.add.animatedSprite("groundslam", "primary");
         slice.animation.play("NORMAL", true);
 
         return [slice];

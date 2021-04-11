@@ -2,6 +2,7 @@ import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import ResourceManager from "../../Wolfie2D/ResourceManager/ResourceManager";
 import SemiAutoGun from "../GameSystems/items/WeaponTypes/SemiAutoGun";
 import Slice from "../GameSystems/items/WeaponTypes/Slice";
+import GroundSlam from "../GameSystems/items/AbilityTypes/GroundSlam";
 import WeaponType from "../GameSystems/items/WeaponTypes/WeaponType";
 
 export default class AbilityTemplateRegistry extends Registry<WeaponConstructor> {
@@ -15,10 +16,11 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         // rm.image("lasergun", "hw3_assets/sprites/lasergun.png");
 
         // Load spritesheets
-        rm.spritesheet("groundslam", "hw3_assets/spritesheets/slice.json");
+        rm.spritesheet("slice", "hw3_assets/spritesheets/slice.json");
+        rm.spritesheet("groundslam", "hw3_assets/spritesheets/groundslam.json");
 
         // Register default types
-        this.registerItem("groundslam", Slice);
+        this.registerItem("groundslam", GroundSlam);
 
         //this.registerItem("semiAutoGun", SemiAutoGun);
     }
