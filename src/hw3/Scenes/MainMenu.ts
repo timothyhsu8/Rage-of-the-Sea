@@ -5,16 +5,39 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import hw3_scene from "./hw3_scene";
+import inventory_scene from "./inventory_scene";
+import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
+
+
+
 
 export default class MainMenu extends Scene {
     // Layers, for multiple main menu screens
+    
     private mainMenu: Layer;
     private controls: Layer;
     private about: Layer;
-
-    loadScene(){}
+    static char: string;
+    static equipped: string[];
+    static items: string[];
+    static image: string;
+    
+    loadScene(){
+        this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
+        this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
+        this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
+    }
 
     startScene(){
+        // storing out data here
+        MainMenu.char = "Diver";
+        MainMenu.equipped = ["lasergun", "lasergun", "lasergun", "lasergun", "lasergun", "lasergun"];
+        MainMenu.items = ["healthpack", "healthpack", "healthpack", "knife", "knife", "knife", "knife"];
+        MainMenu.image = "portrait";
+        this.addLayer("primary", 10);
+
         const center = this.viewport.getCenter();
 
         // The main menu
@@ -43,6 +66,13 @@ export default class MainMenu extends Scene {
         about.borderColor = Color.WHITE;
         about.backgroundColor = Color.TRANSPARENT;
         about.onClickEventId = "about";
+
+        const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Inventory"});
+        inventory.size.set(200, 50);
+        inventory.borderWidth = 2;
+        inventory.borderColor = Color.WHITE;
+        inventory.backgroundColor = Color.TRANSPARENT;
+        inventory.onClickEventId = "inventory";
 
 
 
@@ -107,12 +137,14 @@ export default class MainMenu extends Scene {
         aboutBack.borderColor = Color.WHITE;
         aboutBack.backgroundColor = Color.TRANSPARENT;
         aboutBack.onClickEventId = "menu";
+        
 
         // Subscribe to the button events
         this.receiver.subscribe("play");
         this.receiver.subscribe("controls");
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
+        this.receiver.subscribe("inventory");
 
         // HOMEWORK 3 - TODO
         /*
@@ -156,6 +188,11 @@ export default class MainMenu extends Scene {
                 this.mainMenu.setHidden(false);
                 this.about.setHidden(true);
                 this.controls.setHidden(true);
+            }
+
+            if(event.type === "inventory"){
+                this.sceneManager.changeScene(inventory_scene, {});
+
             }
         }
     }
