@@ -104,6 +104,7 @@ export default class hw3_scene extends Scene {
 
         // Create the battle manager
         this.battleManager = new BattleManager();
+        console.log("yes");
 
         this.initializeWeapons();
         this.initializeAbilities();
@@ -126,8 +127,8 @@ export default class hw3_scene extends Scene {
         this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
-        //this.battleManager.setPlayer(<BattlerAI>this.player._ai);
-        //this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
+        this.battleManager.setPlayer(<BattlerAI>this.player._ai);
+        this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
 
         // Subscribe to relevant events
         //this.receiver.subscribe("healthpack");

@@ -57,7 +57,7 @@ export default class Ability {
         this.type.doAnimation(user, direction, ...this.assets);
 
         // Apply damage
-        //this.battleManager.handleInteraction(userType, this);
+        this.battleManager.handleInteraction(userType, this);
 
         // Send out an event to alert enemies
         //this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
@@ -67,35 +67,7 @@ export default class Ability {
 
         return true;
     }
-
-
-    // @override
-    /**
-     * Uses this weapon in the specified direction.
-     * This only works if the cooldown timer has ended
-     */
-    use(user: GameNode, userType: string, direction: Vec2): boolean {
-        // If the cooldown timer is still running, we can't use the weapon
-        if(!this.cooldownTimer.isStopped()){
-            return false;
-        }
-        // let this.assets = this.type.createRequiredAssets();
-        //this.assets = this.type.createRequiredAssets(this.sprite.getScene());
-        // Do a type specific weapon animation
-        this.type.doAnimation(user, direction, ...this.assets);
-
-        // Apply damage
-        //this.battleManager.handleInteraction(userType, this);
-
-        // Send out an event to alert enemies
-        this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
     
-        // Reset the cooldown timer
-        this.cooldownTimer.start();
-
-        return true;
-    }
-
     /**
      * A check for whether or not this weapon hit a node
      */
