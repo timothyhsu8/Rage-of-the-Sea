@@ -25,13 +25,13 @@ export default class BattleManager {
                 }
             }
         } 
-        /* Attacker is a monster */
+        /* Attacker is a Monster */
         else {
             let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction);
             
             /* Set floor tiles to indicate they're about to be damaged */
             for(let i = 0 ; i < damageTiles.length ; i++)
-                this.tilemap.setTileAtRowCol(damageTiles[i], 2);
+                this.tilemap.setTileAtRowCol(damageTiles[i], 3);
             
             let tilemap = this.tilemap;
             let playerPos = this.player.position;

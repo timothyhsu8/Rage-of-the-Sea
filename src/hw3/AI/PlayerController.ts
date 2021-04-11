@@ -34,7 +34,7 @@ export default class PlayerController implements BattlerAI {
     tilemap: OrthogonalTilemap;
 
     // Array of tiles that player is currently standing on
-    activeTiles: Array<Vec2>
+    activeTile: Vec2;
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
@@ -46,7 +46,7 @@ export default class PlayerController implements BattlerAI {
         this.items = options.items;
         this.inventory = options.inventory;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
-        this.activeTiles = new Array<Vec2>();
+        this.activeTile = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
     }
 
     activate(options: Record<string, any>): void {}
@@ -54,11 +54,10 @@ export default class PlayerController implements BattlerAI {
     handleEvent(event: GameEvent): void {}
 
     /* Finds if activeTiles array has specified RowCol tile in it */
-    hasColRow(tileArray: Array<Vec2>, itemToFind: Vec2): number {
-        for(let i = 0 ; i < tileArray.length ; i++)
-            if(tileArray[i].x === itemToFind.x && tileArray[i].y === itemToFind.y)
-                return i;
-        return -1;
+    hasColRow(tileArray: Vec2, itemToFind: Vec2): boolean {
+        if(tileArray.x === itemToFind.x && tileArray.y === itemToFind.y)
+            return true;
+        return false;
     }
 
     update(deltaT: number): void {
@@ -66,24 +65,26 @@ export default class PlayerController implements BattlerAI {
         this.direction.x = (Input.isPressed("left") ? -1 : 0) + (Input.isPressed("right") ? 1 : 0);
         this.direction.y = (Input.isPressed("forward") ? -1 : 0) + (Input.isPressed("backward") ? 1 : 0);
 
-        /* FINAL PROJECT TODO 
-            - Floor tile values are hard-coded, try to fix this.
-            - ActiveTiles are held in an array, even when there's only one activeTile at a time.
-        */
         /* --HANDLING TILE HIGHLIGHTING OF WHERE PLAYER IS CURRENTLY STANDING-- */
-        let currentColRow:Vec2 = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
+        let currentColRow: Vec2 = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
+        if(currentColRow !== this.activeTile){
+            // Set previous tile back to 1 (Standard floor tile)
+            if(this.tilemap.getTileAtRowCol(this.activeTile) === 2)
+                this.tilemap.setTileAtRowCol(this.activeTile, 1);
 
-        /* De-Highlight tiles that the player is no longer stepping on */
-        for(let i = 0 ; i < this.activeTiles.length ; i++)
-            if(currentColRow.x !== this.activeTiles[i].x || currentColRow.y !== this.activeTiles[i].y){
-                this.tilemap.setTileAtRowCol(this.activeTiles[i], 1);
-                this.activeTiles.splice(i);
-            }
+            // If previous tile was red, set back to yellow
+            else if(this.tilemap.getTileAtRowCol(this.activeTile) === 4)
+                this.tilemap.setTileAtRowCol(this.activeTile, 3);
 
-        /* Highlight Tiles that the player is stepping on */
-        if(this.hasColRow(this.activeTiles, currentColRow) === -1){
-            this.tilemap.setTileAtRowCol(currentColRow, 2); 
-            this.activeTiles.push(currentColRow);
+            // Set current tile to 2 (Highlighted floor tile)
+            if(this.tilemap.getTileAtRowCol(currentColRow) === 1)
+                this.tilemap.setTileAtRowCol(currentColRow, 2);
+            
+            // If current tile is yellow, set to red
+            else if(this.tilemap.getTileAtRowCol(currentColRow) === 3)
+                this.tilemap.setTileAtRowCol(currentColRow, 4);
+
+            this.activeTile = currentColRow;
         }
 
         if(!this.direction.isZero()){
