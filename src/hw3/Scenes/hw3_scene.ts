@@ -24,6 +24,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import GameOver from "./GameOver";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
+import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 
 export default class hw3_scene extends Scene {
@@ -49,6 +50,8 @@ export default class hw3_scene extends Scene {
     private healthDisplay: Label;
 
     private healthbar: Graphic;
+
+    private tilemap: OrthogonalTilemap;
 
     // Map of all abilities usable by player and monsters
     abilityMap: Map<AbilityTypes, Ability>;
@@ -104,7 +107,6 @@ export default class hw3_scene extends Scene {
 
         // Create the battle manager
         this.battleManager = new BattleManager();
-        console.log("yes");
 
         this.initializeWeapons();
         this.initializeAbilities();
@@ -127,8 +129,9 @@ export default class hw3_scene extends Scene {
         this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
-        this.battleManager.setPlayer(<BattlerAI>this.player._ai);
+        this.battleManager.setPlayerAI(<BattlerAI>this.player._ai);
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
+        this.battleManager.setTileMap(this.player, this.tilemap);
 
         // Subscribe to relevant events
         //this.receiver.subscribe("healthpack");
@@ -216,7 +219,7 @@ export default class hw3_scene extends Scene {
     }
     
     createAbility(type: AbilityTypes){
-        let abilityType = <WeaponType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
+        let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
 
         return new Ability(abilityType, this.battleManager, this);
     }
@@ -317,6 +320,7 @@ export default class hw3_scene extends Scene {
                 items: this.items,
                 tilemap: "Floor"
             });
+        this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
         this.player.animation.play("IDLE");
     }
 

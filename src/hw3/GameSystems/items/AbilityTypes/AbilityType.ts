@@ -1,5 +1,6 @@
 import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
+import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 
 export default abstract class AbilityType {
     /** The key for this sprite image */
@@ -22,6 +23,8 @@ export default abstract class AbilityType {
      */
     abstract initialize(options: Record<string, any>): void;
 
+    abstract findHitArea(ownerPositionRowCol: Vec2, direction: Vec2) : Array<Vec2>
+
     /**
      * The animation to do when this weapon is used
      */
@@ -29,5 +32,6 @@ export default abstract class AbilityType {
 
     abstract createRequiredAssets(scene: Scene): Array<any>;
 
+    abstract hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean;
     abstract hits(node: GameNode, ...args: any): boolean;
 }

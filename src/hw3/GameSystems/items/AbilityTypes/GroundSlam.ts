@@ -14,6 +14,20 @@ export default class GroundSlam extends AbilityType {
         this.useVolume = options.useVolume;
     }
 
+    /* Calculates the squares to damage and returns them as an array */
+    findHitArea(ownerPositionRowCol: Vec2, direction: Vec2) : Array<Vec2>{
+        // MAKE SURE THIS DOESN'T TRY TO RETURN SOMETHING OUT OF BOUNDS
+        let damageTiles: Array<Vec2> = [];
+        let xPos = ownerPositionRowCol.x;
+        let yPos = ownerPositionRowCol.y;
+        for(let i = -1 ; i <= 1 ; i++){
+            damageTiles.push(new Vec2(xPos+i, yPos-1));
+            damageTiles.push(new Vec2(xPos+i, yPos));
+            damageTiles.push(new Vec2(xPos+i, yPos+1));
+        }
+        return damageTiles;
+    }
+
     doAnimation(attacker: GameNode, direction: Vec2, sliceSprite: AnimatedSprite): void {
         // Rotate this with the game node
         sliceSprite.rotation = attacker.rotation;
@@ -31,6 +45,14 @@ export default class GroundSlam extends AbilityType {
         slice.animation.play("NORMAL", true);
 
         return [slice];
+    }
+
+    /* Determines if an entity is on a damage tile */
+    hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean{
+        for(let i = 0 ; i < damageTiles.length ; i++)
+            if(targetRowCol.x === damageTiles[i].x && targetRowCol.y === damageTiles[i].y)
+                return true;
+        return false;
     }
 
     hits(node: GameNode, sliceSprite: AnimatedSprite): boolean {

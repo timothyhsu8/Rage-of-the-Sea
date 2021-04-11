@@ -9,6 +9,7 @@ import Item from "./Item";
 import WeaponType from "./WeaponTypes/WeaponType";
 import AbilityType from "./AbilityTypes/AbilityType";
 import Scene from "../../../Wolfie2D/Scene/Scene";
+import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 
 export default class Ability {
     /** The type of this weapon */
@@ -28,7 +29,9 @@ export default class Ability {
 
     scene: Scene;
 
-    constructor(type: WeaponType, battleManager: BattleManager, scene: Scene){
+    tilemap: OrthogonalTilemap;
+
+    constructor(type: AbilityType, battleManager: BattleManager, scene: Scene){
 
         // Set the weapon type
         this.type = type;
@@ -45,6 +48,8 @@ export default class Ability {
         this.cooldownTimer = new Timer(type.cooldown);
 
         this.assets = this.type.createRequiredAssets(scene);
+
+        this.tilemap = this.scene.getTilemap("Floor") as OrthogonalTilemap;
     }
 
     cast(user: GameNode, userType: string, direction: Vec2): boolean {
@@ -57,7 +62,7 @@ export default class Ability {
         this.type.doAnimation(user, direction, ...this.assets);
 
         // Apply damage
-        this.battleManager.handleInteraction(userType, this);
+        this.battleManager.handleInteraction(userType, this, direction, user);
 
         // Send out an event to alert enemies
         //this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
@@ -67,7 +72,12 @@ export default class Ability {
 
         return true;
     }
-    
+
+    /* Determines if an entity is on a damage tile */
+    hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean{
+        return this.type.hitsSprite(targetRowCol, damageTiles);
+    }
+
     /**
      * A check for whether or not this weapon hit a node
      */

@@ -8,7 +8,7 @@
             "animationSprite": "groundslam",
             "spriteKey": "groundslam",
             "damage": 15,
-            "cooldown": 1000,
+            "cooldown": 4000,
             "useVolume": 0
         }
     ]

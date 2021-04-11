@@ -53,15 +53,13 @@ export default class MonsterAttack extends EnemyState {
         /* Find Monster Type and choose the appropriate attack state */
         switch(this.monsterType){
             case MonsterTypes.KRAKEN:
+                /* If within 20 pixels of the player, attack */
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
-                    //this.parent.ability = new Ability(new GroundSlam(10, 1000, "Ground Slam", "groundslam", ), );
                     let dir = this.player.position.clone().sub(this.owner.position).normalize();
-                    if(this.parent.ability.cast(this.owner, "enemy", dir)){
-                        // If we fired, face that direction
-                        this.owner.rotation = Vec2.UP.angleToCCW(dir);
-                    }
+                    if(this.parent.ability.cast(this.owner, "enemy", dir))
+                        this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
                 }
-                    //console.log("Kraken Attack");
+                
                 else this.finished(EnemyStates.DEFAULT);
                 break;
 
