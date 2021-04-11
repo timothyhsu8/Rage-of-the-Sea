@@ -15,6 +15,7 @@ import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Guard from "./EnemyStates/Guard";
 import Patrol from "./EnemyStates/Patrol";
+import Ability from "../GameSystems/items/Ability";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -31,6 +32,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     /** A reference to the player object */
     player: GameNode;
+
+    ability: Ability;
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
@@ -56,6 +59,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.weapon = options.weapon;
 
         this.player = options.player;
+
+        this.ability = options.ability;
 
         // Subscribe to events
         this.receiver.subscribe(hw3_Events.SHOT_FIRED);

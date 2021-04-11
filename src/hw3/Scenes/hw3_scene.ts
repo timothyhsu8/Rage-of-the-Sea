@@ -23,6 +23,8 @@ import Color from "../../Wolfie2D/Utils/Color";
 import Input from "../../Wolfie2D/Input/Input";
 import GameOver from "./GameOver";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
+import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
+import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 
 export default class hw3_scene extends Scene {
     // The player
@@ -48,6 +50,9 @@ export default class hw3_scene extends Scene {
 
     private healthbar: Graphic;
 
+    // Map of all abilities usable by player and monsters
+    abilityMap: Map<AbilityTypes, Ability>;
+
     loadScene(){
         // Load the player and enemy spritesheets
         this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
@@ -60,6 +65,7 @@ export default class hw3_scene extends Scene {
 
         // Load the scene info
         this.load.object("weaponData", "hw3_assets/data/weaponData.json");
+        this.load.object("abilityData", "hw3_assets/data/abilityData.json");
 
         // Load the nav mesh
         this.load.object("navmesh", "hw3_assets/data/navmesh.json");
@@ -100,7 +106,8 @@ export default class hw3_scene extends Scene {
         this.battleManager = new BattleManager();
 
         this.initializeWeapons();
-
+        this.initializeAbilities();
+        
         // Initialize the items array - this represents items that are in the game world
         this.items = new Array();
 
@@ -206,6 +213,12 @@ export default class hw3_scene extends Scene {
 
         return new Weapon(sprite, weaponType, this.battleManager);
     }
+    
+    createAbility(type: AbilityTypes){
+        let abilityType = <WeaponType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
+
+        return new Ability(abilityType, this.battleManager, this);
+    }
 
     /**
      * Creates a healthpack at a certain position in the world
@@ -250,6 +263,33 @@ export default class hw3_scene extends Scene {
             // Register the weapon type
             RegistryManager.getRegistry("weaponTypes").registerItem(weapon.name, weaponType)
         }
+    }
+
+    initializeAbilities(): void{
+        let abilityData = this.load.getObject("abilityData");
+
+        for(let i = 0 ; i < abilityData.numAbilities ; i++){
+            let ability = abilityData.abilities[i];
+
+            // Get the constructor of the prototype
+            let constr = RegistryManager.getRegistry("abilityTemplates").get(ability.abilityType);
+
+             // Create a weapon type
+             let abilityType = new constr();
+
+             // Initialize the weapon type
+             abilityType.initialize(ability);
+ 
+             // Register the weapon type
+             RegistryManager.getRegistry("abilityTypes").registerItem(ability.name, abilityType)
+        }
+    }
+    /* 
+        FINAL PROJECT TODO - Make only the abilities of enemies that are on the current stage load in (and that the player has)
+    */
+    /* Create the map of all abilities that can be used by the player and monsters (Then pass it to MonsterAttack)*/
+    initializeAbilityMap(): void{
+        
     }
 
     initializePlayer(): void {
@@ -367,6 +407,8 @@ export default class hw3_scene extends Scene {
                 health: data.health,
                 player: this.player,
                 weapon: this.createWeapon("weak_pistol"),
+                ability: this.createAbility(AbilityTypes.GROUNDSLAM),
+                //abilities: [""],
                 monsterType: data.monsterType
             }
 

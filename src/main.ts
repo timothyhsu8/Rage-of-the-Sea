@@ -2,7 +2,9 @@ import Game from "./Wolfie2D/Loop/Game";
 import hw3_scene from "./hw3/Scenes/hw3_scene";
 import RegistryManager from "./Wolfie2D/Registry/RegistryManager";
 import WeaponTemplateRegistry from "./hw3/Registry/WeaponRegistry";
+import AbilityTemplateRegistry from "./hw3/Registry/AbilityRegistry";
 import WeaponTypeRegistry from "./hw3/Registry/WeaponTypeRegistry";
+import AbilityTypeRegistry from "./hw3/Registry/AbilityTypeRegistry";
 import MainMenu from "./hw3/Scenes/MainMenu";
 
 // The main function is your entrypoint into Wolfie2D. Specify your first scene and any options here.
@@ -34,6 +36,12 @@ import MainMenu from "./hw3/Scenes/MainMenu";
     
     let weaponTypeRegistry = new WeaponTypeRegistry();
     RegistryManager.addCustomRegistry("weaponTypes", weaponTypeRegistry);
+
+    let abilityTemplateRegistry = new AbilityTemplateRegistry();
+    RegistryManager.addCustomRegistry("abilityTemplates", abilityTemplateRegistry);
+
+    let abilityTypeRegistry = new AbilityTypeRegistry();
+    RegistryManager.addCustomRegistry("abilityTypes", abilityTypeRegistry);
 
     // Create a game with the options specified
     const game = new Game(options);

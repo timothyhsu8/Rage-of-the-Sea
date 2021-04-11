@@ -64,7 +64,7 @@ export default class Weapon extends Item {
         //this.battleManager.handleInteraction(userType, this);
 
         // Send out an event to alert enemies
-        this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
+        //this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
     
         // Reset the cooldown timer
         this.cooldownTimer.start();

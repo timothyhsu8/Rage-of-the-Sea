@@ -4,6 +4,7 @@ import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Timer from "../../../Wolfie2D/Timing/Timer";
+import Ability, {AbilityTypes} from "../../GameSystems/items/Ability";
 import EnemyAI, { EnemyStates, MonsterTypes } from "../EnemyAI";
 import EnemyState from "./EnemyState";
 
@@ -24,6 +25,9 @@ export default class MonsterAttack extends EnemyState {
     player: GameNode;
 
     monsterType: MonsterTypes;
+
+    /* Abilities are stored in a Map */
+    abilityMap: Map<AbilityTypes, Ability>;
 
     constructor(parent: EnemyAI, owner: GameNode, player: GameNode, monsterType: MonsterTypes){
         super(parent, owner);
@@ -48,10 +52,16 @@ export default class MonsterAttack extends EnemyState {
     update(deltaT: number): void {
         /* Find Monster Type and choose the appropriate attack state */
         switch(this.monsterType){
-
             case MonsterTypes.KRAKEN:
-                if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 )
-                    console.log("Kraken Attack");
+                if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
+                    //this.parent.ability = new Ability(new GroundSlam(10, 1000, "Ground Slam", "groundslam", ), );
+                    let dir = this.player.position.clone().sub(this.owner.position).normalize();
+                    if(this.parent.ability.cast(this.owner, "enemy", dir)){
+                        // If we fired, face that direction
+                        this.owner.rotation = Vec2.UP.angleToCCW(dir);
+                    }
+                }
+                    //console.log("Kraken Attack");
                 else this.finished(EnemyStates.DEFAULT);
                 break;
 
