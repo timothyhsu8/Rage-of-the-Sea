@@ -9,6 +9,7 @@ export default class GroundSlam extends AbilityType {
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
         this.cooldown = options.cooldown;
+        this.chargeTime = options.chargeTime;
         this.displayName = options.displayName;
         this.spriteKey = options.spriteKey;
         this.useVolume = options.useVolume;
@@ -16,7 +17,7 @@ export default class GroundSlam extends AbilityType {
 
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2) : Array<Vec2>{
-        // MAKE SURE THIS DOESN'T TRY TO RETURN SOMETHING OUT OF BOUNDS
+        /* FINAL PROJECT TODO - Make sure abilties don't try to calculate something that's out of bounds */
         let damageTiles: Array<Vec2> = [];
         let xPos = ownerPositionRowCol.x;
         let yPos = ownerPositionRowCol.y;

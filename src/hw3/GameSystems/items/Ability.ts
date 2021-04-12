@@ -29,8 +29,6 @@ export default class Ability {
 
     scene: Scene;
 
-    tilemap: OrthogonalTilemap;
-
     constructor(type: AbilityType, battleManager: BattleManager, scene: Scene){
 
         // Set the weapon type
@@ -49,9 +47,9 @@ export default class Ability {
 
         this.assets = this.type.createRequiredAssets(scene);
 
-        this.tilemap = this.scene.getTilemap("Floor") as OrthogonalTilemap;
     }
 
+    /* Cast the ability */
     cast(user: GameNode, userType: string, direction: Vec2): boolean {
         // If the cooldown timer is still running, we can't use the weapon
         if(!this.cooldownTimer.isStopped()){

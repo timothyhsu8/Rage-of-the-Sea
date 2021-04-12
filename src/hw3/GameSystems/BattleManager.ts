@@ -15,6 +15,8 @@ export default class BattleManager {
 
     tilemap: OrthogonalTilemap;
 
+    overlapMap: Map<String, number>   // Maps each damage tile position to prevent attack indicators from canceling each other out
+
     handleInteraction(attackerType: string, ability: Ability, direction: Vec2, attacker: GameNode){
         /* Attacker is the player */
         if(attackerType === "player"){
@@ -27,13 +29,25 @@ export default class BattleManager {
         } 
         /* Attacker is a Monster */
         else {
+            //console.log(this.overlapMap);
             let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction);
             
             /* Set floor tiles to indicate they're about to be damaged */
-            for(let i = 0 ; i < damageTiles.length ; i++)
+            for(let i = 0 ; i < damageTiles.length ; i++){
                 this.tilemap.setTileAtRowCol(damageTiles[i], 3);
             
+                /* Increments overlap map for each damage tile */
+                let mapKey = damageTiles[i].toString();
+                let mapValue = this.overlapMap.get(mapKey);
+                if(mapValue === undefined)
+                    this.overlapMap.set(mapKey, 0);
+                    
+                this.overlapMap.set(mapKey, this.overlapMap.get(mapKey)+1);
+            }
+
+            attacker.freeze();
             let tilemap = this.tilemap;
+            let overlapMap = this.overlapMap;
             let playerPos = this.player.position;
             let playerAI = this.playerAI;
             setTimeout(function(){
@@ -42,10 +56,15 @@ export default class BattleManager {
                     playerAI.damage(ability.type.damage);
 
                 /* Set floor tiles back to normal */
-                for(let i = 0 ; i < damageTiles.length ; i++)
-                    tilemap.setTileAtRowCol(damageTiles[i], 1);
+                for(let i = 0 ; i < damageTiles.length ; i++){
+                    let mapKey = damageTiles[i].toString();
+                    overlapMap.set(mapKey, overlapMap.get(mapKey)-1);
+                    if(overlapMap.get(mapKey) === 0)
+                        tilemap.setTileAtRowCol(damageTiles[i], 1);
+                }
 
-            }, 1000);
+                attacker.unfreeze();
+            }, ability.type.chargeTime);
         }
     }
 
@@ -60,6 +79,7 @@ export default class BattleManager {
     setTileMap(player: AnimatedSprite, tilemap: OrthogonalTilemap){
         this.player = player;
         this.tilemap = tilemap;
+        this.overlapMap = new Map<String, number>();
     }
 
 }

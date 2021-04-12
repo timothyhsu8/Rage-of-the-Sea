@@ -33,6 +33,7 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 
 	/*---------- PHYSICAL ----------*/
 	hasPhysics: boolean = false;
+	frozen: boolean = false;
 	moving: boolean = false;
 	onGround: boolean = false;
 	onWall: boolean = false;
@@ -132,11 +133,13 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
      * @param velocity The velocity with which to move the object.
      */
 	move(velocity: Vec2): void {
+		if(this.frozen) return;
 		this.moving = true;
 		this._velocity = velocity;
 	};
 
 	moveOnPath(speed: number, path: NavigationPath): void {
+		if(this.frozen) return;
 		this.path = path;
 		let dir = path.getMoveDirection(this);
 		this.moving = true;
@@ -350,6 +353,16 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 		
 		// Update our tweens
 		this.tweens.update(deltaT);
+	}
+
+	/** Disables physics movement for this node */
+	freeze(): void {
+		this.frozen = true;
+	}
+
+	/** Reenables physics movement for this node */
+	unfreeze(): void {
+		this.frozen = false;
 	}
 
 	// @implemented

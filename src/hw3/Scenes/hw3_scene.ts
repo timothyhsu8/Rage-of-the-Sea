@@ -84,6 +84,7 @@ export default class hw3_scene extends Scene {
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
         this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
         this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
+        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
     }
 
     startScene(){
@@ -308,6 +309,9 @@ export default class hw3_scene extends Scene {
 
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(5, 5);
+
+        let healthbarborder = this.add.sprite("healthbarborder", "primary");
+        healthbarborder.position = new Vec2(70, 7);
 
         // Create the player
         this.player = this.add.animatedSprite("player", "primary");
