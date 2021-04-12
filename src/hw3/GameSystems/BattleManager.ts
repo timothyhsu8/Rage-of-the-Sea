@@ -20,6 +20,7 @@ export default class BattleManager {
     handleInteraction(attackerType: string, ability: Ability, direction: Vec2, attacker: GameNode){
         /* Attacker is the player */
         if(attackerType === "player"){
+            console.log("Player attack");
             // Check for collisions with enemies
             for(let enemy of this.enemies){
                 if(ability.hits(enemy.owner)){

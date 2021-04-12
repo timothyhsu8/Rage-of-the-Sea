@@ -4,6 +4,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Timer from "../../Wolfie2D/Timing/Timer";
+import Inventory from "../GameSystems/Inventory";
 import InventoryManager from "../GameSystems/InventoryManager";
 import Healthpack from "../GameSystems/items/Healthpack";
 import Item from "../GameSystems/items/Item";
@@ -18,7 +19,7 @@ export default class PlayerController implements BattlerAI {
     owner: AnimatedSprite;
 
     // The inventory of the player
-    private inventory: InventoryManager;
+    private inventory: Inventory;
 
     /** A list of items in the game world */
     private items: Array<Item>;
@@ -99,21 +100,16 @@ export default class PlayerController implements BattlerAI {
         // Get the unit vector in the look direction
         this.lookDirection = this.owner.position.dirTo(Input.getGlobalMousePosition());
 
-        // Shoot a bullet
+        // Use an Ability
         if(Input.isMouseJustPressed()){
-            // Get the current item
-            let item = this.inventory.getItem();
+            // Do Basic Attack on left click
+            if(!Input.isMouseRightClick())
+                this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection);
 
-            // If there is an item in the current slot, use it
-            if(item){
-                item.use(this.owner, "player", this.lookDirection);
-
-                if(item instanceof Healthpack){
-                    // Destroy the used healthpack
-                    this.inventory.removeItem();
-                    item.sprite.visible = false;
-                }
-            }
+            // Use Current Item on right click
+            else if(Input.isMouseRightClick())
+                if(!this.inventory.isEmpty())
+                    this.inventory.getItem().use(this.owner, "player", this.lookDirection);
         }
 
         // Rotate the player
@@ -122,35 +118,12 @@ export default class PlayerController implements BattlerAI {
         // Inventory
 
         // Check for slot change
-        if(Input.isJustPressed("slot1")){
-            this.inventory.changeSlot(0);
-        } else if(Input.isJustPressed("slot2")){
-            this.inventory.changeSlot(1);
-        }
+        // if(Input.isJustPressed("slot1")){
+        //     this.inventory.changeSlot(0);
+        // } else if(Input.isJustPressed("slot2")){
+        //     this.inventory.changeSlot(1);
+        // }
         
-        if(Input.isJustPressed("pickup")){
-            // Check if there is an item to pick up
-            for(let item of this.items){
-                if(this.owner.collisionShape.overlaps(item.sprite.boundary)){
-                    // We overlap it, try to pick it up
-                    this.inventory.addItem(item);
-                    break;
-                }
-            }
-        }
-
-        if(Input.isJustPressed("drop")){
-            // Check if we can drop our current item
-            let item = this.inventory.removeItem();
-            
-            if(item){
-                // Move the item from the ui to the gameworld
-                item.moveSprite(this.owner.position, "primary");
-
-                // Add the item to the list of items
-                this.items.push(item);
-            }
-        }
     }
 
     damage(damage: number): void {

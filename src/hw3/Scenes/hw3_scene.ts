@@ -26,6 +26,7 @@ import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
+import Inventory from "../GameSystems/Inventory";
 
 export default class hw3_scene extends Scene {
     // The player
@@ -152,14 +153,6 @@ export default class hw3_scene extends Scene {
     }
 
     updateScene(deltaT: number): void {
-        while(this.receiver.hasNextEvent()){
-            let event = this.receiver.getNextEvent();
-
-            if(event.isType("healthpack")){
-                this.createHealthpack(event.data.get("position"));
-            }
-        }
-
         let health = (<BattlerAI>this.player._ai).health;
 
         /* Game Over screen on player death */
@@ -193,14 +186,9 @@ export default class hw3_scene extends Scene {
         let itemData = this.load.getObject("itemData");
 
         for(let item of itemData.items){
-            if(item.type === "healthpack"){
-                // Create a healthpack
-                this.createHealthpack(new Vec2(item.position[0], item.position[1]));
-            } else {
-                let weapon = this.createWeapon(item.weaponType);
-                weapon.moveSprite(new Vec2(item.position[0], item.position[1]));
-                this.items.push(weapon);
-            }
+            let weapon = this.createWeapon(item.weaponType);
+            weapon.moveSprite(new Vec2(item.position[0], item.position[1]));
+            this.items.push(weapon);
         }        
     }
 
@@ -223,17 +211,6 @@ export default class hw3_scene extends Scene {
         let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
 
         return new Ability(abilityType, this.battleManager, this);
-    }
-
-    /**
-     * Creates a healthpack at a certain position in the world
-     * @param position 
-     */
-    createHealthpack(position: Vec2): void {
-        let sprite = this.add.sprite("healthpack", "primary");
-        let healthpack = new Healthpack(sprite)
-        healthpack.moveSprite(position);
-        this.items.push(healthpack);
     }
 
     // HOMEWORK 3 - TODO
@@ -299,17 +276,22 @@ export default class hw3_scene extends Scene {
 
     initializePlayer(): void {
         // Create the inventory
-        let inventory = new InventoryManager(this, 2, "inventorySlot", new Vec2(16, 16), 4);
-        let startingWeapon = this.createWeapon("knife");
-        inventory.addItem(startingWeapon);
+        //let inventory = new InventoryManager(this, 2, "inventorySlot", new Vec2(16, 16), 4);
+        let inventory = new Inventory(this, 10);
+        let basicAttack = this.createAbility(AbilityTypes.PLAYER_ANCHORSWING);
+        inventory.setBasicAttack(basicAttack);
+        // let startingWeapon = this.createWeapon("knife");
+        // inventory.addItem(startingWeapon);
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
         portrait.position = new Vec2(6, 6);
 
+        /* Sprite for portrait border */
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(6, 6);
 
+        /* Sprite for healthbar border */
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
         healthbarborder.position = new Vec2(70, 7);
 

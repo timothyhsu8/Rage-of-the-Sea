@@ -68,42 +68,6 @@ export default class MonsterAttack extends EnemyState {
                 this.finished(EnemyStates.DEFAULT);
                 break;
         }
-        
-        // if(this.pollTimer.isStopped()){
-        //     // Restart the timer
-        //     this.pollTimer.start();
-
-        //     this.playerPos = this.parent.getPlayerPosition();
-
-        //     if(this.playerPos !== null){
-        //         // If we see a new player position, update the last position
-        //         this.lastPlayerPos = this.playerPos;
-        //     }
-        // }
-
-        // if(this.playerPos !== null){
-        //     // Player is visible, restart the exitTimer
-        //     this.exitTimer.start();
-
-        //     // Fire at player
-        //     let dir = this.playerPos.clone().sub(this.owner.position).normalize();
-        //     dir.rotateCCW(Math.PI / 4 * Math.random() - Math.PI/8);
-        //     if(this.parent.weapon.use(this.owner, "enemy", dir)){
-        //         // If we fired, face that direction
-        //         this.owner.rotation = Vec2.UP.angleToCCW(dir);
-        //     }
-
-        // }
-
-        // if(this.exitTimer.isStopped()){
-        //     // We haven't seen the player in a while, go check out where we last saw them, if possible
-        //     if(this.lastPlayerPos !== null){
-        //         this.retObj = {target: this.lastPlayerPos}
-        //         this.finished(EnemyStates.ALERT);
-        //     } else {
-        //         this.finished(EnemyStates.DEFAULT);
-        //     }
-        // }
     }
 
     onExit(): Record<string, any> {

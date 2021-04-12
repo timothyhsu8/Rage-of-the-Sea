@@ -18,6 +18,7 @@ export default class Input {
 
 	private static mousePosition: Vec2;
 	private static mousePressPosition: Vec2;
+	private static mouseIsRightClick: boolean;
 
 	private static scrollDirection: number;
 	private static justScrolled: boolean;
@@ -74,7 +75,12 @@ export default class Input {
 			if(event.type === GameEventType.MOUSE_DOWN){
 				Input.mouseJustPressed = true;
 				Input.mousePressed = true;
-				Input.mousePressPosition = event.data.get("position");	
+				Input.mousePressPosition = event.data.get("position");
+
+				if(event.data.get("button") === 2)
+					Input.mouseIsRightClick = true;
+
+				else Input.mouseIsRightClick = false;
 			}
 
 			if(event.type === GameEventType.MOUSE_UP){
@@ -237,6 +243,10 @@ export default class Input {
 	 */
 	static isMousePressed(): boolean {
 		return Input.mousePressed;
+	}
+
+	static isMouseRightClick(): boolean {
+		return this.mouseIsRightClick;
 	}
 
 	/**

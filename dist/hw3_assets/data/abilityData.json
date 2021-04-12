@@ -1,6 +1,17 @@
 {
-    "numAbilities": 1,
+    "numAbilities": 2,
     "abilities": [
+        {
+            "abilityType": "anchorswing",
+            "name": "anchorswing",
+            "displayName": "Anchor Swing",
+            "animationSprite": "anchorswing",
+            "spriteKey": "anchorswing",
+            "damage": 1,
+            "cooldown": 100,
+            "chargeTime": 1000,
+            "useVolume": 0
+        },
         {
             "abilityType": "groundslam",
             "name": "groundslam",
