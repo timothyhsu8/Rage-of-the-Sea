@@ -103,6 +103,7 @@ export default class hw3_scene extends Scene {
         // Set the viewport bounds to the tilemap
         let tilemapSize: Vec2 = this.walls.size; 
         this.viewport.setBounds(0, 0, tilemapSize.x, tilemapSize.y);
+        this.viewport.setOffset(new Vec2(5, 3));
 
         this.addLayer("primary", 10);
 
@@ -167,9 +168,8 @@ export default class hw3_scene extends Scene {
         }
 
         // Update Healthbar GUI
-        //this.healthDisplay.text = "Health: " + health;
         this.healthbar.size = new Vec2(health, 5);
-        this.healthbar.position = new Vec2(80 - .5*(100-health), 16);
+        this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
 
         // Debug mode graph
         if(Input.isKeyJustPressed("g")){
@@ -305,10 +305,10 @@ export default class hw3_scene extends Scene {
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
-        portrait.position = new Vec2(5, 5);
+        portrait.position = new Vec2(6, 6);
 
         let portraitborder = this.add.sprite("portraitborder", "primary");
-        portraitborder.position = new Vec2(5, 5);
+        portraitborder.position = new Vec2(6, 6);
 
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
         healthbarborder.position = new Vec2(70, 7);

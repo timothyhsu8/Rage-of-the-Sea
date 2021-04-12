@@ -37,6 +37,8 @@ export default class Viewport {
     /** The size of the canvas */
     private canvasSize: Vec2;
 
+    private offset: Vec2;
+
     constructor(canvasSize: Vec2, zoomLevel: number){
         this.view = new AABB(Vec2.ZERO, Vec2.ZERO);
         this.boundary = new AABB(Vec2.ZERO, Vec2.ZERO);
@@ -45,6 +47,7 @@ export default class Viewport {
         this.scrollZoomEnabled = false;
         this.canvasSize = Vec2.ZERO;
         this.focus = Vec2.ZERO;
+        this.offset = new Vec2(0, 0);
 
         // Set the size of the canvas
         this.setCanvasSize(canvasSize);
@@ -56,6 +59,11 @@ export default class Viewport {
         // Set the center (and make the viewport stay there)
         this.setCenter(this.view.halfSize.clone());
         this.setFocus(this.view.halfSize.clone());
+    }
+
+    /** Sets offset of the viewport */
+    setOffset(offset: Vec2): void {
+        this.offset = offset;
     }
 
     /** Enables the viewport to zoom in and out */
@@ -238,9 +246,9 @@ export default class Viewport {
         pos.y = MathUtils.clamp(pos.y, this.boundary.top + this.view.hh, this.boundary.bottom - this.view.hh);
 
         // Assure there are no lines in the tilemap
-        pos.x = Math.floor(pos.x);
-        pos.y = Math.floor(pos.y);
-        
+        pos.x = Math.floor(pos.x) + this.offset.x;
+        pos.y = Math.floor(pos.y) + this.offset.y;
+
         this.view.center.copy(pos);
     }
 
