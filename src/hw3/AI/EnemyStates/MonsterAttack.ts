@@ -26,9 +26,6 @@ export default class MonsterAttack extends EnemyState {
 
     monsterType: MonsterTypes;
 
-    /* Abilities are stored in a Map */
-    abilityMap: Map<AbilityTypes, Ability>;
-
     constructor(parent: EnemyAI, owner: GameNode, player: GameNode, monsterType: MonsterTypes){
         super(parent, owner);
 

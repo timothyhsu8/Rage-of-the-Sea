@@ -1,5 +1,5 @@
 import Game from "./Wolfie2D/Loop/Game";
-import hw3_scene from "./hw3/Scenes/hw3_scene";
+import floor1_scene from "./hw3/Scenes/floor1_scene";
 import RegistryManager from "./Wolfie2D/Registry/RegistryManager";
 import WeaponTemplateRegistry from "./hw3/Registry/WeaponRegistry";
 import AbilityTemplateRegistry from "./hw3/Registry/AbilityRegistry";

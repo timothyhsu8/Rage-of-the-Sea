@@ -9,11 +9,9 @@ import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Weapon from "../GameSystems/items/Weapon";
 import { hw3_Events } from "../hw3_constants";
 import BattlerAI from "./BattlerAI";
-import Alert from "./EnemyStates/Alert";
 import Attack from "./EnemyStates/Attack";
 import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
-import Guard from "./EnemyStates/Guard";
 import Patrol from "./EnemyStates/Patrol";
 import Ability from "../GameSystems/items/Ability";
 
@@ -38,19 +36,15 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         
+        /* FINAL PROJECT TODO - Add more enemy states here */
         if(options.defaultMode === "chase"){
             this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
         }
-        else if(options.defaultMode === "guard"){
-            // Guard mode
-            this.addState(EnemyStates.DEFAULT, new Guard(this, owner, options.guardPosition));
-        } 
         else {
-            // Patrol mode
-            this.addState(EnemyStates.DEFAULT, new Patrol(this, owner, options.patrolRoute));
+            // Default state is chase
+            this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
         }
 
-        this.addState(EnemyStates.ALERT, new Alert(this, owner));
         this.addState(EnemyStates.ATTACKING, new Attack(this, owner));
         this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 
@@ -75,18 +69,15 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     activate(options: Record<string, any>): void {}
 
     damage(damage: number): void {
-        console.log("Took damage");
+        //console.log("Took damage");
         this.health -= damage;
     
+        /* Enemy Dies */
         if(this.health <= 0){
             this.owner.setAIActive(false, {});
             this.owner.isCollidable = false;
             this.owner.visible = false;
-
-            if(Math.random() < 0.2){
-                // Spawn a healthpack
-                this.emitter.fireEvent("healthpack", {position: this.owner.position});
-            }
+            //this.emitter.fireEvent(ENEMY_DIED, {position: this.owner.position});
         }
     }
 

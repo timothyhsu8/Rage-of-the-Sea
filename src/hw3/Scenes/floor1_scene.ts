@@ -28,7 +28,7 @@ import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import Inventory from "../GameSystems/Inventory";
 
-export default class hw3_scene extends Scene {
+export default class floor1_scene extends Scene {
     // The player
     private player: AnimatedSprite;
 
@@ -54,18 +54,13 @@ export default class hw3_scene extends Scene {
 
     private tilemap: OrthogonalTilemap;
 
-    // Map of all abilities usable by player and monsters
-    abilityMap: Map<AbilityTypes, Ability>;
-
     loadScene(){
         // Load the player and enemy spritesheets
         this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
         this.load.spritesheet("enemy", "hw3_assets/spritesheets/enemy.json");
 
         // Load the tilemap
-        // HOMEWORK 3 - TODO
-        // Change this file to be your own tilemap
-        this.load.tilemap("level", "hw3_assets/tilemaps/MyLevel.json");
+        this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
         // Load the scene info
         this.load.object("weaponData", "hw3_assets/data/weaponData.json");
@@ -97,7 +92,7 @@ export default class hw3_scene extends Scene {
             Make sure it is still doing so.
 
             What the line is saying is to get the first level from the bottom (tilemapLayers[1]),
-            which in my case was the Walls layer.
+            which in my case was the Walls layer.   FINAL PROJECT TODO - REMOVE COMMENT
         */
         this.walls = <OrthogonalTilemap>tilemapLayers[1].getItems()[0];
 
@@ -105,7 +100,8 @@ export default class hw3_scene extends Scene {
         let tilemapSize: Vec2 = this.walls.size; 
         this.viewport.setBounds(0, 0, tilemapSize.x, tilemapSize.y);
         this.viewport.setOffset(new Vec2(5, 3));
-
+        this.viewport.setZoomLevel(6);
+        
         this.addLayer("primary", 10);
 
         // Create the battle manager
@@ -119,11 +115,6 @@ export default class hw3_scene extends Scene {
 
         // Create the player
         this.initializePlayer();
-
-        // Make the viewport follow the player
-        //this.viewport.follow(this.player);
-        //this.viewport.enableZoom();
-        this.viewport.setZoomLevel(6);
 
         // Create the navmesh
         this.createNavmesh();
@@ -139,57 +130,22 @@ export default class hw3_scene extends Scene {
         // Subscribe to relevant events
         //this.receiver.subscribe("healthpack");
 
-        // Spawn items into the world
-        //this.spawnItems();
-
         // UI for healthbar
         this.addUILayer("healthbar");
         this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
-
-        // REMOVE LATER //
-        // this.addUILayer("health");
-        // this.healthDisplay = <Label>this.add.uiElement(UIElementType.LABEL, "health", {position: new Vec2(200, 16), text: "Health: " + (<BattlerAI>this.player._ai).health});
-        // this.healthDisplay.textColor = Color.WHITE;
     }
 
     updateScene(deltaT: number): void {
         let health = (<BattlerAI>this.player._ai).health;
 
         /* Game Over screen on player death */
-        if(health === 0){
+        if(health <= 0){
             this.sceneManager.changeScene(GameOver);
         }
-
+        
         // Update Healthbar GUI
         this.healthbar.size = new Vec2(health, 5);
         this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
-
-        // Debug mode graph
-        if(Input.isKeyJustPressed("g")){
-            this.getLayer("graph").setHidden(!this.getLayer("graph").isHidden());
-        }
-    }
-
-    // HOMEWORK 3 - TODO
-    /**
-     * This function spawns in all of the items in "items.json"
-     * 
-     * You shouldn't have to put any new code here, however, you will have to modify items.json.
-     * 
-     * Make sure you are spawning in 5 pistols and 5 laser guns somewhere (accessible) in your world.
-     * 
-     * You'll notice that right now, some healthpacks are also spawning in. These also drop from guards.
-     * Feel free to spawn some healthpacks if you want, or you can just let the player suffer >:)
-     */
-    spawnItems(): void {
-        // Get the item data
-        let itemData = this.load.getObject("itemData");
-
-        for(let item of itemData.items){
-            let weapon = this.createWeapon(item.weaponType);
-            weapon.moveSprite(new Vec2(item.position[0], item.position[1]));
-            this.items.push(weapon);
-        }        
     }
 
     /**
@@ -365,6 +321,9 @@ export default class hw3_scene extends Scene {
      * to indices in the navmesh.
      */
     initializeEnemies(){
+        //randomizedEnemyData = // FINAL PROJECT TODO - Randomize data for enemy creation here (it should also depend on what level and such we're on)
+
+
         // Get the enemy data
         const enemyData = this.load.getObject("enemyData");
 
