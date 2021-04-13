@@ -37,20 +37,20 @@ export default class AnchorSwing extends AbilityType {
         sliceSprite.position = attacker.position.clone().add(direction.scaled(16));
 
         // Play the slice animation w/o loop, but queue the normal animation
-        sliceSprite.animation.play("SLICE");
+        sliceSprite.animation.play("SWING");
         sliceSprite.animation.queue("NORMAL", true);
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let slice = scene.add.animatedSprite("groundslam", "primary");
-        slice.animation.play("NORMAL", true);
+        let swing = scene.add.animatedSprite("anchorswing", "primary");
+        swing.animation.play("NORMAL", true);
 
-        return [slice];
+        return [swing];
     }
 
     /* Determines if an entity is on a damage tile */
     hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean{
-        for(let i = 0 ; i < damageTiles.length ; i++)
+        for(let i = 0 ; i <= damageTiles.length ; i++)
             if(targetRowCol.x === damageTiles[i].x && targetRowCol.y === damageTiles[i].y)
                 return true;
         return false;

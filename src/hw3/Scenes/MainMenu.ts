@@ -33,7 +33,7 @@ export default class MainMenu extends Scene {
     startScene(){
         // storing out data here
         MainMenu.char = "Diver";
-        MainMenu.equipped = ["lasergun", "lasergun", "lasergun", "lasergun", "lasergun", "lasergun"];
+        MainMenu.equipped = ["anchor", "lasergun", "lasergun", "lasergun", "lasergun", "lasergun"];
         MainMenu.items = ["healthpack", "healthpack", "healthpack", "knife", "knife", "knife", "knife"];
         MainMenu.image = "portrait";
         this.addLayer("primary", 10);
