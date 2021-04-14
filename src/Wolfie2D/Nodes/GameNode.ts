@@ -365,6 +365,16 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 		this.frozen = false;
 	}
 
+	/** Prevents this object from participating in all collisions and triggers. It can still move. */
+	disablePhysics(): void {
+		this.active = false;
+	}
+
+	/** Enables this object to participate in collisions and triggers. This is only necessary if disablePhysics was called */
+	enablePhysics(): void {
+		this.active = true;
+	}
+
 	// @implemented
 	debugRender(): void {
 		// Draw the position of this GameNode

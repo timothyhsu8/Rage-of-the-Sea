@@ -14,6 +14,7 @@ import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Patrol from "./EnemyStates/Patrol";
 import Ability from "../GameSystems/items/Ability";
+import {GameEvents} from "../Game_Enums"
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -69,7 +70,6 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     activate(options: Record<string, any>): void {}
 
     damage(damage: number): void {
-        //console.log("Took damage");
         this.health -= damage;
     
         /* Enemy Dies */
@@ -77,7 +77,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.owner.setAIActive(false, {});
             this.owner.isCollidable = false;
             this.owner.visible = false;
-            //this.emitter.fireEvent(ENEMY_DIED, {position: this.owner.position});
+            this.owner.positionX = -1000;
+            this.emitter.fireEvent(GameEvents.ENEMY_DIED, {});
         }
     }
 

@@ -9,6 +9,7 @@ import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
 import floor1_scene from "./floor1_scene";
+import CharacterSelect from "./CharacterSelect";
 
 
 
@@ -44,7 +45,7 @@ export default class MainMenu extends Scene {
         this.mainMenu = this.addUILayer("mainMenu");
 
         // Add play button, and give it an event to emit on press
-        const play = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y - 100), text: "Play"});
+        const play = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-100), text: "Play"});
         play.size.set(200, 50);
         play.borderWidth = 2;
         play.borderColor = Color.WHITE;
@@ -117,9 +118,7 @@ export default class MainMenu extends Scene {
         const aboutHeader = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 250), text: "About"});
         aboutHeader.textColor = Color.WHITE;
 
-        // HOMEWORK 3 - TODO
-        // Give yourself credit for your work on this game!
-        const text1 = "This game was created by Timothy Hsu, Joe Weaver, and Richard McKenna";
+        const text1 = "This game was created by Edward Huang, Michael Carpenzano, and Timothy Hsu";
         const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
         const text3 = "Joe Weaver and Richard McKenna.";
 
@@ -138,7 +137,6 @@ export default class MainMenu extends Scene {
         aboutBack.backgroundColor = Color.TRANSPARENT;
         aboutBack.onClickEventId = "menu";
         
-
         // Subscribe to the button events
         this.receiver.subscribe("play");
         this.receiver.subscribe("controls");
@@ -146,24 +144,7 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("menu");
         this.receiver.subscribe("inventory");
 
-        // HOMEWORK 3 - TODO
-        /*
-            Add a controls screen here.
-            Use the About screen as inspiration for how to do so.
-            The controls screen should list all controls:
-
-            WASD to move
-            Q to drop an item
-            E to pick up an item
-            Click to use current item
-            1&2 to change items
-
-            You should also include a back button to return to the main menu.
-
-            Additionally, on the main menu, you should be able to press a button to reach the controls screen.
-        */
     }
-
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
@@ -171,7 +152,7 @@ export default class MainMenu extends Scene {
             console.log(event);
 
             if(event.type === "play"){
-                this.sceneManager.changeScene(floor1_scene, {});
+                this.sceneManager.changeScene(CharacterSelect, {});
             }
 
             if(event.type === "controls"){

@@ -27,6 +27,9 @@ import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import Inventory from "../GameSystems/Inventory";
+import { GameEvents } from "../Game_Enums";
+import MainMenu from "./MainMenu";
+import Map_Scene from "./Map_Scene";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -34,6 +37,9 @@ export default class floor1_scene extends Scene {
 
     // A list of enemies
     private enemies: Array<AnimatedSprite>;
+
+    // The number of enemies left in the room
+    private numMonstersLeft: number;
 
     // The wall layer of the tilemap to use for bullet visualization
     private walls: OrthogonalTilemap;
@@ -66,17 +72,12 @@ export default class floor1_scene extends Scene {
         this.load.object("weaponData", "hw3_assets/data/weaponData.json");
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
 
-        // Load the nav mesh
-        this.load.object("navmesh", "hw3_assets/data/navmesh.json");
-
         // Load in the enemy info
         this.load.object("enemyData", "hw3_assets/data/enemy.json");
 
         // Load in item info
         this.load.object("itemData", "hw3_assets/data/items.json");
 
-        // Load the healthpack sprite
-        this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
         this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
         this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
@@ -109,15 +110,13 @@ export default class floor1_scene extends Scene {
 
         this.initializeWeapons();
         this.initializeAbilities();
-        
+        this.subscribeToEvents();
+
         // Initialize the items array - this represents items that are in the game world
         this.items = new Array();
 
         // Create the player
         this.initializePlayer();
-
-        // Create the navmesh
-        this.createNavmesh();
 
         // Initialize all enemies
         this.initializeEnemies();
@@ -127,21 +126,38 @@ export default class floor1_scene extends Scene {
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
         this.battleManager.setTileMap(this.player, this.tilemap);
 
-        // Subscribe to relevant events
-        //this.receiver.subscribe("healthpack");
-
         // UI for healthbar
         this.addUILayer("healthbar");
         this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
     }
 
     updateScene(deltaT: number): void {
+        /* Handles all game events */
+        while(this.receiver.hasNextEvent()){
+            let event = this.receiver.getNextEvent();
+            switch(event.type){
+                case GameEvents.ENEMY_DIED:
+                    {
+                        this.numMonstersLeft--;
+                        break;
+                    }
+                default:
+                    console.log("Default");
+                    break;
+            }
+        }
+
         let health = (<BattlerAI>this.player._ai).health;
 
-        /* Game Over screen on player death */
-        if(health <= 0){
-            this.sceneManager.changeScene(GameOver);
+        /* If all monsters are killed, advance */
+        if(this.numMonstersLeft <= 0){
+            this.viewport.setZoomLevel(1/6);
+            this.sceneManager.changeScene(MainMenu);
         }
+
+        /* Game Over screen on player death */
+        if(health <= 0)
+            this.sceneManager.changeScene(GameOver);
         
         // Update Healthbar GUI
         this.healthbar.size = new Vec2(health, 5);
@@ -149,7 +165,15 @@ export default class floor1_scene extends Scene {
     }
 
     /**
-     * 
+     * Handles all subscriptions to events
+     */
+     protected subscribeToEvents(){
+        this.receiver.subscribe([
+            GameEvents.ENEMY_DIED
+        ]);
+    }
+
+    /**
      * Creates and returns a new weapon
      * @param type The weaponType of the weapon, as a string
      */
@@ -169,18 +193,7 @@ export default class floor1_scene extends Scene {
         return new Ability(abilityType, this.battleManager, this);
     }
 
-    // HOMEWORK 3 - TODO
-    /**
-     * You'll want to have a new weapon type available in your program - a laser gun.
-     * Carefully look through the code for how the other weapon types (knife and pistol)
-     * are created. They're based of the templates Slice and SemiAutoGun. You should use
-     * the SemiAutoGun template for your laser gun.
-     * 
-     * The laser gun should have a green beam, and should be considerably more powerful than
-     * a pistol. You can decide just how powerful it is.
-     * 
-     * Look in weaponData.json for some insight on what to do here.
-     * 
+    /** 
      * Loads in all weapons from file
      */
     initializeWeapons(): void{
@@ -222,22 +235,12 @@ export default class floor1_scene extends Scene {
              RegistryManager.getRegistry("abilityTypes").registerItem(ability.name, abilityType)
         }
     }
-    /* 
-        FINAL PROJECT TODO - Make only the abilities of enemies that are on the current stage load in (and that the player has)
-    */
-    /* Create the map of all abilities that can be used by the player and monsters (Then pass it to MonsterAttack)*/
-    initializeAbilityMap(): void{
-        
-    }
 
     initializePlayer(): void {
         // Create the inventory
-        //let inventory = new InventoryManager(this, 2, "inventorySlot", new Vec2(16, 16), 4);
         let inventory = new Inventory(this, 10);
         let basicAttack = this.createAbility(AbilityTypes.PLAYER_ANCHORSWING);
         inventory.setBasicAttack(basicAttack);
-        // let startingWeapon = this.createWeapon("knife");
-        // inventory.addItem(startingWeapon);
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
@@ -268,53 +271,6 @@ export default class floor1_scene extends Scene {
 
     // HOMEWORK 3 - TODO
     /**
-     * This function creates the navmesh for the game world.
-     * 
-     * It reads in information in the navmesh.json file.
-     * The format of the navmesh.json file is as follows
-     * 
-     * {
-     *  // An array of positions on the tilemap. You can see the position of your mouse in [row, col]
-     *  // while editing a map in Tiled, and can just multiply those values by the tile size, 16x16
-     *      "nodes": [[100, 200], [50, 400], ...]
-     * 
-     *  // An array of edges between nodes. The numbers here correspond to indices in the "nodes" array above.
-     *  // Note that edges are not directed here. An edge [0, 1] foes in both directions.
-     *      "edges": [[0, 1], [2, 4], ...]
-     * }
-     * 
-     * Your job here is to make a new graph to serve as the navmesh. Your graph should be designed
-     * for your tilemap, and no edges should go through walls.
-     */
-    createNavmesh(): void {
-        // Add a layer to display the graph
-        let gLayer = this.addLayer("graph");
-        gLayer.setHidden(true);
-
-        let navmeshData = this.load.getObject("navmesh");
-
-         // Create the graph
-        this.graph = new PositionGraph();
-
-        // Add all nodes to our graph
-        for(let node of navmeshData.nodes){
-            this.graph.addPositionedNode(new Vec2(node[0], node[1]));
-            this.add.graphic(GraphicType.POINT, "graph", {position: new Vec2(node[0], node[1])})
-        }
-
-        // Add all edges to our graph
-        for(let edge of navmeshData.edges){
-            this.graph.addEdge(edge[0], edge[1]);
-            this.add.graphic(GraphicType.LINE, "graph", {start: this.graph.getNodePosition(edge[0]), end: this.graph.getNodePosition(edge[1])})
-        }
-
-        // Set this graph as a navigable entity
-        let navmesh = new Navmesh(this.graph);
-        this.navManager.addNavigableEntity(hw3_Names.NAVMESH, navmesh);
-    }
-
-    // HOMEWORK 3 - TODO
-    /**
      * This function creates all enemies from the enemy.json file.
      * 
      * Patrolling enemies are given patrol routes corresponding to the navmesh. The numbers in their route correspond
@@ -323,12 +279,12 @@ export default class floor1_scene extends Scene {
     initializeEnemies(){
         //randomizedEnemyData = // FINAL PROJECT TODO - Randomize data for enemy creation here (it should also depend on what level and such we're on)
 
-
         // Get the enemy data
         const enemyData = this.load.getObject("enemyData");
 
         // Create an enemies array
         this.enemies = new Array(enemyData.numEnemies);
+        this.numMonstersLeft = enemyData.numEnemies;
 
         // Initialize the enemies
         for(let i = 0; i < enemyData.numEnemies; i++){
@@ -341,14 +297,6 @@ export default class floor1_scene extends Scene {
 
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
-
-            if(data.route){
-                data.route = data.route.map((index: number) => this.graph.getNodePosition(index));                
-            }
-
-            if(data.guardPosition){
-                data.guardPosition = new Vec2(data.guardPosition[0], data.guardPosition[1]);
-            }
 
             let enemyOptions = {
                 defaultMode: data.mode,
