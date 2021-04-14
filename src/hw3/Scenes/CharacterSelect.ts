@@ -31,7 +31,7 @@ export default class CharacterSelect extends Scene {
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(center.x, center.y-150);
 
-        // Add play button, and give it an event to emit on press
+        // Add play button, and give it an event to emit on press 
         const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+165), text: "SELECT"});
         select.size.set(200, 75);
         select.borderWidth = 3;
