@@ -49,6 +49,14 @@ export default class Ability {
 
     }
 
+    setBattleManager(bm: BattleManager){
+        this.battleManager = bm;
+    }
+
+    setScene(scene: Scene){
+        this.scene = scene;
+    }
+
     /* Cast the ability */
     cast(user: GameNode, userType: string, direction: Vec2): boolean {
         // If the cooldown timer is still running, we can't use the weapon

@@ -29,7 +29,9 @@ import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
 import MainMenu from "./MainMenu";
-import Map_Scene from "./Map_Scene";
+import Map_Scene from "./Map_Scene_Testing";
+import Map_Scene_Testing from "./Map_Scene_Testing";
+import CharacterState from "../CharacterState";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -44,21 +46,21 @@ export default class floor1_scene extends Scene {
     // The wall layer of the tilemap to use for bullet visualization
     private walls: OrthogonalTilemap;
 
-    // The position graph for the navmesh
-    private graph: PositionGraph;
-
-    // A list of items in the scene
-    private items: Array<Item>;
-
     // The battle manager for the scene
     private battleManager: BattleManager;
-
-    // Player health
-    private healthDisplay: Label;
 
     private healthbar: Graphic;
 
     private tilemap: OrthogonalTilemap;
+
+    private options: Record<string, any>;
+
+    private characterState: CharacterState;
+
+    initScene(init: Record<string, any>): void {
+        this.characterState = init.characterState;
+        console.log(this.characterState.getInventory());
+    }
 
     loadScene(){
         // Load the player and enemy spritesheets
@@ -87,15 +89,7 @@ export default class floor1_scene extends Scene {
     startScene(){
         // Add in the tilemap
         let tilemapLayers = this.add.tilemap("level");
-
-        /*  Get the wall layer
-            This line is just getting the wall layer of your tilemap to use for some calculations.
-            Make sure it is still doing so.
-
-            What the line is saying is to get the first level from the bottom (tilemapLayers[1]),
-            which in my case was the Walls layer.   FINAL PROJECT TODO - REMOVE COMMENT
-        */
-        this.walls = <OrthogonalTilemap>tilemapLayers[1].getItems()[0];
+        this.walls = <OrthogonalTilemap>tilemapLayers[1].getItems()[0]; // Get wall layer
 
         // Set the viewport bounds to the tilemap
         let tilemapSize: Vec2 = this.walls.size; 
@@ -108,17 +102,10 @@ export default class floor1_scene extends Scene {
         // Create the battle manager
         this.battleManager = new BattleManager();
 
-        this.initializeWeapons();
+        // Initializations
         this.initializeAbilities();
         this.subscribeToEvents();
-
-        // Initialize the items array - this represents items that are in the game world
-        this.items = new Array();
-
-        // Create the player
         this.initializePlayer();
-
-        // Initialize all enemies
         this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
@@ -137,83 +124,60 @@ export default class floor1_scene extends Scene {
             let event = this.receiver.getNextEvent();
             switch(event.type){
                 case GameEvents.ENEMY_DIED:
-                    {
-                        this.numMonstersLeft--;
-                        break;
-                    }
+                {
+                    this.numMonstersLeft--;
+                    break;
+                }
+                case GameEvents.PLAYER_DIED:
+                {
+                    this.viewport.setZoomLevel(1/6);
+                    this.characterState.setHealth((<BattlerAI>this.player._ai).health);
+                    this.sceneManager.changeScene(MainMenu);
+                    break;
+                }
+                case GameEvents.ROOM_CLEARED:
+                {
+                    // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
+                    this.viewport.setZoomLevel(1/6);
+                    this.characterState.setHealth((<BattlerAI>this.player._ai).health);
+                    this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
+                    break;
+                }
                 default:
                     console.log("Default");
                     break;
             }
         }
 
+        // Update Healthbar GUI
         let health = (<BattlerAI>this.player._ai).health;
+        this.healthbar.size = new Vec2(health, 5);
+        this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
 
         /* If all monsters are killed, advance */
-        if(this.numMonstersLeft <= 0){
-            this.viewport.setZoomLevel(1/6);
-            this.sceneManager.changeScene(MainMenu);
-        }
+        if(this.numMonstersLeft <= 0)
+            this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
 
         /* Game Over screen on player death */
         if(health <= 0)
-            this.sceneManager.changeScene(GameOver);
-        
-        // Update Healthbar GUI
-        this.healthbar.size = new Vec2(health, 5);
-        this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
+            this.emitter.fireEvent(GameEvents.PLAYER_DIED, {});
     }
 
     /**
      * Handles all subscriptions to events
      */
-     protected subscribeToEvents(){
+    protected subscribeToEvents(){
         this.receiver.subscribe([
-            GameEvents.ENEMY_DIED
+            GameEvents.ENEMY_DIED,
+            GameEvents.PLAYER_DIED,
+            GameEvents.ROOM_CLEARED
         ]);
-    }
-
-    /**
-     * Creates and returns a new weapon
-     * @param type The weaponType of the weapon, as a string
-     */
-    createWeapon(type: string): Weapon {
-        let weaponType = <WeaponType>RegistryManager.getRegistry("weaponTypes").get(type);
-
-        /* FINAL PROJECT TODO - This is setting the weapon sprite outside the viewport, but ideally it shouldn't have a sprite to begin with */
-        let sprite = this.add.sprite(weaponType.spriteKey, "primary");
-        sprite.position = new Vec2(-100, -100);
-
-        return new Weapon(sprite, weaponType, this.battleManager);
     }
     
     createAbility(type: AbilityTypes){
         let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
 
         return new Ability(abilityType, this.battleManager, this);
-    }
-
-    /** 
-     * Loads in all weapons from file
-     */
-    initializeWeapons(): void{
-        let weaponData = this.load.getObject("weaponData");
-
-        for(let i = 0; i < weaponData.numWeapons; i++){
-            let weapon = weaponData.weapons[i];
-
-            // Get the constructor of the prototype
-            let constr = RegistryManager.getRegistry("weaponTemplates").get(weapon.weaponType);
-
-            // Create a weapon type
-            let weaponType = new constr();
-
-            // Initialize the weapon type
-            weaponType.initialize(weapon);
-
-            // Register the weapon type
-            RegistryManager.getRegistry("weaponTypes").registerItem(weapon.name, weaponType)
-        }
     }
 
     initializeAbilities(): void{
@@ -258,24 +222,19 @@ export default class floor1_scene extends Scene {
         this.player = this.add.animatedSprite("player", "primary");
         this.player.position.set(4*16, 4*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
+
+        this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
-                speed: 100,
-                inventory: inventory,
-                items: this.items,
+                health: this.characterState.getHealth(),
+                speed: this.characterState.getSpeed(),
+                inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
         this.player.animation.play("IDLE");
     }
-
-    // HOMEWORK 3 - TODO
-    /**
-     * This function creates all enemies from the enemy.json file.
-     * 
-     * Patrolling enemies are given patrol routes corresponding to the navmesh. The numbers in their route correspond
-     * to indices in the navmesh.
-     */
+    
     initializeEnemies(){
         //randomizedEnemyData = // FINAL PROJECT TODO - Randomize data for enemy creation here (it should also depend on what level and such we're on)
 
@@ -304,7 +263,6 @@ export default class floor1_scene extends Scene {
                 guardPosition: data.guardPosition,  // This only matters if the're a guard
                 health: data.health,
                 player: this.player,
-                weapon: this.createWeapon("weak_pistol"),
                 ability: this.createAbility(AbilityTypes.GROUNDSLAM),
                 monsterType: data.monsterType
             }

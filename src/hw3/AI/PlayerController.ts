@@ -42,7 +42,7 @@ export default class PlayerController implements BattlerAI {
         this.direction = Vec2.ZERO;
         this.lookDirection = Vec2.ZERO;
         this.speed = options.speed;
-        this.health = 100;
+        this.health = options.health;
 
         this.items = options.items;
         this.inventory = options.inventory;
@@ -105,7 +105,7 @@ export default class PlayerController implements BattlerAI {
             // Do Basic Attack on left click
             if(!Input.isMouseRightClick())
                 this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection);
-
+                
             // Use Current Item on right click
             else if(Input.isMouseRightClick())
                 if(!this.inventory.isEmpty())
