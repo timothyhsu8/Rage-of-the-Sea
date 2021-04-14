@@ -74,7 +74,7 @@ export default class CharacterSelect extends Scene {
                 let basicAttack = this.createAbility(AbilityTypes.PLAYER_ANCHORSWING);
                 inventory.setBasicAttack(basicAttack);
 
-                let characterState = new CharacterState(100, 10, 10, 500, inventory);
+                let characterState = new CharacterState(100, 10, 10, 80, inventory);
                 this.sceneManager.changeScene(floor1_scene, {characterState: characterState});
             }
         }

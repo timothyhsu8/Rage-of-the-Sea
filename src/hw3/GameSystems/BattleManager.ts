@@ -11,6 +11,8 @@ export default class BattleManager {
 
     enemies: Array<BattlerAI>;
 
+    enemySprites: Array<AnimatedSprite>;
+
     player: AnimatedSprite;
 
     tilemap: OrthogonalTilemap;
@@ -21,15 +23,14 @@ export default class BattleManager {
         /* Attacker is the player */
         if(attackerType === "player"){
             // Check for collisions with enemies
-            for(let enemy of this.enemies){
-                if(ability.hits(enemy.owner)){
-                    enemy.damage(ability.type.damage);
+            for(let i = 0 ; i < this.enemies.length ; i++)
+                if(ability.hits(this.enemies[i].owner)){
+                    this.enemies[i].damage(ability.type.damage);
+                    this.enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                 }
-            }
         } 
         /* Attacker is a Monster */
         else {
-            //console.log(this.overlapMap);
             let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction);
             
             /* Set floor tiles to indicate they're about to be damaged */
@@ -47,7 +48,7 @@ export default class BattleManager {
 
             attacker.freeze();
             let tilemap = this.tilemap;
-            let overlapMap = this.overlapMap;
+            let overlapMap = this.overlapMap;   // Determines if multiple enemy ability indicators are overlapping
             let playerPos = this.player.position;
             let playerAI = this.playerAI;
             setTimeout(function(){

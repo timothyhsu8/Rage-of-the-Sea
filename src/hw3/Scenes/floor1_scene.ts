@@ -268,6 +268,7 @@ export default class floor1_scene extends Scene {
             }
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);
+            this.battleManager.enemySprites = this.enemies;
         }
     }
 }

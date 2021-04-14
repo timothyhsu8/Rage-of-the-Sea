@@ -114,23 +114,9 @@ export default class PlayerController implements BattlerAI {
 
         // Rotate the player
         this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-
-        // Inventory
-
-        // Check for slot change
-        // if(Input.isJustPressed("slot1")){
-        //     this.inventory.changeSlot(0);
-        // } else if(Input.isJustPressed("slot2")){
-        //     this.inventory.changeSlot(1);
-        // }
-        
     }
 
     damage(damage: number): void {
         this.health -= damage;
-
-        if(this.health <= 0){
-            console.log("Game Over");
-        }
     }
 }

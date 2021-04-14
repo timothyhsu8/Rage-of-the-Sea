@@ -6,6 +6,7 @@ import { hw3_Events, hw3_Names } from "../../hw3_constants";
 import EnemyAI, { EnemyStates, MonsterTypes } from "../EnemyAI";
 import EnemyState from "./EnemyState";
 import Stack from "../../../Wolfie2D/DataTypes/Stack";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 export default class Chase extends EnemyState {
 
@@ -25,9 +26,9 @@ export default class Chase extends EnemyState {
     protected player: GameNode;
 
     // A reference to the current monster
-    protected owner: GameNode;
+    protected owner: AnimatedSprite;
 
-    constructor(parent: EnemyAI, owner: GameNode, player: GameNode, monsterType: MonsterTypes){
+    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
         super(parent, owner);
         this.routeIndex = 0;
         this.player = player;
@@ -44,7 +45,6 @@ export default class Chase extends EnemyState {
     handleInput(event: GameEvent): void {}
 
     update(deltaT: number): void {
-
         /* If player is close enough, stop and attack */
         if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 )
             this.finished(EnemyStates.MONSTERATTACK);
@@ -62,6 +62,7 @@ export default class Chase extends EnemyState {
             else{
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
                 this.owner.rotation = Vec2.UP.angleToCCW(this.currentPath.getMoveDirection(this.owner));
+                this.owner.animation.playIfNotAlready("WALK", true);
             }
         }
     }
