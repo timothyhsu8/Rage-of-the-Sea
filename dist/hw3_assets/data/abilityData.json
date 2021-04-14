@@ -8,7 +8,7 @@
             "animationSprite": "anchorswing",
             "spriteKey": "anchorswing",
             "damage": 1,
-            "cooldown": 100,
+            "cooldown": 500,
             "chargeTime": 1000,
             "useVolume": 0
         },
