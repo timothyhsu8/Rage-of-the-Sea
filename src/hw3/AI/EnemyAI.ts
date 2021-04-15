@@ -24,7 +24,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     health: number;
 
     /** The default movement speed of this AI */
-    speed: number = 20;
+    speed: number = 40;
 
     /** The weapon this AI has */
     weapon: Weapon;

@@ -95,7 +95,7 @@ export default class floor1_scene extends Scene {
         let tilemapSize: Vec2 = this.walls.size; 
         this.viewport.setBounds(0, 0, tilemapSize.x, tilemapSize.y);
         this.viewport.setOffset(new Vec2(5, 3));
-        this.viewport.setZoomLevel(6);
+        this.viewport.setZoomLevel(3);
         
         this.addLayer("primary", 10);
 
@@ -125,12 +125,12 @@ export default class floor1_scene extends Scene {
             switch(event.type){
                 case GameEvents.ENEMY_DIED:
                 {
-                    this.numMonstersLeft--;
+                    //this.numMonstersLeft--;
                     break;
                 }
                 case GameEvents.PLAYER_DIED:
                 {
-                    this.viewport.setZoomLevel(1/6);
+                    this.viewport.setZoomLevel(1/3);
                     this.characterState.setHealth((<BattlerAI>this.player._ai).health);
                     this.sceneManager.changeScene(MainMenu);
                     break;
@@ -138,7 +138,7 @@ export default class floor1_scene extends Scene {
                 case GameEvents.ROOM_CLEARED:
                 {
                     // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
-                    this.viewport.setZoomLevel(1/6);
+                    this.viewport.setZoomLevel(1/3);
                     this.characterState.setHealth((<BattlerAI>this.player._ai).health);
                     this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
                     break;
@@ -151,8 +151,8 @@ export default class floor1_scene extends Scene {
 
         // Update Healthbar GUI
         let health = (<BattlerAI>this.player._ai).health;
-        this.healthbar.size = new Vec2(health, 5);
-        this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
+        this.healthbar.size = new Vec2(health*2, 10);
+        this.healthbar.position = new Vec2(93 - .5*(100-(health*2)), 22);
 
         /* If all monsters are killed, advance */
         if(this.numMonstersLeft <= 0)
@@ -216,7 +216,7 @@ export default class floor1_scene extends Scene {
 
         /* Sprite for healthbar border */
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
-        healthbarborder.position = new Vec2(70, 7);
+        healthbarborder.position = new Vec2(130, 7);
 
         // Create the player
         this.player = this.add.animatedSprite("player", "primary");

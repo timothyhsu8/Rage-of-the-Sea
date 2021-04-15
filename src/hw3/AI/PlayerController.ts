@@ -88,12 +88,23 @@ export default class PlayerController implements BattlerAI {
             this.activeTile = currentColRow;
         }
 
-        if(!this.direction.isZero()){
-            // Move the player
+         /* Move player */
+        if(!this.direction.isZero())
             this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
+
+
+        /* Turns player sprite when moving left/right */
+        if(!this.direction.isZero() && this.direction.y === 0){
+			(this.direction.x === -1) ? ((<AnimatedSprite>this.owner).invertX = true):((<AnimatedSprite>this.owner).invertX = false);
             this.owner.animation.playIfNotAlready("WALK", true);
-        } else {
-            // Player is idle
+        }
+
+        /* Turns player sprite when moving up/down */
+        else if(!this.direction.isZero() && this.direction.y === 1)
+            this.owner.animation.playIfNotAlready("WALKDOWN", true);
+
+        /* If player is not moving, play IDLE animation */
+        else {
             this.owner.animation.playIfNotAlready("IDLE", true);
         }
 
@@ -103,9 +114,11 @@ export default class PlayerController implements BattlerAI {
         // Use an Ability
         if(Input.isMouseJustPressed()){
             // Do Basic Attack on left click
-            if(!Input.isMouseRightClick())
+            if(!Input.isMouseRightClick()){
+                this.owner.animation.play("ATTACK");
                 this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection);
-                
+            }
+
             // Use Current Item on right click
             else if(Input.isMouseRightClick())
                 if(!this.inventory.isEmpty())
@@ -113,7 +126,7 @@ export default class PlayerController implements BattlerAI {
         }
 
         // Rotate the player
-        this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+        //this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
     }
 
     damage(damage: number): void {
