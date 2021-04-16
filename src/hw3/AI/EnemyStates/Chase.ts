@@ -62,7 +62,8 @@ export default class Chase extends EnemyState {
             else{
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
                 this.owner.rotation = Vec2.UP.angleToCCW(this.currentPath.getMoveDirection(this.owner));
-                this.owner.animation.playIfNotAlready("WALK", true);
+                if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
+                    this.owner.animation.playIfNotAlready("WALK", true);
             }
         }
     }

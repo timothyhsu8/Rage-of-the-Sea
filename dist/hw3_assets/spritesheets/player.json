@@ -1,10 +1,10 @@
 {
     "name": "TopdownPlayer",
     "spriteSheetImage": "player.png",
-    "spriteWidth": 30,
-    "spriteHeight": 37,
-    "columns": 4,
-    "rows": 1,
+    "spriteWidth": 90,
+    "spriteHeight": 90,
+    "columns": 5,
+    "rows": 3,
     "durationType": "time",
     "animations": [
         { 
@@ -13,7 +13,7 @@
         },
         {
             "name": "ATTACK",
-            "frames": [ {"index": 1, "duration": 10},{"index": 2, "duration": 5},{"index": 3, "duration": 5},{"index": 4, "duration": 5} ]
+            "frames": [ {"index": 10, "duration": 5},{"index": 11, "duration": 5},{"index": 12, "duration": 3},{"index": 13, "duration": 3},{"index": 14, "duration": 3}]
         },
         {
             "name": "WALK",
@@ -21,7 +21,7 @@
         },
         {
             "name": "WALKDOWN",
-            "frames": [ {"index": 4, "duration": 10},{"index": 5, "duration": 10}]
+            "frames": [ {"index": 5, "duration": 10},{"index": 6, "duration": 10}]
         }
        
     ]

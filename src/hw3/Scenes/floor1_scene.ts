@@ -125,7 +125,7 @@ export default class floor1_scene extends Scene {
             switch(event.type){
                 case GameEvents.ENEMY_DIED:
                 {
-                    //this.numMonstersLeft--;
+                    this.numMonstersLeft--;
                     break;
                 }
                 case GameEvents.PLAYER_DIED:
@@ -231,6 +231,8 @@ export default class floor1_scene extends Scene {
                 inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
+        this.player.setImageOffset(new Vec2(0, 17));
+        //this.player.imageOffset.set();
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
         this.player.animation.play("IDLE");
     }

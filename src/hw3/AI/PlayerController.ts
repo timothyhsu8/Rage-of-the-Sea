@@ -92,31 +92,32 @@ export default class PlayerController implements BattlerAI {
         if(!this.direction.isZero())
             this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
 
+        if(!this.owner.animation.isPlaying("ATTACK")){
+            /* Turns player sprite when moving left/right */
+            if(!this.direction.isZero() && this.direction.y === 0){
+                (this.direction.x === -1) ? ((<AnimatedSprite>this.owner).invertX = true):((<AnimatedSprite>this.owner).invertX = false);
+                this.owner.animation.playIfNotAlready("WALK", true);
+            }
 
-        /* Turns player sprite when moving left/right */
-        if(!this.direction.isZero() && this.direction.y === 0){
-			(this.direction.x === -1) ? ((<AnimatedSprite>this.owner).invertX = true):((<AnimatedSprite>this.owner).invertX = false);
-            this.owner.animation.playIfNotAlready("WALK", true);
+            /* Turns player sprite when moving up/down */
+            else if(!this.direction.isZero() && this.direction.y === 1)
+                this.owner.animation.playIfNotAlready("WALKDOWN", true);
+
+            /* If player is not moving, play IDLE animation */
+            else {
+                this.owner.animation.playIfNotAlready("IDLE", true);
+            }
         }
-
-        /* Turns player sprite when moving up/down */
-        else if(!this.direction.isZero() && this.direction.y === 1)
-            this.owner.animation.playIfNotAlready("WALKDOWN", true);
-
-        /* If player is not moving, play IDLE animation */
-        else {
-            this.owner.animation.playIfNotAlready("IDLE", true);
-        }
-
-        // Get the unit vector in the look direction
-        this.lookDirection = this.owner.position.dirTo(Input.getGlobalMousePosition());
 
         // Use an Ability
         if(Input.isMouseJustPressed()){
             // Do Basic Attack on left click
             if(!Input.isMouseRightClick()){
-                this.owner.animation.play("ATTACK");
+                // Rotate the player
+                this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+                this.owner.animation.playIfNotAlready("ATTACK");
                 this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection);
+                this.owner.rotation = 0;
             }
 
             // Use Current Item on right click
@@ -125,8 +126,8 @@ export default class PlayerController implements BattlerAI {
                     this.inventory.getItem().use(this.owner, "player", this.lookDirection);
         }
 
-        // Rotate the player
-        //this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+        // Get the unit vector in the look direction
+        this.lookDirection = this.owner.position.dirTo(Input.getGlobalMousePosition());
     }
 
     damage(damage: number): void {
