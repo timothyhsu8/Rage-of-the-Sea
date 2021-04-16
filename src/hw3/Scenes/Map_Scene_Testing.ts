@@ -4,7 +4,7 @@ import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import inventory_scene from "./inventory_scene";
+import inventory_scene from "./MenuScenes/inventory_scene";
 import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";

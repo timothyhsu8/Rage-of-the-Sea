@@ -25,7 +25,7 @@ export default class BattleManager {
             // Check for collisions with enemies
             let enemies = this.enemies;
             let enemySprites = this.enemySprites;
-            setTimeout(function(){
+            setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
                     if(ability.hits(enemies[i].owner)){
                         enemies[i].damage(ability.type.damage);

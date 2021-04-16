@@ -28,7 +28,7 @@ import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
-import MainMenu from "./MainMenu";
+import MainMenu from "./MenuScenes/MainMenu";
 import Map_Scene from "./Map_Scene_Testing";
 import Map_Scene_Testing from "./Map_Scene_Testing";
 import CharacterState from "../CharacterState";

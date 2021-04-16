@@ -1,23 +1,23 @@
-import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../Wolfie2D/Scene/Layer";
-import Scene from "../../Wolfie2D/Scene/Scene";
-import Color from "../../Wolfie2D/Utils/Color";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
-import floor1_scene from "./floor1_scene";
-import Inventory from "../GameSystems/Inventory";
-import Ability, { AbilityTypes } from "../GameSystems/items/Ability";
-import PlayerController from "../AI/PlayerController";
-import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType";
-import RegistryManager from "../../Wolfie2D/Registry/RegistryManager";
-import BattleManager from "../GameSystems/BattleManager";
-import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import CharacterState from "../CharacterState";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Layer from "../../../Wolfie2D/Scene/Layer";
+import Scene from "../../../Wolfie2D/Scene/Scene";
+import Color from "../../../Wolfie2D/Utils/Color";
+import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
+import Slider from "../../../Wolfie2D/Nodes/UIElements/Slider";
+import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
+import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
+import floor1_scene from "../floor1_scene";
+import Inventory from "../../GameSystems/Inventory";
+import Ability, { AbilityTypes } from "../../GameSystems/items/Ability";
+import PlayerController from "../../AI/PlayerController";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import AbilityType from "../../GameSystems/items/AbilityTypes/AbilityType";
+import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
+import BattleManager from "../../GameSystems/BattleManager";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import CharacterState from "../../CharacterState";
 
 
 export default class CharacterSelect extends Scene {

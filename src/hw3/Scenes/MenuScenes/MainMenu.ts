@@ -1,15 +1,16 @@
-import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../Wolfie2D/Scene/Layer";
-import Scene from "../../Wolfie2D/Scene/Scene";
-import Color from "../../Wolfie2D/Utils/Color";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Layer from "../../../Wolfie2D/Scene/Layer";
+import Scene from "../../../Wolfie2D/Scene/Scene";
+import Color from "../../../Wolfie2D/Utils/Color";
+import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import inventory_scene from "./inventory_scene";
-import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
-import floor1_scene from "./floor1_scene";
+import Slider from "../../../Wolfie2D/Nodes/UIElements/Slider";
+import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
+import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
+import floor1_scene from "../floor1_scene";
 import CharacterSelect from "./CharacterSelect";
+import LevelSelect from "./LevelSelect";
 
 
 
@@ -60,13 +61,13 @@ export default class MainMenu extends Scene {
         controls.backgroundColor = Color.TRANSPARENT;
         controls.onClickEventId = "controls";
 
-        // Add event button
-        const about = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 100), text: "About"});
-        about.size.set(200, 50);
-        about.borderWidth = 2;
-        about.borderColor = Color.WHITE;
-        about.backgroundColor = Color.TRANSPARENT;
-        about.onClickEventId = "about";
+        /* Level Select Button */
+        const levelselect = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 100), text: "Level Select"});
+        levelselect.size.set(200, 50);
+        levelselect.borderWidth = 2;
+        levelselect.borderColor = Color.WHITE;
+        levelselect.backgroundColor = Color.TRANSPARENT;
+        levelselect.onClickEventId = "levelselect";
 
         const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Inventory"});
         inventory.size.set(200, 50);
@@ -110,37 +111,17 @@ export default class MainMenu extends Scene {
         controlsBack.backgroundColor = Color.TRANSPARENT;
         controlsBack.onClickEventId = "menu";
 
-
-        /* ########## ABOUT SCREEN ########## */
-        this.about = this.addUILayer("about");
-        this.about.setHidden(true);
-
-        const aboutHeader = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 250), text: "About"});
-        aboutHeader.textColor = Color.WHITE;
-
-        const text1 = "This game was created by Edward Huang, Michael Carpenzano, and Timothy Hsu";
-        const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
-        const text3 = "Joe Weaver and Richard McKenna.";
-
-        const line1 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 50), text: text1});
-        const line2 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y), text: text2});
-        const line3 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 50), text: text3});
-
-        line1.textColor = Color.WHITE;
-        line2.textColor = Color.WHITE;
-        line3.textColor = Color.WHITE;
-
-        const aboutBack = this.add.uiElement(UIElementType.BUTTON, "about", {position: new Vec2(center.x, center.y + 250), text: "Back"});
-        aboutBack.size.set(200, 50);
-        aboutBack.borderWidth = 2;
-        aboutBack.borderColor = Color.WHITE;
-        aboutBack.backgroundColor = Color.TRANSPARENT;
-        aboutBack.onClickEventId = "menu";
+        // const aboutBack = this.add.uiElement(UIElementType.BUTTON, "about", {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        // aboutBack.size.set(200, 50);
+        // aboutBack.borderWidth = 2;
+        // aboutBack.borderColor = Color.WHITE;
+        // aboutBack.backgroundColor = Color.TRANSPARENT;
+        // aboutBack.onClickEventId = "menu";
         
         // Subscribe to the button events
         this.receiver.subscribe("play");
         this.receiver.subscribe("controls");
-        this.receiver.subscribe("about");
+        this.receiver.subscribe("levelselect");
         this.receiver.subscribe("menu");
         this.receiver.subscribe("inventory");
 
@@ -160,10 +141,8 @@ export default class MainMenu extends Scene {
                 this.mainMenu.setHidden(true);
             }
 
-            if(event.type === "about"){
-                this.about.setHidden(false);
-                this.mainMenu.setHidden(true);
-            }
+            if(event.type === "levelselect")
+                this.sceneManager.changeScene(LevelSelect, {});
 
             if(event.type === "menu"){
                 this.mainMenu.setHidden(false);
