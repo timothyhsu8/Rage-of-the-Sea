@@ -18,6 +18,7 @@ import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
 import BattleManager from "../../GameSystems/BattleManager";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import CharacterState from "../../CharacterState";
+import MainMenu from "./MainMenu";
 
 
 export default class CharacterSelect extends Scene {
@@ -45,6 +46,14 @@ export default class CharacterSelect extends Scene {
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(center.x, center.y-150);
 
+         /* Back Button */
+         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
+         back.size.set(200, 50);
+         back.borderWidth = 2;
+         back.borderColor = Color.WHITE;
+         back.backgroundColor = Color.TRANSPARENT;
+         back.onClickEventId = "back";
+
         // Add play button, and give it an event to emit on press 
         const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+165), text: "SELECT"});
         select.size.set(200, 75);
@@ -53,6 +62,7 @@ export default class CharacterSelect extends Scene {
         select.backgroundColor = new Color(50, 50, 70, 1);
         select.onClickEventId = "select";
 
+        /* Character Description */
         const description = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+280), text: "The diver has a dark and mysterious past."});
         description.size.set(800, 100);
         description.borderWidth = 2;
@@ -61,6 +71,7 @@ export default class CharacterSelect extends Scene {
 
         // Subscribe to the button events
         this.receiver.subscribe("select");
+        this.receiver.subscribe("back");
     }
 
     updateScene(){
@@ -77,6 +88,9 @@ export default class CharacterSelect extends Scene {
                 let characterState = new CharacterState(100, 10, 10, 80, inventory);
                 this.sceneManager.changeScene(floor1_scene, {characterState: characterState});
             }
+
+            if(event.type === "back")
+                this.sceneManager.changeScene(MainMenu, {});
         }
     }
 

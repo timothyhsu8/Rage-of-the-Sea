@@ -11,6 +11,7 @@ import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
 import floor1_scene from "../floor1_scene";
 import CharacterSelect from "./CharacterSelect";
 import LevelSelect from "./LevelSelect";
+import HelpScreen from "./HelpScreen";
 
 
 
@@ -50,7 +51,7 @@ export default class MainMenu extends Scene {
         play.size.set(200, 50);
         play.borderWidth = 2;
         play.borderColor = Color.WHITE;
-        play.backgroundColor = Color.TRANSPARENT;
+        play.backgroundColor = new Color(50, 50, 70, 1);
         play.onClickEventId = "play";
 
         // Add Controls Button
@@ -58,7 +59,7 @@ export default class MainMenu extends Scene {
         controls.size.set(200, 50);
         controls.borderWidth = 2;
         controls.borderColor = Color.WHITE;
-        controls.backgroundColor = Color.TRANSPARENT;
+        controls.backgroundColor = new Color(50, 50, 70, 1);
         controls.onClickEventId = "controls";
 
         /* Level Select Button */
@@ -66,17 +67,16 @@ export default class MainMenu extends Scene {
         levelselect.size.set(200, 50);
         levelselect.borderWidth = 2;
         levelselect.borderColor = Color.WHITE;
-        levelselect.backgroundColor = Color.TRANSPARENT;
+        levelselect.backgroundColor = new Color(50, 50, 70, 1);
         levelselect.onClickEventId = "levelselect";
 
-        const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Inventory"});
+        /* Help */
+        const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Help"});
         inventory.size.set(200, 50);
         inventory.borderWidth = 2;
         inventory.borderColor = Color.WHITE;
-        inventory.backgroundColor = Color.TRANSPARENT;
-        inventory.onClickEventId = "inventory";
-
-
+        inventory.backgroundColor = new Color(50, 50, 70, 1);
+        inventory.onClickEventId = "help";
 
         /* ########## CONTROLS SCREEN ########## */
         this.controls = this.addUILayer("controls");
@@ -103,12 +103,11 @@ export default class MainMenu extends Scene {
         controlsline4.textColor = Color.WHITE;
         controlsline5.textColor = Color.WHITE;
 
-
         const controlsBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x, center.y + 250), text: "Back"});
         controlsBack.size.set(200, 50);
         controlsBack.borderWidth = 2;
         controlsBack.borderColor = Color.WHITE;
-        controlsBack.backgroundColor = Color.TRANSPARENT;
+        controlsBack.backgroundColor = new Color(50, 50, 70, 1);
         controlsBack.onClickEventId = "menu";
 
         // const aboutBack = this.add.uiElement(UIElementType.BUTTON, "about", {position: new Vec2(center.x, center.y + 250), text: "Back"});
@@ -123,14 +122,12 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("controls");
         this.receiver.subscribe("levelselect");
         this.receiver.subscribe("menu");
-        this.receiver.subscribe("inventory");
+        this.receiver.subscribe("help");
 
     }
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
-
-            console.log(event);
 
             if(event.type === "play"){
                 this.sceneManager.changeScene(CharacterSelect, {});
@@ -150,9 +147,8 @@ export default class MainMenu extends Scene {
                 this.controls.setHidden(true);
             }
 
-            if(event.type === "inventory"){
-                this.sceneManager.changeScene(inventory_scene, {});
-
+            if(event.type === "help"){
+                this.sceneManager.changeScene(HelpScreen, {});
             }
         }
     }
