@@ -1,23 +1,24 @@
-import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../Wolfie2D/Scene/Layer";
-import Scene from "../../Wolfie2D/Scene/Scene";
-import Color from "../../Wolfie2D/Utils/Color";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
-import floor1_scene from "./floor1_scene";
-import Inventory from "../GameSystems/Inventory";
-import Ability, { AbilityTypes } from "../GameSystems/items/Ability";
-import PlayerController from "../AI/PlayerController";
-import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType";
-import RegistryManager from "../../Wolfie2D/Registry/RegistryManager";
-import BattleManager from "../GameSystems/BattleManager";
-import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import CharacterState from "../CharacterState";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Layer from "../../../Wolfie2D/Scene/Layer";
+import Scene from "../../../Wolfie2D/Scene/Scene";
+import Color from "../../../Wolfie2D/Utils/Color";
+import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
+import Slider from "../../../Wolfie2D/Nodes/UIElements/Slider";
+import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
+import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
+import floor1_scene from "../floor1_scene";
+import Inventory from "../../GameSystems/Inventory";
+import Ability, { AbilityTypes } from "../../GameSystems/items/Ability";
+import PlayerController from "../../AI/PlayerController";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import AbilityType from "../../GameSystems/items/AbilityTypes/AbilityType";
+import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
+import BattleManager from "../../GameSystems/BattleManager";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import CharacterState from "../../CharacterState";
+import MainMenu from "./MainMenu";
 
 
 export default class CharacterSelect extends Scene {
@@ -45,15 +46,29 @@ export default class CharacterSelect extends Scene {
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(center.x, center.y-150);
 
-        // Add play button, and give it an event to emit on press 
-        const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+165), text: "SELECT"});
+        /* Back Button */
+        const back = <Button>this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
+        back.size.set(200, 50);
+        back.borderWidth = 2;
+        back.borderColor = Color.WHITE;
+        back.backgroundColor = new Color(50, 50, 70, 1);
+        back.onClickEventId = "back";
+
+        /* Character Name */
+        const header = <Label>this.add.uiElement(UIElementType.LABEL, "characterSelect", {position: new Vec2(center.x, center.y+130), text: "Diver"});
+        header.textColor = Color.WHITE;
+        header.fontSize = 40;
+
+        /* Select Button */
+        const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+230), text: "SELECT"});
         select.size.set(200, 75);
         select.borderWidth = 3;
         select.borderColor = Color.WHITE;
         select.backgroundColor = new Color(50, 50, 70, 1);
         select.onClickEventId = "select";
 
-        const description = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+280), text: "The diver has a dark and mysterious past."});
+        /* Character Description */
+        const description = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+350), text: "The diver has a dark and mysterious past."});
         description.size.set(800, 100);
         description.borderWidth = 2;
         description.borderColor = Color.WHITE;
@@ -61,6 +76,7 @@ export default class CharacterSelect extends Scene {
 
         // Subscribe to the button events
         this.receiver.subscribe("select");
+        this.receiver.subscribe("back");
     }
 
     updateScene(){
@@ -77,6 +93,9 @@ export default class CharacterSelect extends Scene {
                 let characterState = new CharacterState(100, 10, 10, 80, inventory);
                 this.sceneManager.changeScene(floor1_scene, {characterState: characterState});
             }
+
+            if(event.type === "back")
+                this.sceneManager.changeScene(MainMenu, {});
         }
     }
 

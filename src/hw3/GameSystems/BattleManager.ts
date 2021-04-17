@@ -23,11 +23,15 @@ export default class BattleManager {
         /* Attacker is the player */
         if(attackerType === "player"){
             // Check for collisions with enemies
-            for(let i = 0 ; i < this.enemies.length ; i++)
-                if(ability.hits(this.enemies[i].owner)){
-                    this.enemies[i].damage(ability.type.damage);
-                    this.enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
-                }
+            let enemies = this.enemies;
+            let enemySprites = this.enemySprites;
+            setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
+                for(let i = 0 ; i < enemies.length ; i++)
+                    if(ability.hits(enemies[i].owner)){
+                        enemies[i].damage(ability.type.damage);
+                        enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
+                    }
+            }, 200);
         } 
         /* Attacker is a Monster */
         else {

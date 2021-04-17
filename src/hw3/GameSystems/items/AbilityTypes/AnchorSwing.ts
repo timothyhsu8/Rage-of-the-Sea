@@ -34,7 +34,7 @@ export default class AnchorSwing extends AbilityType {
         sliceSprite.rotation = attacker.rotation;
 
         // Move the slice out from the player
-        sliceSprite.position = attacker.position.clone().add(direction.scaled(16));
+        sliceSprite.position = attacker.position.clone().add(direction.scaled(20));
 
         // Play the slice animation w/o loop, but queue the normal animation
         sliceSprite.animation.play("SWING");

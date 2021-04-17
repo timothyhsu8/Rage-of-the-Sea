@@ -15,6 +15,10 @@ export default class Inventory{
         this.items = new Array<Item>(inventorySize);
     }
 
+    getItems(): Array<Item>{
+        return this.items;
+    }
+
     isEmpty(): boolean{
         if(this.currentSize === 0)
             return true;

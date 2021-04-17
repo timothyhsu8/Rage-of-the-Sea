@@ -28,7 +28,7 @@ import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
-import MainMenu from "./MainMenu";
+import MainMenu from "./MenuScenes/MainMenu";
 import Map_Scene from "./Map_Scene_Testing";
 import Map_Scene_Testing from "./Map_Scene_Testing";
 import CharacterState from "../CharacterState";
@@ -94,8 +94,8 @@ export default class floor1_scene extends Scene {
         // Set the viewport bounds to the tilemap
         let tilemapSize: Vec2 = this.walls.size; 
         this.viewport.setBounds(0, 0, tilemapSize.x, tilemapSize.y);
-        this.viewport.setOffset(new Vec2(5, 3));
-        this.viewport.setZoomLevel(6);
+        this.viewport.setOffset(new Vec2(11, 3));
+        this.viewport.setZoomLevel(3);
         
         this.addLayer("primary", 10);
 
@@ -130,15 +130,17 @@ export default class floor1_scene extends Scene {
                 }
                 case GameEvents.PLAYER_DIED:
                 {
-                    this.viewport.setZoomLevel(1/6);
+                    this.viewport.setOffset(new Vec2(0, 0));
+                    this.viewport.setZoomLevel(1/3);
                     this.characterState.setHealth((<BattlerAI>this.player._ai).health);
-                    this.sceneManager.changeScene(MainMenu);
+                    this.sceneManager.changeScene(GameOver);
                     break;
                 }
                 case GameEvents.ROOM_CLEARED:
                 {
                     // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
-                    this.viewport.setZoomLevel(1/6);
+                    this.viewport.setOffset(new Vec2(0, 0));
+                    this.viewport.setZoomLevel(1/3);
                     this.characterState.setHealth((<BattlerAI>this.player._ai).health);
                     this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
                     break;
@@ -151,8 +153,8 @@ export default class floor1_scene extends Scene {
 
         // Update Healthbar GUI
         let health = (<BattlerAI>this.player._ai).health;
-        this.healthbar.size = new Vec2(health, 5);
-        this.healthbar.position = new Vec2(75 - .5*(100-health), 13);
+        this.healthbar.size = new Vec2(health*2, 10);
+        this.healthbar.position = new Vec2(93 - .5*(100-(health*2)), 22);
 
         /* If all monsters are killed, advance */
         if(this.numMonstersLeft <= 0)
@@ -208,15 +210,15 @@ export default class floor1_scene extends Scene {
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
-        portrait.position = new Vec2(6, 6);
+        portrait.position = new Vec2(10, 6);
 
         /* Sprite for portrait border */
         let portraitborder = this.add.sprite("portraitborder", "primary");
-        portraitborder.position = new Vec2(6, 6);
+        portraitborder.position = new Vec2(10, 6);
 
         /* Sprite for healthbar border */
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
-        healthbarborder.position = new Vec2(70, 7);
+        healthbarborder.position = new Vec2(135, 7);
 
         // Create the player
         this.player = this.add.animatedSprite("player", "primary");
@@ -231,6 +233,8 @@ export default class floor1_scene extends Scene {
                 inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
+        this.player.setImageOffset(new Vec2(0, 17));
+        //this.player.imageOffset.set();
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
         this.player.animation.play("IDLE");
     }

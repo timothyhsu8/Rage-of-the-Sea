@@ -19,7 +19,7 @@
             "animationSprite": "groundslam",
             "spriteKey": "groundslam",
             "damage": 15,
-            "cooldown": 4000,
+            "cooldown": 2000,
             "chargeTime": 1000,
             "useVolume": 0
         }
