@@ -47,26 +47,26 @@ export default class HelpScreen extends Scene {
 
         /* Backstory */
         let backstoryText = "Game backstory here";
-        const backstory = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x-350, center.y), text: backstoryText});
+        const backstory = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x-350, center.y+50), text: backstoryText});
         backstory.textColor = Color.WHITE;
         backstory.size.set(600, 675);
         backstory.borderRadius = 2;
         backstory.borderColor = Color.WHITE;
         backstory.fontSize = 20;
 
-        const backstoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x-350, center.y-300), text:"Backstory"});
+        const backstoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x-350, center.y-250), text:"Backstory"});
         backstoryHeader.textColor = Color.WHITE;
         backstoryHeader.fontSize = 35;
 
         /* Cheat Codes */
-        const cheats = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x+350, center.y), text:""});
+        const cheats = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x+350, center.y+50), text:""});
         cheats.textColor = Color.WHITE;
         cheats.size.set(600, 675);
         cheats.borderRadius = 2;
         cheats.borderColor = Color.WHITE;
         cheats.fontSize = 20;
 
-        const cheatsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x+350, center.y-300), text:"Cheats"});
+        const cheatsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x+350, center.y-250), text:"Cheats"});
         cheatsHeader.textColor = Color.WHITE;
         cheatsHeader.fontSize = 35;
         
@@ -116,7 +116,7 @@ export default class HelpScreen extends Scene {
         this.cheatButtonLabels = new Array<Button>(numCheats);
         for(let i = 0 ; i < numCheats ; i++){
             /* Buttons */
-            const cheat = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x+350, (center.y-225)+(i*posOffset)), text: text[i]});
+            const cheat = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x+350, (center.y-175)+(i*posOffset)), text: text[i]});
             cheat.size.set(250, 50);
             cheat.borderWidth = 2;
             cheat.borderColor = Color.WHITE;

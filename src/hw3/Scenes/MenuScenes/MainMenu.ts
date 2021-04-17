@@ -4,7 +4,7 @@ import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
-import inventory_scene from "./inventory_scene";
+import inventory_scene from "./InventoryScene";
 import Slider from "../../../Wolfie2D/Nodes/UIElements/Slider";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
@@ -12,16 +12,13 @@ import floor1_scene from "../floor1_scene";
 import CharacterSelect from "./CharacterSelect";
 import LevelSelect from "./LevelSelect";
 import HelpScreen from "./HelpScreen";
-
-
-
+import Controls from "./Controls";
 
 export default class MainMenu extends Scene {
-    // Layers, for multiple main menu screens
-    
     private mainMenu: Layer;
     private controls: Layer;
     private about: Layer;
+    
     static char: string;
     static equipped: string[];
     static items: string[];
@@ -47,36 +44,40 @@ export default class MainMenu extends Scene {
         this.mainMenu = this.addUILayer("mainMenu");
 
         // Add play button, and give it an event to emit on press
-        const play = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-100), text: "Play"});
-        play.size.set(200, 50);
+        const play = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-200), text: "Play"});
+        play.size.set(400, 100);
         play.borderWidth = 2;
         play.borderColor = Color.WHITE;
         play.backgroundColor = new Color(50, 50, 70, 1);
         play.onClickEventId = "play";
-
-        // Add Controls Button
-        const controls = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y), text: "Controls"});
-        controls.size.set(200, 50);
-        controls.borderWidth = 2;
-        controls.borderColor = Color.WHITE;
-        controls.backgroundColor = new Color(50, 50, 70, 1);
-        controls.onClickEventId = "controls";
+        play.fontSize = 35;
 
         /* Level Select Button */
-        const levelselect = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 100), text: "Level Select"});
-        levelselect.size.set(200, 50);
+        const levelselect = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-50), text: "Level Select"});
+        levelselect.size.set(400, 100);
         levelselect.borderWidth = 2;
         levelselect.borderColor = Color.WHITE;
         levelselect.backgroundColor = new Color(50, 50, 70, 1);
         levelselect.onClickEventId = "levelselect";
+        levelselect.fontSize = 35;
 
-        /* Help */
-        const inventory = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 200), text: "Help"});
-        inventory.size.set(200, 50);
+        // Add Controls Button
+        const controls = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y+100), text: "Controls"});
+        controls.size.set(400, 100);
+        controls.borderWidth = 2;
+        controls.borderColor = Color.WHITE;
+        controls.backgroundColor = new Color(50, 50, 70, 1);
+        controls.onClickEventId = "controls";
+        controls.fontSize = 35;
+
+        /* Help Button */
+        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 250), text: "Help"});
+        inventory.size.set(400, 100);
         inventory.borderWidth = 2;
         inventory.borderColor = Color.WHITE;
         inventory.backgroundColor = new Color(50, 50, 70, 1);
         inventory.onClickEventId = "help";
+        inventory.fontSize = 35;
 
         /* ########## CONTROLS SCREEN ########## */
         this.controls = this.addUILayer("controls");
@@ -109,13 +110,6 @@ export default class MainMenu extends Scene {
         controlsBack.borderColor = Color.WHITE;
         controlsBack.backgroundColor = new Color(50, 50, 70, 1);
         controlsBack.onClickEventId = "menu";
-
-        // const aboutBack = this.add.uiElement(UIElementType.BUTTON, "about", {position: new Vec2(center.x, center.y + 250), text: "Back"});
-        // aboutBack.size.set(200, 50);
-        // aboutBack.borderWidth = 2;
-        // aboutBack.borderColor = Color.WHITE;
-        // aboutBack.backgroundColor = Color.TRANSPARENT;
-        // aboutBack.onClickEventId = "menu";
         
         // Subscribe to the button events
         this.receiver.subscribe("play");
@@ -129,14 +123,11 @@ export default class MainMenu extends Scene {
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "play"){
+            if(event.type === "play")
                 this.sceneManager.changeScene(CharacterSelect, {});
-            }
 
-            if(event.type === "controls"){
-                this.controls.setHidden(false);
-                this.mainMenu.setHidden(true);
-            }
+            if(event.type === "controls")
+                this.sceneManager.changeScene(Controls, {});
 
             if(event.type === "levelselect")
                 this.sceneManager.changeScene(LevelSelect, {});
