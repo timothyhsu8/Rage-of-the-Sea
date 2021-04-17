@@ -19,6 +19,7 @@ import BattleManager from "../../GameSystems/BattleManager";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import CharacterState from "../../CharacterState";
 import MainMenu from "./MainMenu";
+import Map_Scene_Testing from "../Map_Scene_Testing";
 
 
 export default class CharacterSelect extends Scene {
@@ -91,7 +92,7 @@ export default class CharacterSelect extends Scene {
                 inventory.setBasicAttack(basicAttack);
 
                 let characterState = new CharacterState(100, 10, 10, 80, inventory);
-                this.sceneManager.changeScene(floor1_scene, {characterState: characterState});
+                this.sceneManager.changeScene(Map_Scene_Testing, {characterState: characterState});
             }
 
             if(event.type === "back")
