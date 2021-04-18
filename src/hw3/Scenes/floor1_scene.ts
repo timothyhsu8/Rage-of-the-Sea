@@ -51,6 +51,7 @@ export default class floor1_scene extends Scene {
         // Load the player and enemy spritesheets
         this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
         this.load.spritesheet("enemy", "hw3_assets/spritesheets/enemy.json");
+        this.load.spritesheet("lizard", "hw3_assets/spritesheets/lizard.json");
 
         // Load the tilemap
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
@@ -241,7 +242,13 @@ export default class floor1_scene extends Scene {
             let data = enemyData.enemies[i];
 
             // Create an enemy
-            this.enemies[i] = this.add.animatedSprite("enemy", "primary");
+
+            if (Math.floor(2 * Math.random()) == 0){
+                this.enemies[i] = this.add.animatedSprite("lizard", "primary");
+            }
+            else{
+                this.enemies[i] = this.add.animatedSprite("enemy", "primary");
+            }
             this.enemies[i].position.set(data.position[0], data.position[1]);
             this.enemies[i].animation.play("IDLE");
 
