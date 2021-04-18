@@ -14,6 +14,8 @@ import InventoryScene from "./MenuScenes/InventoryScene";
 import MainMenu from "./MenuScenes/MainMenu";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
+import BattlerAI from "../AI/BattlerAI";
 
 export default class Map_Scene_Testing extends Scene{
     // Layers, for multiple main menu screens
@@ -30,8 +32,10 @@ export default class Map_Scene_Testing extends Scene{
     }
 
     loadScene(){
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborderlarge.png");
+        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
         this.load.image("mapBackground", "hw3_assets/sprites/map.png");
+        this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
+        this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
     }
 
     startScene(){
@@ -67,9 +71,19 @@ export default class Map_Scene_Testing extends Scene{
         quit.fontSize = 35;
 
         // healthbar
-        /* Sprite for healthbar border */
+        /* Healthbar and Healthbar Border*/
+        this.addLayer("health", 11);
+        this.add.graphic(GraphicType.RECT, "health", {position: new Vec2(430, 66), size: new Vec2(this.characterState.health*6 , 30)});
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
-        healthbarborder.position = new Vec2(135, 7);
+        healthbarborder.position = new Vec2(437, 48);
+        
+        /* Sprite for character portrait */
+        let portrait = this.add.sprite("portrait", "primary");
+        portrait.position = new Vec2(62, 45);
+
+        /* Sprite for portrait border */
+        let portraitborder = this.add.sprite("portraitborder", "primary");
+        portraitborder.position = new Vec2(62, 45);
 
         // // placeholder for map screen composition
         // const map_render = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x, center.y), text: "placeholder"})

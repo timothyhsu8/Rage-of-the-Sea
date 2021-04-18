@@ -44,7 +44,7 @@ export default class floor1_scene extends Scene {
 
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
-        console.log(this.characterState.getInventory());
+        console.log(this.characterState.inventory);
     }
 
     loadScene(){
@@ -66,7 +66,7 @@ export default class floor1_scene extends Scene {
         this.load.object("itemData", "hw3_assets/data/items.json");
 
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
-        this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
+        this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
         this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
         this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
     }
@@ -100,7 +100,7 @@ export default class floor1_scene extends Scene {
 
         // UI for healthbar
         this.addUILayer("healthbar");
-        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 5)});
+        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 10)});
     }
 
     updateScene(deltaT: number): void {
@@ -117,7 +117,7 @@ export default class floor1_scene extends Scene {
                 {
                     this.viewport.setOffset(new Vec2(0, 0));
                     this.viewport.setZoomLevel(1/3);
-                    this.characterState.setHealth((<BattlerAI>this.player._ai).health);
+                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
                     this.sceneManager.changeScene(GameOver);
                     break;
                 }
@@ -126,7 +126,7 @@ export default class floor1_scene extends Scene {
                     // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
                     this.viewport.setOffset(new Vec2(0, 0));
                     this.viewport.setZoomLevel(1/3);
-                    this.characterState.setHealth((<BattlerAI>this.player._ai).health);
+                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
                     this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
                     break;
                 }
@@ -195,14 +195,17 @@ export default class floor1_scene extends Scene {
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
+        portrait.scale.set(1/3, 1/3);
         portrait.position = new Vec2(10, 6);
 
         /* Sprite for portrait border */
         let portraitborder = this.add.sprite("portraitborder", "primary");
+        portraitborder.scale.set(1/3, 1/3);
         portraitborder.position = new Vec2(10, 6);
 
         /* Sprite for healthbar border */
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
+        healthbarborder.scale.set(1/3, 1/3);
         healthbarborder.position = new Vec2(135, 7);
 
         // Create the player
@@ -210,12 +213,12 @@ export default class floor1_scene extends Scene {
         this.player.position.set(4*16, 4*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
-        this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
+        this.characterState.inventory.setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
-                health: this.characterState.getHealth(),
-                speed: this.characterState.getSpeed(),
-                inventory: this.characterState.getInventory(),
+                health: this.characterState.health,
+                speed: this.characterState.speed,
+                inventory: this.characterState.inventory,
                 tilemap: "Floor"
             });
         this.player.setImageOffset(new Vec2(0, 17));

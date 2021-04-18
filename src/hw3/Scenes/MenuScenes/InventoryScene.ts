@@ -38,7 +38,7 @@ export default class InventoryScene extends Scene {
     }
 
     loadScene(){
-        this.load.image("portrait", "hw3_assets/sprites/playerportrait.png");
+        this.load.image("portrait", "hw3_assets/sprites/diverportrait.png");
         this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
     }

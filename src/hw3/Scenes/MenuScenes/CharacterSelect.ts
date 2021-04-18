@@ -91,7 +91,7 @@ export default class CharacterSelect extends Scene {
                 let basicAttack = this.createAbility(AbilityTypes.PLAYER_ANCHORSWING);
                 inventory.setBasicAttack(basicAttack);
 
-                let characterState = new CharacterState(100, 10, 10, 80, inventory);
+                let characterState = new CharacterState(100, 10, 10, 80, inventory, "diverportrait");
                 this.sceneManager.changeScene(Map_Scene_Testing, {characterState: characterState});
             }
 
