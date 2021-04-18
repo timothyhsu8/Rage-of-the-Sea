@@ -54,8 +54,8 @@ export default class MonsterAttack extends EnemyState {
                 /* If within 20 pixels of the player, attack */
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
                     let dir = this.player.position.clone().sub(this.owner.position).normalize();
-                    //this.owner.animation.playIfNotAlready("ATTACK");
-                    this.parent.ability.cast(this.owner, "enemy", dir);
+                    if(this.parent.ability.cast(this.owner, "enemy", dir))
+                        this.owner.animation.playUninterruptable("ATTACK");
                     // if(this.parent.ability.cast(this.owner, "enemy", dir))
                     //     this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
                 }

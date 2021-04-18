@@ -51,7 +51,6 @@ export default class BattleManager {
                 this.overlapMap.set(mapKey, this.overlapMap.get(mapKey)+1);
             }
 
-            attacker.animation.playIfNotAlready("ATTACK");
             attacker.freeze();
             let tilemap = this.tilemap;
             let overlapMap = this.overlapMap;   // Determines if multiple enemy ability indicators are overlapping

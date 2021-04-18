@@ -151,14 +151,16 @@ export default class AnimationManager {
         if(this.pendingAnimation !== null){
             this.play(this.pendingAnimation, this.pendingLoop, this.pendingOnEnd);
         }
+
+        if(this.onEndEvent === "uninterruptable"){
+            this.uninterruptable = false;
+            this.onEndEvent = null;
+        }
     }
 
-    // playUninterruptable(animation: string, loop?: boolean, onEnd?: string){
-    //     if(this.uninterruptable)
-    //         return;
-
-    //     this.play(animation, false, );
-    // }
+    playUninterruptable(animation: string): void {
+        this.play(animation, false, "uninterruptable");
+    }
 
     /**
      * Plays the specified animation. Does not restart it if it is already playing
@@ -179,27 +181,35 @@ export default class AnimationManager {
      * @param onEnd The name of an event to send when this animation naturally stops playing. This only matters if loop is false.
      */
     play(animation: string, loop?: boolean, onEnd?: string): void {
-        this.currentAnimation = animation;
-        this.currentFrame = 0;
-        this.frameProgress = 0;
-        this.animationState = AnimationState.PLAYING;
+        if(this.uninterruptable === true)
+            return;
+        
+        else{
+            if(onEnd === "uninterruptable")
+                this.uninterruptable = true;
 
-        // If loop arg was provided, use that
-        if(loop !== undefined){
-            this.loop = loop;
-        } else {
-            // Otherwise, use what the json file specified
-            this.loop = this.animations.get(animation).repeat;
+            this.currentAnimation = animation;
+            this.currentFrame = 0;
+            this.frameProgress = 0;
+            this.animationState = AnimationState.PLAYING;
+
+            // If loop arg was provided, use that
+            if(loop !== undefined){
+                this.loop = loop;
+            } else {
+                // Otherwise, use what the json file specified
+                this.loop = this.animations.get(animation).repeat;
+            }
+
+            if(onEnd !== undefined){
+                this.onEndEvent = onEnd;
+            } else {
+                this.onEndEvent = null;
+            }
+
+            // Reset pending animation
+            this.pendingAnimation = null;
         }
-
-        if(onEnd !== undefined){
-            this.onEndEvent = onEnd;
-        } else {
-            this.onEndEvent = null;
-        }
-
-        // Reset pending animation
-        this.pendingAnimation = null;
     }
 
     /**
