@@ -92,6 +92,7 @@ export default class PlayerController implements BattlerAI {
         if(!this.direction.isZero())
             this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
 
+        /* Player Move Animations */
         if(!this.owner.animation.isPlaying("ATTACK")){
             /* Turns player sprite when moving left/right */
             if(!this.direction.isZero() && this.direction.y === 0){
@@ -103,13 +104,17 @@ export default class PlayerController implements BattlerAI {
             else if(!this.direction.isZero() && this.direction.y === 1)
                 this.owner.animation.playIfNotAlready("WALKDOWN", true);
 
+            /* Turns player sprite when moving up/down */
+            else if(!this.direction.isZero() && this.direction.y === -1)
+            this.owner.animation.playIfNotAlready("WALKUP", true);
+
             /* If player is not moving, play IDLE animation */
             else {
                 this.owner.animation.playIfNotAlready("IDLE", true);
             }
         }
 
-        // Use an Ability
+        // Use an Attack/Ability
         if(Input.isMouseJustPressed()){
             // Do Basic Attack on left click
             if(!Input.isMouseRightClick()){

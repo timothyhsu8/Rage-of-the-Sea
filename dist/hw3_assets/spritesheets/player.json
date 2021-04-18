@@ -4,7 +4,7 @@
     "spriteWidth": 90,
     "spriteHeight": 90,
     "columns": 5,
-    "rows": 3,
+    "rows": 4,
     "durationType": "time",
     "animations": [
         { 
@@ -22,6 +22,10 @@
         {
             "name": "WALKDOWN",
             "frames": [ {"index": 5, "duration": 10},{"index": 6, "duration": 10}]
+        },
+        {
+            "name": "WALKUP",
+            "frames": [ {"index": 15, "duration": 10},{"index": 16, "duration": 10}]
         }
        
     ]
