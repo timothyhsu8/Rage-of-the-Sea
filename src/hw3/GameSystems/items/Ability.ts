@@ -10,6 +10,7 @@ import WeaponType from "./WeaponTypes/WeaponType";
 import AbilityType from "./AbilityTypes/AbilityType";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 export default class Ability {
     /** The type of this weapon */
@@ -58,7 +59,7 @@ export default class Ability {
     }
 
     /* Cast the ability */
-    cast(user: GameNode, userType: string, direction: Vec2): boolean {
+    cast(user: AnimatedSprite, userType: string, direction: Vec2): boolean {
         // If the cooldown timer is still running, we can't use the weapon
         if(!this.cooldownTimer.isStopped()){
             return false;

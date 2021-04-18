@@ -19,7 +19,7 @@ export default class BattleManager {
 
     overlapMap: Map<String, number>   // Maps each damage tile position to prevent attack indicators from canceling each other out
 
-    handleInteraction(attackerType: string, ability: Ability, direction: Vec2, attacker: GameNode){
+    handleInteraction(attackerType: string, ability: Ability, direction: Vec2, attacker: AnimatedSprite){
         /* Attacker is the player */
         if(attackerType === "player"){
             // Check for collisions with enemies
@@ -28,6 +28,7 @@ export default class BattleManager {
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
                     if(ability.hits(enemies[i].owner)){
+                        console.log("big hit");
                         enemies[i].damage(ability.type.damage);
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }
@@ -50,6 +51,7 @@ export default class BattleManager {
                 this.overlapMap.set(mapKey, this.overlapMap.get(mapKey)+1);
             }
 
+            attacker.animation.playIfNotAlready("ATTACK");
             attacker.freeze();
             let tilemap = this.tilemap;
             let overlapMap = this.overlapMap;   // Determines if multiple enemy ability indicators are overlapping

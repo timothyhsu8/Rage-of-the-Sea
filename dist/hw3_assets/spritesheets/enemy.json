@@ -1,9 +1,9 @@
 {
     "name": "TopdownEnemy",
     "spriteSheetImage": "enemy.png",
-    "spriteWidth": 32,
-    "spriteHeight": 32,
-    "columns": 6,
+    "spriteWidth": 90,
+    "spriteHeight": 90,
+    "columns": 4,
     "rows": 1,
     "durationType": "time",
     "animations": [
@@ -13,11 +13,15 @@
         },
         {
             "name": "WALK",
-            "frames": [ {"index": 1, "duration": 16}, {"index": 2, "duration": 16}, {"index": 3, "duration": 16}, {"index": 4, "duration": 16} ]
+            "frames": [ {"index": 0, "duration": 15}, {"index": 1, "duration": 15} ]
         },
         {
             "name": "TAKEDAMAGE",
-            "frames": [ {"index": 5, "duration": 16} ]
+            "frames": [ {"index": 2, "duration": 16} ]
+        },
+        {
+            "name": "ATTACK",
+            "frames": [ {"index": 4, "duration": 5}, {"index": 5, "duration": 15}, {"index": 6, "duration": 30}, {"index": 7, "duration": 15}]
         }
     ]
 }

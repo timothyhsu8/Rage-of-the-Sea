@@ -131,7 +131,6 @@ export default class floor1_scene extends Scene {
                     break;
                 }
                 default:
-                    console.log("Default");
                     break;
             }
         }
@@ -139,7 +138,7 @@ export default class floor1_scene extends Scene {
         // Update Healthbar GUI
         let health = (<BattlerAI>this.player._ai).health;
         this.healthbar.size = new Vec2(health*2, 10);
-        this.healthbar.position = new Vec2(93 - .5*(100-(health*2)), 22);
+        this.healthbar.position = new Vec2(42+health, 22);
 
         /* If all monsters are killed, advance */
         if(this.numMonstersLeft <= 0)

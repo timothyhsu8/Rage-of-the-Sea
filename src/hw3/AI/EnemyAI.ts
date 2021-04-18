@@ -9,10 +9,8 @@ import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Weapon from "../GameSystems/items/Weapon";
 import { hw3_Events } from "../hw3_constants";
 import BattlerAI from "./BattlerAI";
-import Attack from "./EnemyStates/Attack";
 import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
-import Patrol from "./EnemyStates/Patrol";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
 
@@ -46,15 +44,11 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
         }
 
-        this.addState(EnemyStates.ATTACKING, new Attack(this, owner));
         this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 
         this.health = options.health;
-
         this.weapon = options.weapon;
-
         this.player = options.player;
-
         this.ability = options.ability;
 
         // Subscribe to events

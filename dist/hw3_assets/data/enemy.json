@@ -2,18 +2,14 @@
     "numEnemies": 2,
     "enemies": [
         {
-            "position": [128, 32],
+            "position": [350, 60],
             "mode": "chase",
-            "guardPosition": [111.7, 521.3],
-            "route": [3],
             "health": 5,
             "monsterType": "kraken"
         },
         {
-            "position": [128, 60],
+            "position": [350, 180],
             "mode": "chase",
-            "guardPosition": [111.7, 521.3],
-            "route": [3],
             "health": 5,
             "monsterType": "kraken"
         }

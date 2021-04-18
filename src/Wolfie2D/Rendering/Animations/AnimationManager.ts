@@ -46,6 +46,8 @@ export default class AnimationManager {
     /** The onEnd event of a pending animation */
     protected pendingOnEnd: string;
 
+    protected uninterruptable: boolean;
+
     /**
      * Creates a new AnimationManager
      * @param owner The owner of the AnimationManager
@@ -60,6 +62,7 @@ export default class AnimationManager {
         this.animations = new Map();
         this.onEndEvent = null;
         this.emitter = new Emitter();
+        this.uninterruptable = false;
     }
 
     /**
@@ -149,6 +152,13 @@ export default class AnimationManager {
             this.play(this.pendingAnimation, this.pendingLoop, this.pendingOnEnd);
         }
     }
+
+    // playUninterruptable(animation: string, loop?: boolean, onEnd?: string){
+    //     if(this.uninterruptable)
+    //         return;
+
+    //     this.play(animation, false, );
+    // }
 
     /**
      * Plays the specified animation. Does not restart it if it is already playing

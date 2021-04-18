@@ -73,7 +73,8 @@ export default class Map_Scene_Testing extends Scene{
         // healthbar
         /* Healthbar and Healthbar Border*/
         this.addLayer("health", 11);
-        this.add.graphic(GraphicType.RECT, "health", {position: new Vec2(430, 66), size: new Vec2(this.characterState.health*6 , 30)});
+        let health = this.add.graphic(GraphicType.RECT, "health", {position: new Vec2(330+this.characterState.health, 66), size: new Vec2(this.characterState.health*6 , 30)});
+        health.position = new Vec2(125+(this.characterState.health*3), 66);
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
         healthbarborder.position = new Vec2(437, 48);
         

@@ -2,6 +2,7 @@ import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Timer from "../../../Wolfie2D/Timing/Timer";
 import Ability, {AbilityTypes} from "../../GameSystems/items/Ability";
@@ -26,7 +27,7 @@ export default class MonsterAttack extends EnemyState {
 
     monsterType: MonsterTypes;
 
-    constructor(parent: EnemyAI, owner: GameNode, player: GameNode, monsterType: MonsterTypes){
+    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
         super(parent, owner);
 
         this.monsterType = monsterType;
@@ -53,8 +54,10 @@ export default class MonsterAttack extends EnemyState {
                 /* If within 20 pixels of the player, attack */
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
                     let dir = this.player.position.clone().sub(this.owner.position).normalize();
-                    if(this.parent.ability.cast(this.owner, "enemy", dir))
-                        this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
+                    //this.owner.animation.playIfNotAlready("ATTACK");
+                    this.parent.ability.cast(this.owner, "enemy", dir);
+                    // if(this.parent.ability.cast(this.owner, "enemy", dir))
+                    //     this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
                 }
                 
                 else this.finished(EnemyStates.DEFAULT);

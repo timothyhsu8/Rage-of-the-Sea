@@ -46,7 +46,7 @@ export default class InventoryScene extends Scene {
     startScene(){
         this.inventory = this.addUILayer("inventory");
         this.addLayer("primary", 10);
-        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 150), text: MainMenu.char});
+        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 140), text: MainMenu.char});
         const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 100), text: "Currently Equipped"});
         const ownedItems = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 450), text: "Owned Items"});
         inventoryHeader.textColor = Color.WHITE;
@@ -74,7 +74,7 @@ export default class InventoryScene extends Scene {
 
 
         let portrait = this.add.sprite(MainMenu.image, "primary");
-        portrait.scale = new Vec2(5, 5);
+        portrait.scale = new Vec2(2, 2);
         portrait.position = new Vec2(200, 240);
 
         let width = 500;
