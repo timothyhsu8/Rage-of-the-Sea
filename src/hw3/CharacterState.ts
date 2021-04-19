@@ -21,7 +21,7 @@ export default class CharacterState{
         this.portrait = portrait;
         this.inventory = inventory;
         
-        this.attackMult = 1.0;
+        this.attackMult = 7.0;
         this.takeDamageMult = 1.0;
     }
     /* Adds item to inventory */

@@ -17,7 +17,7 @@ import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import BattlerAI from "../AI/BattlerAI";
 
-export default class Map_Scene_Testing extends Scene{
+export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here

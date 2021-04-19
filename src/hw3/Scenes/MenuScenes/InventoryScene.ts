@@ -7,7 +7,7 @@ import MainMenu from "./MainMenu";
 import Layer from "../../../Wolfie2D/Scene/Layer";
 import CharacterState from "../../CharacterState";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
-import Map_Scene_Testing from "../Map_Scene_Testing";
+import MapScene from "../MapScene";
 
 export default class InventoryScene extends Scene {
     private inventory: Layer;
@@ -21,6 +21,8 @@ export default class InventoryScene extends Scene {
         this.load.image("portrait", "hw3_assets/sprites/diverportrait.png");
         this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
+        this.load.image("double-edged", "hw3_assets/sprites/lasergun.png");
+        this.load.image("boots", "hw3_assets/sprites/lasergun.png");
     }
 
     startScene(){
@@ -49,9 +51,8 @@ export default class InventoryScene extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")
-                this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
+                this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
         }
-
 
         let portrait = this.add.sprite(MainMenu.image, "primary");
         portrait.scale = new Vec2(2, 2);

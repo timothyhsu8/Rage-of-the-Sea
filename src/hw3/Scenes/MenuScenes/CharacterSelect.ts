@@ -19,7 +19,7 @@ import BattleManager from "../../GameSystems/BattleManager";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import CharacterState from "../../CharacterState";
 import MainMenu from "./MainMenu";
-import Map_Scene_Testing from "../Map_Scene_Testing";
+import MapScene from "../MapScene";
 
 
 export default class CharacterSelect extends Scene {
@@ -92,7 +92,7 @@ export default class CharacterSelect extends Scene {
                 inventory.setBasicAttack(basicAttack);
 
                 let characterState = new CharacterState(100, 10, 10, 80, inventory, "diverportrait");
-                this.sceneManager.changeScene(Map_Scene_Testing, {characterState: characterState});
+                this.sceneManager.changeScene(MapScene, {characterState: characterState});
             }
 
             if(event.type === "back")
@@ -102,7 +102,6 @@ export default class CharacterSelect extends Scene {
 
     createAbility(type: AbilityTypes){
         let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
-
         return new Ability(abilityType, this.battleManager, this);
     }
 

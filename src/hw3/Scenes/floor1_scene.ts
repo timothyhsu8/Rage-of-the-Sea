@@ -15,9 +15,13 @@ import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
-import Map_Scene_Testing from "./Map_Scene_Testing";
+import MapScene from "./MapScene";
 import CharacterState from "../CharacterState";
 import { ItemType } from "../GameSystems/items/Item";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Color from "../../Wolfie2D/Utils/Color";
+import ItemSelectScene from "./ItemSelectScene";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -101,6 +105,8 @@ export default class floor1_scene extends Scene {
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
         this.battleManager.setTileMap(this.player, this.tilemap);
 
+        this.receiver.subscribe("getitem");
+
         // UI for healthbar
         this.addUILayer("healthbar");
         this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 10)});
@@ -110,34 +116,31 @@ export default class floor1_scene extends Scene {
         /* Handles all game events */
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
-            switch(event.type){
-                case GameEvents.ENEMY_DIED:
-                {
-                    this.numMonstersLeft--;
-                    break;
+                switch(event.type){
+                    case GameEvents.ENEMY_DIED:
+                    {
+                        this.numMonstersLeft--;
+                        break;
+                    }
+                    case GameEvents.PLAYER_DIED:
+                    {
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1/3);
+                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.sceneManager.changeScene(GameOver);
+                        break;
+                    }
+                    case GameEvents.ROOM_CLEARED:
+                    {
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1/3);
+                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.sceneManager.changeScene(ItemSelectScene, {characterState: this.characterState});
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case GameEvents.PLAYER_DIED:
-                {
-                    this.viewport.setOffset(new Vec2(0, 0));
-                    this.viewport.setZoomLevel(1/3);
-                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
-                    this.sceneManager.changeScene(GameOver);
-                    break;
-                }
-                case GameEvents.ROOM_CLEARED:
-                {
-                    this.characterState.addToInventory(ItemType.DOUBLE_EDGED_SWORD);    // Add item to player's inventory
-
-
-                    this.viewport.setOffset(new Vec2(0, 0));
-                    this.viewport.setZoomLevel(1/3);
-                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
-                    this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
-                    break;
-                }
-                default:
-                    break;
-            }
         }
 
         // Update Healthbar GUI
@@ -159,6 +162,7 @@ export default class floor1_scene extends Scene {
      */
     protected subscribeToEvents(){
         this.receiver.subscribe([
+            "getitem",
             GameEvents.ENEMY_DIED,
             GameEvents.PLAYER_DIED,
             GameEvents.ROOM_CLEARED
