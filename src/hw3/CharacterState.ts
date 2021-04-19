@@ -21,14 +21,18 @@ export default class CharacterState{
         this.portrait = portrait;
         this.inventory = inventory;
         
-        this.attackMult = 7.0;
+        this.attackMult = 1.0;
         this.takeDamageMult = 1.0;
     }
     /* Adds item to inventory */
     addToInventory(itemtype: ItemType){
         let newItem = null;
-        if(itemtype === ItemType.DOUBLE_EDGED_SWORD){ // FINAL PROJECT TODO - Planning to revamp the item adding system later. Just want a quick solution for the first benchmark
+        if(itemtype === ItemType.DOUBLE_EDGED_SWORD){ // FINAL PROJECT TODO - Planning to revamp the item adding system later, so don't add too much to this
             newItem = new Item("Double Edged Sword", itemtype, false, null, 0, 0, 2.0, 0, 0, 2.0);
+        }
+
+        if(itemtype === ItemType.NORMAL_BOOTS){
+            newItem = new Item("Normal Boots", itemtype, false, null, 0, 0, 0, 0, 10, 0);
         }
 
         this.addItemStats(newItem);

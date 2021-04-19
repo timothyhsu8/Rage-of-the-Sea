@@ -55,5 +55,6 @@ export default class Item {
 }
 
 export enum ItemType {
-    DOUBLE_EDGED_SWORD = "double-edged-sword",
+    DOUBLE_EDGED_SWORD = "double_edged_sword",
+    NORMAL_BOOTS = "normal_boots"
 }

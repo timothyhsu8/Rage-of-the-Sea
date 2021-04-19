@@ -22,7 +22,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     health: number;
 
     /** The default movement speed of this AI */
-    speed: number = 40;
+    speed: number = 65;
 
     /** A reference to the player object */
     player: GameNode;

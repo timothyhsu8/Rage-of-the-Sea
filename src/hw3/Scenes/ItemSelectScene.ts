@@ -12,23 +12,23 @@ import MapScene from "./MapScene";
 
 export default class ItemSelectScene extends Scene {
     private characterState: CharacterState;
-
-    static char: string;
-    static equipped: string[];
-    static items: string[];
-    static image: string;
+    private selections: Array<Button>;
+    private selectButton: Button;
+    private itemSelected: number;
     
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
     }
 
-    loadScene(){
-
-    }
+    loadScene(){}
 
     startScene(){
         this.addLayer("primary", 10);
+        this.addLayer("descriptions", 11);
         const center = this.viewport.getCenter();
+
+        this.itemSelected = -1;
+        this.selections = new Array<Button>(3);
 
         /* Header */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y - 350), text: "Select an item to obtain"});
@@ -43,6 +43,25 @@ export default class ItemSelectScene extends Scene {
         item1.backgroundColor = new Color(50, 50, 70, 1);
         item1.onClickEventId = "item1";
         item1.fontSize = 35;
+        this.selections[0] = item1;
+
+        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(center.x-500, center.y+50), text:"Deal double damage, take double damage"});
+        item1description.textColor = Color.WHITE;
+        item1description.fontSize = 20;
+
+        /* Item 2 */
+        const item2 = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y), text: "Normal Boots"});
+        item2.size.set(400, 500);
+        item2.borderWidth = 2;
+        item2.borderColor = Color.WHITE;
+        item2.backgroundColor = new Color(50, 50, 70, 1);
+        item2.onClickEventId = "item2";
+        item2.fontSize = 35;
+        this.selections[1] = item2;
+
+        const item2description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(center.x, center.y+50), text:"Increased movement speed"});
+        item2description.textColor = Color.WHITE;
+        item2description.fontSize = 20;
 
         /* None */
         const none = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x+500, center.y), text: "None"});
@@ -52,10 +71,23 @@ export default class ItemSelectScene extends Scene {
         none.backgroundColor = new Color(50, 50, 70, 1);
         none.onClickEventId = "none";
         none.fontSize = 35;
+        this.selections[2] = none;
+        
+        /* Select */
+        const select = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y+350), text: "SELECT"});
+        select.size.set(150, 100);
+        select.borderWidth = 2;
+        select.borderColor = Color.WHITE;
+        select.backgroundColor = Color.TRANSPARENT;
+        select.onClickEventId = "select";
+        select.fontSize = 25;
+        this.selectButton = select;
 
         // Subscribe to the button events
         this.receiver.subscribe("item1");
+        this.receiver.subscribe("item2");
         this.receiver.subscribe("none");
+        this.receiver.subscribe("select");
     }
 
     updateScene(){
@@ -63,15 +95,43 @@ export default class ItemSelectScene extends Scene {
             let event = this.receiver.getNextEvent();
 
             /* Item 1 */
-            if(event.type === "item1"){
-                this.characterState.addToInventory(ItemType.DOUBLE_EDGED_SWORD);
-                this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
+            if(event.type === "item1")
+                this.itemSelected = 0;
+            
+            /* Item 2 */
+            if(event.type === "item2")
+                this.itemSelected = 1;
+
+            /* None */
+            if(event.type === "none")
+                this.itemSelected = 2;
+
+            /* Select Item and Continue */
+            if(event.type === "select"){
+                if(this.itemSelected !== -1)
+                {
+                    if(this.itemSelected === 0)
+                        this.characterState.addToInventory(ItemType.DOUBLE_EDGED_SWORD);
+
+                    else if(this.itemSelected === 1)
+                        this.characterState.addToInventory(ItemType.NORMAL_BOOTS);
+
+                    this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
+                }
+            }
+        }
+
+        /* Change color of button if item is selected */
+        if(this.itemSelected !== -1){
+            for(let i=0 ; i < this.selections.length ; i++){
+                if(i === this.itemSelected)
+                    this.selections[i].backgroundColor = new Color(50, 100, 70, 1);
+
+                else this.selections[i].backgroundColor = new Color(50, 50, 70, 1);
             }
 
-            if(event.type === "none"){
-                this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
-            }
-                
+            this.selectButton.backgroundColor = new Color(50, 50, 70, 1);
         }
+                
     }
 }

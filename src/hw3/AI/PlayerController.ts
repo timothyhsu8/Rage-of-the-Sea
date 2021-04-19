@@ -90,12 +90,7 @@ export default class PlayerController implements BattlerAI {
 
          /* Move player */
         if(!this.direction.isZero())
-            if (MainMenu.equipped.includes("boots")){
-                this.owner.move(this.direction.normalized().scale(this.speed * 1.5 * deltaT));  // check for items
-            }
-            else{
-                this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
-            }
+            this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
 
         /* Player Move Animations */
         if(!this.owner.animation.isPlaying("ATTACK")){
