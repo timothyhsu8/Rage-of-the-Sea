@@ -4,7 +4,8 @@ import Item from "./Item";
 
 export default class Healthpack extends Item {
     
-    use(user: GameNode): void {
+    use(user: GameNode): boolean {
         (<BattlerAI>user._ai).health += 1;
+        return false;
     }
 }

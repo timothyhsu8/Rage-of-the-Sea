@@ -20,7 +20,7 @@ import Floor from "../GameSystems/Mapping/Floor";
 import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import MapGenerator from "../GameSystems/MapGenerator";
 
-export default class Map_Scene_Testing extends Scene{
+export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here

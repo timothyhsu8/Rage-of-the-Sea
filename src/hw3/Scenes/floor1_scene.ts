@@ -15,8 +15,13 @@ import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
-import Map_Scene_Testing from "./Map_Scene_Testing";
+import MapScene from "./MapScene";
 import CharacterState from "../CharacterState";
+import { ItemType } from "../GameSystems/items/Item";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Color from "../../Wolfie2D/Utils/Color";
+import ItemSelectScene from "./ItemSelectScene";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -57,13 +62,12 @@ export default class floor1_scene extends Scene {
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
         // Load the scene info
-        this.load.object("weaponData", "hw3_assets/data/weaponData.json");
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
 
         // Load in the enemy info
         this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" );
-        this.load.object("krakenData", "hw3_assets/data/enemyData/krakenData.json");
-        this.load.object("lizardData", "hw3_assets/data/enemyData/lizardData.json");
+        this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
+        this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
 
         // Load in item info
         this.load.object("itemData", "hw3_assets/data/items.json");
@@ -97,9 +101,11 @@ export default class floor1_scene extends Scene {
         this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
-        this.battleManager.setPlayerAI(<BattlerAI>this.player._ai);
+        this.battleManager.setPlayer(<BattlerAI>this.player._ai, this.characterState);
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
         this.battleManager.setTileMap(this.player, this.tilemap);
+
+        this.receiver.subscribe("getitem");
 
         // UI for healthbar
         this.addUILayer("healthbar");
@@ -110,32 +116,31 @@ export default class floor1_scene extends Scene {
         /* Handles all game events */
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
-            switch(event.type){
-                case GameEvents.ENEMY_DIED:
-                {
-                    this.numMonstersLeft--;
-                    break;
+                switch(event.type){
+                    case GameEvents.ENEMY_DIED:
+                    {
+                        this.numMonstersLeft--;
+                        break;
+                    }
+                    case GameEvents.PLAYER_DIED:
+                    {
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1/3);
+                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.sceneManager.changeScene(GameOver);
+                        break;
+                    }
+                    case GameEvents.ROOM_CLEARED:
+                    {
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1/3);
+                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.sceneManager.changeScene(ItemSelectScene, {characterState: this.characterState});
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case GameEvents.PLAYER_DIED:
-                {
-                    this.viewport.setOffset(new Vec2(0, 0));
-                    this.viewport.setZoomLevel(1/3);
-                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
-                    this.sceneManager.changeScene(GameOver);
-                    break;
-                }
-                case GameEvents.ROOM_CLEARED:
-                {
-                    // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
-                    this.viewport.setOffset(new Vec2(0, 0));
-                    this.viewport.setZoomLevel(1/3);
-                    this.characterState.health = ((<BattlerAI>this.player._ai).health);
-                    this.sceneManager.changeScene(Map_Scene_Testing, {characterState: this.characterState});
-                    break;
-                }
-                default:
-                    break;
-            }
         }
 
         // Update Healthbar GUI
@@ -157,6 +162,7 @@ export default class floor1_scene extends Scene {
      */
     protected subscribeToEvents(){
         this.receiver.subscribe([
+            "getitem",
             GameEvents.ENEMY_DIED,
             GameEvents.PLAYER_DIED,
             GameEvents.ROOM_CLEARED
@@ -215,12 +221,12 @@ export default class floor1_scene extends Scene {
         this.player.position.set(4*16, 4*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
-        this.characterState.inventory.setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
+        this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
                 health: this.characterState.health,
                 speed: this.characterState.speed,
-                inventory: this.characterState.inventory,
+                inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
         this.player.setImageOffset(new Vec2(0, 17));
@@ -230,7 +236,7 @@ export default class floor1_scene extends Scene {
     }
     
     initializeEnemies(){
-        const monsterData = this.load.getObject("floor1enemies");
+        const monsterData = this.load.getObject("floor1enemies");   // FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
         let positions = monsterData.positions;
 
@@ -259,8 +265,8 @@ export default class floor1_scene extends Scene {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
                 health: monsterInfo.health,
-                player: this.player,
                 ability: this.createAbility(monsterInfo.ability),
+                player: this.player
             }
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);

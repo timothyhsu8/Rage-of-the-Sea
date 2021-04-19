@@ -6,13 +6,13 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Weapon from "../GameSystems/items/Weapon";
 import { hw3_Events } from "../hw3_constants";
 import BattlerAI from "./BattlerAI";
 import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
+import MainMenu from "../Scenes/MenuScenes/MainMenu";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -22,10 +22,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     health: number;
 
     /** The default movement speed of this AI */
-    speed: number = 40;
-
-    /** The weapon this AI has */
-    weapon: Weapon;
+    speed: number = 65;
 
     /** A reference to the player object */
     player: GameNode;
@@ -47,7 +44,6 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 
         this.health = options.health;
-        this.weapon = options.weapon;
         this.player = options.player;
         this.ability = options.ability;
 
@@ -65,7 +61,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     damage(damage: number): void {
         this.health -= damage;
-    
+
         /* Enemy Dies */
         if(this.health <= 0){
             this.owner.setAIActive(false, {});

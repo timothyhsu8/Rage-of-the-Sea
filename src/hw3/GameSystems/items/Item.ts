@@ -1,13 +1,36 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 
-export default abstract class Item {
+export default class Item {
     /** The sprite that represents this weapon in the world or in an inventory */
+    name: string;
+    type: ItemType;
+    active: boolean; // Determines if this is an active or a passive item
     sprite: Sprite;
+    
+    /* Stats */
+    health: number;
+    attack: number;
+    attackMult: number;
+    defense: number;
+    speed: number;
+    takeDamageMult: number;
 
-    constructor(sprite: Sprite){
+    constructor(name: string, type:ItemType, active: boolean, sprite: Sprite, health: number, attack: number, 
+        attackMult: number, defense: number, speed:number, takeDamageMult: number){
+        this.name = name;
+        this.type = type;
+        this.active = active;
         this.sprite = sprite;
+
+        this.health = health;
+        this.attack = attack;
+        this.attackMult = attackMult;
+        this.defense = defense;
+        this.speed = speed;
+        this.takeDamageMult = takeDamageMult;
     }
 
     moveSprite(position: Vec2, layer?: string){
@@ -24,5 +47,14 @@ export default abstract class Item {
         this.sprite.position.copy(position);
     }
 
-    abstract use(user: GameNode, ...args: any): void;
+    /* FINAL PROJECT TODO - Implement this method */
+    use(user: AnimatedSprite, userType: string, direction: Vec2): boolean { 
+        return false;
+    }
+    //abstract use(user: GameNode, ...args: any): void;
+}
+
+export enum ItemType {
+    DOUBLE_EDGED_SWORD = "double_edged_sword",
+    NORMAL_BOOTS = "normal_boots"
 }

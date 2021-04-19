@@ -3,8 +3,8 @@ import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import BattlerAI from "../AI/BattlerAI";
 import Ability from "./items/Ability";
-import Weapon from "./items/Weapon";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import CharacterState from "../CharacterState";
 
 export default class BattleManager {
     playerAI: BattlerAI;
@@ -14,6 +14,7 @@ export default class BattleManager {
     enemySprites: Array<AnimatedSprite>;
 
     player: AnimatedSprite;
+    characterState: CharacterState;
 
     tilemap: OrthogonalTilemap;
 
@@ -25,10 +26,11 @@ export default class BattleManager {
             // Check for collisions with enemies
             let enemies = this.enemies;
             let enemySprites = this.enemySprites;
+            let characterState = this.characterState;
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
                     if(ability.hits(enemies[i].owner)){
-                        enemies[i].damage(ability.type.damage);
+                        enemies[i].damage(ability.type.damage * characterState.attackMult); // FINAL PROJECT TODO - Calculate effoct of Attack stat here
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }
             }, 200);
@@ -55,10 +57,11 @@ export default class BattleManager {
             let overlapMap = this.overlapMap;   // Determines if multiple enemy ability indicators are overlapping
             let playerPos = this.player.position;
             let playerAI = this.playerAI;
+            let characterState = this.characterState;
             setTimeout(function(){
                 // Check if player is hit by attack by comparing player tile to damage tiles
                 if(ability.hitsSprite(tilemap.getColRowAt(playerPos), damageTiles))
-                    playerAI.damage(ability.type.damage);
+                    playerAI.damage(ability.type.damage * characterState.takeDamageMult);   // FINAL PROJECT TODO - Calculate effoct of Defense stat here
 
                 /* Set floor tiles back to normal */
                 for(let i = 0 ; i < damageTiles.length ; i++){
@@ -73,8 +76,9 @@ export default class BattleManager {
         }
     }
 
-    setPlayerAI(player: BattlerAI): void {
+    setPlayer(player: BattlerAI, characterState: CharacterState): void {
         this.playerAI = player;
+        this.characterState = characterState;
     }
 
     setEnemies(enemies: Array<BattlerAI>): void {
