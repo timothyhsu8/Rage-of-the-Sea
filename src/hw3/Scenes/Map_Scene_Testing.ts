@@ -16,12 +16,16 @@ import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import BattlerAI from "../AI/BattlerAI";
+import Floor from "../GameSystems/Mapping/Floor";
+import UIElement from "../../Wolfie2D/Nodes/UIElement";
+import MapGenerator from "../GameSystems/MapGenerator";
 
 export default class Map_Scene_Testing extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here
     private map: Layer;
+    private rooms: Layer;
     private controls: Layer;
     private about: Layer;
     private map_render: Layer;
@@ -44,6 +48,10 @@ export default class Map_Scene_Testing extends Scene{
 
         // The main menu
         this.map = this.addUILayer("map");
+        this.rooms = this.addUILayer("rooms");
+
+        // render map
+        this.renderMap(MapGenerator.generateFloor(0));
 
         // Add play button, and give it an event to emit on press
         const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
@@ -115,6 +123,23 @@ export default class Map_Scene_Testing extends Scene{
             if(event.type === "quit")
                 this.sceneManager.changeScene(MainMenu, {});
 
+        }
+    }
+
+    // generates room buttons with icons on the map
+    renderMap(floor: Floor): void {
+        console.log(floor.roomArray);
+        for(let i = 0; i < floor.roomArray.length; i++){
+            for(let j = 0; j < floor.roomArray[i].length; j++){
+                let room = <Button>this.add.uiElement(UIElementType.BUTTON, "rooms", 
+                {position: new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random()), text: ""});
+                // room.position = new Vec2(i*12 + 3 - 6*Math.random(), j*14 + 3 + 3.5 - 7*Math.random());
+                room.borderWidth = 1;
+                room.borderColor = PancakeColor.colorFromIndex(6);
+                room.backgroundColor = Color.TRANSPARENT;
+                room.size.set(64,64);
+                
+            }
         }
     }
 }
