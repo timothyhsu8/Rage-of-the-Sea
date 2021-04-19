@@ -17,6 +17,7 @@ import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
 import Map_Scene_Testing from "./Map_Scene_Testing";
 import CharacterState from "../CharacterState";
+import { ItemType } from "../GameSystems/items/Item";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -125,7 +126,9 @@ export default class floor1_scene extends Scene {
                 }
                 case GameEvents.ROOM_CLEARED:
                 {
-                    // this.characterState.getInventory().addItem(null);    // FINAL PROJECT TODO - let player choose item and add it to their inventory
+                    this.characterState.addToInventory(ItemType.DOUBLE_EDGED_SWORD);    // Add item to player's inventory
+
+
                     this.viewport.setOffset(new Vec2(0, 0));
                     this.viewport.setZoomLevel(1/3);
                     this.characterState.health = ((<BattlerAI>this.player._ai).health);
@@ -214,12 +217,12 @@ export default class floor1_scene extends Scene {
         this.player.position.set(4*16, 4*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
-        this.characterState.inventory.setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
+        this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
                 health: this.characterState.health,
                 speed: this.characterState.speed,
-                inventory: this.characterState.inventory,
+                inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
         this.player.setImageOffset(new Vec2(0, 17));
