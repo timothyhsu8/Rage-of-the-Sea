@@ -4,9 +4,11 @@ import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 
 export default abstract class Item {
     /** The sprite that represents this weapon in the world or in an inventory */
+    name: string;
     sprite: Sprite;
 
-    constructor(sprite: Sprite){
+    constructor(name: string, sprite: Sprite){
+        this.name = name;
         this.sprite = sprite;
     }
 
@@ -25,4 +27,8 @@ export default abstract class Item {
     }
 
     abstract use(user: GameNode, ...args: any): void;
+}
+
+export enum ItemType {
+    DOUBLE_EDGED_SWORD = "double-edged-sword",
 }

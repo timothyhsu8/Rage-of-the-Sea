@@ -57,7 +57,6 @@ export default class floor1_scene extends Scene {
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
         // Load the scene info
-        this.load.object("weaponData", "hw3_assets/data/weaponData.json");
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
 
         // Load in the enemy info
@@ -97,7 +96,7 @@ export default class floor1_scene extends Scene {
         this.initializeEnemies();
 
         // Send the player and enemies to the battle manager
-        this.battleManager.setPlayerAI(<BattlerAI>this.player._ai);
+        this.battleManager.setPlayer(<BattlerAI>this.player._ai, this.characterState);
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
         this.battleManager.setTileMap(this.player, this.tilemap);
 
@@ -259,8 +258,8 @@ export default class floor1_scene extends Scene {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
                 health: monsterInfo.health,
-                player: this.player,
                 ability: this.createAbility(monsterInfo.ability),
+                player: this.player
             }
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);

@@ -8,7 +8,6 @@ import Inventory from "../GameSystems/Inventory";
 import InventoryManager from "../GameSystems/InventoryManager";
 import Healthpack from "../GameSystems/items/Healthpack";
 import Item from "../GameSystems/items/Item";
-import Weapon from "../GameSystems/items/Weapon";
 import MainMenu from "../Scenes/MenuScenes/MainMenu";
 import BattlerAI from "./BattlerAI";
 
@@ -142,12 +141,6 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        if (MainMenu.equipped.includes("double-edged")){  // check for items
-            this.health -= 2*damage;
-
-        }
-        else{
-            this.health -= damage;
-        }
+        this.health -= damage;
     }
 }

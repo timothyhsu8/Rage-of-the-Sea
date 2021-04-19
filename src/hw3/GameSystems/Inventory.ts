@@ -1,9 +1,8 @@
 import Ability from "./items/Ability";
-import Item from "./items/Item";
+import Item, { ItemType } from "./items/Item";
 import Scene from "../../Wolfie2D/Scene/Scene";
 
 export default class Inventory{
-
     private basicAttack: Ability; 
     private items: Array<Item>;
     private currentSize: number;
@@ -13,6 +12,13 @@ export default class Inventory{
         this.currentItem = 0;
         this.currentSize = 0;
         this.items = new Array<Item>(inventorySize);
+    }
+
+    hasItem(itemToFind: ItemType): boolean{
+        for(let i=0 ; i < this.items.length ; i++)
+            if(this.items[i].name === itemToFind)
+                return true;
+        return false;
     }
 
     getItems(): Array<Item>{

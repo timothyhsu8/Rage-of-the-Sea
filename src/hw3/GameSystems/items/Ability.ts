@@ -6,7 +6,6 @@ import Timer from "../../../Wolfie2D/Timing/Timer";
 import { hw3_Events } from "../../hw3_constants";
 import BattleManager from "../BattleManager";
 import Item from "./Item";
-import WeaponType from "./WeaponTypes/WeaponType";
 import AbilityType from "./AbilityTypes/AbilityType";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
