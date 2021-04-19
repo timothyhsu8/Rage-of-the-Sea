@@ -230,7 +230,7 @@ export default class floor1_scene extends Scene {
     }
     
     initializeEnemies(){
-        const monsterData = this.load.getObject("floor1enemies");
+        const monsterData = this.load.getObject("floor1enemies");   // FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
         let positions = monsterData.positions;
 

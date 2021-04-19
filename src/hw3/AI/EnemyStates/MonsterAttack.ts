@@ -62,8 +62,8 @@ export default class MonsterAttack extends EnemyState {
 
                 else this.finished(EnemyStates.DEFAULT);
                 break;
-            
-            case MonsterTypes.LIZARD:
+            /* FINAL PROJECT TODO - Give this enemy a unique ability */
+            case MonsterTypes.LIZARD:  
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
                     let dir = this.player.position.clone().sub(this.owner.position).normalize();
                     
