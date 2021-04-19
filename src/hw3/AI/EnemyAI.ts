@@ -13,6 +13,7 @@ import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
+import MainMenu from "../Scenes/MenuScenes/MainMenu";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -64,7 +65,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     activate(options: Record<string, any>): void {}
 
     damage(damage: number): void {
-        this.health -= damage;
+        if (MainMenu.equipped.includes("double-edged")){  // check for items
+            this.health -= 2*damage;
+        }
+        else{
+            this.health -= damage;
+        }
     
         /* Enemy Dies */
         if(this.health <= 0){

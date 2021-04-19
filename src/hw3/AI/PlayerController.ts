@@ -9,6 +9,7 @@ import InventoryManager from "../GameSystems/InventoryManager";
 import Healthpack from "../GameSystems/items/Healthpack";
 import Item from "../GameSystems/items/Item";
 import Weapon from "../GameSystems/items/Weapon";
+import MainMenu from "../Scenes/MenuScenes/MainMenu";
 import BattlerAI from "./BattlerAI";
 
 export default class PlayerController implements BattlerAI {
@@ -90,7 +91,12 @@ export default class PlayerController implements BattlerAI {
 
          /* Move player */
         if(!this.direction.isZero())
-            this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
+            if (MainMenu.equipped.includes("boots")){
+                this.owner.move(this.direction.normalized().scale(this.speed * 1.5 * deltaT));  // check for items
+            }
+            else{
+                this.owner.move(this.direction.normalized().scale(this.speed * deltaT));
+            }
 
         /* Player Move Animations */
         if(!this.owner.animation.isPlaying("ATTACK")){
@@ -136,6 +142,12 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        this.health -= damage;
+        if (MainMenu.equipped.includes("double-edged")){  // check for items
+            this.health -= 2*damage;
+
+        }
+        else{
+            this.health -= damage;
+        }
     }
 }

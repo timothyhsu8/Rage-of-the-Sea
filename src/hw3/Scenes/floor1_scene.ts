@@ -62,8 +62,8 @@ export default class floor1_scene extends Scene {
 
         // Load in the enemy info
         this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" );
-        this.load.object("krakenData", "hw3_assets/data/enemyData/krakenData.json");
-        this.load.object("lizardData", "hw3_assets/data/enemyData/lizardData.json");
+        this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
+        this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
 
         // Load in item info
         this.load.object("itemData", "hw3_assets/data/items.json");
