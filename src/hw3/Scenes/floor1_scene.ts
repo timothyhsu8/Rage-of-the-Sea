@@ -44,13 +44,13 @@ export default class floor1_scene extends Scene {
 
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
-        console.log(this.characterState.inventory);
+        //console.log(this.characterState.inventory);
     }
 
     loadScene(){
         // Load the player and enemy spritesheets
         this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
-        this.load.spritesheet("enemy", "hw3_assets/spritesheets/enemy.json");
+        this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemy.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/lizard.json");
 
         // Load the tilemap
@@ -61,7 +61,9 @@ export default class floor1_scene extends Scene {
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
 
         // Load in the enemy info
-        this.load.object("enemyData", "hw3_assets/data/enemy.json");
+        this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" );
+        this.load.object("krakenData", "hw3_assets/data/enemyData/krakenData.json");
+        this.load.object("lizardData", "hw3_assets/data/enemyData/lizardData.json");
 
         // Load in item info
         this.load.object("itemData", "hw3_assets/data/items.json");
@@ -228,45 +230,46 @@ export default class floor1_scene extends Scene {
     }
     
     initializeEnemies(){
-        //randomizedEnemyData = // FINAL PROJECT TODO - Randomize data for enemy creation here (it should also depend on what level and such we're on)
-
-        // Get the enemy data
-        const enemyData = this.load.getObject("enemyData");
+        const monsterData = this.load.getObject("floor1enemies");
+        let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
+        let positions = monsterData.positions;
 
         // Create an enemies array
-        this.enemies = new Array(enemyData.numEnemies);
-        this.numMonstersLeft = enemyData.numEnemies;
+        this.enemies = new Array(numEnemies);
+        this.numMonstersLeft = numEnemies;
 
         // Initialize the enemies
-        for(let i = 0; i < enemyData.numEnemies; i++){
-            let data = enemyData.enemies[i];
+        for(let i = 0; i < numEnemies; i++){
+            /* Gets random monster data */
+            let monsterInfo = this.load.getObject(monsterData.monsterTypes[this.randomInt(monsterData.monsterTypes.length)] + "Data");
 
             // Create an enemy
+            this.enemies[i] = this.add.animatedSprite(monsterInfo.monsterType, "primary");
 
-            if (Math.floor(2 * Math.random()) == 0){
-                this.enemies[i] = this.add.animatedSprite("lizard", "primary");
-            }
-            else{
-                this.enemies[i] = this.add.animatedSprite("enemy", "primary");
-            }
-            this.enemies[i].position.set(data.position[0], data.position[1]);
+            /* Assigns random position to this enemy */
+            let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
+            this.enemies[i].position.set(randomPos[0], randomPos[1]);
+            
             this.enemies[i].animation.play("IDLE");
 
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
             let enemyOptions = {
-                defaultMode: data.mode,
-                patrolRoute: data.route,            // This only matters if they're a patroller
-                guardPosition: data.guardPosition,  // This only matters if the're a guard
-                health: data.health,
+                monsterType: monsterInfo.monsterType,
+                defaultMode: monsterInfo.mode,
+                health: monsterInfo.health,
                 player: this.player,
-                ability: this.createAbility(AbilityTypes.GROUNDSLAM),
-                monsterType: data.monsterType
+                ability: this.createAbility(monsterInfo.ability),
             }
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);
             this.battleManager.enemySprites = this.enemies;
         }
+    }
+
+    /* Generates a random integer in the range [0,max) */
+    randomInt(max: number): number{
+        return Math.floor(Math.random() * max);
     }
 }

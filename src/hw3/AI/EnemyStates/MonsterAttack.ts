@@ -59,6 +59,17 @@ export default class MonsterAttack extends EnemyState {
                     // if(this.parent.ability.cast(this.owner, "enemy", dir))
                     //     this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
                 }
+
+                else this.finished(EnemyStates.DEFAULT);
+                break;
+            
+            case MonsterTypes.LIZARD:
+                if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
+                    let dir = this.player.position.clone().sub(this.owner.position).normalize();
+                    
+                    if(this.parent.ability.cast(this.owner, "enemy", dir))
+                        this.owner.animation.playUninterruptable("ATTACK");
+                }
                 
                 else this.finished(EnemyStates.DEFAULT);
                 break;

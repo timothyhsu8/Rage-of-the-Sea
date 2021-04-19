@@ -28,7 +28,6 @@ export default class BattleManager {
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
                     if(ability.hits(enemies[i].owner)){
-                        console.log("big hit");
                         enemies[i].damage(ability.type.damage);
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }

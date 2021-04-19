@@ -1,0 +1,6 @@
+{
+    "monsterType": "lizard",
+    "mode": "chase",
+    "health": 7,
+    "ability": "groundslam"
+}
