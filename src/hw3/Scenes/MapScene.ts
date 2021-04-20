@@ -29,6 +29,8 @@ export default class MapScene extends Scene{
     private roomArray: Array<Array<Room>>;
     private roomButtons: Array<Array<Button>>;
 
+    static savedButtons: Array<Array<Button>>;
+    static savedFloor: Floor;
 
     private map: Layer;
     private rooms: Layer;
@@ -57,8 +59,13 @@ export default class MapScene extends Scene{
         this.map = this.addUILayer("map");
         this.rooms = this.addUILayer("rooms");
 
-        // generate map
-        let generatedFloor = MapGenerator.generateFloor(0);
+        /* Generate map or load the saved one */
+        let generatedFloor = null;
+        if(MapScene.savedFloor === undefined){
+            generatedFloor = MapGenerator.generateFloor(0);
+            MapScene.savedFloor = generatedFloor;
+        }
+        else generatedFloor = MapScene.savedFloor;
 
         /* Initialize Buttons Array */
         this.roomButtons = new Array<Array<Button>>(generatedFloor.roomArray.length);
@@ -67,7 +74,13 @@ export default class MapScene extends Scene{
     
         // render map
         this.renderMap(generatedFloor);
-        console.log(this.roomButtons);
+
+        /* Load saved button colors */
+        if(MapScene.savedButtons !== undefined){
+            for(let i=0 ; i<this.roomButtons.length ; i++)
+                for(let j=0 ; j<this.roomButtons[i].length ; j++)
+                    this.roomButtons[i][j].backgroundColor = MapScene.savedButtons[i][j].backgroundColor;
+        }
 
         // Add play button, and give it an event to emit on press
         const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
@@ -146,19 +159,21 @@ export default class MapScene extends Scene{
                         if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
                             this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
 
-                            /* Turn next1 node green */
+                            /* Turn next1 node grey */
                             if(this.roomArray[i][j].next1 !== null){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
                                 if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
                             }
-
-                            /* Turn next2 node green */
+                            /* Turn next2 node grey */
                             if(this.roomArray[i][j].next2 !== null){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next2.roomNum);
                                 if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
                             }
+                            /* Save button colors and load into the battle scene */
+                            MapScene.savedButtons = this.roomButtons;
+                            this.sceneManager.changeScene(floor1_scene, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
                         }
             }
         }
@@ -182,14 +197,14 @@ export default class MapScene extends Scene{
                 room.size.set(64,64);
                 floor.roomArray[i][j].position = position
                 
-                /* Sets first column of rooms as available */
-                if(i === 0)
-                    room.backgroundColor = PancakeColor.LIGHT_GRAY;
-
                 /* Add On-Click Events to each room */
                 room.onClickEventId = "room" + i+j;
                 this.receiver.subscribe("room" + i+j);
                 this.roomButtons[i][j] = room;
+
+                /* Sets first column of rooms as available */
+                if(i === 0)
+                    room.backgroundColor = PancakeColor.LIGHT_GRAY;
             }
         }
 

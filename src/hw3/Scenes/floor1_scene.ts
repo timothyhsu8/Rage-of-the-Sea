@@ -49,7 +49,6 @@ export default class floor1_scene extends Scene {
 
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
-        //console.log(this.characterState.inventory);
     }
 
     loadScene(){
