@@ -25,6 +25,9 @@ export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here
+    private roomButtons: Array<Button>;
+    private completedRooms: Array<string>;
+
     private map: Layer;
     private rooms: Layer;
     private controls: Layer;
@@ -41,6 +44,7 @@ export default class MapScene extends Scene{
         this.load.image("mapBackground", "hw3_assets/sprites/map.png");
         this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
         this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
+        this.load.image("battleIcon", "hw3_assets/sprites/Map_Battle_Icon.png");
     }
 
     startScene(){
@@ -52,6 +56,7 @@ export default class MapScene extends Scene{
         this.rooms = this.addUILayer("rooms");
 
         // render map
+        this.roomButtons = new Array<Button>();
         this.renderMap(MapGenerator.generateFloor(0));
 
         // Add play button, and give it an event to emit on press
@@ -124,6 +129,10 @@ export default class MapScene extends Scene{
             if(event.type === "quit")
                 this.sceneManager.changeScene(MainMenu, {});
 
+            if(event.type.substring(0, 4) === "room"){
+                let room = this.roomButtons.find(element => element.onClickEventId === event.type);
+                room.backgroundColor = PancakeColor.colorFromIndex(16);
+            }
         }
     }
 
@@ -134,16 +143,21 @@ export default class MapScene extends Scene{
                 var position = new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random())
                 let room = <Button>this.add.uiElement(UIElementType.BUTTON, "rooms" , 
                 {position: position, text: ""}) ;
-                let levelimage = this.add.sprite("healthbarborder", "rooms");  // healthbarborder as a placeholder
+                let levelimage = this.add.sprite("battleIcon", "rooms"); // draw battle icon as a placeholder until more kinds of rooms are added
                 levelimage.position.set(position.x, position.y);
                 levelimage.size.set(64, 64)
                 // room.position = new Vec2(i*12 + 3 - 6*Math.random(), j*14 + 3 + 3.5 - 7*Math.random());
                 room.borderWidth = 1;
                 room.borderColor = PancakeColor.colorFromIndex(6);
-                room.backgroundColor = Color.TRANSPARENT;
+                room.backgroundColor = PancakeColor.SAND;
                 room.size.set(64,64);
                 floor.roomArray[i][j].position = position
                 
+
+                /* Add On-Click Events to each room */
+                room.onClickEventId = "room" + i+j;
+                this.receiver.subscribe("room" + i+j);
+                this.roomButtons.push(room);
             }
         }
 
