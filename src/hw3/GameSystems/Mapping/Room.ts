@@ -1,3 +1,4 @@
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { RoomTypes } from "./RoomType_Enums";
 
 export default class Room {
@@ -8,6 +9,7 @@ export default class Room {
     level: number;
     beConnected: Boolean;
     toConnect: Boolean;
+    position: Vec2;
 
     constructor(roomType: RoomTypes, roomNum: number, level: number){
         this.roomType = roomType;

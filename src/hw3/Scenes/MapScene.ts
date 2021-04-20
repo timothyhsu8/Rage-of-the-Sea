@@ -19,6 +19,7 @@ import BattlerAI from "../AI/BattlerAI";
 import Floor from "../GameSystems/Mapping/Floor";
 import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import MapGenerator from "../GameSystems/MapGenerator";
+import Line from "../../Wolfie2D/Nodes/Graphics/Line";
 
 export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
@@ -128,7 +129,6 @@ export default class MapScene extends Scene{
 
     // generates room buttons with icons on the map
     renderMap(floor: Floor): void {
-        console.log(floor.roomArray);
         for(let i = 0; i < floor.roomArray.length; i++){
             for(let j = 0; j < floor.roomArray[i].length; j++){
                 var position = new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random())
@@ -136,13 +136,32 @@ export default class MapScene extends Scene{
                 {position: position, text: ""}) ;
                 let levelimage = this.add.sprite("healthbarborder", "rooms");  // healthbarborder as a placeholder
                 levelimage.position.set(position.x, position.y);
-                levelimage.size.set(50, 50)
+                levelimage.size.set(64, 64)
                 // room.position = new Vec2(i*12 + 3 - 6*Math.random(), j*14 + 3 + 3.5 - 7*Math.random());
                 room.borderWidth = 1;
                 room.borderColor = PancakeColor.colorFromIndex(6);
                 room.backgroundColor = Color.TRANSPARENT;
                 room.size.set(64,64);
+                floor.roomArray[i][j].position = position
                 
+            }
+        }
+
+        // generating the lines
+        for(let i = 0; i < floor.roomArray.length; i++){
+            for(let j = 0; j < floor.roomArray[i].length; j++){
+                if (floor.roomArray[i][j].next1 != null){  // check if next1 is null
+                    if (floor.roomArray[i][j].next1.position != null){  // check if the position is null
+                        let line = <Line>this.add.graphic(GraphicType.LINE, "rooms", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next1.position});
+                        line.color = Color.WHITE;
+                    }
+                }
+                if (floor.roomArray[i][j].next2 != null){  // check if next2 is null
+                    if (floor.roomArray[i][j].next2.position != null){  // check if position is null
+                        let line2 = <Line>this.add.graphic(GraphicType.LINE, "rooms", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next2.position});
+                        line2.color = Color.WHITE;
+                    }
+                }
             }
         }
     }
