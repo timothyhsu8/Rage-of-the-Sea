@@ -20,13 +20,15 @@ import Floor from "../GameSystems/Mapping/Floor";
 import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import MapGenerator from "../GameSystems/MapGenerator";
 import Line from "../../Wolfie2D/Nodes/Graphics/Line";
+import Room from "../GameSystems/Mapping/Room";
 
 export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here
-    private roomButtons: Array<Button>;
-    private completedRooms: Array<string>;
+    private roomArray: Array<Array<Room>>;
+    private roomButtons: Array<Array<Button>>;
+
 
     private map: Layer;
     private rooms: Layer;
@@ -55,9 +57,17 @@ export default class MapScene extends Scene{
         this.map = this.addUILayer("map");
         this.rooms = this.addUILayer("rooms");
 
+        // generate map
+        let generatedFloor = MapGenerator.generateFloor(0);
+
+        /* Initialize Buttons Array */
+        this.roomButtons = new Array<Array<Button>>(generatedFloor.roomArray.length);
+        for(let i=0; i < generatedFloor.roomArray.length; i++)
+            this.roomButtons[i] = new Array<Button>(generatedFloor.roomArray[i].length);
+    
         // render map
-        this.roomButtons = new Array<Button>();
-        this.renderMap(MapGenerator.generateFloor(0));
+        this.renderMap(generatedFloor);
+        console.log(this.roomButtons);
 
         // Add play button, and give it an event to emit on press
         const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
@@ -129,15 +139,34 @@ export default class MapScene extends Scene{
             if(event.type === "quit")
                 this.sceneManager.changeScene(MainMenu, {});
 
+            /* Changing colors of nodes */
             if(event.type.substring(0, 4) === "room"){
-                let room = this.roomButtons.find(element => element.onClickEventId === event.type);
-                room.backgroundColor = PancakeColor.colorFromIndex(16);
+                for(let i=0 ; i < this.roomButtons.length ; i++)
+                    for(let j=0 ; j < this.roomButtons[i].length ; j++)
+                        if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
+                            this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
+
+                            /* Turn next1 node green */
+                            if(this.roomArray[i][j].next1 !== null){
+                                let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
+                                if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
+                                    this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                            }
+
+                            /* Turn next2 node green */
+                            if(this.roomArray[i][j].next2 !== null){
+                                let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next2.roomNum);
+                                if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
+                                    this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                            }
+                        }
             }
         }
     }
 
     // generates room buttons with icons on the map
     renderMap(floor: Floor): void {
+        this.roomArray = floor.roomArray;
         for(let i = 0; i < floor.roomArray.length; i++){
             for(let j = 0; j < floor.roomArray[i].length; j++){
                 var position = new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random())
@@ -153,11 +182,14 @@ export default class MapScene extends Scene{
                 room.size.set(64,64);
                 floor.roomArray[i][j].position = position
                 
+                /* Sets first column of rooms as available */
+                if(i === 0)
+                    room.backgroundColor = PancakeColor.LIGHT_GRAY;
 
                 /* Add On-Click Events to each room */
                 room.onClickEventId = "room" + i+j;
                 this.receiver.subscribe("room" + i+j);
-                this.roomButtons.push(room);
+                this.roomButtons[i][j] = room;
             }
         }
 
@@ -178,5 +210,13 @@ export default class MapScene extends Scene{
                 }
             }
         }
+    }
+
+    findRoomRowCol(roomsArray:Array<Array<Room>>, roomToFind:number): Vec2{
+        for(let i=0 ; i < roomsArray.length ; i++)
+            for(let j=0 ; j < roomsArray[i].length ; j++)
+                if(roomsArray[i][j].roomNum === roomToFind)
+                    return new Vec2(i, j);
+        return null;
     }
 }
