@@ -24,6 +24,9 @@ export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
     
     private characterState: CharacterState; // All data of the character goes here
+    private roomButtons: Array<Button>;
+    private completedRooms: Array<string>;
+
     private map: Layer;
     private rooms: Layer;
     private controls: Layer;
@@ -52,6 +55,7 @@ export default class MapScene extends Scene{
         this.rooms = this.addUILayer("rooms");
 
         // render map
+        this.roomButtons = new Array<Button>();
         this.renderMap(MapGenerator.generateFloor(0));
 
         // Add play button, and give it an event to emit on press
@@ -124,6 +128,10 @@ export default class MapScene extends Scene{
             if(event.type === "quit")
                 this.sceneManager.changeScene(MainMenu, {});
 
+            if(event.type.substring(0, 4) === "room"){
+                let room = this.roomButtons.find(element => element.onClickEventId === event.type);
+                room.backgroundColor = PancakeColor.colorFromIndex(16);
+            }
         }
     }
 
@@ -143,7 +151,11 @@ export default class MapScene extends Scene{
                 room.borderColor = PancakeColor.colorFromIndex(6);
                 room.backgroundColor = PancakeColor.SAND;
                 room.size.set(64,64);
-                
+
+                /* Add On-Click Events to each room */
+                room.onClickEventId = "room" + i+j;
+                this.receiver.subscribe("room" + i+j);
+                this.roomButtons.push(room);
             }
         }
     }
