@@ -21,6 +21,7 @@ import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import MapGenerator from "../GameSystems/MapGenerator";
 import Line from "../../Wolfie2D/Nodes/Graphics/Line";
 import Room from "../GameSystems/Mapping/Room";
+import { RoomTypes } from "../GameSystems/Mapping/RoomType_Enums";
 
 export default class MapScene extends Scene{
     // Layers, for multiple main menu screens
@@ -83,15 +84,15 @@ export default class MapScene extends Scene{
         }
 
         // Add play button, and give it an event to emit on press
-        const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
-        play.size.set(200, 50);
-        play.borderWidth = 2;
-        play.borderColor = Color.WHITE;
-        play.backgroundColor = new Color(50, 50, 70, 1);
-        play.onClickEventId = "play";
-        play.fontSize = 35;
+        // const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
+        // play.size.set(200, 50);
+        // play.borderWidth = 2;
+        // play.borderColor = Color.WHITE;
+        // play.backgroundColor = new Color(50, 50, 70, 1);
+        // play.onClickEventId = "play";
+        // play.fontSize = 35;
 
-        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x, center.y+400), text: "View Inventory"});
+        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-200, center.y+400), text: "View Inventory"});
         inventory.size.set(250, 50);
         inventory.borderWidth = 2;
         inventory.borderColor = Color.WHITE;
@@ -99,7 +100,7 @@ export default class MapScene extends Scene{
         inventory.onClickEventId = "inventory";
         inventory.fontSize = 35;
 
-        const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 300, center.y+400), text: "Quit"});
+        const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 200, center.y+400), text: "Quit"});
         quit.size.set(200, 50);
         quit.borderWidth = 2;
         quit.borderColor = Color.WHITE;
@@ -159,14 +160,14 @@ export default class MapScene extends Scene{
                         if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
                             this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
 
-                            /* Turn next1 node grey */
-                            if(this.roomArray[i][j].next1 !== null){
+                            /* Turn next1 node grey */  // FINAL PROJECT TODO - Fix this to work with the boss room
+                            if(this.roomArray[i][j].next1 !== null && this.roomArray[i][j].next1.roomType !== RoomTypes.BOSS_ROOM){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
                                 if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
                             }
                             /* Turn next2 node grey */
-                            if(this.roomArray[i][j].next2 !== null){
+                            if(this.roomArray[i][j].next2 !== null && this.roomArray[i][j].next2.roomType !== RoomTypes.BOSS_ROOM){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next2.roomNum);
                                 if(this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;

@@ -1,6 +1,6 @@
 {
     "monsterType": "kraken",
     "mode": "chase",
-    "health": 5,
+    "health": 7,
     "ability": "groundslam"
 }
