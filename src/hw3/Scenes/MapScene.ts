@@ -131,8 +131,12 @@ export default class MapScene extends Scene{
         console.log(floor.roomArray);
         for(let i = 0; i < floor.roomArray.length; i++){
             for(let j = 0; j < floor.roomArray[i].length; j++){
-                let room = <Button>this.add.uiElement(UIElementType.BUTTON, "rooms", 
-                {position: new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random()), text: ""});
+                var position = new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random())
+                let room = <Button>this.add.uiElement(UIElementType.BUTTON, "rooms" , 
+                {position: position, text: ""}) ;
+                let levelimage = this.add.sprite("healthbarborder", "rooms");  // healthbarborder as a placeholder
+                levelimage.position.set(position.x, position.y);
+                levelimage.size.set(50, 50)
                 // room.position = new Vec2(i*12 + 3 - 6*Math.random(), j*14 + 3 + 3.5 - 7*Math.random());
                 room.borderWidth = 1;
                 room.borderColor = PancakeColor.colorFromIndex(6);
