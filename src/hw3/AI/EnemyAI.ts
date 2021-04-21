@@ -6,7 +6,6 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import { hw3_Events } from "../hw3_constants";
 import BattlerAI from "./BattlerAI";
 import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
@@ -60,7 +59,6 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
         /* Enemy Dies */
         if(this.health <= 0){
-            //console.log(this.emitter.getEventQueue().getQueue().getSize());
             this.owner.setAIActive(false, {});
             this.owner.isCollidable = false;
             this.owner.visible = false;

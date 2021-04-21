@@ -3,12 +3,8 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Timer from "../../Wolfie2D/Timing/Timer";
 import Inventory from "../GameSystems/Inventory";
-import InventoryManager from "../GameSystems/InventoryManager";
-import Healthpack from "../GameSystems/items/Healthpack";
 import Item from "../GameSystems/items/Item";
-import MainMenu from "../Scenes/MenuScenes/MainMenu";
 import BattlerAI from "./BattlerAI";
 
 export default class PlayerController implements BattlerAI {

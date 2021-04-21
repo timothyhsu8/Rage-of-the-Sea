@@ -1,36 +1,27 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
-import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
+import Stats from "../../Stats";
+import Ability from "./Ability";
 
 export default class Item {
     /** The sprite that represents this weapon in the world or in an inventory */
     name: string;
     type: ItemType;
-    active: boolean; // Determines if this is an active or a passive item
     sprite: Sprite;
-    
-    /* Stats */
-    health: number;
-    attack: number;
-    attackMult: number;
-    defense: number;
-    speed: number;
-    takeDamageMult: number;
+    ability: Ability;
+    damage: number;
 
-    constructor(name: string, type:ItemType, active: boolean, sprite: Sprite, health: number, attack: number, 
+    /* Stats */
+    stats: Stats;
+
+    constructor(name: string, type:ItemType, ability: Ability, sprite: Sprite, health: number, attack: number, 
         attackMult: number, defense: number, speed:number, takeDamageMult: number){
         this.name = name;
         this.type = type;
-        this.active = active;
+        this.ability = ability;
         this.sprite = sprite;
-
-        this.health = health;
-        this.attack = attack;
-        this.attackMult = attackMult;
-        this.defense = defense;
-        this.speed = speed;
-        this.takeDamageMult = takeDamageMult;
+        this.stats = new Stats(health, attack, attackMult, defense, speed, takeDamageMult);
     }
 
     moveSprite(position: Vec2, layer?: string){
@@ -49,9 +40,24 @@ export default class Item {
 
     /* FINAL PROJECT TODO - Implement this method */
     use(user: AnimatedSprite, userType: string, direction: Vec2): boolean { 
+        //this.ability.cast();
         return false;
     }
     //abstract use(user: GameNode, ...args: any): void;
+
+    static createItem(type: ItemType): Item{
+        switch(type){
+            case ItemType.DOUBLE_EDGED_SWORD:
+                return new Item("Double Edged Sword", type, null, null, 0, 0, 2.0, 0, 0, 2.0);
+
+            case ItemType.NORMAL_BOOTS:
+                return new Item("Normal Boots", type, null, null, 0, 0, 0, 0, 10, 0)
+
+            default:
+                console.log("Unspecified item");
+                return null;
+        }
+    }
 }
 
 export enum ItemType {

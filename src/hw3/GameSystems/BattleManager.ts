@@ -30,7 +30,7 @@ export default class BattleManager {
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
                     if(ability.hits(enemies[i].owner)){
-                        enemies[i].damage(ability.type.damage * characterState.attackMult); // FINAL PROJECT TODO - Calculate effoct of Attack stat here
+                        enemies[i].damage(ability.type.damage * characterState.stats.attackMult); // FINAL PROJECT TODO - Calculate effoct of Attack stat here
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }
             }, 200);
@@ -61,7 +61,7 @@ export default class BattleManager {
             setTimeout(function(){
                 // Check if player is hit by attack by comparing player tile to damage tiles
                 if(ability.hitsSprite(tilemap.getColRowAt(playerPos), damageTiles))
-                    playerAI.damage(ability.type.damage * characterState.takeDamageMult);   // FINAL PROJECT TODO - Calculate effoct of Defense stat here
+                    playerAI.damage(ability.type.damage * characterState.stats.takeDamageMult);   // FINAL PROJECT TODO - Calculate effoct of Defense stat here
 
                 /* Set floor tiles back to normal */
                 for(let i = 0 ; i < damageTiles.length ; i++){

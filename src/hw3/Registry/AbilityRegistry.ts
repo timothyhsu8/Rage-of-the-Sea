@@ -1,7 +1,5 @@
 import Registry from "../../Wolfie2D/Registry/Registries/Registry";
 import ResourceManager from "../../Wolfie2D/ResourceManager/ResourceManager";
-import SemiAutoGun from "../GameSystems/items/WeaponTypes/SemiAutoGun";
-import Slice from "../GameSystems/items/WeaponTypes/Slice";
 import GroundSlam from "../GameSystems/items/AbilityTypes/GroundSlam";
 import WeaponType from "../GameSystems/items/WeaponTypes/WeaponType";
 import AnchorSwing from "../GameSystems/items/AbilityTypes/AnchorSwing";
@@ -24,8 +22,6 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         // Register default types
         this.registerItem("groundslam", GroundSlam);
         this.registerItem("anchorswing", AnchorSwing);
-
-        //this.registerItem("semiAutoGun", SemiAutoGun);
     }
 
     // We don't need this for this assignment

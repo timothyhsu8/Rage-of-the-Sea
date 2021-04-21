@@ -1,11 +1,7 @@
 import Game from "./Wolfie2D/Loop/Game";
-import floor1_scene from "./hw3/Scenes/floor1_scene";
 import RegistryManager from "./Wolfie2D/Registry/RegistryManager";
-import WeaponTemplateRegistry from "./hw3/Registry/WeaponRegistry";
 import AbilityTemplateRegistry from "./hw3/Registry/AbilityRegistry";
-import WeaponTypeRegistry from "./hw3/Registry/WeaponTypeRegistry";
 import AbilityTypeRegistry from "./hw3/Registry/AbilityTypeRegistry";
-import MainMenu from "./hw3/Scenes/MenuScenes/MainMenu";
 import SplashScreen from "./hw3/Scenes/MenuScenes/SplashScreen";
 
 // The main function is your entrypoint into Wolfie2D. Specify your first scene and any options here.
@@ -32,12 +28,6 @@ import SplashScreen from "./hw3/Scenes/MenuScenes/SplashScreen";
     }
 
     // Set up custom registries
-    let weaponTemplateRegistry = new WeaponTemplateRegistry();
-    RegistryManager.addCustomRegistry("weaponTemplates", weaponTemplateRegistry);
-    
-    let weaponTypeRegistry = new WeaponTypeRegistry();
-    RegistryManager.addCustomRegistry("weaponTypes", weaponTypeRegistry);
-
     let abilityTemplateRegistry = new AbilityTemplateRegistry();
     RegistryManager.addCustomRegistry("abilityTemplates", abilityTemplateRegistry);
 

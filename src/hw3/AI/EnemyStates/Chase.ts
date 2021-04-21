@@ -2,7 +2,6 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import NavigationPath from "../../../Wolfie2D/Pathfinding/NavigationPath";
-import { hw3_Events, hw3_Names } from "../../hw3_constants";
 import EnemyAI, { EnemyStates, MonsterTypes } from "../EnemyAI";
 import EnemyState from "./EnemyState";
 import Stack from "../../../Wolfie2D/DataTypes/Stack";
@@ -70,12 +69,6 @@ export default class Chase extends EnemyState {
 
     onExit(): Record<string, any> {
         return this.retObj;
-    }
-
-    getNextPath(): NavigationPath {
-        let path = this.owner.getScene().getNavigationManager().getPath(hw3_Names.NAVMESH, this.owner.position, this.patrolRoute[this.routeIndex]);
-        this.routeIndex = (this.routeIndex + 1)%this.patrolRoute.length;
-        return path;
     }
 
 }

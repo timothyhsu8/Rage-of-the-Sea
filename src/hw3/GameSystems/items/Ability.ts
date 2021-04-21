@@ -1,14 +1,10 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Emitter from "../../../Wolfie2D/Events/Emitter";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
-import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import Timer from "../../../Wolfie2D/Timing/Timer";
-import { hw3_Events } from "../../hw3_constants";
 import BattleManager from "../BattleManager";
-import Item from "./Item";
 import AbilityType from "./AbilityTypes/AbilityType";
 import Scene from "../../../Wolfie2D/Scene/Scene";
-import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
 export default class Ability {

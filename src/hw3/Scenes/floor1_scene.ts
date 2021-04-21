@@ -15,12 +15,7 @@ import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
-import MapScene from "./MapScene";
 import CharacterState from "../CharacterState";
-import { ItemType } from "../GameSystems/items/Item";
-import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Color from "../../Wolfie2D/Utils/Color";
 import ItemSelectScene from "./ItemSelectScene";
 
 export default class floor1_scene extends Scene {
@@ -125,7 +120,7 @@ export default class floor1_scene extends Scene {
                     {
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1/3);
-                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                         this.sceneManager.changeScene(GameOver);
                         break;
                     }
@@ -133,7 +128,7 @@ export default class floor1_scene extends Scene {
                     {
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1/3);
-                        this.characterState.health = ((<BattlerAI>this.player._ai).health);
+                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                         this.sceneManager.changeScene(ItemSelectScene, {characterState: this.characterState});
                         break;
                     }
@@ -170,7 +165,6 @@ export default class floor1_scene extends Scene {
     
     createAbility(type: AbilityTypes){
         let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
-
         return new Ability(abilityType, this.battleManager, this);
     }
 
@@ -223,8 +217,8 @@ export default class floor1_scene extends Scene {
         this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
-                health: this.characterState.health,
-                speed: this.characterState.speed,
+                health: this.characterState.stats.health,
+                speed: this.characterState.stats.speed,
                 inventory: this.characterState.getInventory(),
                 tilemap: "Floor"
             });
