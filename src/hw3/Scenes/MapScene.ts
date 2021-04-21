@@ -150,8 +150,11 @@ export default class MapScene extends Scene{
             if(event.type === "inventory")
                 this.sceneManager.changeScene(InventoryScene, {characterState: this.characterState});
             
-            if(event.type === "quit")
+            if(event.type === "quit"){
+                MapScene.savedButtons = undefined;
+                MapScene.savedFloor = undefined;
                 this.sceneManager.changeScene(MainMenu, {});
+            }
 
             /* Changing colors of nodes */
             if(event.type.substring(0, 4) === "room"){

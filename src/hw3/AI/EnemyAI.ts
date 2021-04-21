@@ -47,10 +47,6 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.player = options.player;
         this.ability = options.ability;
 
-        // Subscribe to events
-        this.receiver.subscribe(hw3_Events.SHOT_FIRED);
-        console.log("Subscribed to event");
-
         // Initialize to the default state
         this.initialize(EnemyStates.DEFAULT);
 
@@ -64,10 +60,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
         /* Enemy Dies */
         if(this.health <= 0){
+            //console.log(this.emitter.getEventQueue().getQueue().getSize());
             this.owner.setAIActive(false, {});
             this.owner.isCollidable = false;
             this.owner.visible = false;
             this.owner.positionX = -1000;
+            //this.owner.destroy();
             this.emitter.fireEvent(GameEvents.ENEMY_DIED, {});
         }
     }
