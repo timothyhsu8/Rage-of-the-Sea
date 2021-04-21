@@ -40,8 +40,10 @@ export default class Item {
 
     /* FINAL PROJECT TODO - Implement this method */
     use(user: AnimatedSprite, userType: string, direction: Vec2): boolean { 
-        //this.ability.cast();
-        return false;
+        /* If this item has no active ability return false */
+        if(this.ability === null)
+            return false;
+        return this.ability.cast(user, userType, direction);
     }
     //abstract use(user: GameNode, ...args: any): void;
 

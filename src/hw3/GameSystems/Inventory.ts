@@ -39,7 +39,7 @@ export default class Inventory{
         return this.basicAttack;
     }
 
-    getItem(): Item{
+    getCurrentItem(): Item{
         return this.items[this.currentItem];
     }
 

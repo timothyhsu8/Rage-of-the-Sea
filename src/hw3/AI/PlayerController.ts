@@ -123,8 +123,12 @@ export default class PlayerController implements BattlerAI {
 
             // Use Current Item on right click
             else if(Input.isMouseRightClick())
-                if(!this.inventory.isEmpty())
-                    this.inventory.getItem().use(this.owner, "player", this.lookDirection);
+                if(!this.inventory.isEmpty()){
+                    this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+                    // this.owner.animation.playIfNotAlready("USEITEM");
+                    this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
+                    this.owner.rotation = 0;
+                }
         }
 
         // Get the unit vector in the look direction

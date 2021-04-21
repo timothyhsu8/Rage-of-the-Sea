@@ -3,6 +3,7 @@ import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes
 import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
+import LoadScreen from "./LoadScreen";
 import MainMenu from "./MainMenu";
 
 export default class SplashScreen extends Scene {    
@@ -37,7 +38,7 @@ export default class SplashScreen extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play"){
-                this.sceneManager.changeScene(MainMenu, {});
+                this.sceneManager.changeScene(LoadScreen, {});
             }
         }
     }

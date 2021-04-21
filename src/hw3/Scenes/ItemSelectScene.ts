@@ -2,7 +2,6 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import CharacterState from "../CharacterState";
@@ -64,14 +63,14 @@ export default class ItemSelectScene extends Scene {
         item2description.fontSize = 20;
 
         /* None */
-        const none = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x+500, center.y), text: "None"});
-        none.size.set(400, 500);
-        none.borderWidth = 2;
-        none.borderColor = Color.WHITE;
-        none.backgroundColor = new Color(50, 50, 70, 1);
-        none.onClickEventId = "none";
-        none.fontSize = 35;
-        this.selections[2] = none;
+        const item3 = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x+500, center.y), text: "None"});
+        item3.size.set(400, 500);
+        item3.borderWidth = 2;
+        item3.borderColor = Color.WHITE;
+        item3.backgroundColor = new Color(50, 50, 70, 1);
+        item3.onClickEventId = "item3";
+        item3.fontSize = 35;
+        this.selections[2] = item3;
         
         /* Select */
         const select = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y+350), text: "SELECT"});
@@ -86,7 +85,7 @@ export default class ItemSelectScene extends Scene {
         // Subscribe to the button events
         this.receiver.subscribe("item1");
         this.receiver.subscribe("item2");
-        this.receiver.subscribe("none");
+        this.receiver.subscribe("item3");
         this.receiver.subscribe("select");
     }
 
@@ -94,17 +93,9 @@ export default class ItemSelectScene extends Scene {
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
-            /* Item 1 */
-            if(event.type === "item1")
-                this.itemSelected = 0;
-            
-            /* Item 2 */
-            if(event.type === "item2")
-                this.itemSelected = 1;
-
-            /* None */
-            if(event.type === "none")
-                this.itemSelected = 2;
+            /* Select Item */
+            if(event.type.substring(0, 4) === "item")
+                this.itemSelected = parseInt(event.type.substring(4))-1;
 
             /* Select Item and Continue */
             if(event.type === "select"){

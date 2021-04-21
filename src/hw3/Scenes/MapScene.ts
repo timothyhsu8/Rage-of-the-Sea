@@ -3,11 +3,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import inventory_scene from "./MenuScenes/InventoryScene";
-import Slider from "../../Wolfie2D/Nodes/UIElements/Slider";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import TextInput from "../../Wolfie2D/Nodes/UIElements/TextInput";
 import floor1_scene from "./floor1_scene";
 import CharacterState from "../CharacterState";
 import InventoryScene from "./MenuScenes/InventoryScene";
@@ -15,9 +11,7 @@ import MainMenu from "./MenuScenes/MainMenu";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
-import BattlerAI from "../AI/BattlerAI";
 import Floor from "../GameSystems/Mapping/Floor";
-import UIElement from "../../Wolfie2D/Nodes/UIElement";
 import MapGenerator from "../GameSystems/MapGenerator";
 import Line from "../../Wolfie2D/Nodes/Graphics/Line";
 import Room from "../GameSystems/Mapping/Room";
@@ -45,11 +39,7 @@ export default class MapScene extends Scene{
     }
 
     loadScene(){
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
-        this.load.image("mapBackground", "hw3_assets/sprites/map.png");
         this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
-        this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
-        this.load.image("battleIcon", "hw3_assets/sprites/Map_Battle_Icon.png");
     }
 
     startScene(){

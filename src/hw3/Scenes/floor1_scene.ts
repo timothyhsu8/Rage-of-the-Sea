@@ -5,14 +5,12 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import EnemyAI from "../AI/EnemyAI";
-import RegistryManager from "../../Wolfie2D/Registry/RegistryManager";
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import BattleManager from "../GameSystems/BattleManager";
 import BattlerAI from "../AI/BattlerAI";
 import GameOver from "./GameOver";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
-import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType"
 import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
 import CharacterState from "../CharacterState";
@@ -38,8 +36,6 @@ export default class floor1_scene extends Scene {
 
     private tilemap: OrthogonalTilemap;
 
-    private options: Record<string, any>;
-
     private characterState: CharacterState;
 
     initScene(init: Record<string, any>): void {
@@ -47,29 +43,19 @@ export default class floor1_scene extends Scene {
     }
 
     loadScene(){
-        // Load the player and enemy spritesheets
-        this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
+        /* FINAL PROJECT TODO - Maybe add conditionals here and use this scene to load every room for every floor */
+        
+        // Load Enemy Spritesheets
         this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemy.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/lizard.json");
 
         // Load the tilemap
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
-        // Load the scene info
-        this.load.object("abilityData", "hw3_assets/data/abilityData.json");
-
         // Load in the enemy info
-        this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" );
+        //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); // 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
-
-        // Load in item info
-        this.load.object("itemData", "hw3_assets/data/items.json");
-
-        this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
-        this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
-        this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
     }
 
     startScene(){
@@ -89,7 +75,6 @@ export default class floor1_scene extends Scene {
         this.battleManager = new BattleManager();
 
         // Initializations
-        this.initializeAbilities();
         this.subscribeToEvents();
         this.initializePlayer();
         this.initializeEnemies();
@@ -98,8 +83,6 @@ export default class floor1_scene extends Scene {
         this.battleManager.setPlayer(<BattlerAI>this.player._ai, this.characterState);
         this.battleManager.setEnemies(this.enemies.map(enemy => <BattlerAI>enemy._ai));
         this.battleManager.setTileMap(this.player, this.tilemap);
-
-        this.receiver.subscribe("getitem");
 
         // UI for healthbar
         this.addUILayer("healthbar");
@@ -156,43 +139,18 @@ export default class floor1_scene extends Scene {
      */
     protected subscribeToEvents(){
         this.receiver.subscribe([
-            "getitem",
             GameEvents.ENEMY_DIED,
             GameEvents.PLAYER_DIED,
             GameEvents.ROOM_CLEARED
         ]);
     }
-    
-    createAbility(type: AbilityTypes){
-        let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
-        return new Ability(abilityType, this.battleManager, this);
-    }
-
-    initializeAbilities(): void{
-        let abilityData = this.load.getObject("abilityData");
-
-        for(let i = 0 ; i < abilityData.numAbilities ; i++){
-            let ability = abilityData.abilities[i];
-
-            // Get the constructor of the prototype
-            let constr = RegistryManager.getRegistry("abilityTemplates").get(ability.abilityType);
-
-             // Create a weapon type
-             let abilityType = new constr();
-
-             // Initialize the weapon type
-             abilityType.initialize(ability);
- 
-             // Register the weapon type
-             RegistryManager.getRegistry("abilityTypes").registerItem(ability.name, abilityType)
-        }
-    }
 
     initializePlayer(): void {
         // Create the inventory
         let inventory = new Inventory(this, 10);
-        let basicAttack = this.createAbility(AbilityTypes.PLAYER_ANCHORSWING);
+        let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         inventory.setBasicAttack(basicAttack);
+        this.characterState.getInventory().setBasicAttack(basicAttack); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
@@ -214,7 +172,6 @@ export default class floor1_scene extends Scene {
         this.player.position.set(4*16, 4*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
-        this.characterState.getInventory().setBasicAttack(this.createAbility(AbilityTypes.PLAYER_ANCHORSWING)); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
         this.player.addAI(PlayerController,
             {
                 health: this.characterState.stats.health,
@@ -223,7 +180,6 @@ export default class floor1_scene extends Scene {
                 tilemap: "Floor"
             });
         this.player.setImageOffset(new Vec2(0, 17));
-        //this.player.imageOffset.set();
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
         this.player.animation.play("IDLE");
     }
@@ -231,7 +187,7 @@ export default class floor1_scene extends Scene {
     initializeEnemies(){
         const monsterData = this.load.getObject("floor1enemies");   // FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
-        let positions = monsterData.positions;
+        let positions = [...monsterData.positions];
 
         // Create an enemies array
         this.enemies = new Array(numEnemies);
@@ -242,7 +198,7 @@ export default class floor1_scene extends Scene {
             /* Gets random monster data */
             let monsterInfo = this.load.getObject(monsterData.monsterTypes[this.randomInt(monsterData.monsterTypes.length)] + "Data");
 
-            // Create an enemy
+            /* Create an enemy */
             this.enemies[i] = this.add.animatedSprite(monsterInfo.monsterType, "primary");
 
             /* Assigns random position to this enemy */
@@ -258,7 +214,7 @@ export default class floor1_scene extends Scene {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
                 health: monsterInfo.health,
-                ability: this.createAbility(monsterInfo.ability),
+                ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
                 player: this.player
             }
 
@@ -267,7 +223,7 @@ export default class floor1_scene extends Scene {
         }
     }
 
-    /* Generates a random integer in the range [0,max) */
+    /* Generates a random integer in the range [0,max) FINAL PROJECT TODO - Move this somewhere else ideally */
     randomInt(max: number): number{
         return Math.floor(Math.random() * max);
     }

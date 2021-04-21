@@ -17,7 +17,6 @@ export default class AnchorSwing extends AbilityType {
 
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2) : Array<Vec2>{
-        /* FINAL PROJECT TODO - Make sure abilties don't try to calculate something that's out of bounds */
         let damageTiles: Array<Vec2> = [];
         let xPos = ownerPositionRowCol.x;
         let yPos = ownerPositionRowCol.y;

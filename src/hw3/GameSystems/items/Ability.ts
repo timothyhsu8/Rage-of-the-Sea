@@ -6,6 +6,7 @@ import BattleManager from "../BattleManager";
 import AbilityType from "./AbilityTypes/AbilityType";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
 
 export default class Ability {
     /** The type of this weapon */
@@ -56,9 +57,8 @@ export default class Ability {
     /* Cast the ability */
     cast(user: AnimatedSprite, userType: string, direction: Vec2): boolean {
         // If the cooldown timer is still running, we can't use the weapon
-        if(!this.cooldownTimer.isStopped()){
+        if(!this.cooldownTimer.isStopped())
             return false;
-        }
 
         // Do a type specific weapon animation
         this.type.doAnimation(user, direction, ...this.assets);
@@ -66,9 +66,6 @@ export default class Ability {
         // Apply damage
         this.battleManager.handleInteraction(userType, this, direction, user);
 
-        // Send out an event to alert enemies
-        //this.emitter.fireEvent(hw3_Events.SHOT_FIRED, {position: user.position.clone(), volume: this.type.useVolume});
-    
         // Reset the cooldown timer
         this.cooldownTimer.start();
 
@@ -80,11 +77,14 @@ export default class Ability {
         return this.type.hitsSprite(targetRowCol, damageTiles);
     }
 
-    /**
-     * A check for whether or not this weapon hit a node
-     */
+    /* Determines if ability hits based on sprites (Player attacking enemy) */
     hits(node: GameNode): boolean {
         return this.type.hits(node, ...this.assets);
+    }
+
+    static createAbility(type: AbilityTypes, battleManager: BattleManager, scene: Scene){
+        let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
+        return new Ability(abilityType, battleManager, scene);
     }
 }
 
