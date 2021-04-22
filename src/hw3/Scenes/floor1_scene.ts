@@ -15,6 +15,8 @@ import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
 import CharacterState from "../CharacterState";
 import ItemSelectScene from "./ItemSelectScene";
+import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -96,6 +98,9 @@ export default class floor1_scene extends Scene {
                 switch(event.type){
                     case GameEvents.ENEMY_DIED:
                     {
+                        let owner = event.data.get("node");
+                        owner.position.x = -1000;
+                        //this.owner.destroy();
                         this.numMonstersLeft--;
                         break;
                     }
@@ -217,6 +222,35 @@ export default class floor1_scene extends Scene {
                 ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
                 player: this.player
             }
+
+            /* Add Tweens */
+            this.enemies[i].tweens.add("death", {
+                startDelay: 0,
+                duration: 500,
+                onEnd: GameEvents.ENEMY_DIED,
+                node: this.enemies[i],
+                effects: [
+                    {
+                        property: TweenableProperties.alpha,
+                        start: 1.0,
+                        end: 0,
+                        ease: EaseFunctionType.OUT_SINE
+                    }
+                ]
+            });
+
+            // this.enemies[i].tweens.add("knockback", {
+            //     startDelay: 0,
+            //         duration: 500,
+            //         effects: [
+            //             {
+            //                 property: TweenableProperties.posX,
+            //                 start: this.enemies[i].position.x,
+            //                 end: this.enemies[i].position.x-10,
+            //                 ease: EaseFunctionType.OUT_SINE
+            //             }
+            //         ]
+            // });
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);
             this.battleManager.enemySprites = this.enemies;

@@ -108,6 +108,10 @@ export default class Viewport {
             pos = new Vec2(vecOrX, y);
         }
 
+        // let newCenter = new Vec2;
+        // newCenter.x = MathUtils.lerp(pos.x + pos.x*0.1, this.view.center.clone().x, 0.1);
+        // newCenter.y = MathUtils.lerp(pos.y + pos.y*0.1, this.view.center.clone().y, 0.1);
+        // this.view.center = newCenter;
         this.view.center = pos;
     }
 
@@ -249,7 +253,10 @@ export default class Viewport {
         pos.x = Math.floor(pos.x) + this.offset.x;
         pos.y = Math.floor(pos.y) + this.offset.y;
 
-        this.view.center.copy(pos);
+        //this.view.center.copy(pos)
+        let newx = MathUtils.lerp(this.view.center.clone().x, pos.x, 0.1);
+        let newy = MathUtils.lerp(this.view.center.clone().y, pos.y, 0.1);
+        this.view.center = new Vec2(newx, newy);
     }
 
     update(deltaT: number): void {

@@ -1,8 +1,6 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
-import State from "../../Wolfie2D/DataTypes/State/State";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
@@ -11,7 +9,6 @@ import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
-import MainMenu from "../Scenes/MenuScenes/MainMenu";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -56,15 +53,13 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     damage(damage: number): void {
         this.health -= damage;
+        //this.owner.tweens.play("knockback");
 
         /* Enemy Dies */
         if(this.health <= 0){
             this.owner.setAIActive(false, {});
             this.owner.isCollidable = false;
-            this.owner.visible = false;
-            this.owner.positionX = -1000;
-            //this.owner.destroy();
-            this.emitter.fireEvent(GameEvents.ENEMY_DIED, {});
+            this.owner.tweens.play("death");
         }
     }
 

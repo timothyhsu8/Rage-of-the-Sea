@@ -25,7 +25,6 @@ export default class MainMenu extends Scene {
     static image: string;
     
     loadScene(){
-        this.load.image("portrait", "hw3_assets/sprites/diverportrait.png");
         this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
         this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
     }

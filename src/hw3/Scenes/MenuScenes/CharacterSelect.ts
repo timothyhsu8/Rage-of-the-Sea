@@ -1,26 +1,21 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Inventory from "../../GameSystems/Inventory";
-import Ability, { AbilityTypes } from "../../GameSystems/items/Ability";
-import AbilityType from "../../GameSystems/items/AbilityTypes/AbilityType";
-import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
-import BattleManager from "../../GameSystems/BattleManager";
-import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import CharacterState from "../../CharacterState";
 import MainMenu from "./MainMenu";
 import MapScene from "../MapScene";
 
 
 export default class CharacterSelect extends Scene {
-    private battleManager: BattleManager;
 
     loadScene(){
-        this.load.image("portrait", "hw3_assets/sprites/diversplashart.png");
+        this.load.image("diversplash", "hw3_assets/sprites/diversplashart.png");
+        this.load.image("splashborder", "hw3_assets/sprites/splashartborder.png");
+
         this.load.image("lasergun", "hw3_assets/sprites/lasergun.png"); // Load anchor icon for weapon
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
     }
@@ -29,10 +24,11 @@ export default class CharacterSelect extends Scene {
         const center = this.viewport.getCenter();
 
         this.addLayer("primary", 10);
-        let portrait = this.add.sprite("portrait", "primary");
-        portrait.position = new Vec2(center.x, center.y-150);
-        
-        let portraitborder = this.add.sprite("portraitborder", "primary");
+
+        let diversplash = this.add.sprite("diversplash", "primary");
+        diversplash.position = new Vec2(center.x, center.y-150);
+    
+        let portraitborder = this.add.sprite("splashborder", "primary");
         portraitborder.position = new Vec2(center.x, center.y-150);
 
         /* Back Button */

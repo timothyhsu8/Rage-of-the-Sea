@@ -3,6 +3,7 @@ import GameNode from "../../Nodes/GameNode";
 import { AnimationState, TweenData } from "./AnimationTypes";
 import EaseFunctions from "../../Utils/EaseFunctions";
 import MathUtils from "../../Utils/MathUtils";
+import Emitter from "../../Events/Emitter";
 
 /**
  * A manager for the tweens of a GameNode.
@@ -17,6 +18,8 @@ export default class TweenManager {
     protected owner: GameNode;
     /** The list of created tweens */
     protected tweens: Map<TweenData>;
+    /** An event emitter */
+    protected emitter: Emitter;
 
     /**
      * Creates a new TweenManager
@@ -25,6 +28,7 @@ export default class TweenManager {
     constructor(owner: GameNode){
         this.owner = owner;
         this.tweens = new Map();
+        this.emitter = new Emitter();
     }
 
     /**
@@ -131,6 +135,8 @@ export default class TweenManager {
                             tween.elapsedTime -= tween.duration;
                         } else {
                             // We aren't looping and can't reverse, so stop
+                            if(tween.onEnd)
+                                this.emitter.fireEvent(tween.onEnd, {node: tween.node}); 
                             this.stop(key);
                         }
                     }

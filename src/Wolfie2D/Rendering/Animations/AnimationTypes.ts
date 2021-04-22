@@ -1,4 +1,4 @@
-import { TweenableProperties } from "../../Nodes/GameNode";
+import GameNode, { TweenableProperties } from "../../Nodes/GameNode";
 import { EaseFunctionType } from "../../Utils/EaseFunctions";
 
 // @ignorePage
@@ -21,6 +21,15 @@ export class TweenData {
     startDelay: number;
     /** The duration of time over which the value with change from start to end */
     duration: number;
+    
+    /* Options to pass to the receiever when an event is emitted */
+    //options: Record<string, any>;
+
+    node: GameNode;
+
+    /** The name of the event to send (if any) when the tween finishes playing */
+    onEnd: string;
+
     /** An array of the effects on the properties of the object */
     effects: [{
         property: TweenableProperties;
