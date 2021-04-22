@@ -10,7 +10,7 @@ import MainMenu from "./MenuScenes/MainMenu";
 export default class GameOver extends Scene {
 
     loadScene(){
-        this.load.image("artwork", "hw3_assets/sprites/gameover.png");
+        this.load.image("artwork", "hw3_assets/sprites/backgroundart/gameover.png");
     }
 
     startScene() {

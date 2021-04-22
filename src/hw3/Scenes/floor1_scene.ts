@@ -48,9 +48,9 @@ export default class floor1_scene extends Scene {
         /* FINAL PROJECT TODO - Maybe add conditionals here and use this scene to load every room for every floor */
         
         // Load Enemy Spritesheets
-        this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemy.json");
-        this.load.spritesheet("lizard", "hw3_assets/spritesheets/lizard.json");
-        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemy.json");
+        this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemies/kraken.json");
+        this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
+        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/kraken.json");
 
         // Load the tilemap
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");

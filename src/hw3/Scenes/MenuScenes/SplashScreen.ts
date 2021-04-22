@@ -1,18 +1,16 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
-import { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
-import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 import LoadScreen from "./LoadScreen";
 
 export default class SplashScreen extends Scene {    
     private splashart: Sprite;
 
     loadScene(){
-        this.load.image("splashart", "hw3_assets/sprites/splashscreen.png");
+        this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
     }
 
     startScene(){

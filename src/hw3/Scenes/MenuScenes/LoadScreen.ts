@@ -9,19 +9,19 @@ import MainMenu from "./MainMenu";
 export default class LoadScreen extends Scene {
     loadScene(){
         /* Load Menu Images */
-        this.load.image("menubackground", "hw3_assets/sprites/menubackground.png");
+        this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
 
         /* Load Map */
-        this.load.image("mapBackground", "hw3_assets/sprites/map.png");
-        this.load.image("battleIcon", "hw3_assets/sprites/Map_Battle_Icon.png");
+        this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
+        this.load.image("battleIcon", "hw3_assets/sprites/map/battleicon.png");
 
         /* Load Player Spritesheet */
         this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
 
         /* Load Player Portraits */
-        this.load.image("portrait", "hw3_assets/sprites/diverportrait.png");
-        this.load.image("portraitborder", "hw3_assets/sprites/portraitborder.png");
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthbarborder.png");
+        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
+        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
+        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
 
         /* Load Enemies for each floor */
         this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json");

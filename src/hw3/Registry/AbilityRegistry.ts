@@ -16,10 +16,10 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         // rm.image("lasergun", "hw3_assets/sprites/lasergun.png");
 
         // Load spritesheets
-        rm.spritesheet("groundslam", "hw3_assets/spritesheets/groundslam.json");
-        rm.spritesheet("anchorswing", "hw3_assets/spritesheets/anchorswing.json");
-        rm.spritesheet("snipe", "hw3_assets/spritesheets/snipe.json");
-        rm.spritesheet("slice", "hw3_assets/spritesheets/slice.json");
+        rm.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
+        rm.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
+        rm.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
+        rm.spritesheet("slice", "hw3_assets/spritesheets/abilities/slice.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);

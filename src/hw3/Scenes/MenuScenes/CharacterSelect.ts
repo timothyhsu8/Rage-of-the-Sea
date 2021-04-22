@@ -13,11 +13,8 @@ import MapScene from "../MapScene";
 export default class CharacterSelect extends Scene {
 
     loadScene(){
-        this.load.image("diversplash", "hw3_assets/sprites/diversplashart.png");
-        this.load.image("splashborder", "hw3_assets/sprites/splashartborder.png");
-
-        this.load.image("lasergun", "hw3_assets/sprites/lasergun.png"); // Load anchor icon for weapon
-        this.load.object("abilityData", "hw3_assets/data/abilityData.json");
+        this.load.image("diversplash", "hw3_assets/sprites/characterselect/diversplashart.png");
+        this.load.image("splashborder", "hw3_assets/sprites/characterselect/splashartborder.png");
     }
 
     startScene(){this.addUILayer("characterSelect");

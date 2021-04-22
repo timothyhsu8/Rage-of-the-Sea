@@ -28,8 +28,13 @@ export default class StillProjectiles extends EnemyState {
 
     update(deltaT: number): void {
         /* Stand still and shoot projectiles */
-        if(this.player.position !== null)
-            this.finished(EnemyStates.MONSTERATTACK);
+        this.owner.animation.play("IDLE");
+        let state = this;
+        let player = this.player;
+        setTimeout(function(){ 
+            if(player.position !== null)
+                state.finished(EnemyStates.MONSTERATTACK);
+        }, 1000);
     }
 
     onExit(): Record<string, any> {

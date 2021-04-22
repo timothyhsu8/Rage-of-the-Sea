@@ -2,7 +2,6 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
@@ -10,8 +9,8 @@ import MainMenu from "./MainMenu";
 export default class Controls extends Scene {
     
     loadScene(){
-        this.load.image("image1", "hw3_assets/sprites/tutorial1.png");
-        this.load.image("image3", "hw3_assets/sprites/tutorial3.png");
+        this.load.image("image1", "hw3_assets/sprites/howtoplay/tutorial1.png");
+        this.load.image("image3", "hw3_assets/sprites/howtoplay/tutorial3.png");
     }
 
     startScene(){

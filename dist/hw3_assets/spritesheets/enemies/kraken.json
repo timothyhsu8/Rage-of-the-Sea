@@ -1,6 +1,5 @@
 {
-    "name": "TopdownEnemy",
-    "spriteSheetImage": "enemy.png",
+    "spriteSheetImage": "kraken.png",
     "spriteWidth": 90,
     "spriteHeight": 90,
     "columns": 4,

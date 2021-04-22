@@ -10,10 +10,10 @@ export default class WeaponTemplateRegistry extends Registry<WeaponConstructor> 
         const rm = ResourceManager.getInstance();
 
         // Load sprites
-        rm.image("pistol", "hw3_assets/sprites/pistol.png");
-        rm.image("knife", "hw3_assets/sprites/knife.png");
-        rm.image("lasergun", "hw3_assets/sprites/lasergun.png");
-        rm.image("anchor", "hw3_assets/sprites/anchor.png");
+        rm.image("pistol", "hw3_assets/sprites/itemicons/pistol.png");
+        rm.image("knife", "hw3_assets/sprites/itemicons/knife.png");
+        rm.image("lasergun", "hw3_assets/sprites/itemicons/lasergun.png");
+        rm.image("anchor", "hw3_assets/sprites/itemicons/anchor.png");
 
         // Load spritesheets
         rm.spritesheet("slice", "hw3_assets/spritesheets/slice.json");

@@ -18,28 +18,20 @@ import Room from "../GameSystems/Mapping/Room";
 import { RoomTypes } from "../GameSystems/Mapping/RoomType_Enums";
 
 export default class MapScene extends Scene{
-    // Layers, for multiple main menu screens
-    
+        
     private characterState: CharacterState; // All data of the character goes here
     private roomArray: Array<Array<Room>>;
     private roomButtons: Array<Array<Button>>;
 
     static savedButtons: Array<Array<Button>>;
     static savedFloor: Floor;
-
-    private map: Layer;
-    private rooms: Layer;
-    private controls: Layer;
-    private about: Layer;
-    private map_render: Layer;
-    private healthbar: Graphic;
     
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
     }
 
     loadScene(){
-        this.load.image("portrait", "hw3_assets/sprites/" + this.characterState.portrait + ".png");
+        this.load.image("portrait", "hw3_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
     }
 
     startScene(){
@@ -47,8 +39,8 @@ export default class MapScene extends Scene{
         const center = this.viewport.getCenter();
 
         // The main menu
-        this.map = this.addUILayer("map");
-        this.rooms = this.addUILayer("rooms");
+        this.addUILayer("map");
+        this.addUILayer("rooms");
 
         /* Generate map or load the saved one */
         let generatedFloor = null;

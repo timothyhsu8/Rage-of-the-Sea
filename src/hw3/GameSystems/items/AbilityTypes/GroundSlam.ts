@@ -28,23 +28,12 @@ export default class GroundSlam extends AbilityType {
         return damageTiles;
     }
 
-    doAnimation(attacker: GameNode, direction: Vec2, sliceSprite: AnimatedSprite): void {
-        // Rotate this with the game node
-        sliceSprite.rotation = attacker.rotation;
+    doAnimation(attacker: GameNode, direction: Vec2, abilitySprite: AnimatedSprite): void {
+        abilitySprite.position = attacker.position.clone();   // Move the slice out from the player
 
-        // Move the slice out from the player
-        sliceSprite.position = attacker.position.clone().add(direction.scaled(16));
-
-        // Play the slice animation w/o loop, but queue the normal animation
-        sliceSprite.animation.play("SLICE");
-        sliceSprite.animation.queue("NORMAL", true);
-    }
-
-    createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let slice = scene.add.animatedSprite("groundslam", "primary");
-        slice.animation.play("NORMAL", true);
-
-        return [slice];
+        /* Play the slice animation w/o loop, but queue the normal animation */
+        abilitySprite.animation.play("GROUNDSLAM");
+        // abilitySprite.animation.queue("NORMAL", true);
     }
 
     /* Determines if an entity is on a damage tile */
@@ -55,7 +44,14 @@ export default class GroundSlam extends AbilityType {
         return false;
     }
 
+    /* Determines if sprites overlap (Player attacking enemy) */
     hits(node: GameNode, sliceSprite: AnimatedSprite): boolean {
         return sliceSprite.boundary.overlaps(node.collisionShape);
+    }
+
+    createRequiredAssets(scene: Scene): [AnimatedSprite] {
+        let ability = scene.add.animatedSprite("groundslam", "primary");
+        ability.animation.play("NORMAL", true);
+        return [ability];
     }
 }

@@ -28,8 +28,8 @@ export default class MainMenu extends Scene {
     static image: string;
     
     loadScene(){
-        this.load.image("lasergun", "hw3_assets/sprites/lasergun.png");
-        this.load.image("healthpack", "hw3_assets/sprites/healthpack.png");
+        this.load.image("lasergun", "hw3_assets/sprites/itemicons/lasergun.png");
+        this.load.image("healthpack", "hw3_assets/sprites/itemicons/healthpack.png");
     }
 
     startScene(){
