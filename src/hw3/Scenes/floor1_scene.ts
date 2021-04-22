@@ -50,6 +50,7 @@ export default class floor1_scene extends Scene {
         // Load Enemy Spritesheets
         this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemy.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/lizard.json");
+        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemy.json");
 
         // Load the tilemap
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
@@ -58,6 +59,7 @@ export default class floor1_scene extends Scene {
         //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); // 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
+        this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
     }
 
     startScene(){
@@ -209,8 +211,6 @@ export default class floor1_scene extends Scene {
             /* Assigns random position to this enemy */
             let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
             this.enemies[i].position.set(randomPos[0], randomPos[1]);
-            
-            this.enemies[i].animation.play("IDLE");
 
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
@@ -238,19 +238,6 @@ export default class floor1_scene extends Scene {
                     }
                 ]
             });
-
-            // this.enemies[i].tweens.add("knockback", {
-            //     startDelay: 0,
-            //         duration: 500,
-            //         effects: [
-            //             {
-            //                 property: TweenableProperties.posX,
-            //                 start: this.enemies[i].position.x,
-            //                 end: this.enemies[i].position.x-10,
-            //                 ease: EaseFunctionType.OUT_SINE
-            //             }
-            //         ]
-            // });
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);
             this.battleManager.enemySprites = this.enemies;

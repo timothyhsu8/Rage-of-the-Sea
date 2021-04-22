@@ -10,7 +10,7 @@ export default class CharacterState{
     private inventory: Inventory;   // Private to prevent direct changes to the inventory. Use the methods in this class
 
     constructor(health: number, attack: number, defense: number, speed:number, inventory: Inventory, portrait: string){
-        this.stats = new Stats(health, attack, 1.0, defense, speed, 1.0);
+        this.stats = new Stats(health, attack, 11.0, defense, speed, 1.0);
         this.portrait = portrait;
         this.inventory = inventory;
     }

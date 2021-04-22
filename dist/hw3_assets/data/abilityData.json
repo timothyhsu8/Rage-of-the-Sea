@@ -1,5 +1,5 @@
 {
-    "numAbilities": 2,
+    "numAbilities": 3,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -21,6 +21,17 @@
             "damage": 15,
             "cooldown": 2000,
             "chargeTime": 1000,
+            "useVolume": 0
+        },
+        {
+            "abilityType": "snipe",
+            "name": "snipe",
+            "displayName": "Snipe",
+            "animationSprite": "snipe",
+            "spriteKey": "snipe",
+            "damage": 15,
+            "cooldown": 2000,
+            "chargeTime": 1500,
             "useVolume": 0
         }
     ]

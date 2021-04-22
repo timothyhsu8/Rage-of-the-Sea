@@ -10,6 +10,7 @@ import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
+import StillProjectiles from "./EnemyStates/StillProjectiles";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -30,8 +31,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.owner = owner;
         
         /* FINAL PROJECT TODO - Add more enemy states here */
-        if(options.defaultMode === "chase"){
-            this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
+        if(options.defaultMode === "stillprojectiles"){
+            this.addState(EnemyStates.DEFAULT, new StillProjectiles(this, owner, options.player, options.monsterType));
         }
         else {
             // Default state is chase
@@ -121,7 +122,6 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
                 }
             }
         }
-
         return pos;
     }
 
@@ -140,5 +140,6 @@ export enum EnemyStates {
 
 export enum MonsterTypes {
     KRAKEN = "kraken",
-    LIZARD = "lizard"
+    LIZARD = "lizard",
+    SOLLASINA = "sollasina"
 }

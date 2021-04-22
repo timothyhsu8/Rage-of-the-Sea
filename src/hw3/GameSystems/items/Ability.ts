@@ -90,5 +90,6 @@ export default class Ability {
 
 export enum AbilityTypes {
     PLAYER_ANCHORSWING = "anchorswing",
-    GROUNDSLAM = "groundslam"
+    GROUNDSLAM = "groundslam",
+    SNIPE = "snipe"
 }

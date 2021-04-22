@@ -10,7 +10,7 @@ import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 export default class Chase extends EnemyState {
 
     // The route this AI takes when patrolling
-    protected patrolRoute: Array<Vec2>;
+    protected route: Array<Vec2>;
 
     // The current patrolRoute index
     protected routeIndex: number;
@@ -52,15 +52,14 @@ export default class Chase extends EnemyState {
         else {
             /* Reset navigation path if completed */
             if(this.currentPath.isDone()){
-                let navStack = new Stack<Vec2>(this.patrolRoute.length);
-                navStack.push(this.patrolRoute[0]);
+                let navStack = new Stack<Vec2>(this.route.length);
+                navStack.push(this.route[0]);
                 this.currentPath = new NavigationPath(navStack);
             }
 
             /* Follow Player */
             else{
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
-                //this.owner.rotation = Vec2.UP.angleToCCW(this.currentPath.getMoveDirection(this.owner));
                 if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
                     this.owner.animation.playIfNotAlready("WALK", true);
             }

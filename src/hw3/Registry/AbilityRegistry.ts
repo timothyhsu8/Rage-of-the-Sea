@@ -3,6 +3,7 @@ import ResourceManager from "../../Wolfie2D/ResourceManager/ResourceManager";
 import GroundSlam from "../GameSystems/items/AbilityTypes/GroundSlam";
 import WeaponType from "../GameSystems/items/WeaponTypes/WeaponType";
 import AnchorSwing from "../GameSystems/items/AbilityTypes/AnchorSwing";
+import Snipe from "../GameSystems/items/AbilityTypes/Snipe";
 
 export default class AbilityTemplateRegistry extends Registry<WeaponConstructor> {
     
@@ -17,11 +18,13 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         // Load spritesheets
         rm.spritesheet("groundslam", "hw3_assets/spritesheets/groundslam.json");
         rm.spritesheet("anchorswing", "hw3_assets/spritesheets/anchorswing.json");
+        rm.spritesheet("snipe", "hw3_assets/spritesheets/snipe.json");
         rm.spritesheet("slice", "hw3_assets/spritesheets/slice.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
         this.registerItem("anchorswing", AnchorSwing);
+        this.registerItem("snipe", Snipe);
     }
 
     // We don't need this for this assignment

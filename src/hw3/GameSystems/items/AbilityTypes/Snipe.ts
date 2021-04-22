@@ -4,7 +4,7 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
 import AbilityType from "./AbilityType";
 
-export default class GroundSlam extends AbilityType {
+export default class Snipe extends AbilityType {
 
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
@@ -16,15 +16,9 @@ export default class GroundSlam extends AbilityType {
     }
 
     /* Calculates the squares to damage and returns them as an array */
-    findHitArea(ownerPositionRowCol: Vec2, direction:Vec2, playerPos: Vec2) : Array<Vec2>{
-        let damageTiles: Array<Vec2> = [];
-        let xPos = ownerPositionRowCol.x;
-        let yPos = ownerPositionRowCol.y;
-        for(let i = -1 ; i <= 1 ; i++){
-            damageTiles.push(new Vec2(xPos+i, yPos-1));
-            damageTiles.push(new Vec2(xPos+i, yPos));
-            damageTiles.push(new Vec2(xPos+i, yPos+1));
-        }
+    findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
+        /* FINAL PROJECT TODO - Make sure abilties don't try to calculate something that's out of bounds */
+        let damageTiles: Array<Vec2> = [playerPos];
         return damageTiles;
     }
 
@@ -41,7 +35,7 @@ export default class GroundSlam extends AbilityType {
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let slice = scene.add.animatedSprite("groundslam", "primary");
+        let slice = scene.add.animatedSprite("snipe", "primary");
         slice.animation.play("NORMAL", true);
 
         return [slice];

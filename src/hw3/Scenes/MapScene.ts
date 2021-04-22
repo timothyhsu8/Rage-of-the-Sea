@@ -72,16 +72,7 @@ export default class MapScene extends Scene{
                 for(let j=0 ; j<this.roomButtons[i].length ; j++)
                     this.roomButtons[i][j].backgroundColor = MapScene.savedButtons[i][j].backgroundColor;
         }
-
-        // Add play button, and give it an event to emit on press
-        // const play = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x - 300, center.y + 400), text: "Next Room"});
-        // play.size.set(200, 50);
-        // play.borderWidth = 2;
-        // play.borderColor = Color.WHITE;
-        // play.backgroundColor = new Color(50, 50, 70, 1);
-        // play.onClickEventId = "play";
-        // play.fontSize = 35;
-
+        
         const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-200, center.y+400), text: "View Inventory"});
         inventory.size.set(250, 50);
         inventory.borderWidth = 2;

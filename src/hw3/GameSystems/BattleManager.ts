@@ -14,6 +14,7 @@ export default class BattleManager {
     enemySprites: Array<AnimatedSprite>;
 
     player: AnimatedSprite;
+
     characterState: CharacterState;
 
     tilemap: OrthogonalTilemap;
@@ -37,7 +38,7 @@ export default class BattleManager {
         } 
         /* Attacker is a Monster */
         else {
-            let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction);
+            let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction, this.tilemap.getColRowAt(this.player.position));
             
             /* Set floor tiles to indicate they're about to be damaged */
             for(let i = 0 ; i < damageTiles.length ; i++){
