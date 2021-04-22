@@ -1,13 +1,15 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
+import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../../Wolfie2D/Scene/Layer";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
+import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 import LoadScreen from "./LoadScreen";
-import MainMenu from "./MainMenu";
 
 export default class SplashScreen extends Scene {    
-    private splashScreen: Layer;
+    private splashart: Sprite;
 
     loadScene(){
         this.load.image("splashart", "hw3_assets/sprites/splashscreen.png");
@@ -19,14 +21,15 @@ export default class SplashScreen extends Scene {
 
         /* Splash Artwork */
         this.addLayer("splashart", 9);
-        let splashart = this.add.sprite("splashart", "splashart");
-        splashart.scale.set(3.4, 3.4);
-        splashart.position.set(center.x, center.y);
+        this.splashart = this.add.sprite("splashart", "splashart");
+        this.splashart.scale.set(3.4, 3.4);
+        this.splashart.position.set(center.x, center.y);
+        UITweens.fadeIn(this.splashart, 0, 700);
 
         /* Click To Play */
-        this.splashScreen = this.addUILayer("splashScreen");
+        this.addUILayer("splashScreen");
         const play = this.add.uiElement(UIElementType.BUTTON, "splashScreen", {position: new Vec2(center.x, center.y), text: ""});
-        play.size.set(1600, 900);
+        play.size.set(1650, 950);
         play.backgroundColor = Color.TRANSPARENT;
         play.onClickEventId = "play";
 

@@ -8,6 +8,9 @@ import MainMenu from "./MainMenu";
 */
 export default class LoadScreen extends Scene {
     loadScene(){
+        /* Load Menu Images */
+        this.load.image("menubackground", "hw3_assets/sprites/menubackground.png");
+
         /* Load Map */
         this.load.image("mapBackground", "hw3_assets/sprites/map.png");
         this.load.image("battleIcon", "hw3_assets/sprites/Map_Battle_Icon.png");

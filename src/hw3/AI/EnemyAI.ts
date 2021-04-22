@@ -1,7 +1,7 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import GameNode from "../../Wolfie2D/Nodes/GameNode";
+import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import BattlerAI from "./BattlerAI";
@@ -9,6 +9,7 @@ import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
+import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -53,7 +54,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     damage(damage: number): void {
         this.health -= damage;
-        //this.owner.tweens.play("knockback");
+        this.playKnockbackTween();
 
         /* Enemy Dies */
         if(this.health <= 0){
@@ -61,6 +62,24 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.owner.isCollidable = false;
             this.owner.tweens.play("death");
         }
+    }
+
+    playKnockbackTween() {
+        let endPosX = this.owner.position.x;
+        (this.player.position.x >= this.owner.position.x)?(endPosX-=4):(endPosX+=4);
+        this.owner.tweens.add("knockback", {
+                startDelay: 0,
+                    duration: 500,
+                    effects: [
+                        {
+                            property: TweenableProperties.posX,
+                            start: this.owner.position.x,
+                            end: endPosX,
+                            ease: EaseFunctionType.OUT_SINE
+                        }
+                    ]
+            });
+        this.owner.tweens.play("knockback");
     }
 
     getPlayerPosition(): Vec2 {

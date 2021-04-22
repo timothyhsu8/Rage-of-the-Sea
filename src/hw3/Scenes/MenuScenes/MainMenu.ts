@@ -13,11 +13,14 @@ import CharacterSelect from "./CharacterSelect";
 import LevelSelect from "./LevelSelect";
 import HelpScreen from "./HelpScreen";
 import Controls from "./Controls";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 
 export default class MainMenu extends Scene {
     private mainMenu: Layer;
     private controls: Layer;
     private about: Layer;
+    private sceneObjects: Array<GameNode>;
     
     static char: string;
     static equipped: string[];
@@ -30,6 +33,7 @@ export default class MainMenu extends Scene {
     }
 
     startScene(){
+        this.sceneObjects = new Array<GameNode>();
         // storing out data here
         MainMenu.char = "Diver";
         MainMenu.equipped = ["double-edged", "boots", "anchor", "lasergun", "lasergun", "lasergun", "lasergun", "lasergun"];
@@ -37,78 +41,20 @@ export default class MainMenu extends Scene {
         MainMenu.image = "portrait";
         this.addLayer("primary", 10);
 
+        /* Background Artwork */
+        this.addLayer("background", 9);
         const center = this.viewport.getCenter();
+        // let backgroundart = this.add.sprite("menubackground", "background");
+        // backgroundart.position.set(center.x, center.y);
 
         // The main menu
         this.mainMenu = this.addUILayer("mainMenu");
 
-        // Add play button, and give it an event to emit on press
-        const play = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-200), text: "Play"});
-        play.size.set(400, 100);
-        play.borderWidth = 2;
-        play.borderColor = Color.WHITE;
-        play.backgroundColor = new Color(50, 50, 70, 1);
-        play.onClickEventId = "play";
-        play.fontSize = 35;
-
-        /* Level Select Button */
-        const levelselect = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y-50), text: "Level Select"});
-        levelselect.size.set(400, 100);
-        levelselect.borderWidth = 2;
-        levelselect.borderColor = Color.WHITE;
-        levelselect.backgroundColor = new Color(50, 50, 70, 1);
-        levelselect.onClickEventId = "levelselect";
-        levelselect.fontSize = 35;
-
-        // Add Controls Button
-        const controls = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y+100), text: "Controls"});
-        controls.size.set(400, 100);
-        controls.borderWidth = 2;
-        controls.borderColor = Color.WHITE;
-        controls.backgroundColor = new Color(50, 50, 70, 1);
-        controls.onClickEventId = "controls";
-        controls.fontSize = 35;
-
-        /* Help Button */
-        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x, center.y + 250), text: "Help"});
-        inventory.size.set(400, 100);
-        inventory.borderWidth = 2;
-        inventory.borderColor = Color.WHITE;
-        inventory.backgroundColor = new Color(50, 50, 70, 1);
-        inventory.onClickEventId = "help";
-        inventory.fontSize = 35;
-
-        /* ########## CONTROLS SCREEN ########## */
-        this.controls = this.addUILayer("controls");
-        this.controls.setHidden(true);
-
-        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 250), text: "Controls"});
-        controlsHeader.textColor = Color.WHITE;
-
-        const  movementText= "Move - WASD";
-        const pickupText = "Pickup Item - E";
-        const dropText = "Drop Item - Q";
-        const useText = "Use Item - Left Mouse Click";
-        const equipText = "Equip - 1 and 2";
-
-        const controlsline1 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 150), text: movementText});
-        const controlsline2 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y - 75), text: pickupText});
-        const controlsline3 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y), text: dropText});
-        const controlsline4 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y + 75), text: useText});
-        const controlsline5 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x, center.y + 150), text: equipText});
-
-        controlsline1.textColor = Color.WHITE;
-        controlsline2.textColor = Color.WHITE;
-        controlsline3.textColor = Color.WHITE;
-        controlsline4.textColor = Color.WHITE;
-        controlsline5.textColor = Color.WHITE;
-
-        const controlsBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x, center.y + 250), text: "Back"});
-        controlsBack.size.set(200, 50);
-        controlsBack.borderWidth = 2;
-        controlsBack.borderColor = Color.WHITE;
-        controlsBack.backgroundColor = new Color(50, 50, 70, 1);
-        controlsBack.onClickEventId = "menu";
+        /* Menu Buttons */
+        this.makeMenuButton(new Vec2(center.x, center.y-200), "Start Game", new Vec2(400, 100), "play", 0);
+        this.makeMenuButton(new Vec2(center.x, center.y-50), "Level Select", new Vec2(400, 100), "levelselect", 150);
+        this.makeMenuButton(new Vec2(center.x, center.y+100), "Controls", new Vec2(400, 100), "controls", 300);
+        this.makeMenuButton(new Vec2(center.x, center.y+250), "Help", new Vec2(400, 100), "help", 450);
         
         // Subscribe to the button events
         this.receiver.subscribe("play");
@@ -116,14 +62,32 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("levelselect");
         this.receiver.subscribe("menu");
         this.receiver.subscribe("help");
-
     }
+
+    makeMenuButton(position: Vec2, text: string, size: Vec2, eventid: string, delay: number){
+        const button = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(position.x+1000, position.y), text: text});
+        button.size.set(size.x, size.y);
+        button.borderWidth = 2;
+        button.borderColor = Color.WHITE;
+        button.backgroundColor = new Color(50, 50, 70, 1);
+        button.onClickEventId = eventid;
+        button.fontSize = 35;
+        button.font = "Tahoma";
+        this.sceneObjects.push(button);
+        UITweens.slide(button, delay, 350, new Vec2(position.x+1000, position.y), position);
+    }
+
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "play")
-                this.sceneManager.changeScene(CharacterSelect, {});
+            if(event.type === "play"){
+                UITweens.slideOutScene(this.sceneObjects, 100, new Vec2(-1000, 0));
+                let sceneManager = this.sceneManager;
+                setTimeout(function(){ 
+                    sceneManager.changeScene(CharacterSelect, {});
+                }, 600);
+            }
 
             if(event.type === "controls")
                 this.sceneManager.changeScene(Controls, {});
