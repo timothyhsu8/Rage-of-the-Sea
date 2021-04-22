@@ -17,9 +17,6 @@ export default class PlayerController implements BattlerAI {
     // The inventory of the player
     private inventory: Inventory;
 
-    /** A list of items in the game world */
-    private items: Array<Item>;
-
     // Movement
     private direction: Vec2;
     private speed: number;
@@ -40,7 +37,6 @@ export default class PlayerController implements BattlerAI {
         this.speed = options.speed;
         this.health = options.health;
 
-        this.items = options.items;
         this.inventory = options.inventory;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.activeTile = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
@@ -136,6 +132,13 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        this.health -= damage;
+        if(this.owner.tweens.isStopped("takedamage")){
+            this.health -= damage;
+            this.owner.tweens.play("takedamage", true);
+            setTimeout(() => {
+                this.owner.tweens.stop("takedamage");
+                this.owner.alpha = 1.0;
+            }, 2000);
+        }
     }
 }

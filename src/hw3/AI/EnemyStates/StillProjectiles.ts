@@ -31,10 +31,11 @@ export default class StillProjectiles extends EnemyState {
         this.owner.animation.play("IDLE");
         let state = this;
         let player = this.player;
+        let randomNum = (Math.random()*1000)*100
         setTimeout(function(){ 
             if(player.position !== null)
                 state.finished(EnemyStates.MONSTERATTACK);
-        }, 1000);
+        }, randomNum);
     }
 
     onExit(): Record<string, any> {

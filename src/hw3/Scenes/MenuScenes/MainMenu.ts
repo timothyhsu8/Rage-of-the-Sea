@@ -74,7 +74,7 @@ export default class MainMenu extends Scene {
         button.fontSize = 35;
         button.font = "Tahoma";
         this.sceneObjects.push(button);
-        UITweens.slide(button, delay, 350, new Vec2(position.x+1000, position.y), position);
+        UITweens.slide(button, delay, 200, new Vec2(position.x+1000, position.y), position);
     }
 
     updateScene(){
@@ -82,11 +82,11 @@ export default class MainMenu extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play"){
-                UITweens.slideOutScene(this.sceneObjects, 100, new Vec2(-1000, 0));
+                UITweens.slideOutScene(this.sceneObjects, 80, new Vec2(-1000, 0));
                 let sceneManager = this.sceneManager;
                 setTimeout(function(){ 
                     sceneManager.changeScene(CharacterSelect, {});
-                }, 600);
+                }, 500);
             }
 
             if(event.type === "controls")

@@ -1,18 +1,22 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
 
 export default class LevelSelect extends Scene {
-    
+    private sceneUI: Array<GameNode>;
+
     loadScene(){
         this.load.image("levelimage", "hw3_assets/sprites/levelselect/levelimage.png");
     }
 
     startScene(){
+        this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
         this.addUILayer("levelSelect");
         
@@ -23,11 +27,13 @@ export default class LevelSelect extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        this.sceneUI.push(back);
     
         /* Level Select Header */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "levelSelect", {position: new Vec2(center.x, center.y-375), text: "Level Select"});
         header.textColor = Color.WHITE;
         header.fontSize = 50;
+        this.sceneUI.push(header);
 
         this.addLayer("levelimages", 9);
         /* Row 1 */
@@ -38,9 +44,11 @@ export default class LevelSelect extends Scene {
             level.borderColor = Color.WHITE;
             level.backgroundColor = Color.TRANSPARENT;
             level.onClickEventId = "back";
+            this.sceneUI.push(level);
 
             let levelimage = this.add.sprite("levelimage", "levelimages");
             levelimage.position.set(center.x-500 + (i*500), center.y-150);
+            this.sceneUI.push(levelimage);
         }
 
         /* Row 2 */
@@ -51,13 +59,17 @@ export default class LevelSelect extends Scene {
             level.borderColor = Color.WHITE;
             level.backgroundColor = Color.TRANSPARENT;
             level.onClickEventId = "back";
+            this.sceneUI.push(level);
 
             let levelimage = this.add.sprite("levelimage", "levelimages");
             levelimage.position.set(center.x-500 + (i*500), center.y+150);
+            this.sceneUI.push(levelimage);
         }
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
+
+        UITweens.slideInScene(this.sceneUI, 50, new Vec2(2000, 0));
     }
     updateScene(){
         while(this.receiver.hasNextEvent()){

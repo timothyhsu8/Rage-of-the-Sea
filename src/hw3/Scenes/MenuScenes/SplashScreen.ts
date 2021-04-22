@@ -37,9 +37,12 @@ export default class SplashScreen extends Scene {
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
-
             if(event.type === "play"){
-                this.sceneManager.changeScene(LoadScreen, {});
+                UITweens.fadeOut(this.splashart, 0, 300);
+                let sceneManager = this.sceneManager;
+                setTimeout(() => {
+                    sceneManager.changeScene(LoadScreen, {});
+                }, 300);
             }
         }
     }

@@ -31,6 +31,16 @@ export default class TweenManager {
         this.emitter = new Emitter();
     }
 
+    isStopped(key: string){
+        let tween = this.tweens.get(key);
+        if(this.tweens.has(key)){
+            if(this.tweens.get(key).animationState === AnimationState.STOPPED)
+                return true;
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Add a tween to this game node
      * @param key The name of the tween

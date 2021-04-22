@@ -5,6 +5,7 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
+import MapScene from "./MapScene";
 import MainMenu from "./MenuScenes/MainMenu";
 
 export default class GameOver extends Scene {
@@ -48,8 +49,11 @@ export default class GameOver extends Scene {
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "back")
+            if(event.type === "back"){
+                MapScene.savedButtons = undefined;
+                MapScene.savedFloor = undefined;
                 this.sceneManager.changeScene(MainMenu, {});
+            }
         }
     }
 }

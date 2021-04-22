@@ -188,7 +188,17 @@ export default class floor1_scene extends Scene {
             });
         this.player.setImageOffset(new Vec2(0, 17));
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
-        this.player.animation.play("IDLE");
+
+        /* Add Tweens */
+        this.player.tweens.add("takedamage", {startDelay: 0, duration: 500/*, onEnd: GameEvents.ENEMY_DIED*/, node: this.player,
+            effects: [{
+                    property: TweenableProperties.alpha,
+                    start: 1.0,
+                    end: 0.3,
+                    ease: EaseFunctionType.OUT_SINE
+                }
+            ]
+        });
     }
     
     initializeEnemies(){
@@ -224,19 +234,8 @@ export default class floor1_scene extends Scene {
             }
 
             /* Add Tweens */
-            this.enemies[i].tweens.add("death", {
-                startDelay: 0,
-                duration: 500,
-                onEnd: GameEvents.ENEMY_DIED,
-                node: this.enemies[i],
-                effects: [
-                    {
-                        property: TweenableProperties.alpha,
-                        start: 1.0,
-                        end: 0,
-                        ease: EaseFunctionType.OUT_SINE
-                    }
-                ]
+            this.enemies[i].tweens.add("death", {startDelay: 0, duration: 500, onEnd: GameEvents.ENEMY_DIED, node: this.enemies[i],
+                effects: [{property: TweenableProperties.alpha, start: 1.0, end: 0, ease: EaseFunctionType.OUT_SINE}]
             });
 
             this.enemies[i].addAI(EnemyAI, enemyOptions);

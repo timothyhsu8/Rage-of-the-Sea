@@ -8,25 +8,33 @@ import Inventory from "../../GameSystems/Inventory";
 import CharacterState from "../../CharacterState";
 import MainMenu from "./MainMenu";
 import MapScene from "../MapScene";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 
 
 export default class CharacterSelect extends Scene {
-
+    private sceneObjects: Array<GameNode>;
+    private sceneUI: Array<GameNode>;
+    
     loadScene(){
         this.load.image("diversplash", "hw3_assets/sprites/characterselect/diversplashart.png");
         this.load.image("splashborder", "hw3_assets/sprites/characterselect/splashartborder.png");
     }
 
     startScene(){this.addUILayer("characterSelect");
+        this.sceneObjects = new Array<GameNode>();
+        this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
 
         this.addLayer("primary", 10);
 
         let diversplash = this.add.sprite("diversplash", "primary");
         diversplash.position = new Vec2(center.x, center.y-150);
+        this.sceneObjects.push(diversplash);
     
         let portraitborder = this.add.sprite("splashborder", "primary");
         portraitborder.position = new Vec2(center.x, center.y-150);
+        this.sceneObjects.push(portraitborder);
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
@@ -35,11 +43,13 @@ export default class CharacterSelect extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        this.sceneUI.push(back);
 
         /* Character Name */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "characterSelect", {position: new Vec2(center.x, center.y+130), text: "Diver"});
         header.textColor = Color.WHITE;
         header.fontSize = 40;
+        this.sceneUI.push(header);
 
         /* Select Button */
         const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+230), text: "SELECT"});
@@ -48,6 +58,7 @@ export default class CharacterSelect extends Scene {
         select.borderColor = Color.WHITE;
         select.backgroundColor = new Color(50, 50, 70, 1);
         select.onClickEventId = "select";
+        this.sceneUI.push(select);
 
         /* Character Description */
         const description = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+350), text: "The diver has a dark and mysterious past."});
@@ -55,10 +66,15 @@ export default class CharacterSelect extends Scene {
         description.borderWidth = 2;
         description.borderColor = Color.WHITE;
         description.backgroundColor = Color.TRANSPARENT;
+        this.sceneUI.push(description);
 
-        // Subscribe to the button events
+        /* Subscribe to the button events */
         this.receiver.subscribe("select");
         this.receiver.subscribe("back");
+
+        /* Play Tweens */
+        UITweens.fadeInScene(this.sceneObjects);
+        UITweens.slideInScene(this.sceneUI, 150, new Vec2(1200, 0));
     }
 
     updateScene(){
