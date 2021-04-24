@@ -1,18 +1,23 @@
 import Inventory from "./GameSystems/Inventory";
 import Item, { ItemType } from "./GameSystems/items/Item";
+import MapState from "./GameSystems/MapState";
 import Stats from "./Stats";
 
 /* Holds all data for the character between rooms. Pass this class into floor scenes */
 export default class CharacterState{
     portrait: string;
+    itemRotation: number;   // Keeps track of when player can receieve an item. Receives an item when this reaches 3
     stats: Stats;
+    mapState: MapState;
     
     private inventory: Inventory;   // Private to prevent direct changes to the inventory. Use the methods in this class
 
-    constructor(health: number, attack: number, defense: number, speed:number, inventory: Inventory, portrait: string){
+    constructor(health: number, attack: number, defense: number, speed:number, inventory: Inventory, portrait: string, currentFloor: number){
         this.stats = new Stats(health, attack, 11.0, defense, speed, 1.0);
         this.portrait = portrait;
         this.inventory = inventory;
+        this.itemRotation = 0;
+        this.mapState = new MapState(currentFloor);
     }
 
     /* Adds item to inventory */

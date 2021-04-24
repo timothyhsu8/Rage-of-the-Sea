@@ -24,7 +24,7 @@ export default class InventoryScene extends Scene {
         this.load.image("knife", "hw3_assets/sprites/itemicons/knife.png");
         this.load.image("double-edged", "hw3_assets/sprites/itemicons/lasergun.png");
         this.load.image("boots", "hw3_assets/sprites/itemicons/lasergun.png");
-        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
+        //this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
     }
 
     startScene(){

@@ -24,13 +24,28 @@ export default class LoadScreen extends Scene {
         this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
 
         /* Load Enemies for each floor */
-        this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json");
+        this.load.object("floorEnemies", "hw3_assets/data/floorEnemies.json");
 
         /* Load Abilities  */
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
-
+        
         /* Load Inventory Slots */
-        this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");
+        this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");   // FINAL PROJECT TODO - Actually make this
+    }
+
+    unloadScene(){
+        this.load.keepSpritesheet("player");
+
+        this.load.keepObject("abilityData");
+        this.load.keepObject("floorEnemies");
+
+        this.load.keepImage("battleIcon");
+        this.load.keepImage("menubackground");
+        this.load.keepImage("mapBackground");
+        this.load.keepImage("battleIcon");
+        this.load.keepImage("portrait");
+        this.load.keepImage("portraitborder");
+        this.load.keepImage("healthbarborder");
     }
 
     startScene(){

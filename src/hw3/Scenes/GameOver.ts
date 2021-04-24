@@ -50,8 +50,6 @@ export default class GameOver extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back"){
-                MapScene.savedButtons = undefined;
-                MapScene.savedFloor = undefined;
                 this.sceneManager.changeToScene(MainMenu, {});
             }
         }

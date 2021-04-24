@@ -56,15 +56,12 @@ export default class floor1_scene extends Scene {
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
         // Load in the enemy info
-        this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); // 
+        //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
-        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
-        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
 
-        this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
+        /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
         this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
@@ -209,7 +206,8 @@ export default class floor1_scene extends Scene {
     }
     
     initializeEnemies(){
-        const monsterData = this.load.getObject("floor1enemies");   // FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
+        const monsterData = this.load.getObject("floorEnemies").enemies[this.characterState.mapState.currentFloor-1];// FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
+        
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
         let positions = [...monsterData.positions];
 

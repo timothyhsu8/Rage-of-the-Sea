@@ -27,10 +27,7 @@ export default class MainMenu extends Scene {
     static items: string[];
     static image: string;
     
-    loadScene(){
-        this.load.image("lasergun", "hw3_assets/sprites/itemicons/lasergun.png");
-        this.load.image("healthpack", "hw3_assets/sprites/itemicons/healthpack.png");
-    }
+    loadScene(){}
 
     startScene(){
         this.sceneObjects = new Array<GameNode>();

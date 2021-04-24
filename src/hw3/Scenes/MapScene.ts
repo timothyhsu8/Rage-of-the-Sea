@@ -16,27 +16,24 @@ import MapGenerator from "../GameSystems/MapGenerator";
 import Line from "../../Wolfie2D/Nodes/Graphics/Line";
 import Room from "../GameSystems/Mapping/Room";
 import { RoomTypes } from "../GameSystems/Mapping/RoomType_Enums";
+import MapState from "../GameSystems/MapState";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 
 export default class MapScene extends Scene{
-        
+
+    private mapState: MapState;
     private characterState: CharacterState; // All data of the character goes here
     private roomArray: Array<Array<Room>>;
     private roomButtons: Array<Array<Button>>;
+    private nextFloorButton: Button;
 
-    static savedButtons: Array<Array<Button>>;
-    static savedFloor: Floor;
-    
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
+        this.mapState = this.characterState.mapState;
     }
 
     loadScene(){
-        this.load.image("portrait", "hw3_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
-        this.load.image("battleIcon", "hw3_assets/sprites/map/battleicon.png");
-        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
-        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
-        this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
+        //this.load.image("portrait", "hw3_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
     }
 
     startScene(){
@@ -49,11 +46,11 @@ export default class MapScene extends Scene{
 
         /* Generate map or load the saved one */
         let generatedFloor = null;
-        if(MapScene.savedFloor === undefined){
+        if(this.mapState.savedFloor === undefined){
             generatedFloor = MapGenerator.generateFloor(0);
-            MapScene.savedFloor = generatedFloor;
+            this.mapState.savedFloor = generatedFloor;
         }
-        else generatedFloor = MapScene.savedFloor;
+        else generatedFloor = this.mapState.savedFloor;
 
         /* Initialize Buttons Array */
         this.roomButtons = new Array<Array<Button>>(generatedFloor.roomArray.length);
@@ -64,13 +61,22 @@ export default class MapScene extends Scene{
         this.renderMap(generatedFloor);
 
         /* Load saved button colors */
-        if(MapScene.savedButtons !== undefined){
+        if(this.mapState.savedButtons !== undefined){
             for(let i=0 ; i<this.roomButtons.length ; i++)
                 for(let j=0 ; j<this.roomButtons[i].length ; j++)
-                    this.roomButtons[i][j].backgroundColor = MapScene.savedButtons[i][j].backgroundColor;
+                    this.roomButtons[i][j].backgroundColor = this.mapState.savedButtons[i][j].backgroundColor;
         }
         
-        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-200, center.y+400), text: "View Inventory"});
+        const nextFloor = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x, center.y+400), text: "Next Floor"});
+        this.nextFloorButton = nextFloor;  
+        nextFloor.size.set(250, 50);
+        nextFloor.borderWidth = 2;
+        nextFloor.borderColor = Color.WHITE;
+        nextFloor.onClickEventId = "nextfloor";
+        nextFloor.fontSize = 35;
+        (this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
+
+        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
         inventory.size.set(250, 50);
         inventory.borderWidth = 2;
         inventory.borderColor = Color.WHITE;
@@ -78,13 +84,17 @@ export default class MapScene extends Scene{
         inventory.onClickEventId = "inventory";
         inventory.fontSize = 35;
 
-        const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 200, center.y+400), text: "Quit"});
+        const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
         quit.size.set(200, 50);
         quit.borderWidth = 2;
         quit.borderColor = Color.WHITE;
         quit.backgroundColor = new Color(50, 50, 70, 1);
         quit.onClickEventId = "quit";
         quit.fontSize = 35;
+
+        const currentFloor = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x + 650, center.y-400), text: "Floor " + this.mapState.currentFloor});
+        currentFloor.textColor = Color.WHITE;
+        currentFloor.fontSize = 35;
 
         // healthbar
         /* Healthbar and Healthbar Border*/
@@ -102,14 +112,6 @@ export default class MapScene extends Scene{
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(62, 45);
 
-        // // placeholder for map screen composition
-        // const map_render = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x, center.y), text: "placeholder"})
-        // map_render.size.set(1280, 640);
-        // map_render.borderWidth = 4;
-        // map_render.borderColor = Color.WHITE;
-        // map_render.backgroundColor = PancakeColor.TAN;
-        // map_render.fontSize = 35;
-
         let mapBackground = this.add.sprite("mapBackground", "primary");
         mapBackground.position = new Vec2(center.x, center.y);
 
@@ -117,8 +119,11 @@ export default class MapScene extends Scene{
         this.receiver.subscribe("play");
         this.receiver.subscribe("inventory");
         this.receiver.subscribe("quit");
+        this.receiver.subscribe("nextfloor");
     }
     updateScene(){
+        const LAST_ROOM_COL = 6;
+
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
@@ -129,12 +134,19 @@ export default class MapScene extends Scene{
                 this.sceneManager.changeToScene(InventoryScene, {characterState: this.characterState});
             
             if(event.type === "quit"){
-                MapScene.savedButtons = undefined;
-                MapScene.savedFloor = undefined;
+                this.mapState.resetMap();
                 this.sceneManager.changeToScene(MainMenu, {});
             }
 
-            /* Changing colors of nodes */
+            /* Move To Next Floor */
+            if(event.type === "nextfloor"){
+                if(this.mapState.nextFloorOpen){
+                    this.mapState.nextFloor();
+                    this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                }
+            }
+
+            /* Showing completion of rooms */
             if(event.type.substring(0, 4) === "room"){
                 for(let i=0 ; i < this.roomButtons.length ; i++)
                     for(let j=0 ; j < this.roomButtons[i].length ; j++)
@@ -154,9 +166,13 @@ export default class MapScene extends Scene{
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
                             }
                             /* Save button colors and load into the battle scene */
-                            MapScene.savedButtons = this.roomButtons;
+                            this.mapState.savedButtons = this.roomButtons;
                             this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
                         }
+                
+                /* Enable Next Floor Button */
+                if(parseInt(event.type.substring(4,5)) === LAST_ROOM_COL)
+                    this.mapState.nextFloorOpen = true;       
             }
         }
     }
