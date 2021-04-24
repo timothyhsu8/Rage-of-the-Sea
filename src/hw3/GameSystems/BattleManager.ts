@@ -30,7 +30,7 @@ export default class BattleManager {
             let characterState = this.characterState;
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++)
-                    if(ability.hits(enemies[i].owner)){
+                    if(enemies[i].owner !== undefined && ability.hits(enemies[i].owner)){
                         enemies[i].damage(ability.type.damage * characterState.stats.attackMult); // FINAL PROJECT TODO - Calculate effoct of Attack stat here
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }

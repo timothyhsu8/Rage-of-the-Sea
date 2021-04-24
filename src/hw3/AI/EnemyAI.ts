@@ -58,11 +58,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.playKnockbackTween();
 
         /* Enemy Dies */
-        if(this.health <= 0){
-            this.owner.setAIActive(false, {});
-            this.owner.isCollidable = false;
+        if(this.health <= 0)
             this.owner.tweens.play("death");
-        }
     }
 
     playKnockbackTween() {

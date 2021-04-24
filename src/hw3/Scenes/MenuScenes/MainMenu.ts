@@ -85,15 +85,15 @@ export default class MainMenu extends Scene {
                 UITweens.slideOutScene(this.sceneObjects, 80, new Vec2(-1000, 0));
                 let sceneManager = this.sceneManager;
                 setTimeout(function(){ 
-                    sceneManager.changeScene(CharacterSelect, {});
+                    sceneManager.changeToScene(CharacterSelect, {});
                 }, 500);
             }
 
             if(event.type === "controls")
-                this.sceneManager.changeScene(Controls, {});
+                this.sceneManager.changeToScene(Controls, {});
 
             if(event.type === "levelselect")
-                this.sceneManager.changeScene(LevelSelect, {});
+                this.sceneManager.changeToScene(LevelSelect, {});
 
             if(event.type === "menu"){
                 this.mainMenu.setHidden(false);
@@ -102,7 +102,7 @@ export default class MainMenu extends Scene {
             }
 
             if(event.type === "help"){
-                this.sceneManager.changeScene(HelpScreen, {});
+                this.sceneManager.changeToScene(HelpScreen, {});
             }
         }
     }

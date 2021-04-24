@@ -56,10 +56,18 @@ export default class floor1_scene extends Scene {
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
 
         // Load in the enemy info
-        //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); // 
+        this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); // 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
+        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
+        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
+        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
+
+        this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
+        this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
+        this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
+        this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
     }
 
     startScene(){
@@ -101,25 +109,24 @@ export default class floor1_scene extends Scene {
                     case GameEvents.ENEMY_DIED:
                     {
                         let owner = event.data.get("node");
-                        owner.position.x = -1000;
-                        //this.owner.destroy();
+                        owner.destroy();
                         this.numMonstersLeft--;
                         break;
                     }
                     case GameEvents.PLAYER_DIED:
                     {
                         this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1/3);
+                        this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.sceneManager.changeScene(GameOver);
+                        this.sceneManager.changeToScene(GameOver);
                         break;
                     }
                     case GameEvents.ROOM_CLEARED:
                     {
                         this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1/3);
+                        this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.sceneManager.changeScene(ItemSelectScene, {characterState: this.characterState});
+                        this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
                         break;
                     }
                     default:
@@ -190,7 +197,7 @@ export default class floor1_scene extends Scene {
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
 
         /* Add Tweens */
-        this.player.tweens.add("takedamage", {startDelay: 0, duration: 500/*, onEnd: GameEvents.ENEMY_DIED*/, node: this.player,
+        this.player.tweens.add("takedamage", {startDelay: 0, duration: 500,
             effects: [{
                     property: TweenableProperties.alpha,
                     start: 1.0,
@@ -234,7 +241,7 @@ export default class floor1_scene extends Scene {
             }
 
             /* Add Tweens */
-            this.enemies[i].tweens.add("death", {startDelay: 0, duration: 500, onEnd: GameEvents.ENEMY_DIED, node: this.enemies[i],
+            this.enemies[i].tweens.add("death", {startDelay: 0, duration: 500, onEnd: GameEvents.ENEMY_DIED,
                 effects: [{property: TweenableProperties.alpha, start: 1.0, end: 0, ease: EaseFunctionType.OUT_SINE}]
             });
 

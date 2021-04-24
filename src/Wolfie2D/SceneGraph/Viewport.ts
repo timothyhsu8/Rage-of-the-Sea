@@ -108,10 +108,6 @@ export default class Viewport {
             pos = new Vec2(vecOrX, y);
         }
 
-        // let newCenter = new Vec2;
-        // newCenter.x = MathUtils.lerp(pos.x + pos.x*0.1, this.view.center.clone().x, 0.1);
-        // newCenter.y = MathUtils.lerp(pos.y + pos.y*0.1, this.view.center.clone().y, 0.1);
-        // this.view.center = newCenter;
         this.view.center = pos;
     }
 
@@ -167,7 +163,7 @@ export default class Viewport {
      * @param zoom The zoom level
      */
     setZoomLevel(zoom: number): void {
-        this.view.halfSize.scale(1/zoom);
+        this.view.halfSize.copy(this.canvasSize.scaled(1/zoom/2));
     }
 
     /**
@@ -252,11 +248,8 @@ export default class Viewport {
         // Assure there are no lines in the tilemap
         pos.x = Math.floor(pos.x) + this.offset.x;
         pos.y = Math.floor(pos.y) + this.offset.y;
-
-        //this.view.center.copy(pos)
-        let newx = MathUtils.lerp(this.view.center.clone().x, pos.x, 0.1);
-        let newy = MathUtils.lerp(this.view.center.clone().y, pos.y, 0.1);
-        this.view.center = new Vec2(newx, newy);
+        
+        this.view.center.copy(pos);
     }
 
     update(deltaT: number): void {

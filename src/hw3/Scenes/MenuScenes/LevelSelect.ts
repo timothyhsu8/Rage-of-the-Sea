@@ -76,7 +76,7 @@ export default class LevelSelect extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")
-                this.sceneManager.changeScene(MainMenu, {});
+                this.sceneManager.changeToScene(MainMenu, {});
         }
     }
 }

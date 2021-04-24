@@ -35,7 +35,7 @@ export default class LoadScreen extends Scene {
 
     startScene(){
         this.initializeAbilities();
-        this.sceneManager.changeScene(MainMenu, {});
+        this.sceneManager.changeToScene(MainMenu, {});
     }
 
     initializeAbilities(): void{

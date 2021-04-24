@@ -47,7 +47,6 @@ export default class AnimationManager {
     protected pendingOnEnd: string;
 
     protected uninterruptable: boolean;
-
     /**
      * Creates a new AnimationManager
      * @param owner The owner of the AnimationManager
@@ -83,7 +82,7 @@ export default class AnimationManager {
             return this.animations.get(this.currentAnimation).frames[this.currentFrame].index;
         } else {
             // No current animation, warn the user
-            console.warn("Animation index was requested, but the current animation was invalid");
+            console.warn(`Animation index was requested, but the current animation: ${this.currentAnimation} was invalid`);
             return 0;
         }
     }
@@ -133,7 +132,7 @@ export default class AnimationManager {
             return index;
         } else {
             // No current animation, can't advance. Warn the user
-            console.warn("Animation index and advance was requested, but the current animation was invalid");
+            console.warn(`Animation index and advance was requested, but the current animation (${this.currentAnimation}) in node with id: ${this.owner.id} was invalid`);
             return 0;
         }
     }
@@ -144,7 +143,7 @@ export default class AnimationManager {
         this.animationState = AnimationState.STOPPED;
 
         if(this.onEndEvent !== null){
-            this.emitter.fireEvent(this.onEndEvent, {owner: this.owner, animation: this.currentAnimation});
+            this.emitter.fireEvent(this.onEndEvent, {owner: this.owner.id, animation: this.currentAnimation});
         }
 
         // If there is a pending animation, play it
@@ -183,33 +182,30 @@ export default class AnimationManager {
     play(animation: string, loop?: boolean, onEnd?: string): void {
         if(this.uninterruptable === true)
             return;
-        
-        else{
-            if(onEnd === "uninterruptable")
-                this.uninterruptable = true;
 
-            this.currentAnimation = animation;
-            this.currentFrame = 0;
-            this.frameProgress = 0;
-            this.animationState = AnimationState.PLAYING;
+        if(onEnd === "uninterruptable")
+            this.uninterruptable = true;
+        this.currentAnimation = animation;
+        this.currentFrame = 0;
+        this.frameProgress = 0;
+        this.animationState = AnimationState.PLAYING;
 
-            // If loop arg was provided, use that
-            if(loop !== undefined){
-                this.loop = loop;
-            } else {
-                // Otherwise, use what the json file specified
-                this.loop = this.animations.get(animation).repeat;
-            }
-
-            if(onEnd !== undefined){
-                this.onEndEvent = onEnd;
-            } else {
-                this.onEndEvent = null;
-            }
-
-            // Reset pending animation
-            this.pendingAnimation = null;
+        // If loop arg was provided, use that
+        if(loop !== undefined){
+            this.loop = loop;
+        } else {
+            // Otherwise, use what the json file specified
+            this.loop = this.animations.get(animation).repeat;
         }
+
+        if(onEnd !== undefined){
+            this.onEndEvent = onEnd;
+        } else {
+            this.onEndEvent = null;
+        }
+
+        // Reset pending animation
+        this.pendingAnimation = null;
     }
 
     /**

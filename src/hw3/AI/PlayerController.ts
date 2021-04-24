@@ -4,10 +4,10 @@ import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Inventory from "../GameSystems/Inventory";
-import Item from "../GameSystems/items/Item";
 import BattlerAI from "./BattlerAI";
 
 export default class PlayerController implements BattlerAI {
+
     // Fields from BattlerAI
     health: number;
 
@@ -131,14 +131,23 @@ export default class PlayerController implements BattlerAI {
         this.lookDirection = this.owner.position.dirTo(Input.getGlobalMousePosition());
     }
 
+    /* FINAL PROJECT TODO - Implement */
+    destroy(): void {
+        // this.owner.destroy();
+    }
+
     damage(damage: number): void {
-        if(this.owner.tweens.isStopped("takedamage")){
-            this.health -= damage;
-            this.owner.tweens.play("takedamage", true);
-            setTimeout(() => {
-                this.owner.tweens.stop("takedamage");
-                this.owner.alpha = 1.0;
-            }, 2000);
+        if(this.owner !== undefined){
+            if(this.owner.tweens.isStopped("takedamage")){
+                this.health -= damage;
+                this.owner.tweens.play("takedamage", true);
+                setTimeout(() => {
+                    if(this.owner !== undefined){
+                    this.owner.tweens.stop("takedamage");
+                    this.owner.alpha = 1.0;
+                    }
+                }, 2000);
+            }
         }
     }
 }

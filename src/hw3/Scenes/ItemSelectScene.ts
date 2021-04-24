@@ -107,7 +107,7 @@ export default class ItemSelectScene extends Scene {
                     else if(this.itemSelected === 1)
                         this.characterState.addToInventory(ItemType.NORMAL_BOOTS);
 
-                    this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
+                    this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                 }
             }
         }

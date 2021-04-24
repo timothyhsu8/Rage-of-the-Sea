@@ -24,6 +24,7 @@ export default class InventoryScene extends Scene {
         this.load.image("knife", "hw3_assets/sprites/itemicons/knife.png");
         this.load.image("double-edged", "hw3_assets/sprites/itemicons/lasergun.png");
         this.load.image("boots", "hw3_assets/sprites/itemicons/lasergun.png");
+        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
     }
 
     startScene(){
@@ -52,7 +53,7 @@ export default class InventoryScene extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")
-                this.sceneManager.changeScene(MapScene, {characterState: this.characterState});
+                this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
         }
 
         let portrait = this.add.sprite(MainMenu.image, "primary");

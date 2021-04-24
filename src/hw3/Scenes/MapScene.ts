@@ -32,6 +32,11 @@ export default class MapScene extends Scene{
 
     loadScene(){
         this.load.image("portrait", "hw3_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
+        this.load.image("battleIcon", "hw3_assets/sprites/map/battleicon.png");
+        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
+        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
+        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
+        this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
     }
 
     startScene(){
@@ -118,15 +123,15 @@ export default class MapScene extends Scene{
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play")
-                this.sceneManager.changeScene(floor1_scene, {characterState: this.characterState});
+                this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState});
 
             if(event.type === "inventory")
-                this.sceneManager.changeScene(InventoryScene, {characterState: this.characterState});
+                this.sceneManager.changeToScene(InventoryScene, {characterState: this.characterState});
             
             if(event.type === "quit"){
                 MapScene.savedButtons = undefined;
                 MapScene.savedFloor = undefined;
-                this.sceneManager.changeScene(MainMenu, {});
+                this.sceneManager.changeToScene(MainMenu, {});
             }
 
             /* Changing colors of nodes */
@@ -150,7 +155,7 @@ export default class MapScene extends Scene{
                             }
                             /* Save button colors and load into the battle scene */
                             MapScene.savedButtons = this.roomButtons;
-                            this.sceneManager.changeScene(floor1_scene, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
+                            this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
                         }
             }
         }

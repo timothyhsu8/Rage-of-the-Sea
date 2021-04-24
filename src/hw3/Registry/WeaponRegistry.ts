@@ -16,7 +16,7 @@ export default class WeaponTemplateRegistry extends Registry<WeaponConstructor> 
         rm.image("anchor", "hw3_assets/sprites/itemicons/anchor.png");
 
         // Load spritesheets
-        rm.spritesheet("slice", "hw3_assets/spritesheets/slice.json");
+        rm.spritesheet("slice", "hw3_assets/spritesheets/abilities/slice.json");
 
         // Register default types
         this.registerItem("slice", Slice);

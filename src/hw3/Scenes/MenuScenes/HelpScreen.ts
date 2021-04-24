@@ -87,7 +87,7 @@ export default class HelpScreen extends Scene {
 
             /* Back Button */
             if(event.type === "back")
-                this.sceneManager.changeScene(MainMenu, {});
+                this.sceneManager.changeToScene(MainMenu, {});
 
             /* Cheat Codes */
             for(let i = 0 ; i < this.cheatEventNames.length; i++)

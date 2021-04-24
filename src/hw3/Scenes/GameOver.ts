@@ -52,7 +52,7 @@ export default class GameOver extends Scene {
             if(event.type === "back"){
                 MapScene.savedButtons = undefined;
                 MapScene.savedFloor = undefined;
-                this.sceneManager.changeScene(MainMenu, {});
+                this.sceneManager.changeToScene(MainMenu, {});
             }
         }
     }
