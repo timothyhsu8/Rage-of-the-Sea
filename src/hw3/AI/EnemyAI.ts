@@ -55,11 +55,13 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     damage(damage: number): void {
         this.health -= damage;
-        this.playKnockbackTween();
+        this.playKnockbackTween();      /* FINAL PROJECT TODO - Add property to enemies to make them knockbackable */
 
         /* Enemy Dies */
-        if(this.health <= 0)
+        if(this.health <= 0){
+            this.owner.disablePhysics();
             this.owner.tweens.play("death");
+        }
     }
 
     playKnockbackTween() {

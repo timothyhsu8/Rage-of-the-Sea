@@ -5,7 +5,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import CharacterState from "../CharacterState";
-import { ItemType } from "../GameSystems/items/Item";
+import Item, { ItemType } from "../GameSystems/items/Item";
 import MapScene from "./MapScene";
 
 
@@ -14,6 +14,9 @@ export default class ItemSelectScene extends Scene {
     private selections: Array<Button>;
     private selectButton: Button;
     private itemSelected: number;
+
+    private allItems: Array<ItemType>;
+    private itemChoices: Array<ItemType>;
     
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
@@ -22,6 +25,18 @@ export default class ItemSelectScene extends Scene {
     loadScene(){}
 
     startScene(){
+        /* Determine random items to offer the player */
+        this.allItems = this.load.getObject("itemData").items;
+
+        /* Assigns random items to the selection */
+        this.itemChoices = new Array<ItemType>(3);
+        for(let i=0 ; i < this.itemChoices.length ; i++){
+            if(this.allItems.length !== 0)
+                this.itemChoices[i] = this.allItems.splice(this.randomInt(this.allItems.length), 1)[0];    
+            else this.itemChoices[i] = ItemType.NONE;
+        }
+
+        /* Display Item Selection Scene */
         this.addLayer("primary", 10);
         this.addLayer("descriptions", 11);
         const center = this.viewport.getCenter();
@@ -34,44 +49,11 @@ export default class ItemSelectScene extends Scene {
         header.textColor = Color.WHITE;
         header.fontSize = 35;
 
-        /* Item 1 */
-        const item1 = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-500, center.y), text: "Double Edged Sword"});
-        item1.size.set(400, 500);
-        item1.borderWidth = 2;
-        item1.borderColor = Color.WHITE;
-        item1.backgroundColor = new Color(50, 50, 70, 1);
-        item1.onClickEventId = "item1";
-        item1.fontSize = 35;
-        this.selections[0] = item1;
+        /* Display Item Buttons */
+        this.makeItemButtons(new Vec2(center.x-500, center.y), 0);
+        this.makeItemButtons(new Vec2(center.x, center.y), 1);
+        this.makeItemButtons(new Vec2(center.x+500, center.y), 2);
 
-        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(center.x-500, center.y+50), text:"Deal double damage, take double damage"});
-        item1description.textColor = Color.WHITE;
-        item1description.fontSize = 20;
-
-        /* Item 2 */
-        const item2 = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y), text: "Normal Boots"});
-        item2.size.set(400, 500);
-        item2.borderWidth = 2;
-        item2.borderColor = Color.WHITE;
-        item2.backgroundColor = new Color(50, 50, 70, 1);
-        item2.onClickEventId = "item2";
-        item2.fontSize = 35;
-        this.selections[1] = item2;
-
-        const item2description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(center.x, center.y+50), text:"Increased movement speed"});
-        item2description.textColor = Color.WHITE;
-        item2description.fontSize = 20;
-
-        /* None */
-        const item3 = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x+500, center.y), text: "None"});
-        item3.size.set(400, 500);
-        item3.borderWidth = 2;
-        item3.borderColor = Color.WHITE;
-        item3.backgroundColor = new Color(50, 50, 70, 1);
-        item3.onClickEventId = "item3";
-        item3.fontSize = 35;
-        this.selections[2] = item3;
-        
         /* Select */
         const select = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y+350), text: "SELECT"});
         select.size.set(150, 100);
@@ -101,11 +83,17 @@ export default class ItemSelectScene extends Scene {
             if(event.type === "select"){
                 if(this.itemSelected !== -1)
                 {
-                    if(this.itemSelected === 0)
-                        this.characterState.addToInventory(ItemType.DOUBLE_EDGED_SWORD);
+                    /* Add selected item to inventory, remove it from pool */
+                    for(let i=0 ; i < this.itemChoices.length ; i++)
+                        if(this.itemSelected === i){
+                            this.characterState.addToInventory(this.itemChoices[i]);
+                            this.itemChoices[i] = ItemType.NONE;
+                        }
 
-                    else if(this.itemSelected === 1)
-                        this.characterState.addToInventory(ItemType.NORMAL_BOOTS);
+                    /* Put non-selected items back into the pool */
+                    for(let i=0 ; i < this.itemChoices.length ; i++)
+                        if(this.itemChoices[i] !== "none")
+                            this.allItems.push(this.itemChoices[i]);
 
                     this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                 }
@@ -122,7 +110,25 @@ export default class ItemSelectScene extends Scene {
             }
 
             this.selectButton.backgroundColor = new Color(50, 50, 70, 1);
-        }
-                
+        }        
+    }
+    
+    makeItemButtons(position: Vec2, itemChoice: number){
+        const item = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: position, text: this.itemChoices[itemChoice]});
+        item.size.set(400, 500);
+        item.borderWidth = 2;
+        item.borderColor = Color.WHITE;
+        item.backgroundColor = new Color(50, 50, 70, 1);
+        item.onClickEventId = "item"+(itemChoice+1);
+        item.fontSize = 35;
+        this.selections[itemChoice] = item;
+
+        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+50), text:""});
+        item1description.textColor = Color.WHITE;
+        item1description.fontSize = 20;
+    }
+
+    randomInt(max: number): number{
+        return Math.floor(Math.random() * max);
     }
 }

@@ -127,8 +127,9 @@ export default class MapScene extends Scene{
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "play")
+            if(event.type === "play"){
                 this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState});
+            }
 
             if(event.type === "inventory")
                 this.sceneManager.changeToScene(InventoryScene, {characterState: this.characterState});

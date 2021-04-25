@@ -25,7 +25,8 @@
                  "name":"Collidable",
                  "type":"bool",
                  "value":true
-                }],
+                }
+              ],
          "type":"tilelayer",
          "visible":true,
          "width":16,

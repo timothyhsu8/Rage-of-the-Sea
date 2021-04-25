@@ -26,8 +26,9 @@ export default class LoadScreen extends Scene {
         /* Load Enemies for each floor */
         this.load.object("floorEnemies", "hw3_assets/data/floorEnemies.json");
 
-        /* Load Abilities  */
+        /* Load Items and Abilities  */
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
+        this.load.object("itemData", "hw3_assets/data/itemData.json");
         
         /* Load Inventory Slots */
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");   // FINAL PROJECT TODO - Actually make this
@@ -37,6 +38,7 @@ export default class LoadScreen extends Scene {
         this.load.keepSpritesheet("player");
 
         this.load.keepObject("abilityData");
+        this.load.keepObject("itemData");
         this.load.keepObject("floorEnemies");
 
         this.load.keepImage("battleIcon");

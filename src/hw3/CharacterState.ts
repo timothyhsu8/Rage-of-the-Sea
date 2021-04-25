@@ -12,8 +12,8 @@ export default class CharacterState{
     
     private inventory: Inventory;   // Private to prevent direct changes to the inventory. Use the methods in this class
 
-    constructor(health: number, attack: number, defense: number, speed:number, inventory: Inventory, portrait: string, currentFloor: number){
-        this.stats = new Stats(health, attack, 11.0, defense, speed, 1.0);
+    constructor(maxHealth: number, attack: number, defense: number, speed:number, inventory: Inventory, portrait: string, currentFloor: number){
+        this.stats = new Stats(maxHealth, maxHealth, attack, 11.0, defense, speed, 1.0);
         this.portrait = portrait;
         this.inventory = inventory;
         this.itemRotation = 0;
@@ -22,17 +22,19 @@ export default class CharacterState{
 
     /* Adds item to inventory */
     addToInventory(itemtype: ItemType){
-        let newItem = Item.createItem(itemtype);
-        this.addItemStats(newItem);
-        this.inventory.addItem(newItem);
+        if(itemtype !== ItemType.NONE){
+            let newItem = Item.createItem(itemtype);
+            this.addItemStats(newItem);
+            this.inventory.addItem(newItem);
+        }
     }
 
     /* Adds item stats to player stats */
     addItemStats(item: Item){
-        this.stats.health += item.stats.health;
         this.stats.attack += item.stats.attack;
         this.stats.defense += item.stats.defense;
         this.stats.speed += item.stats.speed;
+        (this.stats.health + item.stats.health > this.stats.maxHealth)?(this.stats.health = this.stats.maxHealth):(this.stats.health += item.stats.health);
 
         if(this.stats.attackMult < item.stats.attackMult)
             this.stats.attackMult = item.stats.attackMult;

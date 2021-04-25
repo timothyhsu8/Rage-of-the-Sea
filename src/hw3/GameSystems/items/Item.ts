@@ -15,13 +15,13 @@ export default class Item {
     /* Stats */
     stats: Stats;
 
-    constructor(name: string, type:ItemType, ability: Ability, sprite: Sprite, health: number, attack: number, 
+    constructor(name: string, type:ItemType, ability: Ability, sprite: Sprite, maxHealth: number, health: number, attack: number, 
         attackMult: number, defense: number, speed:number, takeDamageMult: number){
         this.name = name;
         this.type = type;
         this.ability = ability;
         this.sprite = sprite;
-        this.stats = new Stats(health, attack, attackMult, defense, speed, takeDamageMult);
+        this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);
     }
 
     moveSprite(position: Vec2, layer?: string){
@@ -50,10 +50,13 @@ export default class Item {
     static createItem(type: ItemType): Item{
         switch(type){
             case ItemType.DOUBLE_EDGED_SWORD:
-                return new Item("Double Edged Sword", type, null, null, 0, 0, 2.0, 0, 0, 2.0);
+                return new Item("Double Edged Sword", type, null, null, 0, 0, 0, 2.0, 0, 0, 2.0);
 
             case ItemType.NORMAL_BOOTS:
-                return new Item("Normal Boots", type, null, null, 0, 0, 0, 0, 10, 0)
+                return new Item("Normal Boots", type, null, null, 0, 0, 0, 0, 0, 10, 0);
+
+            case ItemType.HEAL:
+                return new Item("Heal", type, null, null, 0, 30, 0, 0, 0, 0, 0);
 
             default:
                 console.log("Unspecified item");
@@ -64,5 +67,7 @@ export default class Item {
 
 export enum ItemType {
     DOUBLE_EDGED_SWORD = "double_edged_sword",
-    NORMAL_BOOTS = "normal_boots"
+    NORMAL_BOOTS = "normal_boots",
+    HEAL = "heal",
+    NONE = "none"
 }
