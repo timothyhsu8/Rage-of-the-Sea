@@ -11,6 +11,7 @@ import Ability from "../GameSystems/items/Ability";
 import {GameEvents} from "../Game_Enums"
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import StillProjectiles from "./EnemyStates/StillProjectiles";
+import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -58,7 +59,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.playKnockbackTween();      /* FINAL PROJECT TODO - Add property to enemies to make them knockbackable */
 
         /* Enemy Dies */
-        if(this.health <= 0){
+        if(HelpScreen.instakill || this.health <= 0){
             this.owner.disablePhysics();
             this.owner.tweens.play("death");
         }

@@ -5,6 +5,7 @@ import BattlerAI from "../AI/BattlerAI";
 import Ability from "./items/Ability";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import CharacterState from "../CharacterState";
+import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 
 export default class BattleManager {
     playerAI: BattlerAI;
@@ -30,7 +31,7 @@ export default class BattleManager {
             let characterState = this.characterState;
             setTimeout(function(){      /*  FINAL PROJECT TODO - Make this a chargeUp of each ability. */
                 for(let i = 0 ; i < enemies.length ; i++){
-                    if(enemies[i].owner !== undefined && ability.hits(enemies[i].owner)){
+                    if(enemies[i].owner !== undefined && (HelpScreen.instakill || ability.hits(enemies[i].owner))  ){
                         enemies[i].damage(ability.type.damage * characterState.stats.attackMult); // FINAL PROJECT TODO - Calculate effoct of Attack stat here
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }

@@ -82,7 +82,7 @@ export default class MainMenu extends Scene {
                 UITweens.slideOutScene(this.sceneObjects, 80, new Vec2(-1000, 0));
                 let sceneManager = this.sceneManager;
                 setTimeout(function(){ 
-                    sceneManager.changeToScene(CharacterSelect, {});
+                    sceneManager.changeToScene(CharacterSelect, {startingLevel: 1});
                 }, 500);
             }
 

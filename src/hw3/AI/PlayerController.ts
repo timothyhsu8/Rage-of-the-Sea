@@ -4,6 +4,7 @@ import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Inventory from "../GameSystems/Inventory";
+import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import BattlerAI from "./BattlerAI";
 
 export default class PlayerController implements BattlerAI {
@@ -137,7 +138,7 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        if(this.owner !== undefined){
+        if(!HelpScreen.invincibility && this.owner !== undefined){
             if(this.owner.tweens.isStopped("takedamage")){
                 this.health -= damage;
                 this.owner.tweens.play("takedamage", true);

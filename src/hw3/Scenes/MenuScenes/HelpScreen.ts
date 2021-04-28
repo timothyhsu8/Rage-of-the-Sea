@@ -1,9 +1,7 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
-import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
@@ -16,7 +14,7 @@ export default class HelpScreen extends Scene {
 
     static allLevelsUnlocked: boolean = false;
     static invincibility: boolean = false;
-    static cheat3: boolean = false;
+    static instakill: boolean = false;
     static cheat4: boolean = false;
     static cheat5: boolean = false;
 
@@ -28,7 +26,7 @@ export default class HelpScreen extends Scene {
         this.addUILayer("help");
         
         /* Initializes the list of cheats */
-        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.cheat3, HelpScreen.cheat4, HelpScreen.cheat5];
+        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.instakill, HelpScreen.cheat4, HelpScreen.cheat5];
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
@@ -37,13 +35,6 @@ export default class HelpScreen extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
-    
-        /* Developer Names */
-        let aboutText = "Developers: Edward Huang, Michael Carpenzano, and Timothy Hsu";
-        const about = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x, center.y-375), text: aboutText});
-        about.textColor = Color.WHITE;
-        about.size.set(200, 500);
-        about.fontSize = 20;
 
         /* Backstory */
         let backstoryText = "Game backstory here";
@@ -71,9 +62,9 @@ export default class HelpScreen extends Scene {
         cheatsHeader.fontSize = 35;
         
         /* Create Cheat Code Buttons */
-        let cheatTextArray = ["Unlock All Levels", "Invincibility", "Cheat 3", "Cheat 4", "Cheat 5"];
+        let cheatTextArray = ["Unlock All Levels", "Invincibility", "Instakill All", "Next Floor Available", "Cheat 5"];
         this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5"];
-        this.createCheatButtons(5, center, cheatTextArray, 100, this.cheatEventNames);
+        this.createCheatButtons(5, center, cheatTextArray, 110, this.cheatEventNames);
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
@@ -106,7 +97,7 @@ export default class HelpScreen extends Scene {
         /* Sets values of the static variables (since the cheatList array only stores the variables by value, not reference)*/
         (this.cheatList[0])?(HelpScreen.allLevelsUnlocked = true):(HelpScreen.allLevelsUnlocked = false);
         (this.cheatList[1])?(HelpScreen.invincibility = true):(HelpScreen.invincibility = false);
-        (this.cheatList[2])?(HelpScreen.cheat3 = true):(HelpScreen.cheat3 = false);
+        (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
         (this.cheatList[3])?(HelpScreen.cheat4 = true):(HelpScreen.cheat4 = false);
         (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
     }
@@ -117,7 +108,7 @@ export default class HelpScreen extends Scene {
         for(let i = 0 ; i < numCheats ; i++){
             /* Buttons */
             const cheat = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x+350, (center.y-175)+(i*posOffset)), text: text[i]});
-            cheat.size.set(250, 50);
+            cheat.size.set(300, 75);
             cheat.borderWidth = 2;
             cheat.borderColor = Color.WHITE;
             cheat.backgroundColor = new Color(50, 50, 70, 1);

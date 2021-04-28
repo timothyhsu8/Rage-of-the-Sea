@@ -6,6 +6,7 @@ import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
+import CharacterSelect from "./CharacterSelect";
 import MainMenu from "./MainMenu";
 
 export default class LevelSelect extends Scene {
@@ -16,6 +17,8 @@ export default class LevelSelect extends Scene {
     }
 
     startScene(){
+        const NUM_LEVELS = 6;
+        
         this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
         this.addUILayer("levelSelect");
@@ -43,7 +46,7 @@ export default class LevelSelect extends Scene {
             level.size.set(375, 200);
             level.borderColor = Color.WHITE;
             level.backgroundColor = Color.TRANSPARENT;
-            level.onClickEventId = "back";
+            level.onClickEventId = "level"+(i+1);
             this.sceneUI.push(level);
 
             let levelimage = this.add.sprite("levelimage", "levelimages");
@@ -58,7 +61,7 @@ export default class LevelSelect extends Scene {
             level.size.set(375, 200);
             level.borderColor = Color.WHITE;
             level.backgroundColor = Color.TRANSPARENT;
-            level.onClickEventId = "back";
+            level.onClickEventId = "level"+(i+4);
             this.sceneUI.push(level);
 
             let levelimage = this.add.sprite("levelimage", "levelimages");
@@ -68,15 +71,25 @@ export default class LevelSelect extends Scene {
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
+        
+        for(let i=1 ; i <= NUM_LEVELS ; i++)
+            this.receiver.subscribe("level" + i);
 
         UITweens.slideInScene(this.sceneUI, 50, new Vec2(2000, 0));
     }
+    
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")
                 this.sceneManager.changeToScene(MainMenu, {});
+
+            /* Go To Character Select Screen */
+            if(event.type.substring(0,5) === "level"){
+                let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
+                this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
+            }
         }
     }
 }
