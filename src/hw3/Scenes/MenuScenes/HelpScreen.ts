@@ -15,7 +15,7 @@ export default class HelpScreen extends Scene {
     static allLevelsUnlocked: boolean = false;
     static invincibility: boolean = false;
     static instakill: boolean = false;
-    static cheat4: boolean = false;
+    static nextFloorOpen: boolean = false;
     static cheat5: boolean = false;
 
     loadScene(){}
@@ -26,7 +26,7 @@ export default class HelpScreen extends Scene {
         this.addUILayer("help");
         
         /* Initializes the list of cheats */
-        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.instakill, HelpScreen.cheat4, HelpScreen.cheat5];
+        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.instakill, HelpScreen.nextFloorOpen, HelpScreen.cheat5];
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
@@ -98,7 +98,7 @@ export default class HelpScreen extends Scene {
         (this.cheatList[0])?(HelpScreen.allLevelsUnlocked = true):(HelpScreen.allLevelsUnlocked = false);
         (this.cheatList[1])?(HelpScreen.invincibility = true):(HelpScreen.invincibility = false);
         (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
-        (this.cheatList[3])?(HelpScreen.cheat4 = true):(HelpScreen.cheat4 = false);
+        (this.cheatList[3])?(HelpScreen.nextFloorOpen = true):(HelpScreen.nextFloorOpen = false);
         (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
     }
 

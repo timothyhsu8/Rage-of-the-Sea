@@ -7,6 +7,7 @@ import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import CharacterSelect from "./CharacterSelect";
+import HelpScreen from "./HelpScreen";
 import MainMenu from "./MainMenu";
 
 export default class LevelSelect extends Scene {
@@ -14,6 +15,7 @@ export default class LevelSelect extends Scene {
 
     loadScene(){
         this.load.image("levelimage", "hw3_assets/sprites/levelselect/levelimage.png");
+        this.load.image("lock", "hw3_assets/sprites/levelselect/lock.png");
     }
 
     startScene(){
@@ -39,43 +41,55 @@ export default class LevelSelect extends Scene {
         this.sceneUI.push(header);
 
         this.addLayer("levelimages", 9);
-        /* Row 1 */
-        for(let i = 0 ; i < 3 ; i++){
-            /* Border Buttons */
-            const level = this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: new Vec2(center.x-500 + (i*500), center.y-150), text: ""});
-            level.size.set(375, 200);
-            level.borderColor = Color.WHITE;
-            level.backgroundColor = Color.TRANSPARENT;
-            level.onClickEventId = "level"+(i+1);
-            this.sceneUI.push(level);
+        this.addLayer("locks", 10);
+        this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1", false);
+        this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2", true);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3", true);
+        this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4", true);
+        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5", true);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6", true);
 
-            let levelimage = this.add.sprite("levelimage", "levelimages");
-            levelimage.position.set(center.x-500 + (i*500), center.y-150);
-            this.sceneUI.push(levelimage);
-        }
-
-        /* Row 2 */
-        for(let i = 0 ; i < 3 ; i++){
-            /* Border Buttons */
-            const level = this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: new Vec2(center.x-500 + (i*500), center.y+150), text: ""});
-            level.size.set(375, 200);
-            level.borderColor = Color.WHITE;
-            level.backgroundColor = Color.TRANSPARENT;
-            level.onClickEventId = "level"+(i+4);
-            this.sceneUI.push(level);
-
-            let levelimage = this.add.sprite("levelimage", "levelimages");
-            levelimage.position.set(center.x-500 + (i*500), center.y+150);
-            this.sceneUI.push(levelimage);
-        }
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
-        
         for(let i=1 ; i <= NUM_LEVELS ; i++)
-            this.receiver.subscribe("level" + i);
+            this.receiver.subscribe("floor" + i);
 
+        /* Tween Animation for Scene */
         UITweens.slideInScene(this.sceneUI, 50, new Vec2(2000, 0));
+    }
+
+    makeLevelButtons(position: Vec2, eventid: string, delay: number, text: string, locked: boolean){
+        /* Clickable Buttons */
+        const button = <Button>this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: position, text: ""});
+        button.size.set(375, 200);
+        button.borderWidth = 2;
+        button.borderColor = Color.WHITE;
+        button.backgroundColor = Color.TRANSPARENT;
+        button.onClickEventId = eventid;
+        button.fontSize = 35;
+        button.font = "Tahoma";
+        this.sceneUI.push(button);
+
+        /* Level Images */
+        const levelimage = this.add.sprite("levelimage", "levelimages");
+        levelimage.position.set(position.x, position.y);
+        this.sceneUI.push(levelimage);
+
+        /* Add lock icon and lower alpha on locked rooms */
+        if(locked && !HelpScreen.allLevelsUnlocked){
+            levelimage.alpha = 0.5;
+            const lockIcon = this.add.sprite("lock", "locks");
+            lockIcon.position.set(position.x, position.y);
+            this.sceneUI.push(lockIcon);
+            button.onClickEventId = "locked";
+        }
+
+        /* Descriptions */
+        const description = <Label>this.add.uiElement(UIElementType.LABEL, "levelSelect", {position: new Vec2(position.x, position.y+120), text:text});
+        description.textColor = Color.WHITE;
+        description.fontSize = 25;
+        this.sceneUI.push(description);
     }
     
     updateScene(){
@@ -86,7 +100,7 @@ export default class LevelSelect extends Scene {
                 this.sceneManager.changeToScene(MainMenu, {});
 
             /* Go To Character Select Screen */
-            if(event.type.substring(0,5) === "level"){
+            if(event.type.substring(0,5) === "floor"){
                 let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
                 this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
             }

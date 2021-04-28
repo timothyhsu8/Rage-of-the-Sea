@@ -18,6 +18,7 @@ import Room from "../GameSystems/Mapping/Room";
 import { RoomTypes } from "../GameSystems/Mapping/RoomType_Enums";
 import MapState from "../GameSystems/MapState";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import HelpScreen from "./MenuScenes/HelpScreen";
 
 export default class MapScene extends Scene{
 
@@ -37,6 +38,8 @@ export default class MapScene extends Scene{
     }
 
     startScene(){
+        const MAX_FLOOR_NUM = 6;
+
         this.addLayer("primary", 10);
         const center = this.viewport.getCenter();
 
@@ -67,6 +70,10 @@ export default class MapScene extends Scene{
                     this.roomButtons[i][j].backgroundColor = this.mapState.savedButtons[i][j].backgroundColor;
         }
         
+        /* Set next floor as open if the cheat is enabled */
+        if(HelpScreen.nextFloorOpen)
+            this.mapState.nextFloorOpen = true;
+
         const nextFloor = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x, center.y+400), text: "Next Floor"});
         this.nextFloorButton = nextFloor;  
         nextFloor.size.set(250, 50);
@@ -74,7 +81,11 @@ export default class MapScene extends Scene{
         nextFloor.borderColor = Color.WHITE;
         nextFloor.onClickEventId = "nextfloor";
         nextFloor.fontSize = 35;
-        (this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
+        (HelpScreen.nextFloorOpen || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
+
+        /* Disables 'Next Floor' button on the last  floor */
+        if(this.mapState.currentFloor === MAX_FLOOR_NUM)
+            nextFloor.visible = false;
 
         const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
         inventory.size.set(250, 50);
