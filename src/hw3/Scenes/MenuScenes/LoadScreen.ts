@@ -10,6 +10,7 @@ export default class LoadScreen extends Scene {
     loadScene(){
         /* Load Menu Images */
         this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
+        this.load.image("defaultbackground", "hw3_assets/sprites/backgroundart/defaultbackground.png");
 
         /* Load Map */
         this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
@@ -43,6 +44,7 @@ export default class LoadScreen extends Scene {
 
         this.load.keepImage("battleIcon");
         this.load.keepImage("menubackground");
+        this.load.keepImage("defaultbackground");
         this.load.keepImage("mapBackground");
         this.load.keepImage("battleIcon");
         this.load.keepImage("portrait");

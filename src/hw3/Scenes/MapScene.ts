@@ -39,13 +39,17 @@ export default class MapScene extends Scene{
 
     startScene(){
         const MAX_FLOOR_NUM = 6;
-
-        this.addLayer("primary", 10);
         const center = this.viewport.getCenter();
+
+        /* Background Artwork */
+        this.addLayer("background", 1);
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
 
         // The main menu
         this.addUILayer("map");
         this.addUILayer("rooms");
+        this.addLayer("primary", 10);
 
         /* Generate map or load the saved one */
         let generatedFloor = null;

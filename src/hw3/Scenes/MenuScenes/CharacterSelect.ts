@@ -31,6 +31,12 @@ export default class CharacterSelect extends Scene {
         this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
 
+        /* Background Artwork */
+        this.addLayer("background", 9);
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
+        UITweens.fadeIn(backgroundart, 0, 600);
+
         this.addLayer("primary", 10);
 
         let diversplash = this.add.sprite("diversplash", "primary");

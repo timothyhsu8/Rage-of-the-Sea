@@ -2,6 +2,7 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
@@ -25,6 +26,11 @@ export default class HelpScreen extends Scene {
         const center = this.viewport.getCenter();
         this.addUILayer("help");
         
+        /* Background Artwork */
+        this.addLayer("background", 9);
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
+
         /* Initializes the list of cheats */
         this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.instakill, HelpScreen.nextFloorOpen, HelpScreen.cheat5];
 

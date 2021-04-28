@@ -25,6 +25,12 @@ export default class LevelSelect extends Scene {
         const center = this.viewport.getCenter();
         this.addUILayer("levelSelect");
         
+        /* Background Artwork */
+        this.addLayer("background", 1);
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
+        UITweens.fadeIn(backgroundart, 0, 600);
+
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
         back.size.set(200, 50);
@@ -78,7 +84,7 @@ export default class LevelSelect extends Scene {
 
         /* Add lock icon and lower alpha on locked rooms */
         if(locked && !HelpScreen.allLevelsUnlocked){
-            levelimage.alpha = 0.5;
+            levelimage.alpha = 0.3;
             const lockIcon = this.add.sprite("lock", "locks");
             lockIcon.position.set(position.x, position.y);
             this.sceneUI.push(lockIcon);

@@ -15,6 +15,7 @@ import HelpScreen from "./HelpScreen";
 import Controls from "./Controls";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 
 export default class MainMenu extends Scene {
     private mainMenu: Layer;
@@ -41,17 +42,18 @@ export default class MainMenu extends Scene {
         /* Background Artwork */
         this.addLayer("background", 9);
         const center = this.viewport.getCenter();
-        // let backgroundart = this.add.sprite("menubackground", "background");
-        // backgroundart.position.set(center.x, center.y);
+        let backgroundart = this.add.sprite("menubackground", "background");
+        backgroundart.position.set(center.x, center.y);
+        UITweens.fadeIn(backgroundart, 0, 600);
 
         // The main menu
         this.mainMenu = this.addUILayer("mainMenu");
 
         /* Menu Buttons */
-        this.makeMenuButton(new Vec2(center.x, center.y-200), "Start Game", new Vec2(400, 100), "play", 0);
-        this.makeMenuButton(new Vec2(center.x, center.y-50), "Level Select", new Vec2(400, 100), "levelselect", 150);
-        this.makeMenuButton(new Vec2(center.x, center.y+100), "Controls", new Vec2(400, 100), "controls", 300);
-        this.makeMenuButton(new Vec2(center.x, center.y+250), "Help", new Vec2(400, 100), "help", 450);
+        this.makeMenuButton(new Vec2(center.x-350, center.y-200), "Start Game", new Vec2(450, 100), "play", 0);
+        this.makeMenuButton(new Vec2(center.x-350, center.y-50), "Level Select", new Vec2(450, 100), "levelselect", 150);
+        this.makeMenuButton(new Vec2(center.x-350, center.y+100), "Controls", new Vec2(450, 100), "controls", 300);
+        this.makeMenuButton(new Vec2(center.x-350, center.y+250), "Help", new Vec2(450, 100), "help", 450);
         
         // Subscribe to the button events
         this.receiver.subscribe("play");
@@ -64,14 +66,15 @@ export default class MainMenu extends Scene {
     makeMenuButton(position: Vec2, text: string, size: Vec2, eventid: string, delay: number){
         const button = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(position.x+1000, position.y), text: text});
         button.size.set(size.x, size.y);
-        button.borderWidth = 2;
-        button.borderColor = Color.WHITE;
-        button.backgroundColor = new Color(50, 50, 70, 1);
+        button.borderWidth = 4;
+        button.borderColor = PancakeColor.PINK;
+        button.backgroundColor = PancakeColor.MAGENTA;
         button.onClickEventId = eventid;
-        button.fontSize = 35;
+        button.fontSize = 40;
+        button.textColor = PancakeColor.BEIGE;
         button.font = "Tahoma";
         this.sceneObjects.push(button);
-        UITweens.slide(button, delay, 200, new Vec2(position.x+1000, position.y), position);
+        UITweens.slide(button, delay, 200, new Vec2(position.x+1500, position.y), position);
     }
 
     updateScene(){
