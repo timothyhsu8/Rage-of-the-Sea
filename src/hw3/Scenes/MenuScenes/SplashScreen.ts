@@ -11,6 +11,13 @@ export default class SplashScreen extends Scene {
 
     loadScene(){
         this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
+        
+        /* Load Item Data */
+        this.load.object("itemInfo", "hw3_assets/data/itemData.json");
+    }
+
+    unloadScene(){
+        this.load.keepObject("itemInfo");
     }
 
     startScene(){

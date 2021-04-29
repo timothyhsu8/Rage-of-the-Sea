@@ -1,4 +1,21 @@
 {
-    "items": ["double_edged_sword", "normal_boots"],
+    "numItems": 2,
+    "allitems": [{
+        "name": "Double Edged Sword",
+        "key": "double_edged_sword",
+        "description": "Deal double damage, take double damage"
+    },
+    {
+        "name": "Normal Boots",
+        "key": "normal_boots",
+        "description": "Move Faster"
+    }],
+
+    "none":{
+        "name": "None",
+        "key": "none",
+        "description": ""
+    },
+
     "heal": "heal"
 }

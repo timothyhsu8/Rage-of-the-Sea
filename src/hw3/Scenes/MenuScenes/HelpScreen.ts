@@ -2,7 +2,6 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
@@ -48,6 +47,7 @@ export default class HelpScreen extends Scene {
         backstory.textColor = Color.WHITE;
         backstory.size.set(600, 675);
         backstory.borderRadius = 2;
+        backstory.borderWidth = 2;
         backstory.borderColor = Color.WHITE;
         backstory.fontSize = 20;
 
@@ -62,6 +62,7 @@ export default class HelpScreen extends Scene {
         cheats.borderRadius = 2;
         cheats.borderColor = Color.WHITE;
         cheats.fontSize = 20;
+        cheats.borderWidth = 2;
 
         const cheatsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "help", {position: new Vec2(center.x+350, center.y-250), text:"Cheats"});
         cheatsHeader.textColor = Color.WHITE;

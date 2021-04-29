@@ -4,10 +4,9 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
+import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import CharacterState from "../CharacterState";
-import Item, { ItemType } from "../GameSystems/items/Item";
 import MapScene from "./MapScene";
-
 
 export default class ItemSelectScene extends Scene {
     private characterState: CharacterState;
@@ -15,8 +14,8 @@ export default class ItemSelectScene extends Scene {
     private selectButton: Button;
     private itemSelected: number;
 
-    private allItems: Array<ItemType>;
-    private itemChoices: Array<ItemType>;
+    private allItems: any;  // Array of all items from the JSON file
+    private itemChoices: Array<any>;
     
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
@@ -26,20 +25,26 @@ export default class ItemSelectScene extends Scene {
 
     startScene(){
         /* Determine random items to offer the player */
-        this.allItems = this.load.getObject("itemData").items;
+        const itemData = this.load.getObject("itemData");
+        this.allItems = itemData.allitems;
 
         /* Assigns random items to the selection */
-        this.itemChoices = new Array<ItemType>(3);
+        this.itemChoices = new Array<any>(3);
         for(let i=0 ; i < this.itemChoices.length ; i++){
             if(this.allItems.length !== 0)
                 this.itemChoices[i] = this.allItems.splice(this.randomInt(this.allItems.length), 1)[0];    
-            else this.itemChoices[i] = ItemType.NONE;
+            else this.itemChoices[i] = itemData.none;
         }
+
+        /* Background Artwork */
+        const center = this.viewport.getCenter();
+        this.addLayer("background", 9);
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
 
         /* Display Item Selection Scene */
         this.addLayer("primary", 10);
         this.addLayer("descriptions", 11);
-        const center = this.viewport.getCenter();
 
         this.itemSelected = -1;
         this.selections = new Array<Button>(3);
@@ -86,13 +91,13 @@ export default class ItemSelectScene extends Scene {
                     /* Add selected item to inventory, remove it from pool */
                     for(let i=0 ; i < this.itemChoices.length ; i++)
                         if(this.itemSelected === i){
-                            this.characterState.addToInventory(this.itemChoices[i]);
-                            this.itemChoices[i] = ItemType.NONE;
+                            this.characterState.addToInventory(this.itemChoices[i].key);
+                            this.itemChoices[i] = null;
                         }
 
                     /* Put non-selected items back into the pool */
                     for(let i=0 ; i < this.itemChoices.length ; i++)
-                        if(this.itemChoices[i] !== "none")
+                        if(this.itemChoices[i] !== null && this.itemChoices[i].key !== "none")
                             this.allItems.push(this.itemChoices[i]);
 
                     this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
@@ -114,17 +119,32 @@ export default class ItemSelectScene extends Scene {
     }
     
     makeItemButtons(position: Vec2, itemChoice: number){
-        const item = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: position, text: this.itemChoices[itemChoice]});
+
+        if(this.itemChoices[itemChoice].key !== "none"){
+            /* Item Icon */
+            let itemicon = this.add.sprite(this.itemChoices[itemChoice].key, "descriptions");
+            itemicon.position.set(position.x, position.y-125);
+
+            /* Item Icon Border */
+            const border = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y-125), text:""});
+            border.borderColor = Color.WHITE;
+            border.borderWidth = 2;
+            border.size = new Vec2(175, 175);
+        }
+
+        /* Selection Box */
+        const item = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: position, text: this.itemChoices[itemChoice].name});
         item.size.set(400, 500);
         item.borderWidth = 2;
-        item.borderColor = Color.WHITE;
-        item.backgroundColor = new Color(50, 50, 70, 1);
+        item.borderColor = PancakeColor.PINK;
+        item.backgroundColor = PancakeColor.MAGENTA;
         item.onClickEventId = "item"+(itemChoice+1);
         item.fontSize = 35;
         this.selections[itemChoice] = item;
 
-        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+50), text:""});
-        item1description.textColor = Color.WHITE;
+        /* Description */
+        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+50), text:this.itemChoices[itemChoice].description});
+        item1description.textColor = PancakeColor.BEIGE;
         item1description.fontSize = 20;
     }
 

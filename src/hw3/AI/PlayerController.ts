@@ -113,8 +113,8 @@ export default class PlayerController implements BattlerAI {
             if(!Input.isMouseRightClick()){
                 // Rotate the player
                 this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-                this.owner.animation.playIfNotAlready("ATTACK");
-                this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection);
+                if(this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection))
+                    this.owner.animation.playIfNotAlready("ATTACK");
                 this.owner.rotation = 0;
             }
 

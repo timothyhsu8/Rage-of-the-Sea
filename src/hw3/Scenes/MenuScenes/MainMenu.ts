@@ -2,13 +2,7 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Layer from "../../../Wolfie2D/Scene/Layer";
 import Scene from "../../../Wolfie2D/Scene/Scene";
-import Color from "../../../Wolfie2D/Utils/Color";
-import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
-import inventory_scene from "./InventoryScene";
-import Slider from "../../../Wolfie2D/Nodes/UIElements/Slider";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
-import TextInput from "../../../Wolfie2D/Nodes/UIElements/TextInput";
-import floor1_scene from "../floor1_scene";
 import CharacterSelect from "./CharacterSelect";
 import LevelSelect from "./LevelSelect";
 import HelpScreen from "./HelpScreen";
@@ -28,7 +22,13 @@ export default class MainMenu extends Scene {
     static items: string[];
     static image: string;
     
-    loadScene(){}
+    loadScene(){
+        this.load.object("itemData", "hw3_assets/data/itemData.json");
+    }
+
+    unloadScene(){
+        this.load.keepObject("itemData");
+    }
 
     startScene(){
         this.sceneObjects = new Array<GameNode>();
@@ -64,7 +64,7 @@ export default class MainMenu extends Scene {
     }
 
     makeMenuButton(position: Vec2, text: string, size: Vec2, eventid: string, delay: number){
-        const button = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(position.x+1000, position.y), text: text});
+        const button = <Button>this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(position.x+2000, position.y), text: text});
         button.size.set(size.x, size.y);
         button.borderWidth = 4;
         button.borderColor = PancakeColor.PINK;
@@ -74,7 +74,7 @@ export default class MainMenu extends Scene {
         button.textColor = PancakeColor.BEIGE;
         button.font = "Tahoma";
         this.sceneObjects.push(button);
-        UITweens.slide(button, delay, 200, new Vec2(position.x+1500, position.y), position);
+        UITweens.slide(button, delay, 200, new Vec2(position.x+2000, position.y), position);
     }
 
     updateScene(){

@@ -37,6 +37,7 @@ export default class Controls extends Scene {
         controls.size.set(450, 750);
         controls.borderRadius = 2;
         controls.borderColor = Color.WHITE;
+        controls.borderWidth = 2;
         controls.fontSize = 20;
 
         const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y-285), text:"Controls"});
@@ -52,6 +53,7 @@ export default class Controls extends Scene {
         tutorial.size.set(1100, 750);
         tutorial.borderRadius = 2;
         tutorial.borderColor = Color.WHITE;
+        tutorial.borderWidth = 2;
         tutorial.fontSize = 20;
 
         const tutorialHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y-285), text:"How To Play"});

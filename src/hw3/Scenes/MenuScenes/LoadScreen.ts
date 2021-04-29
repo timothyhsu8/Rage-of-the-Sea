@@ -7,6 +7,9 @@ import MainMenu from "./MainMenu";
     FINAL PROJECT TODO - Make this come before the splash screen and have a loading bar
 */
 export default class LoadScreen extends Scene {
+
+    private itemData: any;
+
     loadScene(){
         /* Load Menu Images */
         this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
@@ -29,7 +32,11 @@ export default class LoadScreen extends Scene {
 
         /* Load Items and Abilities  */
         this.load.object("abilityData", "hw3_assets/data/abilityData.json");
-        this.load.object("itemData", "hw3_assets/data/itemData.json");
+
+        this.itemData = this.load.getObject("itemInfo");
+        for(let i=0; i < this.itemData.numItems ; i++){
+            this.load.image(this.itemData.allitems[i].key, "hw3_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
+        }
         
         /* Load Inventory Slots */
         this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");   // FINAL PROJECT TODO - Actually make this
@@ -39,7 +46,6 @@ export default class LoadScreen extends Scene {
         this.load.keepSpritesheet("player");
 
         this.load.keepObject("abilityData");
-        this.load.keepObject("itemData");
         this.load.keepObject("floorEnemies");
 
         this.load.keepImage("battleIcon");
@@ -50,11 +56,19 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("portrait");
         this.load.keepImage("portraitborder");
         this.load.keepImage("healthbarborder");
+
+        for(let i=0; i < this.itemData.numItems ; i++)
+            this.load.keepImage(this.itemData.allitems[i].key);
     }
 
     startScene(){
-        this.initializeAbilities();
+        // this.itemData = this.load.getObject("itemData2");
+        // for(let i=0; i < this.itemData.numItems ; i++){
+        //     this.load.image(this.itemData.allitems[i].key, "hw3_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
+        // }
+            this.initializeAbilities();
         this.sceneManager.changeToScene(MainMenu, {});
+        
     }
 
     initializeAbilities(): void{

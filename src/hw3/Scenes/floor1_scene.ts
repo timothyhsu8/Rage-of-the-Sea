@@ -17,6 +17,7 @@ import CharacterState from "../CharacterState";
 import ItemSelectScene from "./ItemSelectScene";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
+import MapScene from "./MapScene";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -123,7 +124,16 @@ export default class floor1_scene extends Scene {
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
+                        this.characterState.itemRotation++;
+                        
+                        /* Item Select Screen */
+                        if(this.characterState.itemRotation === 2){
+                            this.characterState.itemRotation = 0;
+                            this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
+                        }
+
+                        /* Map Screen */
+                        else this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                         break;
                     }
                     default:

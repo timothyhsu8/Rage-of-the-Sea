@@ -45,17 +45,6 @@ export default class InventoryScene extends Scene {
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
 
-        this.receiver.subscribe("back");
-    }
-
-    updateScene(deltaT: number): void {
-        while(this.receiver.hasNextEvent()){
-            let event = this.receiver.getNextEvent();
-
-            if(event.type === "back")
-                this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
-        }
-
         let portrait = this.add.sprite(MainMenu.image, "primary");
         portrait.scale = new Vec2(2, 2);
         portrait.position = new Vec2(200, 240);
@@ -85,6 +74,17 @@ export default class InventoryScene extends Scene {
                 height += 100
                 width = 500
             }
+        }
+
+        this.receiver.subscribe("back");
+    }
+
+    updateScene(deltaT: number): void {
+        while(this.receiver.hasNextEvent()){
+            let event = this.receiver.getNextEvent();
+
+            if(event.type === "back")
+                this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
         }
     }
 }
