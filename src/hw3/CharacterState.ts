@@ -1,3 +1,4 @@
+import ResourceManager from "../Wolfie2D/ResourceManager/ResourceManager";
 import Inventory from "./GameSystems/Inventory";
 import Item, { ItemType } from "./GameSystems/items/Item";
 import MapState from "./GameSystems/MapState";
@@ -21,9 +22,11 @@ export default class CharacterState{
     }
 
     /* Adds item to inventory */
-    addToInventory(itemtype: ItemType){
-        if(itemtype !== ItemType.NONE){
-            let newItem = Item.createItem(itemtype);
+    addToInventory(itemChoice: any){
+        console.log(itemChoice.name);
+        if(itemChoice.key !== "none"){
+            let newItem = new Item(itemChoice.name, itemChoice.key, itemChoice.ability, itemChoice.maxHealth, itemChoice.health, itemChoice.attack,
+                itemChoice.attackMult, itemChoice.defense, itemChoice.speed, itemChoice.takeDamageMult);
             this.addItemStats(newItem);
             this.inventory.addItem(newItem);
         }

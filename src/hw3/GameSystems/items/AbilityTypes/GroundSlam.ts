@@ -56,6 +56,7 @@ export default class GroundSlam extends AbilityType {
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let ability = scene.add.animatedSprite("groundslam", "primary");
+        ability.animation.play("NORMAL");
         return [ability];
     }
 }

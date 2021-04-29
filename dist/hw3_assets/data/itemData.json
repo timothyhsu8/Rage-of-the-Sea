@@ -3,27 +3,67 @@
     "allitems": [{
         "name": "Double Edged Sword",
         "key": "double_edged_sword",
-        "description": "Deal double damage, take double damage"
+        "description": "Deal double damage, take double damage",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 2.0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 2.0
     },
     {
         "name": "Normal Boots",
         "key": "normal_boots",
-        "description": "Move Faster"
+        "description": "Move Faster",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 10,
+        "takeDamageMult": 0
     },
     {
         "name": "Iron Plating",
         "key": "iron_plating",
-        "description": "Lightly increased defense"
+        "description": "Lightly increased defense",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 10,
+        "speed": 0,
+        "takeDamageMult": 0
     },
     {
         "name": "Fury Gemstone",
         "key": "fury_gemstone",
-        "description": "Moderately increased attack damage"
+        "description": "Moderately increased attack damage",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 1.5,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
     },
     {
         "name": "Resilience Gemstone",
         "key": "resilience_gemstone",
-        "description": "Moderately increased defense"
+        "description": "Moderately increased defense",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0.7
     }
 ],
 

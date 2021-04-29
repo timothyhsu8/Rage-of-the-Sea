@@ -43,6 +43,7 @@ export default class Snipe extends AbilityType {
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let slice = scene.add.animatedSprite("snipe", "primary");
+        slice.animation.play("NORMAL");
         return [slice];
     }
 

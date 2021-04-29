@@ -15,12 +15,11 @@ export default class Item {
     /* Stats */
     stats: Stats;
 
-    constructor(name: string, type:ItemType, ability: Ability, sprite: Sprite, maxHealth: number, health: number, attack: number, 
+    constructor(name: string, type:ItemType, ability: Ability, maxHealth: number, health: number, attack: number, 
         attackMult: number, defense: number, speed:number, takeDamageMult: number){
         this.name = name;
         this.type = type;
         this.ability = ability;
-        this.sprite = sprite;
         this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);
     }
 
@@ -44,36 +43,6 @@ export default class Item {
         if(this.ability === null)
             return false;
         return this.ability.cast(user, userType, direction);
-    }
-    //abstract use(user: GameNode, ...args: any): void;
-
-    static createItem(type: ItemType): Item{
-        switch(type){
-            case ItemType.DOUBLE_EDGED_SWORD:
-                return new Item("Double Edged Sword", type, null, null, 0, 0, 0, 2.0, 0, 0, 2.0);
-
-            case ItemType.NORMAL_BOOTS:
-                return new Item("Normal Boots", type, null, null, 0, 0, 0, 0, 0, 10, 0);
-
-            case ItemType.HEAL:
-                return new Item("Heal", type, null, null, 0, 30, 0, 0, 0, 0, 0);
-            
-            case ItemType.IRON_PLATING:
-                return new Item("Iron Plating", type, null, null, 0, 0, 0, 0, 10, 0, 0);
-
-            case ItemType.FURY_GEMSTONE:
-                return new Item("Fury Gemstone", type, null, null, 0, 0, 0, 1.5, 0, 0, 0);
-
-            case ItemType.RESILIENCE_GEMSTONE:
-                return new Item("Resilience Gemstone", type, null, null, 0, 0, 0, 0, 0, 0, 0.7);
-            
-            case ItemType.SWIFTNESS_GEMSTONE:
-                return new Item("Swiftness Gemstone", type, null, null, 0, 0, 0, 0, 0, 0, 0.0);
-
-            default:
-                console.log("Unspecified item");
-                return null;
-        }
     }
 }
 

@@ -91,7 +91,7 @@ export default class ItemSelectScene extends Scene {
                     /* Add selected item to inventory, remove it from pool */
                     for(let i=0 ; i < this.itemChoices.length ; i++)
                         if(this.itemSelected === i){
-                            this.characterState.addToInventory(this.itemChoices[i].key);
+                            this.characterState.addToInventory(this.itemChoices[i]);
                             this.itemChoices[i] = null;
                         }
 
