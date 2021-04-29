@@ -3,15 +3,13 @@ import Item, { ItemType } from "./items/Item";
 import Scene from "../../Wolfie2D/Scene/Scene";
 
 export default class Inventory{
-    private basicAttack: Ability; 
     private items: Array<Item>;
-    private currentSize: number;
-    private currentItem: number;
+    basicAttack: Ability; 
+    currentItem: number;
 
-    constructor(scene: Scene, inventorySize: number){
+    constructor(scene: Scene){
         this.currentItem = 0;
-        this.currentSize = 0;
-        this.items = new Array<Item>(inventorySize);
+        this.items = new Array<Item>();
     }
 
     hasItem(itemToFind: ItemType): boolean{
@@ -26,9 +24,9 @@ export default class Inventory{
     }
 
     isEmpty(): boolean{
-        if(this.currentSize === 0)
+        if(this.items.length === 0)
             return true;
-        return false;
+        else return false;
     }
 
     setBasicAttack(ability: Ability): void{
@@ -39,14 +37,7 @@ export default class Inventory{
         return this.basicAttack;
     }
 
-    getCurrentItem(): Item{
-        return this.items[this.currentItem];
-    }
-
     addItem(item: Item): void{
-        if(this.currentSize < this.items.length){
-            this.items[this.currentSize] = item;
-            this.currentSize++;
-        }
+        this.items.push(item);
     }
 }

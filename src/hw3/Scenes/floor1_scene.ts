@@ -143,8 +143,9 @@ export default class floor1_scene extends Scene {
 
         // Update Healthbar GUI
         let health = (<BattlerAI>this.player._ai).health;
-        this.healthbar.size = new Vec2(health*2, 10);
-        this.healthbar.position = new Vec2(42+health, 22);
+        let multiplier = this.characterState.stats.maxHealth/100;
+        this.healthbar.size = new Vec2((health*2)/multiplier, 10);
+        this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
 
         /* If all monsters are killed, advance */
         if(this.numMonstersLeft <= 0)
@@ -168,7 +169,7 @@ export default class floor1_scene extends Scene {
 
     initializePlayer(): void {
         // Create the inventory
-        let inventory = new Inventory(this, 10);
+        let inventory = new Inventory(this);
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         inventory.setBasicAttack(basicAttack);
         this.characterState.getInventory().setBasicAttack(basicAttack); // FINAL PROJECT TODO - Ideally this should be able to be done from character select

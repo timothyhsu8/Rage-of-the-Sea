@@ -93,8 +93,8 @@ export default class CharacterSelect extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "select"){
-                let inventory = new Inventory(this, 50);
-                let characterState = new CharacterState(100, 0, 0, 80, inventory, "diverportrait", this.startingLevel);
+                let inventory = new Inventory(this);
+                let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
                 this.sceneManager.changeToScene(MapScene, {characterState: characterState});
             }
 

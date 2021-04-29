@@ -10,7 +10,6 @@ import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import MapScene from "../MapScene";
 
 export default class InventoryScene extends Scene {
-    private inventory: Layer;
     private characterState: CharacterState;
 
     initScene(init: Record<string, any>): void {
@@ -28,14 +27,20 @@ export default class InventoryScene extends Scene {
     }
 
     startScene(){
-        this.inventory = this.addUILayer("inventory");
+        /* Background Artwork */
+        this.addLayer("background", 9);
+        const center = this.viewport.getCenter();
+        let backgroundart = this.add.sprite("defaultbackground", "background");
+        backgroundart.position.set(center.x, center.y);
+
+        this.addUILayer("inventory");
         this.addLayer("primary", 10);
-        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 140), text: MainMenu.char});
-        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 100), text: "Currently Equipped"});
-        const ownedItems = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 450), text: "Owned Items"});
-        inventoryHeader.textColor = Color.WHITE;
+        
+        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 100), text: "Equipped Items"});
         currentlyEquipped.textColor = Color.WHITE;
-        ownedItems.textColor = Color.WHITE;
+
+        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 140), text: MainMenu.char});
+        inventoryHeader.textColor = Color.WHITE;
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(200, 75), text: "Back to Map"});
@@ -46,7 +51,7 @@ export default class InventoryScene extends Scene {
         back.onClickEventId = "back";
 
         /* Player Portrait */
-        let portrait = this.add.sprite(MainMenu.image, "primary");
+        let portrait = this.add.sprite(this.characterState.portrait, "primary");
         portrait.scale = new Vec2(2, 2);
         portrait.position = new Vec2(200, 240);
         let portraitborder = this.add.sprite("portraitborder", "primary");
@@ -56,24 +61,21 @@ export default class InventoryScene extends Scene {
         let width = 500;
         let height = 150;
         var text = ""
-        for (let x in MainMenu.equipped){
-            let portrait = this.add.sprite(MainMenu.equipped[x], "primary");
-            portrait.scale = new Vec2(4,4);
-            portrait.position = new Vec2(width, height);
-            width += 200
-            if (width >= 1400){
-                height += 100
-                width = 500
-            }
-        }                
+        let equippedItems = this.characterState.getInventory().getItems();
+        for(let i=0 ; i < equippedItems.length ; i++){
+            /* Item Icon */
+            let icon = this.add.sprite(equippedItems[i].key, "primary");
+            icon.scale.set(1/2, 1/2);
+            icon.position = new Vec2(width, height);
 
-        width = 500;
-        height = 500;
-        for (let x in MainMenu.items){
-            let portrait = this.add.sprite(MainMenu.items[x], "primary");
-            portrait.scale = new Vec2(4,4);
-            portrait.position = new Vec2(width, height);
-            width += 200
+            /* Item Icon Border */
+            const border = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: icon.position, text: ""});
+            border.size = new Vec2(icon.size.x/2, icon.size.y/2);
+            border.borderRadius = 2;
+            border.borderColor = Color.WHITE;
+            border.borderWidth = 2;
+
+            width += 100
             if (width >= 1400){
                 height += 100
                 width = 500

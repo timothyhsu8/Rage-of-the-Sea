@@ -1,5 +1,5 @@
 {
-    "numItems": 5,
+    "numItems": 7,
     "allitems": [{
         "name": "Double Edged Sword",
         "key": "double_edged_sword",
@@ -64,6 +64,32 @@
         "defense": 0,
         "speed": 0,
         "takeDamageMult": 0.7
+    },
+    {
+        "name": "Swiftness Gemstone",
+        "key": "swiftness_gemstone",
+        "description": "Moderately increased speed",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 20,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Captain's Hat",
+        "key": "captains_hat",
+        "description": "Increased max health, defense, and speed",
+        "ability": null,
+        "maxHealth": 10,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 5,
+        "speed": 5,
+        "takeDamageMult": 0
     }
 ],
 

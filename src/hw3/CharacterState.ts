@@ -37,6 +37,10 @@ export default class CharacterState{
         this.stats.attack += item.stats.attack;
         this.stats.defense += item.stats.defense;
         this.stats.speed += item.stats.speed;
+
+        this.stats.maxHealth += item.stats.maxHealth;
+        this.stats.health += item.stats.maxHealth;
+
         (this.stats.health + item.stats.health > this.stats.maxHealth)?(this.stats.health = this.stats.maxHealth):(this.stats.health += item.stats.health);
 
         if(this.stats.attackMult < item.stats.attackMult)

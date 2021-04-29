@@ -7,7 +7,7 @@ import Ability from "./Ability";
 export default class Item {
     /** The sprite that represents this weapon in the world or in an inventory */
     name: string;
-    type: ItemType;
+    key: ItemType;
     sprite: Sprite;
     ability: Ability;
     damage: number;
@@ -15,10 +15,10 @@ export default class Item {
     /* Stats */
     stats: Stats;
 
-    constructor(name: string, type:ItemType, ability: Ability, maxHealth: number, health: number, attack: number, 
+    constructor(name: string, key:ItemType, ability: Ability, maxHealth: number, health: number, attack: number, 
         attackMult: number, defense: number, speed:number, takeDamageMult: number){
         this.name = name;
-        this.type = type;
+        this.key = key;
         this.ability = ability;
         this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);
     }

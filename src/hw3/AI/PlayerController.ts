@@ -123,7 +123,7 @@ export default class PlayerController implements BattlerAI {
                 if(!this.inventory.isEmpty()){
                     this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
                     // this.owner.animation.playIfNotAlready("USEITEM");
-                    this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
+                    //this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
                     this.owner.rotation = 0;
                 }
         }
