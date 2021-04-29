@@ -57,6 +57,18 @@ export default class Item {
 
             case ItemType.HEAL:
                 return new Item("Heal", type, null, null, 0, 30, 0, 0, 0, 0, 0);
+            
+            case ItemType.IRON_PLATING:
+                return new Item("Iron Plating", type, null, null, 0, 0, 0, 0, 10, 0, 0);
+
+            case ItemType.FURY_GEMSTONE:
+                return new Item("Fury Gemstone", type, null, null, 0, 0, 0, 1.5, 0, 0, 0);
+
+            case ItemType.RESILIENCE_GEMSTONE:
+                return new Item("Resilience Gemstone", type, null, null, 0, 0, 0, 0, 0, 0, 0.7);
+            
+            case ItemType.SWIFTNESS_GEMSTONE:
+                return new Item("Swiftness Gemstone", type, null, null, 0, 0, 0, 0, 0, 0, 0.0);
 
             default:
                 console.log("Unspecified item");
@@ -69,5 +81,9 @@ export enum ItemType {
     DOUBLE_EDGED_SWORD = "double_edged_sword",
     NORMAL_BOOTS = "normal_boots",
     HEAL = "heal",
+    IRON_PLATING = "iron_plating",
+    FURY_GEMSTONE = "fury_gemstone",
+    RESILIENCE_GEMSTONE = "resilience_gemstone",
+    SWIFTNESS_GEMSTONE = "swiftness_gemstone",
     NONE = "none"
 }

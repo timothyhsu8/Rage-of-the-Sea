@@ -1,0 +1,11 @@
+{
+    "items":[{
+        "name": "Double Edged Sword",
+        "type": "double_edged_sword",
+        "ability": null,
+        "maxHealth": "knife",
+        "health": 1,
+        "": 200,
+        "useVolume": 0
+    }]
+}

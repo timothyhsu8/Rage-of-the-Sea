@@ -99,7 +99,7 @@ export default class PlayerController implements BattlerAI {
 
             /* Turns player sprite when moving up/down */
             else if(!this.direction.isZero() && this.direction.y === -1)
-            this.owner.animation.playIfNotAlready("WALKUP", true);
+                this.owner.animation.playIfNotAlready("WALKUP", true);
 
             /* If player is not moving, play IDLE animation */
             else {
@@ -138,6 +138,9 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
+        if(damage < 0)
+            damage = 0;
+
         if(!HelpScreen.invincibility && this.owner !== undefined){
             if(this.owner.tweens.isStopped("takedamage")){
                 this.health -= damage;

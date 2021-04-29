@@ -111,10 +111,9 @@ export default class ItemSelectScene extends Scene {
                 if(i === this.itemSelected)
                     this.selections[i].backgroundColor = new Color(50, 100, 70, 1);
 
-                else this.selections[i].backgroundColor = new Color(50, 50, 70, 1);
+                else this.selections[i].backgroundColor = PancakeColor.MAGENTA;;
             }
-
-            this.selectButton.backgroundColor = new Color(50, 50, 70, 1);
+            this.selectButton.backgroundColor = PancakeColor.MAGENTA;;
         }        
     }
     

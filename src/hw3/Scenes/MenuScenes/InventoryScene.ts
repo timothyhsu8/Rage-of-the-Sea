@@ -45,9 +45,13 @@ export default class InventoryScene extends Scene {
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
 
+        /* Player Portrait */
         let portrait = this.add.sprite(MainMenu.image, "primary");
         portrait.scale = new Vec2(2, 2);
         portrait.position = new Vec2(200, 240);
+        let portraitborder = this.add.sprite("portraitborder", "primary");
+        portraitborder.scale = new Vec2(2, 2);
+        portraitborder.position = new Vec2(200, 240);
 
         let width = 500;
         let height = 150;

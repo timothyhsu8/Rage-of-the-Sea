@@ -1,5 +1,5 @@
 {
-    "numItems": 2,
+    "numItems": 5,
     "allitems": [{
         "name": "Double Edged Sword",
         "key": "double_edged_sword",
@@ -9,7 +9,23 @@
         "name": "Normal Boots",
         "key": "normal_boots",
         "description": "Move Faster"
-    }],
+    },
+    {
+        "name": "Iron Plating",
+        "key": "iron_plating",
+        "description": "Lightly increased defense"
+    },
+    {
+        "name": "Fury Gemstone",
+        "key": "fury_gemstone",
+        "description": "Moderately increased attack damage"
+    },
+    {
+        "name": "Resilience Gemstone",
+        "key": "resilience_gemstone",
+        "description": "Moderately increased defense"
+    }
+],
 
     "none":{
         "name": "None",

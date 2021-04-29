@@ -39,7 +39,7 @@ export default class CharacterState{
         if(this.stats.attackMult < item.stats.attackMult)
             this.stats.attackMult = item.stats.attackMult;
         
-        if(this.stats.takeDamageMult < item.stats.takeDamageMult)
+        if(this.stats.takeDamageMult < item.stats.takeDamageMult || (item.stats.takeDamageMult !== 0 && this.stats.takeDamageMult === 1.0))
             this.stats.takeDamageMult = item.stats.takeDamageMult;
     }
 
