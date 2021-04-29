@@ -1,4 +1,5 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
@@ -9,12 +10,15 @@ import MainMenu from "./MainMenu";
 
 export default class Controls extends Scene {
     
+    private sceneObjects: Array<GameNode>;
+
     loadScene(){
         this.load.image("image1", "hw3_assets/sprites/howtoplay/tutorial1.png");
         this.load.image("image3", "hw3_assets/sprites/howtoplay/tutorial3.png");
     }
 
     startScene(){
+        this.sceneObjects = new Array<GameNode>();
         this.addUILayer("primary");
         const center = this.viewport.getCenter();
         
@@ -30,6 +34,7 @@ export default class Controls extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        this.sceneObjects.push(back);
     
         /* Controls */
         const controls = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y+50), text: ""});
@@ -39,10 +44,13 @@ export default class Controls extends Scene {
         controls.borderColor = Color.WHITE;
         controls.borderWidth = 2;
         controls.fontSize = 20;
+        this.sceneObjects.push(controls);
+    
 
         const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y-285), text:"Controls"});
         controlsHeader.textColor = Color.WHITE;
         controlsHeader.fontSize = 35;
+        this.sceneObjects.push(controlsHeader);
 
         let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", "Right Mouse - Use Item"];
         this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 185));
@@ -55,10 +63,12 @@ export default class Controls extends Scene {
         tutorial.borderColor = Color.WHITE;
         tutorial.borderWidth = 2;
         tutorial.fontSize = 20;
+        this.sceneObjects.push(tutorial);
 
         const tutorialHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y-285), text:"How To Play"});
         tutorialHeader.textColor = Color.WHITE;
         tutorialHeader.fontSize = 35;
+        this.sceneObjects.push(tutorialHeader);
 
         /* Tutorial Images */
         this.makeTutorialImage("image1", new Vec2(center.x-40, center.y-100));
@@ -80,6 +90,7 @@ export default class Controls extends Scene {
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
+        UITweens.slideInScene(this.sceneObjects, 30, new Vec2(2000, 0));
     }
 
     updateScene(){
@@ -100,22 +111,26 @@ export default class Controls extends Scene {
             const textlabel = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(xpos, ypos+(spacing*i)), text:text[i]});
             textlabel.textColor = Color.WHITE;
             textlabel.fontSize = 30;
+            this.sceneObjects.push(textlabel);
         }
     }
 
     makeTutorialImage(image: string, position: Vec2){
         let levelimage = this.add.sprite(image, "primary");
         levelimage.position.set(position.x, position.y);
+        this.sceneObjects.push(levelimage);
         
         const imageborder = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: position, text: ""});
         imageborder.size.set(440, 240);
         imageborder.borderWidth = 2;
         imageborder.borderColor = Color.WHITE;
+        this.sceneObjects.push(imageborder);
     }
 
     makeTutorialCaption(fontSize: number, text: string, position:Vec2){
         const label = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: position, text: text});
         label.textColor = Color.WHITE;
         label.fontSize = fontSize;
+        this.sceneObjects.push(label);
     }
 }

@@ -76,6 +76,12 @@ export default class BattleManager {
 
                 attacker.unfreeze();
             }, ability.type.chargeTime);
+
+            /* Returns array of tiles to be hit, in case we want to use them to play an animation */
+            let damageTilePositions = new Array<Vec2>();
+            for(let i=0 ; i < damageTiles.length ; i++)
+                damageTilePositions.push(this.tilemap.getWorldPosFromRowCol(damageTiles[i]));
+            return damageTilePositions;
         }
     }
 

@@ -40,6 +40,11 @@ export default class AnchorSwing extends AbilityType {
         sliceSprite.animation.queue("NORMAL", true);
     }
 
+    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
+        // sprite.position = position;
+        // sprite.animation.play("SLICE");
+    }
+
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let swing = scene.add.animatedSprite("anchorswing", "primary");
         swing.animation.play("NORMAL", true);

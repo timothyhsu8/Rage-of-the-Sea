@@ -19,6 +19,7 @@ export default class Snipe extends AbilityType {
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
         /* FINAL PROJECT TODO - Make sure abilties don't try to calculate something that's out of bounds */
         let damageTiles: Array<Vec2> = [playerPos];
+        
         return damageTiles;
     }
 
@@ -27,17 +28,21 @@ export default class Snipe extends AbilityType {
         sliceSprite.rotation = attacker.rotation;
 
         // Move the slice out from the player
-        sliceSprite.position = attacker.position.clone().add(direction.scaled(16));
+        sliceSprite.position = attacker.position.clone().add(direction.scaled(0));
 
         // Play the slice animation w/o loop, but queue the normal animation
         sliceSprite.animation.play("SLICE");
         sliceSprite.animation.queue("NORMAL", true);
     }
 
+    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
+        sprite.position = position;
+        sprite.animation.play("SLICE");
+        sprite.animation.queue("NORMAL", true);
+    }
+
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let slice = scene.add.animatedSprite("snipe", "primary");
-        slice.animation.play("NORMAL", true);
-
         return [slice];
     }
 

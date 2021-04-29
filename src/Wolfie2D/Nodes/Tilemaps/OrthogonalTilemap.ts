@@ -92,6 +92,11 @@ export default class OrthogonalTilemap extends Tilemap {
         return new Vec2(x, y);
     }
 
+    getWorldPosFromRowCol(rowCol: Vec2): Vec2 {
+        let index = rowCol.y * this.numCols + rowCol.x;
+        return this.getTileWorldPosition(index);
+    }
+
     /**
      * Gets the data value of the tile at the specified index
      * @param index The index of the tile

@@ -64,7 +64,15 @@ export default class Ability {
         this.type.doAnimation(user, direction, ...this.assets);
 
         // Apply damage
-        this.battleManager.handleInteraction(userType, this, direction, user);
+        let damageTiles = this.battleManager.handleInteraction(userType, this, direction, user);
+        
+        /* Play animations on tiles to be hit */
+        if(damageTiles !== undefined){
+            for(let i=0 ; i < damageTiles.length ; i++){
+                let asset = this.type.createRequiredAssets(this.scene);
+                this.type.doIndicatorAnimations(damageTiles[i], asset[0]);
+            }
+        }
 
         // Reset the cooldown timer
         this.cooldownTimer.start();

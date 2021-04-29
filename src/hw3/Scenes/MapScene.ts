@@ -1,6 +1,5 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
-import Layer from "../../Wolfie2D/Scene/Layer";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
@@ -9,7 +8,6 @@ import CharacterState from "../CharacterState";
 import InventoryScene from "./MenuScenes/InventoryScene";
 import MainMenu from "./MenuScenes/MainMenu";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
-import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Floor from "../GameSystems/Mapping/Floor";
 import MapGenerator from "../GameSystems/MapGenerator";
@@ -19,8 +17,11 @@ import { RoomTypes } from "../GameSystems/Mapping/RoomType_Enums";
 import MapState from "../GameSystems/MapState";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import HelpScreen from "./MenuScenes/HelpScreen";
+import GameNode from "../../Wolfie2D/Nodes/GameNode";
+import UITweens from "../../Wolfie2D/Rendering/Animations/UITweens";
 
 export default class MapScene extends Scene{
+    private sceneObjects: Array<GameNode>;
 
     private mapState: MapState;
     private characterState: CharacterState; // All data of the character goes here
@@ -40,6 +41,8 @@ export default class MapScene extends Scene{
     startScene(){
         const MAX_FLOOR_NUM = 6;
         const center = this.viewport.getCenter();
+
+        this.sceneObjects = new Array<GameNode>();
 
         /* Background Artwork */
         this.addLayer("background", 1);
@@ -118,23 +121,30 @@ export default class MapScene extends Scene{
         health.position = new Vec2(125+(this.characterState.stats.health*3), 66);
         let healthbarborder = this.add.sprite("healthbarborder", "primary");
         healthbarborder.position = new Vec2(437, 48);
+        this.sceneObjects.push(health);
+        this.sceneObjects.push(healthbarborder);
         
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
         portrait.position = new Vec2(62, 45);
+        this.sceneObjects.push(portrait);
 
         /* Sprite for portrait border */
         let portraitborder = this.add.sprite("portraitborder", "primary");
         portraitborder.position = new Vec2(62, 45);
+        this.sceneObjects.push(portraitborder);
 
         let mapBackground = this.add.sprite("mapBackground", "primary");
         mapBackground.position = new Vec2(center.x, center.y);
+        this.sceneObjects.push(mapBackground);
 
         /* Subscribe to the button events */
         this.receiver.subscribe("play");
         this.receiver.subscribe("inventory");
         this.receiver.subscribe("quit");
         this.receiver.subscribe("nextfloor");
+
+        UITweens.fadeInScene(this.sceneObjects);
     }
     updateScene(){
         const LAST_ROOM_COL = 6;
@@ -204,6 +214,8 @@ export default class MapScene extends Scene{
                 let levelimage = this.add.sprite("battleIcon", "rooms"); // draw battle icon as a placeholder until more kinds of rooms are added
                 levelimage.position.set(position.x, position.y);
                 levelimage.size.set(64, 64)
+                this.sceneObjects.push(levelimage);
+
                 // room.position = new Vec2(i*12 + 3 - 6*Math.random(), j*14 + 3 + 3.5 - 7*Math.random());
                 room.borderWidth = 1;
                 room.borderColor = PancakeColor.colorFromIndex(6);

@@ -34,6 +34,8 @@ export default abstract class AbilityType {
      */
     abstract doAnimation(...args: any): void;
 
+    abstract doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void;
+
     abstract createRequiredAssets(scene: Scene): Array<any>;
 
     abstract hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean;

@@ -62,7 +62,7 @@ export default class LevelSelect extends Scene {
             this.receiver.subscribe("floor" + i);
 
         /* Tween Animation for Scene */
-        UITweens.slideInScene(this.sceneUI, 50, new Vec2(2000, 0));
+        UITweens.slideInScene(this.sceneUI, 30, new Vec2(2000, 0));
     }
 
     makeLevelButtons(position: Vec2, eventid: string, delay: number, text: string, locked: boolean){

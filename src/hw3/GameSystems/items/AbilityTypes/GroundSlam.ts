@@ -36,6 +36,11 @@ export default class GroundSlam extends AbilityType {
         // abilitySprite.animation.queue("NORMAL", true);
     }
 
+    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
+        // sprite.position = position;
+        // sprite.animation.play("GROUNDSLAM");
+    }
+
     /* Determines if an entity is on a damage tile */
     hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean{
         for(let i = 0 ; i < damageTiles.length ; i++)
@@ -51,7 +56,6 @@ export default class GroundSlam extends AbilityType {
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let ability = scene.add.animatedSprite("groundslam", "primary");
-        ability.animation.play("NORMAL", true);
         return [ability];
     }
 }

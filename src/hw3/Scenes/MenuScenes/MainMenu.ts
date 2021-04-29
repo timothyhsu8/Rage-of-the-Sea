@@ -10,13 +10,15 @@ import Controls from "./Controls";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
+import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 
 export default class MainMenu extends Scene {
     private mainMenu: Layer;
     private controls: Layer;
     private about: Layer;
     private sceneObjects: Array<GameNode>;
-    
+    private backgroundart: Sprite;
+
     static char: string;
     static equipped: string[];
     static items: string[];
@@ -42,9 +44,9 @@ export default class MainMenu extends Scene {
         /* Background Artwork */
         this.addLayer("background", 9);
         const center = this.viewport.getCenter();
-        let backgroundart = this.add.sprite("menubackground", "background");
-        backgroundart.position.set(center.x, center.y);
-        UITweens.fadeIn(backgroundart, 0, 600);
+        this.backgroundart = this.add.sprite("menubackground", "background");
+        this.backgroundart.position.set(center.x, center.y);
+        UITweens.fadeIn(this.backgroundart, 0, 600);
 
         // The main menu
         this.mainMenu = this.addUILayer("mainMenu");
@@ -82,6 +84,7 @@ export default class MainMenu extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play"){
+                UITweens.fadeOut(this.backgroundart, 0, 500);
                 UITweens.slideOutScene(this.sceneObjects, 80, new Vec2(-1000, 0));
                 let sceneManager = this.sceneManager;
                 setTimeout(function(){ 
@@ -101,9 +104,8 @@ export default class MainMenu extends Scene {
                 this.controls.setHidden(true);
             }
 
-            if(event.type === "help"){
+            if(event.type === "help")
                 this.sceneManager.changeToScene(HelpScreen, {});
-            }
         }
     }
 }
