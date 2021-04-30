@@ -10,6 +10,7 @@ import MainMenu from "./MainMenu";
 import MapScene from "../MapScene";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 
 
 export default class CharacterSelect extends Scene {
@@ -90,6 +91,7 @@ export default class CharacterSelect extends Scene {
 
     updateScene(){
         while(this.receiver.hasNextEvent()){
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
             if(event.type === "select"){

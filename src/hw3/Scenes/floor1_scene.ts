@@ -18,6 +18,7 @@ import ItemSelectScene from "./ItemSelectScene";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import MapScene from "./MapScene";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -67,7 +68,12 @@ export default class floor1_scene extends Scene {
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
     }
 
+    unloadScene(){}
+
     startScene(){
+        /* Play Level Music */
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music", loop:"true", holdReference: true});
+
         // Add in the tilemap
         let tilemapLayers = this.add.tilemap("level");
         // let tilemapLayers = this.add.tilemap("level2");
@@ -122,6 +128,7 @@ export default class floor1_scene extends Scene {
                     }
                     case GameEvents.ROOM_CLEARED:
                     {
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);

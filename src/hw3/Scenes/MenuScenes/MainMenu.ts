@@ -11,6 +11,7 @@ import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 
 export default class MainMenu extends Scene {
     private mainMenu: Layer;
@@ -82,8 +83,8 @@ export default class MainMenu extends Scene {
     updateScene(){
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
-
-            if(event.type === "play"){
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
+            if(event.type === "play"){ 
                 UITweens.fadeOut(this.backgroundart, 0, 500);
                 UITweens.slideOutScene(this.sceneObjects, 80, new Vec2(-1000, 0));
                 let sceneManager = this.sceneManager;

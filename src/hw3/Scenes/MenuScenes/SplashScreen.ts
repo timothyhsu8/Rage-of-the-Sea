@@ -1,4 +1,5 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
@@ -10,6 +11,9 @@ export default class SplashScreen extends Scene {
     private splashart: Sprite;
 
     loadScene(){
+        /* Load Audio */
+        this.load.audio("click", "hw3_assets/sounds/click.mp3");
+
         this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
         
         /* Load Item Data */
@@ -17,6 +21,7 @@ export default class SplashScreen extends Scene {
     }
 
     unloadScene(){
+        this.load.keepAudio("click");
         this.load.keepObject("itemInfo");
     }
 
@@ -45,6 +50,7 @@ export default class SplashScreen extends Scene {
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
             if(event.type === "play"){
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
                 UITweens.fadeOut(this.splashart, 0, 300);
                 let sceneManager = this.sceneManager;
                 setTimeout(() => {

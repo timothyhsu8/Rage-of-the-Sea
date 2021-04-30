@@ -11,6 +11,14 @@ export default class LoadScreen extends Scene {
     private itemData: any;
 
     loadScene(){
+        /* Load Audio */
+        this.load.audio("level1music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level2music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level3music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level4music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level5music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level6music", "hw3_assets/music/level1music.mp3");
+
         /* Load Menu Images */
         this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
         this.load.image("defaultbackground", "hw3_assets/sprites/backgroundart/defaultbackground.png");
@@ -43,6 +51,13 @@ export default class LoadScreen extends Scene {
     }
 
     unloadScene(){
+        this.load.keepAudio("level1music");
+        this.load.keepAudio("level2music");
+        this.load.keepAudio("level3music");
+        this.load.keepAudio("level4music");
+        this.load.keepAudio("level5music");
+        this.load.keepAudio("level6music");
+
         this.load.keepSpritesheet("player");
 
         this.load.keepObject("abilityData");

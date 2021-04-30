@@ -1,4 +1,5 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
@@ -100,6 +101,7 @@ export default class LevelSelect extends Scene {
     
     updateScene(){
         while(this.receiver.hasNextEvent()){
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")
