@@ -59,6 +59,11 @@ export default class PlayerController implements BattlerAI {
         this.direction.x = (Input.isPressed("left") ? -1 : 0) + (Input.isPressed("right") ? 1 : 0);
         this.direction.y = (Input.isPressed("forward") ? -1 : 0) + (Input.isPressed("backward") ? 1 : 0);
 
+        /* Enable invincibility */
+        if(HelpScreen.allowInvincibility && Input.isJustPressed("invincibility")){
+            (HelpScreen.invincibility)?(HelpScreen.invincibility = false):(HelpScreen.invincibility=true);
+        }
+
         /* --HANDLING TILE HIGHLIGHTING OF WHERE PLAYER IS CURRENTLY STANDING-- */
         let currentColRow: Vec2 = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
         if(currentColRow !== this.activeTile){

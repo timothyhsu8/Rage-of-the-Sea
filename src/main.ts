@@ -18,10 +18,13 @@ import SplashScreen from "./hw3/Scenes/MenuScenes/SplashScreen";
             {name: "backward", keys: ["s"]},
             {name: "left", keys: ["a"]},
             {name: "right", keys: ["d"]},
-            {name: "pickup", keys: ["e"]},
-            {name: "drop", keys: ["q"]},
-            {name: "slot1", keys: ["1"]},
-            {name: "slot2", keys: ["2"]}
+            {name: "invincibility", keys: ["i"]},
+            {name: "floor1", keys: ["1"]},
+            {name: "floor2", keys: ["2"]},
+            {name: "floor3", keys: ["3"]},
+            {name: "floor4", keys: ["4"]},
+            {name: "floor5", keys: ["5"]},
+            {name: "floor6", keys: ["6"]},
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want

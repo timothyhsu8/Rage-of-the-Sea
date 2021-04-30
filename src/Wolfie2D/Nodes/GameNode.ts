@@ -87,6 +87,10 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 		this.rotation = 0;
 	}
 
+	getEmitter(){
+		return this.emitter;
+	}
+
 	destroy(){
 		this.tweens.destroy();
 		this.receiver.destroy();

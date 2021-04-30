@@ -9,6 +9,7 @@ import CharacterState from "../../CharacterState";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import MapScene from "../MapScene";
 import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
+import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 
 export default class InventoryScene extends Scene {
     private characterState: CharacterState;
@@ -91,6 +92,7 @@ export default class InventoryScene extends Scene {
 
     updateScene(deltaT: number): void {
         while(this.receiver.hasNextEvent()){
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back")

@@ -17,7 +17,7 @@
     {
         "name": "Normal Boots",
         "key": "normal_boots",
-        "description": "Move Faster",
+        "description": "Move Slightly Faster",
         "rarity": "common",
         "ability": null,
         "maxHealth": 0,
@@ -38,7 +38,7 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 10,
+        "defense": 12,
         "speed": 0,
         "takeDamageMult": 0
     },
@@ -51,7 +51,7 @@
         "maxHealth": 0,
         "health": 0,
         "attack": 0,
-        "attackMult": 1.5,
+        "attackMult": 1.6,
         "defense": 0,
         "speed": 0,
         "takeDamageMult": 0
@@ -108,14 +108,14 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 15,
+        "defense": 25,
         "speed": -20,
-        "takeDamageMult": 0.8
+        "takeDamageMult": 0.7
     },
     {
         "name": "Blessing of Poseidon",
         "key": "blessing_of_poseidon",
-        "description": "Increaed max health and speed",
+        "description": "Increased max health and speed",
         "rarity": "rare",
         "ability": null,
         "maxHealth": 30,

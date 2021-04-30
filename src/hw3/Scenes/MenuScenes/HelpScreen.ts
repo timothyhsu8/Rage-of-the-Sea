@@ -14,10 +14,12 @@ export default class HelpScreen extends Scene {
     cheatEventNames: Array<string>;     // Holds the event names for each cheat
 
     static allLevelsUnlocked: boolean = false;
-    static invincibility: boolean = false;
+    static allowInvincibility: boolean = false;
     static instakill: boolean = false;
-    static nextFloorOpen: boolean = false;
+    static roomSkipping: boolean = false;
     static cheat5: boolean = false;
+
+    static invincibility: boolean = false;
 
     loadScene(){}
 
@@ -32,7 +34,7 @@ export default class HelpScreen extends Scene {
         backgroundart.position.set(center.x, center.y);
 
         /* Initializes the list of cheats */
-        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.invincibility, HelpScreen.instakill, HelpScreen.nextFloorOpen, HelpScreen.cheat5];
+        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.allowInvincibility, HelpScreen.instakill, HelpScreen.roomSkipping, HelpScreen.cheat5];
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "help", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
@@ -70,7 +72,7 @@ export default class HelpScreen extends Scene {
         cheatsHeader.fontSize = 35;
         
         /* Create Cheat Code Buttons */
-        let cheatTextArray = ["Unlock All Levels", "Invincibility", "Instakill All", "Next Floor Available", "Cheat 5"];
+        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-6]", "Cheat 5"];
         this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5"];
         this.createCheatButtons(5, center, cheatTextArray, 110, this.cheatEventNames);
 
@@ -105,9 +107,9 @@ export default class HelpScreen extends Scene {
 
         /* Sets values of the static variables (since the cheatList array only stores the variables by value, not reference)*/
         (this.cheatList[0])?(HelpScreen.allLevelsUnlocked = true):(HelpScreen.allLevelsUnlocked = false);
-        (this.cheatList[1])?(HelpScreen.invincibility = true):(HelpScreen.invincibility = false);
+        (this.cheatList[1])?(HelpScreen.allowInvincibility = true):(HelpScreen.allowInvincibility = false);
         (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
-        (this.cheatList[3])?(HelpScreen.nextFloorOpen = true):(HelpScreen.nextFloorOpen = false);
+        (this.cheatList[3])?(HelpScreen.roomSkipping = true):(HelpScreen.roomSkipping = false);
         (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
     }
 

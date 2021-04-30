@@ -19,6 +19,8 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import HelpScreen from "./MenuScenes/HelpScreen";
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import UITweens from "../../Wolfie2D/Rendering/Animations/UITweens";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import Input from "../../Wolfie2D/Input/Input";
 
 export default class MapScene extends Scene{
     private sceneObjects: Array<GameNode>;
@@ -78,7 +80,7 @@ export default class MapScene extends Scene{
         }
         
         /* Set next floor as open if the cheat is enabled */
-        if(HelpScreen.nextFloorOpen)
+        if(HelpScreen.roomSkipping)
             this.mapState.nextFloorOpen = true;
 
         const nextFloor = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x, center.y+400), text: "Next Floor"});
@@ -88,7 +90,7 @@ export default class MapScene extends Scene{
         nextFloor.borderColor = Color.WHITE;
         nextFloor.onClickEventId = "nextfloor";
         nextFloor.fontSize = 35;
-        (HelpScreen.nextFloorOpen || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
+        (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
 
         /* Disables 'Next Floor' button on the last  floor */
         if(this.mapState.currentFloor === MAX_FLOOR_NUM)
@@ -151,6 +153,7 @@ export default class MapScene extends Scene{
         const LAST_ROOM_COL = 6;
 
         while(this.receiver.hasNextEvent()){
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play"){
@@ -201,6 +204,18 @@ export default class MapScene extends Scene{
                 if(parseInt(event.type.substring(4,5)) === LAST_ROOM_COL)
                     this.mapState.nextFloorOpen = true;       
             }
+        }
+        /* Skip Floor buttons pressed */
+        if(HelpScreen.roomSkipping){
+            const NUM_FLOORS = 6;
+            for(let i=1 ; i <= NUM_FLOORS ; i++)
+                if(Input.isJustPressed("floor"+i)){
+                    if(this.characterState.mapState.currentFloor !== i){
+                        this.characterState.mapState.currentFloor = i;
+                        this.characterState.mapState.resetMap();
+                        this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                    }
+                }
         }
     }
 

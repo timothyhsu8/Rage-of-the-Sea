@@ -1,4 +1,5 @@
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
+import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
 import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
@@ -31,6 +32,7 @@ export default class AnchorSwing extends AbilityType {
     doAnimation(attacker: GameNode, direction: Vec2, sliceSprite: AnimatedSprite): void {
         // Rotate this with the game node
         sliceSprite.rotation = attacker.rotation;
+        attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "anchorswing_sound"});
 
         // Move the slice out from the player
         sliceSprite.position = attacker.position.clone().add(direction.scaled(20));

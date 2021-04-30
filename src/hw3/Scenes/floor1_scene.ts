@@ -19,6 +19,8 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import MapScene from "./MapScene";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import Input from "../../Wolfie2D/Input/Input";
+import HelpScreen from "./MenuScenes/HelpScreen";
 
 export default class floor1_scene extends Scene {
     // The player
@@ -68,7 +70,9 @@ export default class floor1_scene extends Scene {
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
     }
 
-    unloadScene(){}
+    unloadScene(){
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+    }
 
     startScene(){
         /* Play Level Music */
@@ -128,7 +132,6 @@ export default class floor1_scene extends Scene {
                     }
                     case GameEvents.ROOM_CLEARED:
                     {
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
@@ -142,6 +145,22 @@ export default class floor1_scene extends Scene {
 
                         /* Map Screen */
                         else this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                        break;
+                    }
+                    case GameEvents.SKIP_TO_ROOM:
+                    {
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                        let floorNum = event.data.get("floor");
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1);
+                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+
+                        /* Sets Floor */
+                        if(this.characterState.mapState.currentFloor !== floorNum){
+                            this.characterState.mapState.currentFloor = floorNum;
+                            this.characterState.mapState.resetMap();
+                        }
+                        this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                         break;
                     }
                     default:
@@ -162,6 +181,14 @@ export default class floor1_scene extends Scene {
         /* Game Over screen on player death */
         if(health <= 0)
             this.emitter.fireEvent(GameEvents.PLAYER_DIED, {});
+
+        /* Skip Floor buttons pressed */
+        if(HelpScreen.roomSkipping){
+            const NUM_FLOORS = 6;
+            for(let i=1 ; i <= NUM_FLOORS ; i++)
+                if(Input.isJustPressed("floor"+i))
+                    this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});
+        }
     }
 
     /**
@@ -171,7 +198,8 @@ export default class floor1_scene extends Scene {
         this.receiver.subscribe([
             GameEvents.ENEMY_DIED,
             GameEvents.PLAYER_DIED,
-            GameEvents.ROOM_CLEARED
+            GameEvents.ROOM_CLEARED,
+            GameEvents.SKIP_TO_ROOM
         ]);
     }
 
