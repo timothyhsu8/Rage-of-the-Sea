@@ -146,7 +146,8 @@ export default class OrthogonalTilemap extends Tilemap {
             // We have an index
             tile = this.getTile(indexOrCol);
         }
-
+        // console.log("MAP")
+        // console.log(this.collisionMap)
         return this.collisionMap[tile];
     }
 
