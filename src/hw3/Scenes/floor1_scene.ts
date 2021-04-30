@@ -47,14 +47,16 @@ export default class floor1_scene extends Scene {
 
     loadScene(){
         /* FINAL PROJECT TODO - Maybe add conditionals here and use this scene to load every room for every floor */
-        
+
         // Load Enemy Spritesheets
         this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemies/kraken.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/kraken.json");
 
-        // Load the tilemap
+        // Load the tilemaps
+
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
+        this.load.tilemap("level2", "hw3_assets/tilemaps/Floor2.json");
 
         // Load in the enemy info
         //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); 
@@ -71,6 +73,8 @@ export default class floor1_scene extends Scene {
     startScene(){
         // Add in the tilemap
         let tilemapLayers = this.add.tilemap("level");
+        // let tilemapLayers = this.add.tilemap("level2");
+
         this.walls = <OrthogonalTilemap>tilemapLayers[1].getItems()[0]; // Get wall layer
 
         // Set the viewport bounds to the tilemap
