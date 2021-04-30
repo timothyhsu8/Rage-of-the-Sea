@@ -54,10 +54,7 @@ export default class floor1_scene extends Scene {
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/kraken.json");
 
         // Load the tilemaps
-
-        this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
-        this.load.tilemap("level2", "hw3_assets/tilemaps/Floor2.json");
-
+        this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
         // Load in the enemy info
         //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");

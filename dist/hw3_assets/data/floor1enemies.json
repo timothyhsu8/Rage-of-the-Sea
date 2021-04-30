@@ -1,5 +1,0 @@
-{
-    "numEnemies": [3, 4, 5],
-    "monsterTypes": ["kraken", "lizard", "sollasina"],
-    "positions": [[250, 60], [250, 180], [370, 60], [370, 180], [300, 120], [400, 120], [400, 50]]
-}
