@@ -237,10 +237,6 @@ export default class floor1_scene extends Scene {
 
             /* Assigns random position to this enemy */
             let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
-            while (this.tilemaps[1].getTileAtWorldPosition(new Vec2(randomPos[0], randomPos[1])) != 0){  // find a square that is not collidable
-                randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
-            }
-
             this.enemies[i].position.set(randomPos[0], randomPos[1]);
 
             // Activate physics
