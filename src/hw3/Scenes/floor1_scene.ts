@@ -192,7 +192,7 @@ export default class floor1_scene extends Scene {
 
         // Create the player
         this.player = this.add.animatedSprite("player", "primary");
-        this.player.position.set(4*16, 4*16);
+        this.player.position.set(5*16, 8*16);
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
 
         this.player.addAI(PlayerController,

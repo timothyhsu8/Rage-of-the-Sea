@@ -163,6 +163,8 @@ export default class ItemSelectScene extends Scene {
                 return "Uncommon";
             case "rare":
                 return "Rare";
+            case "ultra_rare":
+                return "Ultra Rare";
             default:
                 return "Common";
         }
@@ -176,6 +178,8 @@ export default class ItemSelectScene extends Scene {
                 return PancakeColor.LIGHT_GREEN;
             case "rare":
                 return PancakeColor.TURQUOISE;
+            case "ultra_rare":
+                return PancakeColor.YELLOW;
             default:
                 return Color.WHITE;
         }

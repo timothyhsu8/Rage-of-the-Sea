@@ -58,8 +58,9 @@ export default class Chase extends EnemyState {
             }
 
             /* Follow Player */
-            else{
+            else{   
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
+                
                 if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
                     this.owner.animation.playIfNotAlready("WALK", true);
             }

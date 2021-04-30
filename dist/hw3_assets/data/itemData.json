@@ -1,5 +1,5 @@
 {
-    "numItems": 7,
+    "numItems": 9,
     "allitems": [{
         "name": "Double Edged Sword",
         "key": "double_edged_sword",
@@ -31,8 +31,8 @@
     {
         "name": "Iron Plating",
         "key": "iron_plating",
-        "description": "Lightly increased defense",
-        "rarity": "common",
+        "description": "Moderately increased defense",
+        "rarity": "uncommon",
         "ability": null,
         "maxHealth": 0,
         "health": 0,
@@ -96,6 +96,34 @@
         "attackMult": 0,
         "defense": 5,
         "speed": 5,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Lost Diver's Suit",
+        "key": "lost_divers_suit",
+        "description": "Greatly increased defense, lower speed",
+        "rarity": "ultra_rare",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 15,
+        "speed": -20,
+        "takeDamageMult": 0.8
+    },
+    {
+        "name": "Blessing of Poseidon",
+        "key": "blessing_of_poseidon",
+        "description": "Increaed max health and speed",
+        "rarity": "rare",
+        "ability": null,
+        "maxHealth": 30,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 10,
         "takeDamageMult": 0
     }
 ],
