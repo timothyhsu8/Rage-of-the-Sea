@@ -53,7 +53,7 @@ export default class floor1_scene extends Scene {
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/kraken.json");
 
-        // Load the tilemaps
+        // Load the tilemap
 
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor1.json");
         this.load.tilemap("level2", "hw3_assets/tilemaps/Floor2.json");
