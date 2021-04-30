@@ -125,10 +125,18 @@ export default class ItemSelectScene extends Scene {
             itemicon.position.set(position.x, position.y-125);
 
             /* Item Icon Border */
+            let rarity = this.itemChoices[itemChoice].rarity;
+            let rarityColor = this.getRarityColor(rarity);
             const border = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y-125), text:""});
-            border.borderColor = Color.WHITE;
-            border.borderWidth = 2;
+            border.borderWidth = 4;
             border.size = new Vec2(175, 175);
+            border.borderColor = rarityColor;
+
+            /* Rarity Text */
+            let rarityText = "(" + this.getRarityText(rarity) + ")";
+            const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+32), text:rarityText});
+            item1description.textColor = rarityColor;
+            item1description.fontSize = 20;
         }
 
         /* Selection Box */
@@ -142,9 +150,35 @@ export default class ItemSelectScene extends Scene {
         this.selections[itemChoice] = item;
 
         /* Description */
-        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+50), text:this.itemChoices[itemChoice].description});
+        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+75), text:this.itemChoices[itemChoice].description});
         item1description.textColor = PancakeColor.BEIGE;
         item1description.fontSize = 20;
+    }
+
+    getRarityText(rarity: string): string{
+        switch(rarity){
+            case "common":
+                return "Common";
+            case "uncommon":
+                return "Uncommon";
+            case "rare":
+                return "Rare";
+            default:
+                return "Common";
+        }
+    }
+
+    getRarityColor(rarity: string): Color{
+        switch(rarity){
+            case "common":
+                return Color.WHITE;
+            case "uncommon":
+                return PancakeColor.LIGHT_GREEN;
+            case "rare":
+                return PancakeColor.TURQUOISE;
+            default:
+                return Color.WHITE;
+        }
     }
 
     randomInt(max: number): number{

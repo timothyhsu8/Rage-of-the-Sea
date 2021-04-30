@@ -8,6 +8,7 @@ import Layer from "../../../Wolfie2D/Scene/Layer";
 import CharacterState from "../../CharacterState";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import MapScene from "../MapScene";
+import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 
 export default class InventoryScene extends Scene {
     private characterState: CharacterState;
@@ -16,15 +17,7 @@ export default class InventoryScene extends Scene {
         this.characterState = init.characterState;
     }
 
-    loadScene(){
-        this.load.image("lasergun", "hw3_assets/sprites/itemicons/lasergun.png");
-        this.load.image("healthpack", "hw3_assets/sprites/itemicons/healthpack.png");
-        this.load.image("anchor", "hw3_assets/sprites/itemicons/anchor.png");
-        this.load.image("knife", "hw3_assets/sprites/itemicons/knife.png");
-        this.load.image("double-edged", "hw3_assets/sprites/itemicons/lasergun.png");
-        this.load.image("boots", "hw3_assets/sprites/itemicons/lasergun.png");
-        //this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
-    }
+    loadScene(){}
 
     startScene(){
         /* Background Artwork */
@@ -33,11 +26,13 @@ export default class InventoryScene extends Scene {
         let backgroundart = this.add.sprite("defaultbackground", "background");
         backgroundart.position.set(center.x, center.y);
 
-        this.addUILayer("inventory");
         this.addLayer("primary", 10);
-        
-        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(900, 100), text: "Equipped Items"});
+        this.addUILayer("inventory");
+
+        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(1000, 70), text: "Equipped Items"});
         currentlyEquipped.textColor = Color.WHITE;
+        currentlyEquipped.fontSize = 35;
+        currentlyEquipped.font = "Tahoma";
 
         const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 140), text: MainMenu.char});
         inventoryHeader.textColor = Color.WHITE;
@@ -58,18 +53,27 @@ export default class InventoryScene extends Scene {
         portraitborder.scale = new Vec2(2, 2);
         portraitborder.position = new Vec2(200, 240);
 
+        /* Item Icons Background */
+        const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+200, center.y), text: ""});
+        iconBackground.backgroundColor = PancakeColor.MAGENTA;
+        iconBackground.borderWidth = 2;
+        iconBackground.borderRadius = 2;
+        iconBackground.borderColor = PancakeColor.PINK;
+        iconBackground.size.set(1100, 700);
+
+        /* Item Icons */
         let width = 500;
         let height = 150;
         var text = ""
         let equippedItems = this.characterState.getInventory().getItems();
         for(let i=0 ; i < equippedItems.length ; i++){
             /* Item Icon */
-            let icon = this.add.sprite(equippedItems[i].key, "primary");
+            let icon = this.add.sprite(equippedItems[i].key, "inventory");
             icon.scale.set(1/2, 1/2);
             icon.position = new Vec2(width, height);
 
             /* Item Icon Border */
-            const border = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: icon.position, text: ""});
+            const border = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: icon.position, text: ""});
             border.size = new Vec2(icon.size.x/2, icon.size.y/2);
             border.borderRadius = 2;
             border.borderColor = Color.WHITE;
