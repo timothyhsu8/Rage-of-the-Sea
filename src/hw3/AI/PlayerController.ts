@@ -1,5 +1,6 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
@@ -61,6 +62,7 @@ export default class PlayerController implements BattlerAI {
 
         /* Enable invincibility */
         if(HelpScreen.allowInvincibility && Input.isJustPressed("invincibility")){
+            this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             (HelpScreen.invincibility)?(HelpScreen.invincibility = false):(HelpScreen.invincibility=true);
         }
 

@@ -159,7 +159,7 @@ export default class HelpScreen extends Scene {
         for(let i = 0 ; i < numCheats ; i++){
             /* Buttons */
             const cheat = <Button>this.add.uiElement(UIElementType.BUTTON, "text", {position: new Vec2(center.x+350, (center.y-175)+(i*posOffset)), text: text[i]});
-            cheat.size.set(300, 75);
+            cheat.size.set(320, 75);
             cheat.borderWidth = 2;
             cheat.borderColor = Color.WHITE;
             cheat.backgroundColor = new Color(50, 50, 70, 1);

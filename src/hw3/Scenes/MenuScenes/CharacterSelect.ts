@@ -34,7 +34,7 @@ export default class CharacterSelect extends Scene {
 
         /* Background Artwork */
         this.addLayer("background", 9);
-        let backgroundart = this.add.sprite("defaultbackground", "background");
+        let backgroundart = this.add.sprite("darkbackground", "background");
         backgroundart.position.set(center.x, center.y);
         UITweens.fadeIn(backgroundart, 0, 600);
 

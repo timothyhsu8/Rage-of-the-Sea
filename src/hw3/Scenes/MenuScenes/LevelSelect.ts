@@ -31,7 +31,8 @@ export default class LevelSelect extends Scene {
         this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
         this.addUILayer("levelSelect");
-        
+        this.addLayer("abovebackground", 2);
+
         /* Background Artwork */
         this.addLayer("background", 1);
         let backgroundart = this.add.sprite("defaultbackground", "background");
@@ -91,11 +92,16 @@ export default class LevelSelect extends Scene {
 
         /* Add lock icon and lower alpha on locked rooms */
         if(locked && !HelpScreen.allLevelsUnlocked){
-            levelimage.alpha = 0.3;
+            levelimage.alpha = 0.35;
             const lockIcon = this.add.sprite("lock", "locks");
             lockIcon.position.set(position.x, position.y);
             this.sceneUI.push(lockIcon);
             button.onClickEventId = "locked";
+
+            const blackBG = <Label>this.add.uiElement(UIElementType.LABEL, "abovebackground", {position: position, text:text});
+            blackBG.size.set(375, 200);
+            blackBG.backgroundColor = Color.BLACK;
+            button.borderWidth = 2;
         }
 
         /* Descriptions */
