@@ -69,10 +69,10 @@ export default class SplashScreen extends Scene {
         }
 
         if(this.flashingText.alpha === 0)
-            UITweens.fadeIn(this.flashingText, 0, 1200);
+            UITweens.fadeIn(this.flashingText, 0, 1000);
 
         if(this.flashingText.alpha === 1)
-            UITweens.fadeOut(this.flashingText, 0, 1200);
+            UITweens.fadeOut(this.flashingText, 0, 1000);
 
     }
 }

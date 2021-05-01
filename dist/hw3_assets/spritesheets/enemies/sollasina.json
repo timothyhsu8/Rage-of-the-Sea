@@ -1,6 +1,6 @@
 {
     "name": "Sollasina",
-    "spriteSheetImage": "kraken.png",
+    "spriteSheetImage": "sollasina.png",
     "spriteWidth": 90,
     "spriteHeight": 90,
     "columns": 4,
@@ -9,10 +9,6 @@
     "animations": [
         { 
             "name": "IDLE",
-            "frames": [ {"index": 0, "duration": 1} ]
-        },
-        {
-            "name": "WALK",
             "frames": [ {"index": 0, "duration": 15}, {"index": 1, "duration": 15} ]
         },
         {
@@ -21,7 +17,7 @@
         },
         {
             "name": "ATTACK",
-            "frames": [ {"index": 4, "duration": 5}, {"index": 5, "duration": 15}, {"index": 6, "duration": 33}, {"index": 7, "duration": 15}]
+            "frames": [ {"index": 4, "duration": 35}, {"index": 5, "duration": 25}, {"index": 6, "duration": 20}]
         }
     ]
 }

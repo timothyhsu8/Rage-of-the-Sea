@@ -73,6 +73,8 @@ export default class MonsterAttack extends EnemyState {
                 let dir = this.player.position.clone().sub(this.owner.position).normalize();
                 if(this.parent.ability.cast(this.owner, "enemy", dir))
                     this.owner.animation.playUninterruptable("ATTACK");
+                
+
                 break;
 
             default:
