@@ -12,6 +12,7 @@ import {GameEvents} from "../Game_Enums"
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import StillProjectiles from "./EnemyStates/StillProjectiles";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -57,6 +58,9 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     damage(damage: number): void {
         this.health -= damage;
         this.playKnockbackTween();      /* FINAL PROJECT TODO - Add property to enemies to make them knockbackable */
+
+        let enemyName = this.owner.imageId.toLowerCase();
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
 
         /* Enemy Dies */
         if(HelpScreen.instakill || this.health <= 0){

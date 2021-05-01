@@ -130,7 +130,12 @@ export default class AudioManager {
                 let soundKey = event.data.get("key");
                 let loop = event.data.get("loop");
                 let holdReference = event.data.get("holdReference");
-                this.playSound(soundKey, loop, holdReference);
+                if(this.receiver.hasNextEvent()){
+                    let event2 = this.receiver.peekNextEvent();
+                    if(event2.data.get("key") !== soundKey)
+                        this.playSound(soundKey, loop, holdReference);
+                }
+                else this.playSound(soundKey, loop, holdReference);
             }
 
             if(event.type === GameEventType.STOP_SOUND){

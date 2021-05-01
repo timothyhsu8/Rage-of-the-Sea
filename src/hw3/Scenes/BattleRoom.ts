@@ -54,7 +54,12 @@ export default class BattleRoom extends Scene {
         // Load Enemy Spritesheets
         this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemies/kraken.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
-        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/kraken.json");
+        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/sollasina.json");
+
+        // Load Enemy Audio
+        this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
+        this.load.audio("lizardDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("sollasinaDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
