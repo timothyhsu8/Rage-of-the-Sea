@@ -1,6 +1,7 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
+import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
@@ -9,11 +10,13 @@ import LoadScreen from "./LoadScreen";
 
 export default class SplashScreen extends Scene {    
     private splashart: Sprite;
+    private flashingText: Sprite;
 
     loadScene(){
         /* Load Audio */
         this.load.audio("click", "hw3_assets/sounds/click.mp3");
 
+        this.load.image("clicktoplay", "hw3_assets/sprites/backgroundart/clicktoplay.png");
         this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
         
         /* Load Item Data */
@@ -43,6 +46,11 @@ export default class SplashScreen extends Scene {
         play.backgroundColor = Color.TRANSPARENT;
         play.onClickEventId = "play";
 
+        /* Click To Play Text */
+        this.flashingText = this.add.sprite("clicktoplay", "primary");
+        this.flashingText.position.set(center.x, center.y+350);
+        this.flashingText.alpha = 0;
+
         // Subscribe to the button events
         this.receiver.subscribe("play");
     }
@@ -52,11 +60,19 @@ export default class SplashScreen extends Scene {
             if(event.type === "play"){
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
                 UITweens.fadeOut(this.splashart, 0, 300);
+                UITweens.fadeOut(this.flashingText, 0, 300);
                 let sceneManager = this.sceneManager;
                 setTimeout(() => {
                     sceneManager.changeToScene(LoadScreen, {});
                 }, 300);
             }
         }
+
+        if(this.flashingText.alpha === 0)
+            UITweens.fadeIn(this.flashingText, 0, 1200);
+
+        if(this.flashingText.alpha === 1)
+            UITweens.fadeOut(this.flashingText, 0, 1200);
+
     }
 }

@@ -3,7 +3,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
-import floor1_scene from "./floor1_scene";
+import BattleRoom from "./BattleRoom";
 import CharacterState from "../CharacterState";
 import InventoryScene from "./MenuScenes/InventoryScene";
 import MainMenu from "./MenuScenes/MainMenu";
@@ -157,7 +157,7 @@ export default class MapScene extends Scene{
             let event = this.receiver.getNextEvent();
 
             if(event.type === "play"){
-                this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState});
+                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
             }
 
             if(event.type === "inventory")
@@ -197,7 +197,7 @@ export default class MapScene extends Scene{
                             }
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
-                            this.sceneManager.changeToScene(floor1_scene, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
+                            this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
                         }
                 
                 /* Enable Next Floor Button */

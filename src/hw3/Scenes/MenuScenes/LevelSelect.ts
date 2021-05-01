@@ -15,7 +15,13 @@ export default class LevelSelect extends Scene {
     private sceneUI: Array<GameNode>;
 
     loadScene(){
-        this.load.image("levelimage", "hw3_assets/sprites/levelselect/levelimage.png");
+        this.load.image("level1image", "hw3_assets/sprites/levelselect/level1image.png");
+        this.load.image("level2image", "hw3_assets/sprites/levelselect/level2image.png");
+        this.load.image("level3image", "hw3_assets/sprites/levelselect/level3image.png");
+        this.load.image("level4image", "hw3_assets/sprites/levelselect/level4image.png");
+        this.load.image("level5image", "hw3_assets/sprites/levelselect/level5image.png");
+        this.load.image("level6image", "hw3_assets/sprites/levelselect/level6image.png");
+
         this.load.image("lock", "hw3_assets/sprites/levelselect/lock.png");
     }
 
@@ -49,12 +55,12 @@ export default class LevelSelect extends Scene {
 
         this.addLayer("levelimages", 9);
         this.addLayer("locks", 10);
-        this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1", false);
-        this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2", true);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3", true);
-        this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4", true);
-        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5", true);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6", true);
+        this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
+        this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2: Casino", true, 2);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Dining Area", true, 3);
+        this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4", true, 4);
+        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5", true, 5);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6", true, 6);
 
 
         // Subscribe to the button events
@@ -66,7 +72,7 @@ export default class LevelSelect extends Scene {
         UITweens.slideInScene(this.sceneUI, 30, new Vec2(2000, 0));
     }
 
-    makeLevelButtons(position: Vec2, eventid: string, delay: number, text: string, locked: boolean){
+    makeLevelButtons(position: Vec2, eventid: string, delay: number, text: string, locked: boolean, num: number){
         /* Clickable Buttons */
         const button = <Button>this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: position, text: ""});
         button.size.set(375, 200);
@@ -79,7 +85,7 @@ export default class LevelSelect extends Scene {
         this.sceneUI.push(button);
 
         /* Level Images */
-        const levelimage = this.add.sprite("levelimage", "levelimages");
+        const levelimage = this.add.sprite("level" + num + "image", "levelimages");
         levelimage.position.set(position.x, position.y);
         this.sceneUI.push(levelimage);
 

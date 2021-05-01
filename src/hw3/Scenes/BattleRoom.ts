@@ -22,7 +22,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import HelpScreen from "./MenuScenes/HelpScreen";
 
-export default class floor1_scene extends Scene {
+export default class BattleRoom extends Scene {
     // The player
     private player: AnimatedSprite;
 
