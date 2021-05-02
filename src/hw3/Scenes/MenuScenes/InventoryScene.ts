@@ -3,8 +3,6 @@ import Scene from "../../../Wolfie2D/Scene/Scene";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../../Wolfie2D/Utils/Color";
-import MainMenu from "./MainMenu";
-import Layer from "../../../Wolfie2D/Scene/Layer";
 import CharacterState from "../../CharacterState";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import MapScene from "../MapScene";
@@ -12,12 +10,16 @@ import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import Input from "../../../Wolfie2D/Input/Input";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
+import Item from "../../GameSystems/items/Item";
 
 export default class InventoryScene extends Scene {
     private characterState: CharacterState;
+    private equippedItems: Array<Item>;
     private itemIcons: Array<Sprite>;
     
+    private itemName: Label;
     private itemDescription: Label;
+    private itemDescriptionBox: Sprite;
     private hovering: boolean;
     private hoveredItem: Sprite;
 
@@ -28,27 +30,39 @@ export default class InventoryScene extends Scene {
     loadScene(){}
 
     startScene(){
+        this.addLayer("background", 9);
+        this.addLayer("primary", 10);
+        this.addLayer("inventory", 11);
+        this.addLayer("itemdescriptionbox", 12);
+        this.addLayer("itemdescriptions", 13);
+
         this.itemIcons = new Array<Sprite>();
         this.hovering = false;
 
         /* Background Artwork */
-        this.addLayer("background", 9);
         const center = this.viewport.getCenter();
         let backgroundart = this.add.sprite("defaultbackground", "background");
         backgroundart.position.set(center.x, center.y);
 
-        this.addLayer("primary", 10);
-        this.addLayer("inventory", 11);
-        this.addLayer("itemdescriptions", 12);
-        
-        this.itemDescription = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(-100, -100), text: "Equipped Items"});
-        this.itemDescription.textColor = Color.WHITE;
+        /* Item name Label */
+        this.itemName = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(-100, -100), text: ""});
+        this.itemName.font = "Merriweather";
+        this.itemName.visible = false;
+        this.itemName.fontSize = 15;
+
+        /* Item descriptions on item hover */
+        this.itemDescription = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(-100, -100), text: ""});
+        this.itemDescription.textColor = PancakeColor.BEIGE;
+        this.itemDescription.font = "Merriweather";
         this.itemDescription.visible = false;
-        this.itemDescription.fontSize = 35;
-        this.itemDescription.backgroundColor = PancakeColor.MAGENTA;
+        this.itemDescription.fontSize = 15;
+
+        /* Item Description Box */
+        this.itemDescriptionBox = this.add.sprite("itemdescriptionbox", "itemdescriptionbox");
+        this.itemDescriptionBox.visible = false;
 
         const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(1000, 70), text: "Equipped Items"});
-        currentlyEquipped.textColor = Color.WHITE;
+        currentlyEquipped.textColor = PancakeColor.BEIGE;
         currentlyEquipped.fontSize = 35;
         currentlyEquipped.font = "Merriweather";
 
@@ -85,10 +99,10 @@ export default class InventoryScene extends Scene {
         let width = 500;
         let height = 150;
         var text = ""
-        let equippedItems = this.characterState.getInventory().getItems();
-        for(let i=0 ; i < equippedItems.length ; i++){
+        this.equippedItems = this.characterState.getInventory().getItems();
+        for(let i=0 ; i < this.equippedItems.length ; i++){
             /* Item Icon */
-            let icon = this.add.sprite(equippedItems[i].key, "inventory");
+            let icon = this.add.sprite(this.equippedItems[i].key, "inventory");
             icon.scale.set(1/2, 1/2);
             icon.position = new Vec2(width, height);
             this.itemIcons.push(icon);
@@ -119,8 +133,8 @@ export default class InventoryScene extends Scene {
                 this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
         }
 
+        /* Check if mouse is hovering over item */
         if(!this.hovering){
-            /* Check if mouse is hovering over item */
             for(let i=0 ; i < this.itemIcons.length ; i++){
                 let mousePos: Vec2 = Input.getMousePosition()
 
@@ -128,8 +142,21 @@ export default class InventoryScene extends Scene {
                 if(this.itemIcons[i].contains(mousePos.x, mousePos.y)){
                     this.hovering = true;
                     this.hoveredItem = this.itemIcons[i];
-                    this.itemDescription.position.set(mousePos.x, mousePos.y);
+
+                    /* Item name */
+                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-95);
+                    this.itemName.text = this.equippedItems[i].name + " (" + Item.getRarityText(this.equippedItems[i].rarity) + ")"; 
+                    this.itemName.textColor = Item.getRarityColor(this.equippedItems[i].rarity);
+                    this.itemName.visible = true;
+                    
+                    /* Description */
+                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-70);
+                    this.itemDescription.text = this.equippedItems[i].description; 
                     this.itemDescription.visible = true;
+
+                    /* Description Box */
+                    this.itemDescriptionBox.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);
+                    this.itemDescriptionBox.visible = true;
                 }
             }
         }
@@ -138,10 +165,11 @@ export default class InventoryScene extends Scene {
         else{
             let mousePos: Vec2 = Input.getMousePosition()
             if(!this.hoveredItem.contains(mousePos.x, mousePos.y)){
+                this.itemName.visible = false;
+                this.itemDescriptionBox.visible = false;
                 this.itemDescription.visible = false;
                 this.hovering = false;
             }
         }
-
     }
 }

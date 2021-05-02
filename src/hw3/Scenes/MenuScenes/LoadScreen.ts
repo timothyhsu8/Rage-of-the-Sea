@@ -29,8 +29,8 @@ export default class LoadScreen extends Scene {
         this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
         this.load.image("defaultbackground", "hw3_assets/sprites/backgroundart/defaultbackground.png");
         this.load.image("darkbackground", "hw3_assets/sprites/backgroundart/darkbackground.png");
+        this.load.image("itemdescriptionbox", "hw3_assets/sprites/itemicons/itemdescriptionbox.png");
         
-
         /* Load Map */
         this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
         this.load.image("battleIcon", "hw3_assets/sprites/map/battleicon.png");
@@ -83,6 +83,7 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("portrait");
         this.load.keepImage("portraitborder");
         this.load.keepImage("healthbarborder");
+        this.load.keepImage("itemdescriptionbox");
 
         for(let i=0; i < this.itemData.numItems ; i++)
             this.load.keepImage(this.itemData.allitems[i].key);

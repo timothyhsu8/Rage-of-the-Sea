@@ -129,7 +129,7 @@
     {
         "name": "Health Pack",
         "key": "health_pack",
-        "description": "Increase your health by a little",
+        "description": "Slight health increase",
         "rarity": "uncommon",
         "ability": null,
         "maxHealth": 0,

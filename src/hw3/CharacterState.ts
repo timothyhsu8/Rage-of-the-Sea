@@ -23,10 +23,9 @@ export default class CharacterState{
 
     /* Adds item to inventory */
     addToInventory(itemChoice: any){
-        console.log(itemChoice.name);
         if(itemChoice.key !== "none"){
             let newItem = new Item(itemChoice.name, itemChoice.key, itemChoice.ability, itemChoice.maxHealth, itemChoice.health, itemChoice.attack,
-                itemChoice.attackMult, itemChoice.defense, itemChoice.speed, itemChoice.takeDamageMult);
+                itemChoice.attackMult, itemChoice.defense, itemChoice.speed, itemChoice.takeDamageMult, itemChoice.description, itemChoice.rarity);
             this.addItemStats(newItem);
             this.inventory.addItem(newItem);
         }
@@ -39,15 +38,15 @@ export default class CharacterState{
         this.stats.speed += item.stats.speed;
 
         this.stats.maxHealth += item.stats.maxHealth;
-        this.stats.health += item.stats.maxHealth;
 
-        this.stats.health += item.stats.health;
-
+        /* Healing (Doesn't exceed maxHealth) */
         (this.stats.health + item.stats.health > this.stats.maxHealth)?(this.stats.health = this.stats.maxHealth):(this.stats.health += item.stats.health);
 
+        /* Attack Multiplier */
         if(this.stats.attackMult < item.stats.attackMult)
             this.stats.attackMult = item.stats.attackMult;
         
+        /* Take Damage Multiplier */
         if(this.stats.takeDamageMult < item.stats.takeDamageMult || (item.stats.takeDamageMult !== 0 && this.stats.takeDamageMult === 1.0))
             this.stats.takeDamageMult = item.stats.takeDamageMult;
     }

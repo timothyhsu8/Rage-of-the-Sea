@@ -7,6 +7,7 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import CharacterState from "../CharacterState";
+import Item from "../GameSystems/items/Item";
 import MapScene from "./MapScene";
 
 export default class ItemSelectScene extends Scene {
@@ -139,14 +140,14 @@ export default class ItemSelectScene extends Scene {
 
             /* Item Icon Border */
             let rarity = this.itemChoices[itemChoice].rarity;
-            let rarityColor = this.getRarityColor(rarity);
+            let rarityColor = Item.getRarityColor(rarity);
             const border = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y-125), text:""});
             border.borderWidth = 4;
             border.size = new Vec2(175, 175);
             border.borderColor = rarityColor;
 
             /* Rarity Text */
-            let rarityText = "(" + this.getRarityText(rarity) + ")";
+            let rarityText = "(" + Item.getRarityText(rarity) + ")";
             const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+32), text:rarityText});
             item1description.textColor = rarityColor;
             item1description.fontSize = 20;
@@ -168,36 +169,6 @@ export default class ItemSelectScene extends Scene {
         item1description.fontSize = 20;
     }
 
-    getRarityText(rarity: string): string{
-        switch(rarity){
-            case "common":
-                return "Common";
-            case "uncommon":
-                return "Uncommon";
-            case "rare":
-                return "Rare";
-            case "ultra_rare":
-                return "Ultra Rare";
-            default:
-                return "Common";
-        }
-    }
-
-    getRarityColor(rarity: string): Color{
-        switch(rarity){
-            case "common":
-                return Color.WHITE;
-            case "uncommon":
-                return PancakeColor.LIGHT_GREEN;
-            case "rare":
-                return PancakeColor.TURQUOISE;
-            case "ultra_rare":
-                return PancakeColor.YELLOW;
-            default:
-                return Color.WHITE;
-        }
-    }
-
     passRarityTest(rarity: string): boolean{
         let chance = 100;
         if(rarity === "common")
@@ -207,7 +178,7 @@ export default class ItemSelectScene extends Scene {
         else if(rarity === "rare")
             chance = 35;
         else if(rarity === "ultra_rare")
-            chance = 15;
+            chance = 1;
         
         if(this.randomInt(101) < chance)
             return true;

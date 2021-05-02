@@ -1,6 +1,8 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
+import Color from "../../../Wolfie2D/Utils/Color";
+import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 import Stats from "../../Stats";
 import Ability from "./Ability";
 
@@ -8,6 +10,8 @@ export default class Item {
     /** The sprite that represents this weapon in the world or in an inventory */
     name: string;
     key: ItemType;
+    description: string;
+    rarity: string;
     sprite: Sprite;
     ability: Ability;
     damage: number;
@@ -16,9 +20,11 @@ export default class Item {
     stats: Stats;
 
     constructor(name: string, key:ItemType, ability: Ability, maxHealth: number, health: number, attack: number, 
-        attackMult: number, defense: number, speed:number, takeDamageMult: number){
+        attackMult: number, defense: number, speed:number, takeDamageMult: number, description: string, rarity: string){
         this.name = name;
         this.key = key;
+        this.description = description;
+        this.rarity = rarity;
         this.ability = ability;
         this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);
     }
@@ -37,12 +43,41 @@ export default class Item {
         this.sprite.position.copy(position);
     }
 
-    /* FINAL PROJECT TODO - Implement this method */
     use(user: AnimatedSprite, userType: string, direction: Vec2): boolean { 
         /* If this item has no active ability return false */
         if(this.ability === null)
             return false;
         return this.ability.cast(user, userType, direction);
+    }
+
+    static getRarityText(rarity: string): string{
+        switch(rarity){
+            case "common":
+                return "Common";
+            case "uncommon":
+                return "Uncommon";
+            case "rare":
+                return "Rare";
+            case "ultra_rare":
+                return "Ultra Rare";
+            default:
+                return "Common";
+        }
+    }
+
+    static getRarityColor(rarity: string): Color{
+        switch(rarity){
+            case "common":
+                return Color.WHITE;
+            case "uncommon":
+                return PancakeColor.LIGHT_GREEN;
+            case "rare":
+                return PancakeColor.TURQUOISE;
+            case "ultra_rare":
+                return PancakeColor.YELLOW;
+            default:
+                return Color.WHITE;
+        }
     }
 }
 
