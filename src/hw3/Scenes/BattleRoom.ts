@@ -75,18 +75,11 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
     }
 
-    unloadScene(){
-        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-    }
+    unloadScene(){}
 
     startScene(){
-        /* Play Level Music */
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music", loop:"true", holdReference: true});
-
         // Add in the tilemap
         let tilemapLayers = this.add.tilemap("level");
-        // let tilemapLayers = this.add.tilemap("level2");
-
         this.walls = <OrthogonalTilemap>tilemapLayers[1].getItems()[0]; // Get wall layer
 
         // Set the viewport bounds to the tilemap
@@ -132,6 +125,7 @@ export default class BattleRoom extends Scene {
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                         this.sceneManager.changeToScene(GameOver);
                         break;
                     }
@@ -154,7 +148,6 @@ export default class BattleRoom extends Scene {
                     }
                     case GameEvents.SKIP_TO_ROOM:
                     {
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                         let floorNum = event.data.get("floor");
                         this.viewport.setOffset(new Vec2(0, 0));
                         this.viewport.setZoomLevel(1);
@@ -162,6 +155,8 @@ export default class BattleRoom extends Scene {
 
                         /* Sets Floor */
                         if(this.characterState.mapState.currentFloor !== floorNum){
+                            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + floorNum +"music", loop:"true", holdReference: true});
                             this.characterState.mapState.currentFloor = floorNum;
                             this.characterState.mapState.resetMap();
                         }

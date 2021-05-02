@@ -171,6 +171,8 @@ export default class MapScene extends Scene{
             
             if(event.type === "quit"){
                 this.mapState.resetMap();
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "mainmenu_music", loop:"true", holdReference: true});
                 this.sceneManager.changeToScene(MainMenu, {});
             }
 
@@ -178,6 +180,8 @@ export default class MapScene extends Scene{
             if(event.type === "nextfloor"){
                 if(this.mapState.nextFloorOpen){
                     this.mapState.nextFloor();
+                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                     this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                 }
             }
@@ -217,8 +221,10 @@ export default class MapScene extends Scene{
             for(let i=1 ; i <= NUM_FLOORS ; i++)
                 if(Input.isJustPressed("floor"+i)){
                     if(this.characterState.mapState.currentFloor !== i){
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor) + "music"});
                         this.characterState.mapState.currentFloor = i;
                         this.characterState.mapState.resetMap();
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                         this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                     }
                 }

@@ -84,6 +84,7 @@ export default class CharacterSelect extends Scene {
         description.borderColor = Color.WHITE;
         description.backgroundColor = Color.TRANSPARENT;
         description.font = "Merriweather";
+        description.fontSize = 25;
         this.sceneUI.push(description);
 
         /* Subscribe to the button events */
@@ -103,6 +104,9 @@ export default class CharacterSelect extends Scene {
             if(event.type === "select"){
                 let inventory = new Inventory(this);
                 let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
+                
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                 this.sceneManager.changeToScene(MapScene, {characterState: characterState});
             }
 

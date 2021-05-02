@@ -1,5 +1,8 @@
+import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import RegistryManager from "../../../Wolfie2D/Registry/RegistryManager";
 import Scene from "../../../Wolfie2D/Scene/Scene";
+import Color from "../../../Wolfie2D/Utils/Color";
 import MainMenu from "./MainMenu";
 
 /* 
@@ -19,6 +22,7 @@ export default class LoadScreen extends Scene {
         this.load.audio("level5music", "hw3_assets/music/level1music.mp3");
         this.load.audio("level6music", "hw3_assets/music/level1music.mp3");
         this.load.audio("anchorswing_sound", "hw3_assets/sounds/anchorswing.mp3");
+        this.load.audio("snipe_sound", "hw3_assets/sounds/snipe.mp3")
         this.load.audio("playerdamage", "hw3_assets/sounds/playerdamage.mp3")
 
         /* Load Menu Images */
@@ -62,6 +66,7 @@ export default class LoadScreen extends Scene {
         this.load.keepAudio("level5music");
         this.load.keepAudio("level6music");
         this.load.keepAudio("anchorswing_sound");
+        this.load.keepAudio("snipe_sound");
         this.load.keepAudio("playerdamage");
 
         this.load.keepSpritesheet("player");
@@ -84,11 +89,13 @@ export default class LoadScreen extends Scene {
     }
 
     startScene(){
-        // this.itemData = this.load.getObject("itemData2");
-        // for(let i=0; i < this.itemData.numItems ; i++){
-        //     this.load.image(this.itemData.allitems[i].key, "hw3_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
-        // }
-            this.initializeAbilities();
+        const center = this.viewport.getCenter();
+        this.addUILayer("primary");
+        const textlabel = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: center, text:"Loading..."});
+        textlabel.textColor = Color.WHITE;
+        textlabel.fontSize = 30;
+        textlabel.font = "Merriweather";
+        this.initializeAbilities();
         this.sceneManager.changeToScene(MainMenu, {});
         
     }

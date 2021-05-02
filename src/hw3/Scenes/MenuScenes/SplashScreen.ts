@@ -15,6 +15,7 @@ export default class SplashScreen extends Scene {
     loadScene(){
         /* Load Audio */
         this.load.audio("click", "hw3_assets/sounds/click.mp3");
+        this.load.audio("mainmenu_music", "hw3_assets/music/mainmenu.mp3");
 
         this.load.image("clicktoplay", "hw3_assets/sprites/backgroundart/clicktoplay.png");
         this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
@@ -25,12 +26,14 @@ export default class SplashScreen extends Scene {
 
     unloadScene(){
         this.load.keepAudio("click");
+        this.load.keepAudio("mainmenu_music");
         this.load.keepObject("itemInfo");
     }
 
     startScene(){
         this.addLayer("primary", 10);
         const center = this.viewport.getCenter();
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "mainmenu_music", loop:"true", holdReference: true});
 
         /* Splash Artwork */
         this.addLayer("splashart", 9);
@@ -69,10 +72,10 @@ export default class SplashScreen extends Scene {
         }
 
         if(this.flashingText.alpha === 0)
-            UITweens.fadeIn(this.flashingText, 0, 1000);
+            UITweens.fadeIn(this.flashingText, 0, 950);
 
         if(this.flashingText.alpha === 1)
-            UITweens.fadeOut(this.flashingText, 0, 1000);
+            UITweens.fadeOut(this.flashingText, 0, 950);
 
     }
 }
