@@ -22,7 +22,7 @@
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina", "kraken", "lizard"],
             "monsterTypes": ["kraken", "lizard", "sollasina"],
-            "positions": [[250, 60], [250, 180], [370, 60], [370, 180], [300, 120], [400, 120], [400, 50], [200, 60]]
+            "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 130]]
         },
         {
             "numEnemies": [7, 8],
