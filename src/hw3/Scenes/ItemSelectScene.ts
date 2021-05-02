@@ -31,10 +31,21 @@ export default class ItemSelectScene extends Scene {
 
         /* Assigns random items to the selection */
         this.itemChoices = new Array<any>(3);
-        for(let i=0 ; i < this.itemChoices.length ; i++){
-            if(this.allItems.length !== 0)
-                this.itemChoices[i] = this.allItems.splice(this.randomInt(this.allItems.length), 1)[0];    
-            else this.itemChoices[i] = itemData.none;
+        for(let i=0 ; i < this.itemChoices.length ;){
+            if(this.allItems.length !== 0){
+                let randomNum = this.randomInt(this.allItems.length);
+                
+                /* Item passes rarity test, add to inventory */
+                if(this.passRarityTest(this.allItems[randomNum].rarity)){
+                    this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
+                    i++;
+                }
+            }
+
+            else{
+                this.itemChoices[i] = itemData.none;
+                i++;
+            }
         }
 
         /* Background Artwork */
@@ -185,6 +196,22 @@ export default class ItemSelectScene extends Scene {
             default:
                 return Color.WHITE;
         }
+    }
+
+    passRarityTest(rarity: string): boolean{
+        let chance = 100;
+        if(rarity === "common")
+            chance = 100;
+        else if(rarity === "uncommon")
+            chance = 65;
+        else if(rarity === "rare")
+            chance = 35;
+        else if(rarity === "ultra_rare")
+            chance = 15;
+        
+        if(this.randomInt(101) < chance)
+            return true;
+        return false;
     }
 
     randomInt(max: number): number{

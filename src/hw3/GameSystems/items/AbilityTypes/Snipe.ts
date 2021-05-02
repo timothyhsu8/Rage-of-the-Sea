@@ -13,38 +13,33 @@ export default class Snipe extends AbilityType {
         this.displayName = options.displayName;
         this.spriteKey = options.spriteKey;
         this.useVolume = options.useVolume;
+        this.hasTileAnimations = false;
     }
 
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
-        /* FINAL PROJECT TODO - Make sure abilties don't try to calculate something that's out of bounds */
         let damageTiles: Array<Vec2> = [playerPos];
-        
         return damageTiles;
     }
 
-    doAnimation(attacker: GameNode, direction: Vec2, sliceSprite: AnimatedSprite): void {
-        // Rotate this with the game node
-        sliceSprite.rotation = attacker.rotation;
+    doAnimation(attacker: GameNode, direction: Vec2, abilitySprite: AnimatedSprite): void {
+        // Move Sprite out from owner
+        // abilitySprite.position = attacker.position.clone().add(direction.scaled(0));
 
-        // Move the slice out from the player
-        sliceSprite.position = attacker.position.clone().add(direction.scaled(0));
-
-        // Play the slice animation w/o loop, but queue the normal animation
-        sliceSprite.animation.play("SLICE");
-        sliceSprite.animation.queue("NORMAL", true);
+        // abilitySprite.animation.play("SLICE");
+        // abilitySprite.animation.queue("NORMAL", true);
     }
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
         sprite.position = position;
-        sprite.animation.play("SLICE");
+        sprite.animation.play("SNIPE");
         sprite.animation.queue("NORMAL", true);
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let slice = scene.add.animatedSprite("snipe", "primary");
-        slice.animation.play("NORMAL");
-        return [slice];
+        let snipe = scene.add.animatedSprite("snipe", "primary");
+        snipe.animation.play("NORMAL");
+        return [snipe];
     }
 
     /* Determines if an entity is on a damage tile */
@@ -55,7 +50,7 @@ export default class Snipe extends AbilityType {
         return false;
     }
 
-    hits(node: GameNode, sliceSprite: AnimatedSprite): boolean {
-        return sliceSprite.boundary.overlaps(node.collisionShape);
+    hits(node: GameNode, abilitySprite: AnimatedSprite): boolean {
+        return abilitySprite.boundary.overlaps(node.collisionShape);
     }
 }

@@ -59,7 +59,7 @@ export default class Controls extends Scene {
         this.sceneObjects.push(controlsHeader);
 
         let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", "Right Mouse - Use Item"];
-        this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 185));
+        this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 200));
 
         /* How To Play */
         const tutorial = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y+50), text:""});

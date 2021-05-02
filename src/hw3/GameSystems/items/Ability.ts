@@ -68,6 +68,13 @@ export default class Ability {
         
         /* Play animations on tiles to be hit */
         if(damageTiles !== undefined){
+            /* Adjust animation to center of tile */
+            for(let i=0 ; i < damageTiles.length ; i++){
+                damageTiles[i].x = damageTiles[i].x+16
+                damageTiles[i].y = damageTiles[i].y-16
+            }
+
+            /* Play Animation */
             for(let i=0 ; i < damageTiles.length ; i++){
                 let asset = this.type.createRequiredAssets(this.scene);
                 this.type.doIndicatorAnimations(damageTiles[i], asset[0]);

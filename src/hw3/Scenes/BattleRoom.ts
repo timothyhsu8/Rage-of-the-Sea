@@ -267,10 +267,20 @@ export default class BattleRoom extends Scene {
         this.enemies = new Array(numEnemies);
         this.numMonstersLeft = numEnemies;
 
+        /* Make sure required enemies are included */
+        let requiredEnemies = [...monsterData.requiredEnemies];
+
         // Initialize the enemies
         for(let i = 0; i < numEnemies; i++){
             /* Gets random monster data */
-            let monsterInfo = this.load.getObject(monsterData.monsterTypes[this.randomInt(monsterData.monsterTypes.length)] + "Data");
+            let monsterInfo = null;
+            
+            /* Create Required Enemy */
+            if(requiredEnemies.length !== 0)
+                monsterInfo = this.load.getObject(requiredEnemies.pop() + "Data");
+
+            /* Create Random Enemy */
+            else monsterInfo = this.load.getObject(monsterData.monsterTypes[this.randomInt(monsterData.monsterTypes.length)] + "Data");
 
             /* Create an enemy */
             this.enemies[i] = this.add.animatedSprite(monsterInfo.monsterType, "primary");

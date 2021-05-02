@@ -31,7 +31,7 @@
             "spriteKey": "snipe",
             "damage": 15,
             "cooldown": 2000,
-            "chargeTime": 1500,
+            "chargeTime": 1300,
             "useVolume": 0
         }
     ]

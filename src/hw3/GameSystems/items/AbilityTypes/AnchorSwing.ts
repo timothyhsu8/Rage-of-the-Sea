@@ -14,6 +14,7 @@ export default class AnchorSwing extends AbilityType {
         this.displayName = options.displayName;
         this.spriteKey = options.spriteKey;
         this.useVolume = options.useVolume;
+        this.hasTileAnimations = false;
     }
 
     /* Calculates the squares to damage and returns them as an array */

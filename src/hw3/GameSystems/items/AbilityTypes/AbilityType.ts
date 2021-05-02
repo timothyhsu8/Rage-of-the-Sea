@@ -22,6 +22,8 @@ export default abstract class AbilityType {
     /** How loud it is to use this weapon */
     useVolume: number;
 
+    hasTileAnimations: boolean;
+
     /**
      * Initializes this weapon type with data
      */
