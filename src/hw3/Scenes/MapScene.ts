@@ -41,7 +41,7 @@ export default class MapScene extends Scene{
     }
 
     startScene(){
-        const floor_names = ["Floor 1: Engine Room", "Floor 2: Casino", "Floor 3: Dining Hall", "Floor 4: Dining Hall 2", "Floor 5", "Floor 6"];
+        const floor_names = ["Floor 1: Engine Room", "Floor 2: Casino", "Floor 3: Dining Hall", "Floor 4", "Floor 5", "Floor 6"];
         const MAX_FLOOR_NUM = 6;
         const center = this.viewport.getCenter();
 
