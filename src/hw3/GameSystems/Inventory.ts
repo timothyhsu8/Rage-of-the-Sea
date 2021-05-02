@@ -38,6 +38,8 @@ export default class Inventory{
     }
 
     addItem(item: Item): void{
-        this.items.push(item);
+        if (item.name != "Health Pack"){
+            this.items.push(item);
+        }
     }
 }
