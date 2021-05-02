@@ -38,7 +38,8 @@ export default class CharacterSelect extends Scene {
         backgroundart.position.set(center.x, center.y);
         UITweens.fadeIn(backgroundart, 0, 600);
 
-        this.addLayer("primary", 10);
+        this.addLayer("abovebackground", 10);
+        this.addLayer("primary", 11);
 
         let diversplash = this.add.sprite("diversplash", "primary");
         diversplash.position = new Vec2(center.x, center.y-150);
@@ -55,29 +56,34 @@ export default class CharacterSelect extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        back.font = "Merriweather";
         this.sceneUI.push(back);
 
         /* Character Name */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "characterSelect", {position: new Vec2(center.x, center.y+130), text: "Diver"});
         header.textColor = Color.WHITE;
         header.fontSize = 40;
+        header.font = "Merriweather";
         this.sceneUI.push(header);
 
         /* Select Button */
-        const select = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+230), text: "SELECT"});
+        const select = <Button>this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+230), text: "SELECT"});
         select.size.set(200, 75);
         select.borderWidth = 3;
         select.borderColor = Color.WHITE;
         select.backgroundColor = new Color(50, 50, 70, 1);
         select.onClickEventId = "select";
+        select.font = "Merriweather";
+        select.textColor = Color.WHITE;
         this.sceneUI.push(select);
 
         /* Character Description */
-        const description = this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+350), text: "The diver has a dark and mysterious past."});
+        const description = <Label>this.add.uiElement(UIElementType.BUTTON, "characterSelect", {position: new Vec2(center.x, center.y+350), text: "The diver has a dark and mysterious past."});
         description.size.set(800, 100);
         description.borderWidth = 2;
         description.borderColor = Color.WHITE;
         description.backgroundColor = Color.TRANSPARENT;
+        description.font = "Merriweather";
         this.sceneUI.push(description);
 
         /* Subscribe to the button events */

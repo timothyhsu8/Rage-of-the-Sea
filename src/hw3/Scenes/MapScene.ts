@@ -41,6 +41,7 @@ export default class MapScene extends Scene{
     }
 
     startScene(){
+        const floor_names = ["Floor 1: Engine Room", "Floor 2: Casino", "Floor 3: Dining Hall", "Floor 4", "Floor 5", "Floor 6"];
         const MAX_FLOOR_NUM = 6;
         const center = this.viewport.getCenter();
 
@@ -54,6 +55,7 @@ export default class MapScene extends Scene{
         // The main menu
         this.addUILayer("map");
         this.addUILayer("rooms");
+        this.addUILayer("floortext");
         this.addLayer("primary", 10);
 
         /* Generate map or load the saved one */
@@ -90,6 +92,7 @@ export default class MapScene extends Scene{
         nextFloor.borderColor = Color.WHITE;
         nextFloor.onClickEventId = "nextfloor";
         nextFloor.fontSize = 35;
+        nextFloor.font = "Merriweather";
         (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
 
         /* Disables 'Next Floor' button on the last  floor */
@@ -102,6 +105,7 @@ export default class MapScene extends Scene{
         inventory.borderColor = Color.WHITE;
         inventory.backgroundColor = new Color(50, 50, 70, 1);
         inventory.onClickEventId = "inventory";
+        inventory.font = "Merriweather";
         inventory.fontSize = 35;
 
         const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
@@ -110,11 +114,13 @@ export default class MapScene extends Scene{
         quit.borderColor = Color.WHITE;
         quit.backgroundColor = new Color(50, 50, 70, 1);
         quit.onClickEventId = "quit";
+        quit.font = "Merriweather";
         quit.fontSize = 35;
 
-        const currentFloor = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x + 650, center.y-400), text: "Floor " + this.mapState.currentFloor});
-        currentFloor.textColor = Color.WHITE;
-        currentFloor.fontSize = 35;
+        const currentFloor = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x, center.y-265), text: floor_names[this.characterState.mapState.currentFloor-1]});
+        currentFloor.textColor = PancakeColor.MAGENTA;
+        currentFloor.fontSize = 40;
+        currentFloor.font = "PixelSimple";
 
         // healthbar
         /* Healthbar and Healthbar Border*/

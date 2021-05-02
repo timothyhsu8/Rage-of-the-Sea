@@ -45,6 +45,7 @@ export default class HelpScreen extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        back.font = "Merriweather";
 
         /* Backstory */
         let backstory = [
@@ -71,6 +72,7 @@ export default class HelpScreen extends Scene {
         const backstoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-350, center.y-250), text:"Backstory"});
         backstoryHeader.textColor = PancakeColor.BEIGE;
         backstoryHeader.fontSize = 35;
+        backstoryHeader.font = "Merriweather";
 
         /* Cheat Codes */
         const cheats = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+350, center.y+50), text:""});
@@ -80,11 +82,13 @@ export default class HelpScreen extends Scene {
         cheats.borderColor = PancakeColor.PINK;
         cheats.backgroundColor = PancakeColor.MAGENTA;
         cheats.fontSize = 20;
+        cheats.font = "Merriweather";
         cheats.borderWidth = 2;
 
         const cheatsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x+350, center.y-250), text:"Cheats"});
         cheatsHeader.textColor = PancakeColor.BEIGE;
         cheatsHeader.fontSize = 35;
+        cheatsHeader.font = "Merriweather";
         
         /* Developers */
         const developers = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-350, center.y+235), text:""});
@@ -99,6 +103,7 @@ export default class HelpScreen extends Scene {
         const devsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-350, center.y+150), text:"Developers"});
         devsHeader.textColor = PancakeColor.BEIGE;
         devsHeader.fontSize = 35;
+        devsHeader.font = "Merriweather";
 
         let devnames = ["Timothy Hsu", "Edward Huang", "Michael Carpenzano"];
         this.createBackstoryText(new Vec2(center.x-350, center.y+220), devnames, 25, 40);
@@ -148,8 +153,9 @@ export default class HelpScreen extends Scene {
     createBackstoryText(startPos: Vec2, text:Array<string>, fontSize: number, spacing: number){
         for(let i=0 ; i < text.length ; i++){
             const textline = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(startPos.x, startPos.y+(i*spacing)), text: text[i]});
-            textline.textColor = PancakeColor.BEIGE;
+            textline.textColor = Color.WHITE;
             textline.fontSize = fontSize;
+            textline.font = "Merriweather";
         }
     }
 
@@ -163,6 +169,7 @@ export default class HelpScreen extends Scene {
             cheat.borderWidth = 2;
             cheat.borderColor = Color.WHITE;
             cheat.backgroundColor = new Color(50, 50, 70, 1);
+            cheat.font = "Merriweather";
             cheat.onClickEventId = onClickEvent[i];
             this.cheatButtonLabels[i] = cheat;
         }

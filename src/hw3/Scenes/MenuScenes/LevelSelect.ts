@@ -46,19 +46,21 @@ export default class LevelSelect extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        back.font = "Merriweather";
         this.sceneUI.push(back);
     
         /* Level Select Header */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "levelSelect", {position: new Vec2(center.x, center.y-375), text: "Level Select"});
         header.textColor = Color.WHITE;
         header.fontSize = 50;
+        header.font = "Merriweather";
         this.sceneUI.push(header);
 
         this.addLayer("levelimages", 9);
         this.addLayer("locks", 10);
         this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
         this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2: Casino", true, 2);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Dining Area", true, 3);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Dining Hall", true, 3);
         this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4", true, 4);
         this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5", true, 5);
         this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6", true, 6);
@@ -82,7 +84,7 @@ export default class LevelSelect extends Scene {
         button.backgroundColor = Color.TRANSPARENT;
         button.onClickEventId = eventid;
         button.fontSize = 35;
-        button.font = "Tahoma";
+        button.font = "Merriweather";
         this.sceneUI.push(button);
 
         /* Level Images */
@@ -108,6 +110,7 @@ export default class LevelSelect extends Scene {
         const description = <Label>this.add.uiElement(UIElementType.LABEL, "levelSelect", {position: new Vec2(position.x, position.y+120), text:text});
         description.textColor = Color.WHITE;
         description.fontSize = 25;
+        description.font = "Merriweather";
         this.sceneUI.push(description);
     }
     

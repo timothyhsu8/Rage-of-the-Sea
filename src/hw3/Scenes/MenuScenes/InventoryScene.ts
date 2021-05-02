@@ -33,10 +33,11 @@ export default class InventoryScene extends Scene {
         const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(1000, 70), text: "Equipped Items"});
         currentlyEquipped.textColor = Color.WHITE;
         currentlyEquipped.fontSize = 35;
-        currentlyEquipped.font = "Tahoma";
+        currentlyEquipped.font = "Merriweather";
 
-        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 140), text: MainMenu.char});
+        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 345), text: "Diver"});
         inventoryHeader.textColor = Color.WHITE;
+        inventoryHeader.font = "Merriweather";
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(200, 75), text: "Back to Map"});
@@ -45,6 +46,7 @@ export default class InventoryScene extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        back.font = "Merriweather";
 
         /* Player Portrait */
         let portrait = this.add.sprite(this.characterState.portrait, "primary");

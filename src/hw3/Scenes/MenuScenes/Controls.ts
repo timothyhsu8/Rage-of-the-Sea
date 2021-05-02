@@ -7,6 +7,7 @@ import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
+import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 import MainMenu from "./MainMenu";
 
 export default class Controls extends Scene {
@@ -15,7 +16,9 @@ export default class Controls extends Scene {
 
     loadScene(){
         this.load.image("image1", "hw3_assets/sprites/howtoplay/tutorial1.png");
+        this.load.image("image2", "hw3_assets/sprites/howtoplay/tutorial2.png");
         this.load.image("image3", "hw3_assets/sprites/howtoplay/tutorial3.png");
+        this.load.image("image4", "hw3_assets/sprites/howtoplay/tutorial4.png");
     }
 
     startScene(){
@@ -35,22 +38,24 @@ export default class Controls extends Scene {
         back.borderColor = Color.WHITE;
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
+        back.font = "Merriweather";
         this.sceneObjects.push(back);
     
         /* Controls */
-        const controls = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y+50), text: ""});
+        const controls = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y-150), text: ""});
         controls.textColor = Color.WHITE;
-        controls.size.set(450, 750);
+        controls.size.set(400, 350);
         controls.borderRadius = 2;
-        controls.borderColor = Color.WHITE;
+        controls.borderColor = PancakeColor.PINK;
+        controls.backgroundColor = PancakeColor.MAGENTA;
         controls.borderWidth = 2;
         controls.fontSize = 20;
-        this.sceneObjects.push(controls);
-    
+        controls.font = "Merriweather";
 
         const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y-285), text:"Controls"});
-        controlsHeader.textColor = Color.WHITE;
+        controlsHeader.textColor = PancakeColor.BEIGE;
         controlsHeader.fontSize = 35;
+        controlsHeader.font = "Merriweather";
         this.sceneObjects.push(controlsHeader);
 
         let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", "Right Mouse - Use Item"];
@@ -59,35 +64,37 @@ export default class Controls extends Scene {
         /* How To Play */
         const tutorial = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y+50), text:""});
         tutorial.textColor = Color.WHITE;
-        tutorial.size.set(1100, 750);
+        tutorial.size.set(1050, 750);
         tutorial.borderRadius = 2;
-        tutorial.borderColor = Color.WHITE;
+        tutorial.borderColor = PancakeColor.PINK;
+        tutorial.backgroundColor = PancakeColor.MAGENTA;
         tutorial.borderWidth = 2;
         tutorial.fontSize = 20;
-        this.sceneObjects.push(tutorial);
+        tutorial.font = "Merriweather";
 
         const tutorialHeader = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y-285), text:"How To Play"});
-        tutorialHeader.textColor = Color.WHITE;
+        tutorialHeader.textColor = PancakeColor.BEIGE;
         tutorialHeader.fontSize = 35;
+        tutorialHeader.font = "Merriweather";
         this.sceneObjects.push(tutorialHeader);
 
         /* Tutorial Images */
         this.makeTutorialImage("image1", new Vec2(center.x-40, center.y-100));
-        this.makeTutorialImage("image1", new Vec2(center.x+500, center.y-100));
+        this.makeTutorialImage("image2", new Vec2(center.x+500, center.y-100));
         this.makeTutorialImage("image3", new Vec2(center.x-40, center.y+225));
-        this.makeTutorialImage("image1", new Vec2(center.x+500, center.y+225));
+        this.makeTutorialImage("image4", new Vec2(center.x+500, center.y+225));
 
         /* Image Captions */
         this.makeTutorialCaption(25, "Fight enemies using attacks and items", new Vec2(center.x-40, center.y+45));
         
-        this.makeTutorialCaption(22, "Items have different effects and can be", new Vec2(center.x+500, center.y+45));
-        this.makeTutorialCaption(22, "found after clearing a room", new Vec2(center.x+500, center.y+75));
+        this.makeTutorialCaption(22, "Yellow tiles indicate where an enemy is planning", new Vec2(center.x+500, center.y+45));
+        this.makeTutorialCaption(22, "to attack. Avoid these to save your health", new Vec2(center.x+500, center.y+75));
 
-        this.makeTutorialCaption(22, "Yellow tiles indicate where an enemy is planning", new Vec2(center.x-40, center.y+365));
-        this.makeTutorialCaption(22, "to attack. Avoid these to save your health", new Vec2(center.x-40, center.y+395));
+        this.makeTutorialCaption(22, "Each sword icon indicates a battle room. Fight your", new Vec2(center.x-40, center.y+365));
+        this.makeTutorialCaption(22, "way to the rightmost rooms to advance to the next floor", new Vec2(center.x-40, center.y+395));
 
-        this.makeTutorialCaption(22, "If your health reaches 0 you will game over.", new Vec2(center.x+500, center.y+365));
-        this.makeTutorialCaption(22, "Progress doesn't save so be careful!", new Vec2(center.x+500, center.y+395));
+        this.makeTutorialCaption(22, "You'll be able to obtain a new item every 2 battle rooms.", new Vec2(center.x+500, center.y+365));
+        this.makeTutorialCaption(22, "Items give different upgrades that make you stronger.", new Vec2(center.x+500, center.y+395));
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
@@ -113,6 +120,7 @@ export default class Controls extends Scene {
             const textlabel = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(xpos, ypos+(spacing*i)), text:text[i]});
             textlabel.textColor = Color.WHITE;
             textlabel.fontSize = 30;
+            textlabel.font = "Merriweather";
             this.sceneObjects.push(textlabel);
         }
     }
@@ -133,6 +141,7 @@ export default class Controls extends Scene {
         const label = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: position, text: text});
         label.textColor = Color.WHITE;
         label.fontSize = fontSize;
+        label.font = "Merriweather";
         this.sceneObjects.push(label);
     }
 }

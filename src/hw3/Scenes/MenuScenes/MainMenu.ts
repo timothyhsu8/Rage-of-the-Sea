@@ -35,8 +35,6 @@ export default class MainMenu extends Scene {
 
     startScene(){
         this.sceneObjects = new Array<GameNode>();
-        // storing out data here
-        MainMenu.char = "Diver";
         this.addLayer("primary", 10);
 
         /* Background Artwork */
@@ -72,7 +70,7 @@ export default class MainMenu extends Scene {
         button.onClickEventId = eventid;
         button.fontSize = 40;
         button.textColor = PancakeColor.BEIGE;
-        button.font = "Tahoma";
+        button.font = "Merriweather";
         this.sceneObjects.push(button);
         UITweens.slide(button, delay, 200, new Vec2(position.x+2000, position.y), position);
     }
