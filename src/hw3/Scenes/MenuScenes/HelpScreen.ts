@@ -170,6 +170,7 @@ export default class HelpScreen extends Scene {
             cheat.borderColor = Color.WHITE;
             cheat.backgroundColor = new Color(50, 50, 70, 1);
             cheat.font = "Merriweather";
+            cheat.fontSize = 25;
             cheat.onClickEventId = onClickEvent[i];
             this.cheatButtonLabels[i] = cheat;
         }

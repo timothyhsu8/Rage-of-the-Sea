@@ -91,7 +91,7 @@ export default class MapScene extends Scene{
         nextFloor.borderWidth = 2;
         nextFloor.borderColor = Color.WHITE;
         nextFloor.onClickEventId = "nextfloor";
-        nextFloor.fontSize = 35;
+        nextFloor.fontSize = 30;
         nextFloor.font = "Merriweather";
         (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
 
@@ -106,7 +106,7 @@ export default class MapScene extends Scene{
         inventory.backgroundColor = new Color(50, 50, 70, 1);
         inventory.onClickEventId = "inventory";
         inventory.font = "Merriweather";
-        inventory.fontSize = 35;
+        inventory.fontSize = 30;
 
         const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
         quit.size.set(200, 50);
@@ -115,7 +115,7 @@ export default class MapScene extends Scene{
         quit.backgroundColor = new Color(50, 50, 70, 1);
         quit.onClickEventId = "quit";
         quit.font = "Merriweather";
-        quit.fontSize = 35;
+        quit.fontSize = 30;
 
         const currentFloor = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x, center.y-265), text: floor_names[this.characterState.mapState.currentFloor-1]});
         currentFloor.textColor = PancakeColor.MAGENTA;

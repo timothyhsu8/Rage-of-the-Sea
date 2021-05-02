@@ -62,9 +62,9 @@ export default class Controls extends Scene {
         this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 200));
 
         /* How To Play */
-        const tutorial = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y+50), text:""});
+        const tutorial = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y+45), text:""});
         tutorial.textColor = Color.WHITE;
-        tutorial.size.set(1050, 750);
+        tutorial.size.set(1050, 725);
         tutorial.borderRadius = 2;
         tutorial.borderColor = PancakeColor.PINK;
         tutorial.backgroundColor = PancakeColor.MAGENTA;
@@ -79,22 +79,22 @@ export default class Controls extends Scene {
         this.sceneObjects.push(tutorialHeader);
 
         /* Tutorial Images */
-        this.makeTutorialImage("image1", new Vec2(center.x-40, center.y-100));
-        this.makeTutorialImage("image2", new Vec2(center.x+500, center.y-100));
-        this.makeTutorialImage("image3", new Vec2(center.x-40, center.y+225));
-        this.makeTutorialImage("image4", new Vec2(center.x+500, center.y+225));
+        this.makeTutorialImage("image1", new Vec2(center.x-40, center.y-130));
+        this.makeTutorialImage("image2", new Vec2(center.x+500, center.y-130));
+        this.makeTutorialImage("image3", new Vec2(center.x-40, center.y+205));
+        this.makeTutorialImage("image4", new Vec2(center.x+500, center.y+205));
 
         /* Image Captions */
-        this.makeTutorialCaption(25, "Fight enemies using attacks and items", new Vec2(center.x-40, center.y+45));
+        this.makeTutorialCaption(22, "Fight enemies using attacks and items", new Vec2(center.x-40, center.y+15));
         
-        this.makeTutorialCaption(22, "Yellow tiles indicate where an enemy is planning", new Vec2(center.x+500, center.y+45));
-        this.makeTutorialCaption(22, "to attack. Avoid these to save your health", new Vec2(center.x+500, center.y+75));
+        this.makeTutorialCaption(21, "Yellow tiles indicate where an enemy is planning", new Vec2(center.x+500, center.y+15));
+        this.makeTutorialCaption(21, "to attack. Avoid these to save your health", new Vec2(center.x+500, center.y+45));
 
-        this.makeTutorialCaption(22, "Each sword icon indicates a battle room. Fight your", new Vec2(center.x-40, center.y+365));
-        this.makeTutorialCaption(22, "way to the rightmost rooms to advance to the next floor", new Vec2(center.x-40, center.y+395));
+        this.makeTutorialCaption(18, "Each sword icon indicates a battle room. Fight your", new Vec2(center.x-40, center.y+345));
+        this.makeTutorialCaption(18, "way to the rightmost rooms to advance to the next floor", new Vec2(center.x-40, center.y+375));
 
-        this.makeTutorialCaption(22, "You'll be able to obtain a new item every 2 battle rooms.", new Vec2(center.x+500, center.y+365));
-        this.makeTutorialCaption(22, "Items give different upgrades that make you stronger.", new Vec2(center.x+500, center.y+395));
+        this.makeTutorialCaption(18, "You'll be able to obtain a new item every 2 battle rooms.", new Vec2(center.x+500, center.y+345));
+        this.makeTutorialCaption(18, "Items give different upgrades that make you stronger.", new Vec2(center.x+500, center.y+375));
 
         // Subscribe to the button events
         this.receiver.subscribe("back");

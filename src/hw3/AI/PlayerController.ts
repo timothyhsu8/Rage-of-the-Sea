@@ -151,6 +151,7 @@ export default class PlayerController implements BattlerAI {
         if(!HelpScreen.invincibility && this.owner !== undefined){
             if(this.owner.tweens.isStopped("takedamage")){
                 this.health -= damage;
+                this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "playerdamage"});
                 this.owner.tweens.play("takedamage", true);
                 setTimeout(() => {
                     if(this.owner !== undefined){
