@@ -1,5 +1,5 @@
 {
-    "numItems": 10,
+    "numItems": 13,
     "allitems": [{
         "name": "Double Edged Sword",
         "key": "double_edged_sword",
@@ -139,6 +139,48 @@
         "defense": 0,
         "speed": 0,
         "takeDamageMult": 0
+    },
+    {
+        "name": "Seaweed Coverings",
+        "key": "seaweed_coverings",
+        "description": "Slight max health and defense increase",
+        "rarity": "common",
+        "ability": null,
+        "maxHealth": 5,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 5,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Raging Tide",
+        "key": "raging_tide",
+        "description": "Moderate attack damage increase",
+        "rarity": "uncommon",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 8,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Spirit of Eri",
+        "key": "spirit_of_eri",
+        "description": "Full Heal + Greatly increased health and defense",
+        "rarity": "ultra_rare",
+        "ability": null,
+        "maxHealth": 50,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 15,
+        "speed": 0,
+        "takeDamageMult": 0.5
     }
 ],
 

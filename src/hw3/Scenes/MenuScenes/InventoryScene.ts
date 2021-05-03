@@ -61,7 +61,7 @@ export default class InventoryScene extends Scene {
         this.itemDescriptionBox = this.add.sprite("itemdescriptionbox", "itemdescriptionbox");
         this.itemDescriptionBox.visible = false;
 
-        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(1000, 70), text: "Equipped Items"});
+        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(950, 70), text: "Equipped Items"});
         currentlyEquipped.textColor = PancakeColor.BEIGE;
         currentlyEquipped.fontSize = 35;
         currentlyEquipped.font = "Merriweather";
@@ -88,12 +88,12 @@ export default class InventoryScene extends Scene {
         portraitborder.position = new Vec2(200, 240);
 
         /* Item Icons Background */
-        const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+200, center.y), text: ""});
+        const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+150, center.y), text: ""});
         iconBackground.backgroundColor = PancakeColor.MAGENTA;
         iconBackground.borderWidth = 2;
         iconBackground.borderRadius = 2;
         iconBackground.borderColor = PancakeColor.PINK;
-        iconBackground.size.set(1100, 700);
+        iconBackground.size.set(1000, 700);
 
         /* Item Icons */
         let width = 500;
@@ -115,7 +115,7 @@ export default class InventoryScene extends Scene {
             border.borderWidth = 2;
 
             width += 100
-            if (width >= 1400){
+            if (width >= 1500){
                 height += 100
                 width = 500
             }

@@ -155,7 +155,7 @@ export default class ItemSelectScene extends Scene {
 
         /* Selection Box */
         const item = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: position, text: this.itemChoices[itemChoice].name});
-        item.size.set(400, 500);
+        item.size.set(450, 550);
         item.borderWidth = 2;
         item.borderColor = PancakeColor.PINK;
         item.backgroundColor = PancakeColor.MAGENTA;
@@ -174,11 +174,11 @@ export default class ItemSelectScene extends Scene {
         if(rarity === "common")
             chance = 100;
         else if(rarity === "uncommon")
-            chance = 65;
+            chance = 60;
         else if(rarity === "rare")
-            chance = 35;
+            chance = 28;
         else if(rarity === "ultra_rare")
-            chance = 9;
+            chance = 8;
         
         if(this.randomInt(101) < chance)
             return true;
