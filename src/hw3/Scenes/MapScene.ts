@@ -24,6 +24,8 @@ import Input from "../../Wolfie2D/Input/Input";
 
 export default class MapScene extends Scene{
     private sceneObjects: Array<GameNode>;
+    private quitConfirmation: Array<Label>
+    private quitLabelVisible: boolean;
 
     private mapState: MapState;
     private characterState: CharacterState; // All data of the character goes here
@@ -45,7 +47,9 @@ export default class MapScene extends Scene{
         const MAX_FLOOR_NUM = 6;
         const center = this.viewport.getCenter();
 
+        this.quitConfirmation = new Array<Label>();
         this.sceneObjects = new Array<GameNode>();
+        this.quitLabelVisible = false;
 
         /* Background Artwork */
         this.addLayer("background", 1);
@@ -56,6 +60,7 @@ export default class MapScene extends Scene{
         this.addUILayer("map");
         this.addUILayer("rooms");
         this.addUILayer("floortext");
+        this.addUILayer("quitConfirmation");
         this.addLayer("primary", 10);
 
         /* Generate map or load the saved one */
@@ -85,6 +90,7 @@ export default class MapScene extends Scene{
         if(HelpScreen.roomSkipping)
             this.mapState.nextFloorOpen = true;
 
+        /* Next Floor Button */
         const nextFloor = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x, center.y+400), text: "Next Floor"});
         this.nextFloorButton = nextFloor;  
         nextFloor.size.set(250, 50);
@@ -99,6 +105,7 @@ export default class MapScene extends Scene{
         if(this.mapState.currentFloor === MAX_FLOOR_NUM)
             nextFloor.visible = false;
 
+        /* Inventory Button */
         const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
         inventory.size.set(250, 50);
         inventory.borderWidth = 2;
@@ -108,6 +115,7 @@ export default class MapScene extends Scene{
         inventory.font = "Merriweather";
         inventory.fontSize = 30;
 
+        /* Quit Button */
         const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
         quit.size.set(200, 50);
         quit.borderWidth = 2;
@@ -117,6 +125,52 @@ export default class MapScene extends Scene{
         quit.font = "Merriweather";
         quit.fontSize = 30;
 
+        /* Quit Confirmation Label */
+        const quitConfirmation = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y), text:""});
+        quitConfirmation.size.set(500, 325);
+        quitConfirmation.borderColor = PancakeColor.PINK;
+        quitConfirmation.backgroundColor = PancakeColor.MAGENTA;
+        quitConfirmation.visible = false;
+
+        const areYouSure = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y-100), text:"Are you sure you want to quit?"});
+        areYouSure.fontSize = 30;
+        areYouSure.textColor = PancakeColor.BEIGE;
+        areYouSure.font = "Merriweather";
+        areYouSure.visible = false;
+
+        const progress = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y-60), text:"(Progress won't be saved)"});
+        progress.fontSize = 22;
+        progress.textColor = PancakeColor.BEIGE;
+        progress.font = "Merriweather";
+        progress.visible = false;
+        
+        const yesQuit = <Button>this.add.uiElement(UIElementType.BUTTON, "quitConfirmation", {position: new Vec2(center.x-125, center.y+100), text: "Yes"});
+        yesQuit.size.set(200, 50);
+        yesQuit.borderWidth = 2;
+        yesQuit.borderColor = Color.WHITE;
+        yesQuit.backgroundColor = new Color(50, 50, 70, 1);
+        yesQuit.onClickEventId = "yesQuit";
+        yesQuit.font = "Merriweather";
+        yesQuit.fontSize = 30;
+        yesQuit.visible = false;
+
+        const noQuit = <Button>this.add.uiElement(UIElementType.BUTTON, "quitConfirmation", {position: new Vec2(center.x+125, center.y+100), text: "No"});
+        noQuit.size.set(200, 50);
+        noQuit.borderWidth = 2;
+        noQuit.borderColor = Color.WHITE;
+        noQuit.backgroundColor = new Color(50, 50, 70, 1);
+        noQuit.onClickEventId = "noQuit";
+        noQuit.font = "Merriweather";
+        noQuit.fontSize = 30;
+        noQuit.visible = false;
+
+        this.quitConfirmation.push(quitConfirmation);
+        this.quitConfirmation.push(areYouSure);
+        this.quitConfirmation.push(progress);
+        this.quitConfirmation.push(yesQuit);
+        this.quitConfirmation.push(noQuit);
+
+        /* Current Floor Label */
         const currentFloor = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x, center.y-265), text: floor_names[this.characterState.mapState.currentFloor-1]});
         currentFloor.textColor = PancakeColor.MAGENTA;
         currentFloor.fontSize = 40;
@@ -143,15 +197,17 @@ export default class MapScene extends Scene{
         portraitborder.position = new Vec2(62, 45);
         this.sceneObjects.push(portraitborder);
 
+        /* Sprite for map */
         let mapBackground = this.add.sprite("mapBackground", "primary");
         mapBackground.position = new Vec2(center.x, center.y);
         this.sceneObjects.push(mapBackground);
 
         /* Subscribe to the button events */
-        this.receiver.subscribe("play");
         this.receiver.subscribe("inventory");
         this.receiver.subscribe("quit");
         this.receiver.subscribe("nextfloor");
+        this.receiver.subscribe("yesQuit");
+        this.receiver.subscribe("noQuit");
 
         UITweens.fadeInScene(this.sceneObjects);
     }
@@ -162,14 +218,22 @@ export default class MapScene extends Scene{
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "play"){
-                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
-            }
-
             if(event.type === "inventory")
                 this.sceneManager.changeToScene(InventoryScene, {characterState: this.characterState});
             
             if(event.type === "quit"){
+                this.quitLabelVisible = true;
+                for(let i=0 ; i < this.quitConfirmation.length ; i++)
+                    this.quitConfirmation[i].visible = true;
+            }
+
+            if(event.type === "noQuit"){
+                this.quitLabelVisible = false;
+                for(let i=0 ; i < this.quitConfirmation.length ; i++)
+                    this.quitConfirmation[i].visible = false;
+            }
+
+            if(event.type === "yesQuit"){
                 this.mapState.resetMap();
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "mainmenu_music", loop:"true", holdReference: true});
@@ -187,7 +251,7 @@ export default class MapScene extends Scene{
             }
 
             /* Showing completion of rooms */
-            if(event.type.substring(0, 4) === "room"){
+            if(event.type.substring(0, 4) === "room" && !this.quitLabelVisible){
                 for(let i=0 ; i < this.roomButtons.length ; i++)
                     for(let j=0 ; j < this.roomButtons[i].length ; j++)
                         if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
