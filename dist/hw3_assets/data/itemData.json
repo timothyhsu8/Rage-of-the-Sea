@@ -1,19 +1,6 @@
 {
-    "numItems": 13,
-    "allitems": [{
-        "name": "Double Edged Sword",
-        "key": "double_edged_sword",
-        "description": "Deal double damage, take double damage",
-        "rarity": "rare",
-        "ability": null,
-        "maxHealth": 0,
-        "health": 0,
-        "attack": 0,
-        "attackMult": 2.0,
-        "defense": 0,
-        "speed": 0,
-        "takeDamageMult": 2.0
-    },
+    "numItems": 15,
+    "allitems": [
     {
         "name": "Normal Boots",
         "key": "normal_boots",
@@ -25,7 +12,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 10,
+        "speed": 8,
         "takeDamageMult": 0
     },
     {
@@ -38,7 +25,7 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 12,
+        "defense": 9,
         "speed": 0,
         "takeDamageMult": 0
     },
@@ -59,8 +46,8 @@
     {
         "name": "Resilience Gemstone",
         "key": "resilience_gemstone",
-        "description": "Moderately increased defense",
-        "rarity": "uncommon",
+        "description": "Reduce damage by 1/4",
+        "rarity": "rare",
         "ability": null,
         "maxHealth": 0,
         "health": 0,
@@ -68,7 +55,7 @@
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
-        "takeDamageMult": 0.7
+        "takeDamageMult": 0.75
     },
     {
         "name": "Swiftness Gemstone",
@@ -81,7 +68,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 20,
+        "speed": 15,
         "takeDamageMult": 0
     },
     {
@@ -108,7 +95,7 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 25,
+        "defense": 32,
         "speed": -20,
         "takeDamageMult": 0.7
     },
@@ -162,7 +149,7 @@
         "ability": null,
         "maxHealth": 0,
         "health": 0,
-        "attack": 8,
+        "attack": 1,
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
@@ -171,16 +158,58 @@
     {
         "name": "Spirit of Eri",
         "key": "spirit_of_eri",
-        "description": "Full Heal + Greatly increased health and defense",
+        "description": "Full Heal + Halve Damage Taken",
         "rarity": "ultra_rare",
         "ability": null,
-        "maxHealth": 50,
+        "maxHealth": 0,
+        "health": 10000,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0.5
+    },
+    {
+        "name": "Neptune's Trident",
+        "key": "neptunes_trident",
+        "description": "Increased damage",
+        "rarity": "rare",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 1.5,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Engraved Dagger",
+        "key": "engraved_dagger",
+        "description": "Slightly increased damage",
+        "rarity": "uncommon",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0.5,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Conch Shell",
+        "key": "conch_shell",
+        "description": "Slightly Increased Defense and Max Health",
+        "rarity": "common",
+        "ability": null,
+        "maxHealth": 8,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 15,
+        "defense": 4,
         "speed": 0,
-        "takeDamageMult": 0.5
+        "takeDamageMult": 0
     }
 ],
 

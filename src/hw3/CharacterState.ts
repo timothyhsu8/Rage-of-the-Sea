@@ -1,4 +1,3 @@
-import ResourceManager from "../Wolfie2D/ResourceManager/ResourceManager";
 import Inventory from "./GameSystems/Inventory";
 import Item, { ItemType } from "./GameSystems/items/Item";
 import MapState from "./GameSystems/MapState";
@@ -47,7 +46,7 @@ export default class CharacterState{
             this.stats.attackMult = item.stats.attackMult;
         
         /* Take Damage Multiplier */
-        if(this.stats.takeDamageMult < item.stats.takeDamageMult || (item.stats.takeDamageMult !== 0 && this.stats.takeDamageMult === 1.0))
+        if(item.stats.takeDamageMult !== 0 && (item.stats.takeDamageMult < this.stats.takeDamageMult))
             this.stats.takeDamageMult = item.stats.takeDamageMult;
     }
 

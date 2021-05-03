@@ -105,6 +105,13 @@ export default class CharacterSelect extends Scene {
                 let inventory = new Inventory(this);
                 let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
                 
+                /* FOR BUG TESTING SPECIFIC ITEMS */
+                // const itemData = this.load.getObject("itemData");
+                // let allItems = itemData.allitems;
+                // for(let i=0 ; i < allItems.length ; i++)
+                //     if(allItems[i].key === "spirit_of_eri")
+                //         characterState.addToInventory(allItems[i]);
+                
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                 this.sceneManager.changeToScene(MapScene, {characterState: characterState});
