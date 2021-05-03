@@ -178,7 +178,7 @@ export default class ItemSelectScene extends Scene {
         else if(rarity === "rare")
             chance = 35;
         else if(rarity === "ultra_rare")
-            chance = 1;
+            chance = 9;
         
         if(this.randomInt(101) < chance)
             return true;

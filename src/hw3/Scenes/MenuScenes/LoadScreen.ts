@@ -16,11 +16,11 @@ export default class LoadScreen extends Scene {
     loadScene(){
         /* Load Audio */
         this.load.audio("level1music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level2music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level3music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level4music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level5music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level6music", "hw3_assets/music/level1music.mp3");
+        this.load.audio("level2music", "hw3_assets/music/level2music.mp3");
+        this.load.audio("level3music", "hw3_assets/music/level3music.mp3");
+        this.load.audio("level4music", "hw3_assets/music/level4music.mp3");
+        this.load.audio("level5music", "hw3_assets/music/level5music.mp3");
+        this.load.audio("level6music", "hw3_assets/music/level6music.mp3");
         this.load.audio("anchorswing_sound", "hw3_assets/sounds/anchorswing.mp3");
         this.load.audio("snipe_sound", "hw3_assets/sounds/snipe.mp3")
         this.load.audio("playerdamage", "hw3_assets/sounds/playerdamage.mp3")
