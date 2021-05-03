@@ -1,5 +1,6 @@
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
@@ -60,17 +61,44 @@ export default class ItemSelectScene extends Scene {
         this.addLayer("descriptions", 11);
 
         this.itemSelected = -1;
-        this.selections = new Array<Button>(3);
+        this.selections = new Array<Button>(4);
+
+        /* Healthbar */
+        let multiplier = this.characterState.stats.maxHealth/100;
+        let health = this.add.graphic(GraphicType.RECT, "descriptions", {position: new Vec2(330+this.characterState.stats.health, 66), size: new Vec2((this.characterState.stats.health*6)/multiplier, 30)});
+        health.position = new Vec2(125+(this.characterState.stats.health*3)/multiplier, 66);
+        let healthbarborder = this.add.sprite("healthbarborder", "primary");
+        healthbarborder.position = new Vec2(437, 48);
+
+        /* Sprite for character portrait */
+        let portrait = this.add.sprite("portrait", "primary");
+        portrait.position = new Vec2(62, 45);
+
+        /* Sprite for portrait border */
+        let portraitborder = this.add.sprite("portraitborder", "primary");
+        portraitborder.position = new Vec2(62, 45);
 
         /* Header */
-        const header = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y - 350), text: "Select an item to obtain"});
+        const header = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y - 300), text: "Select an item to obtain"});
         header.textColor = Color.WHITE;
         header.fontSize = 35;
+        header.font = "Merriweather";
 
         /* Display Item Buttons */
         this.makeItemButtons(new Vec2(center.x-500, center.y), 0);
         this.makeItemButtons(new Vec2(center.x, center.y), 1);
         this.makeItemButtons(new Vec2(center.x+500, center.y), 2);
+
+        /* Heal Button */
+        const heal = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-500, center.y+350), text: "Heal for 1/5 of Max HP"});
+        heal.size.set(300, 100);
+        heal.borderWidth = 2;
+        heal.borderColor = PancakeColor.PINK;
+        heal.backgroundColor = PancakeColor.MAGENTA;
+        heal.onClickEventId = "item4";
+        heal.fontSize = 25;
+        heal.font = "Merriweather";
+        this.selections[3] = heal;
 
         /* Select */
         const select = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y+350), text: "SELECT"});
@@ -80,12 +108,14 @@ export default class ItemSelectScene extends Scene {
         select.backgroundColor = Color.TRANSPARENT;
         select.onClickEventId = "select";
         select.fontSize = 25;
+        select.font = "Merriweather";
         this.selectButton = select;
 
         // Subscribe to the button events
         this.receiver.subscribe("item1");
         this.receiver.subscribe("item2");
         this.receiver.subscribe("item3");
+        this.receiver.subscribe("item4");
         this.receiver.subscribe("select");
     }
 
@@ -102,12 +132,15 @@ export default class ItemSelectScene extends Scene {
             if(event.type === "select"){
                 if(this.itemSelected !== -1)
                 {
+                    /* Heal Player for 1/5 of Max HP */
+                    if(this.itemSelected === 3)
+                        this.characterState.healPlayer(this.characterState.stats.maxHealth * (1/5));
+
                     /* Add selected item to inventory, remove it from pool */
-                    for(let i=0 ; i < this.itemChoices.length ; i++)
-                        if(this.itemSelected === i){
-                            this.characterState.addToInventory(this.itemChoices[i]);
-                            this.itemChoices[i] = null;
-                        }
+                    else{
+                        this.characterState.addToInventory(this.itemChoices[this.itemSelected]);
+                        this.itemChoices[this.itemSelected] = null;
+                    }
 
                     /* Put non-selected items back into the pool */
                     for(let i=0 ; i < this.itemChoices.length ; i++)
@@ -151,6 +184,7 @@ export default class ItemSelectScene extends Scene {
             const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+32), text:rarityText});
             item1description.textColor = rarityColor;
             item1description.fontSize = 20;
+            item1description.font = "Merriweather";
         }
 
         /* Selection Box */
@@ -161,12 +195,14 @@ export default class ItemSelectScene extends Scene {
         item.backgroundColor = PancakeColor.MAGENTA;
         item.onClickEventId = "item"+(itemChoice+1);
         item.fontSize = 35;
+        item.font = "Merriweather";
         this.selections[itemChoice] = item;
 
         /* Description */
-        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+75), text:this.itemChoices[itemChoice].description});
+        const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+80), text:this.itemChoices[itemChoice].description});
         item1description.textColor = PancakeColor.BEIGE;
         item1description.fontSize = 20;
+        item1description.font = "Merriweather";
     }
 
     passRarityTest(rarity: string): boolean{

@@ -39,7 +39,7 @@ export default class CharacterState{
         this.stats.maxHealth += item.stats.maxHealth;
 
         /* Healing (Doesn't exceed maxHealth) */
-        (this.stats.health + item.stats.health > this.stats.maxHealth)?(this.stats.health = this.stats.maxHealth):(this.stats.health += item.stats.health);
+        this.healPlayer(this.stats.health);
 
         /* Attack Multiplier */
         if(this.stats.attackMult < item.stats.attackMult)
@@ -48,6 +48,10 @@ export default class CharacterState{
         /* Take Damage Multiplier */
         if(item.stats.takeDamageMult !== 0 && (item.stats.takeDamageMult < this.stats.takeDamageMult))
             this.stats.takeDamageMult = item.stats.takeDamageMult;
+    }
+
+    healPlayer(healthToAdd: number){
+        (this.stats.health + healthToAdd > this.stats.maxHealth)?(this.stats.health = this.stats.maxHealth):(this.stats.health += healthToAdd);
     }
 
     getInventory(){
