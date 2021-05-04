@@ -21,6 +21,7 @@ import MapScene from "./MapScene";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import HelpScreen from "./MenuScenes/HelpScreen";
+import MainMenu from "./MenuScenes/MainMenu";
 
 export default class BattleRoom extends Scene {
     // The player
@@ -137,7 +138,7 @@ export default class BattleRoom extends Scene {
                         this.viewport.setZoomLevel(1);
                         this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                        this.sceneManager.changeToScene(GameOver);
+                        this.sceneManager.changeToScene(MainMenu, {});
                         // Final Project TODO: add won game scene and art
                         break; 
                     }
