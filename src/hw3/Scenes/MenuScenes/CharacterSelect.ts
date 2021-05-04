@@ -109,7 +109,7 @@ export default class CharacterSelect extends Scene {
                 // const itemData = this.load.getObject("itemData");
                 // let allItems = itemData.allitems;
                 // for(let i=0 ; i < allItems.length ; i++)
-                //     if(allItems[i].key === "spirit_of_eri")
+                //     if(allItems[i].key === "lost_divers_suit")
                 //         characterState.addToInventory(allItems[i]);
                 
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});

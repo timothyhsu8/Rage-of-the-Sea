@@ -37,9 +37,10 @@ export default class CharacterState{
         this.stats.speed += item.stats.speed;
 
         this.stats.maxHealth += item.stats.maxHealth;
+        this.healPlayer(item.stats.maxHealth);
 
         /* Healing (Doesn't exceed maxHealth) */
-        this.healPlayer(this.stats.health);
+        this.healPlayer(item.stats.health);
 
         /* Attack Multiplier */
         if(this.stats.attackMult < item.stats.attackMult)

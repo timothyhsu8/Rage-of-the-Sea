@@ -25,7 +25,7 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 9,
+        "defense": 4,
         "speed": 0,
         "takeDamageMult": 0
     },
@@ -46,7 +46,7 @@
     {
         "name": "Resilience Gemstone",
         "key": "resilience_gemstone",
-        "description": "Reduce damage by 1/4",
+        "description": "Reduce damage taken by 1/5",
         "rarity": "rare",
         "ability": null,
         "maxHealth": 0,
@@ -55,7 +55,7 @@
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
-        "takeDamageMult": 0.75
+        "takeDamageMult": 0.8
     },
     {
         "name": "Swiftness Gemstone",
@@ -77,11 +77,11 @@
         "description": "Increased max health, defense, and speed",
         "rarity": "rare",
         "ability": null,
-        "maxHealth": 10,
+        "maxHealth": 8,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 5,
+        "defense": 2,
         "speed": 5,
         "takeDamageMult": 0
     },
@@ -95,9 +95,9 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 32,
+        "defense": 9,
         "speed": -20,
-        "takeDamageMult": 0.7
+        "takeDamageMult": 0.8
     },
     {
         "name": "Blessing of Poseidon",
@@ -105,7 +105,7 @@
         "description": "Increased max health and speed",
         "rarity": "rare",
         "ability": null,
-        "maxHealth": 30,
+        "maxHealth": 15,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
@@ -137,7 +137,7 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 5,
+        "defense": 2,
         "speed": 0,
         "takeDamageMult": 0
     },
@@ -203,11 +203,11 @@
         "description": "Slightly Increased Defense and Max Health",
         "rarity": "common",
         "ability": null,
-        "maxHealth": 8,
+        "maxHealth": 5,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 4,
+        "defense": 2,
         "speed": 0,
         "takeDamageMult": 0
     }

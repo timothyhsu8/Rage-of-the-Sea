@@ -109,8 +109,7 @@ export default class LoadScreen extends Scene {
 
             // Get the constructor of the prototype
             let constr = RegistryManager.getRegistry("abilityTemplates").get(ability.abilityType);
-            console.log(ability.abilityType);
-
+            
             // Create a weapon type
             let abilityType = new constr();
 
