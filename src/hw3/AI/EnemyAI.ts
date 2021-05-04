@@ -145,5 +145,6 @@ export enum EnemyStates {
 export enum MonsterTypes {
     KRAKEN = "kraken",
     LIZARD = "lizard",
-    SOLLASINA = "sollasina"
+    SOLLASINA = "sollasina",
+    SOLLASINA_YELLOW = "sollasina_yellow"
 }

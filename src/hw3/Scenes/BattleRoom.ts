@@ -55,6 +55,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemies/kraken.json");
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/sollasina.json");
+        this.load.spritesheet("sollasina_yellow", "hw3_assets/spritesheets/enemies/sollasina_yellow.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
@@ -68,13 +69,14 @@ export default class BattleRoom extends Scene {
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
+        this.load.object("sollasina_yellowData", "hw3_assets/data/EnemyData/sollasina_yellowData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
         this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
+        this.load.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
     }
-
     unloadScene(){}
 
     startScene(){

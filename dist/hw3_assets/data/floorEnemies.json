@@ -15,25 +15,25 @@
         {
             "numEnemies": [6, 7, 8],
             "requiredEnemies": ["sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow"],
             "positions": [[200, 60], [250, 60], [270, 200], [300, 120], [370, 60], [370, 220], [420, 50],  [450, 120]]
         },
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow"],
             "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 130]]
         },
         {
             "numEnemies": [7, 8],
-            "requiredEnemies": ["sollasina", "sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina"],
+            "requiredEnemies": ["sollasina_yellow", "sollasina", "sollasina", "kraken", "lizard"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow"],
             "positions": [[250, 60], [250, 180], [370, 60], [370, 180], [300, 120], [400, 120], [400, 50], [200, 60]]
         },
         {
             "numEnemies": [8, 9],
-            "requiredEnemies": ["sollasina", "sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina"],
+            "requiredEnemies": ["sollasina_yellow", "sollasina", "sollasina", "kraken", "lizard"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow"],
             "positions": [[250, 60], [250, 180], [370, 60], [370, 180], [300, 120], [400, 120], [400, 50], [200, 60], [200, 180]]
         }
     ]

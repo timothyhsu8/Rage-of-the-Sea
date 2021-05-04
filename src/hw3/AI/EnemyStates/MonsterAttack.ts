@@ -69,16 +69,14 @@ export default class MonsterAttack extends EnemyState {
                 else this.finished(EnemyStates.DEFAULT);
                 break;
             
-            case MonsterTypes.SOLLASINA:  
-                let dir = this.player.position.clone().sub(this.owner.position).normalize();
+            case MonsterTypes.SOLLASINA:
+            case MonsterTypes.SOLLASINA_YELLOW:  
+                let dir = this.player.position.clone().sub(this.owner.position).normalize();    // Get player position
                 if(this.parent.ability.cast(this.owner, "enemy", dir))
                     this.owner.animation.playUninterruptable("ATTACK");
-                
-
                 break;
 
             default:
-                console.log("Enemy Attack");
                 this.finished(EnemyStates.DEFAULT);
                 break;
         }
