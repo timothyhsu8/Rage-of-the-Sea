@@ -95,9 +95,9 @@
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 32,
+        "defense": 22,
         "speed": -20,
-        "takeDamageMult": 0.7
+        "takeDamageMult": 0.8
     },
     {
         "name": "Blessing of Poseidon",
