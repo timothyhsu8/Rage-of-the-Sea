@@ -62,8 +62,8 @@ export default class LevelSelect extends Scene {
         this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2: Casino", true, 2);
         this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Event Room", true, 3);
         this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4: Dining Area", true, 4);
-        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5", true, 5);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6", true, 6);
+        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5: Poolside", true, 5);
+        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6: The Bridge", true, 6);
 
 
         // Subscribe to the button events
