@@ -92,7 +92,7 @@ export default class MainMenu extends Scene {
                 this.sceneManager.changeToScene(Controls, {});
 
             if(event.type === "levelselect")
-                this.sceneManager.changeToScene(LevelSelect, {});
+                this.sceneManager.changeToScene(LevelSelect, {page: 1});
 
             if(event.type === "menu"){
                 this.mainMenu.setHidden(false);

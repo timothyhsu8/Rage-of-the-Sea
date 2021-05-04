@@ -7,14 +7,23 @@ import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
+import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
 import CharacterSelect from "./CharacterSelect";
 import HelpScreen from "./HelpScreen";
 import MainMenu from "./MainMenu";
 
 export default class LevelSelect extends Scene {
     private sceneUI: Array<GameNode>;
+    private page: number
+    private maxPages: number
+
+    initScene(init: Record<string, any>): void {
+        this.page = init.page;
+        this.maxPages = 2 // Final Project TODO: after we determine how many levels pages
+    }
 
     loadScene(){
+        // Final Project TODO: add conditionals if additional levels / boss room are added
         this.load.image("level1image", "hw3_assets/sprites/levelselect/level1image.png");
         this.load.image("level2image", "hw3_assets/sprites/levelselect/level2image.png");
         this.load.image("level3image", "hw3_assets/sprites/levelselect/level3image.png");
@@ -39,15 +48,15 @@ export default class LevelSelect extends Scene {
         backgroundart.position.set(center.x, center.y);
         UITweens.fadeIn(backgroundart, 0, 600);
 
-        /* Back Button */
-        const back = <Button>this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: new Vec2(center.x-650, center.y-375), text: "Back"});
-        back.size.set(200, 50);
-        back.borderWidth = 2;
-        back.borderColor = Color.WHITE;
-        back.backgroundColor = new Color(50, 50, 70, 1);
-        back.onClickEventId = "back";
-        back.font = "Merriweather";
-        this.sceneUI.push(back);
+        /* Home, Next, Prev Buttons */
+        if (this.page > 1){
+            this.makePageButtons(new Vec2(center.x-650, center.y+375), "Previous")
+        }
+        if (this.page < this.maxPages){
+            this.makePageButtons(new Vec2(center.x+650, center.y+375), "Next")
+        }
+        this.makePageButtons(new Vec2(center.x-650, center.y-375), "Home")
+
     
         /* Level Select Header */
         const header = <Label>this.add.uiElement(UIElementType.LABEL, "levelSelect", {position: new Vec2(center.x, center.y-375), text: "Level Select"});
@@ -56,6 +65,7 @@ export default class LevelSelect extends Scene {
         header.font = "Merriweather";
         this.sceneUI.push(header);
 
+        // Final Project TODO: after adding additional levels / boss stage; conditional for which page to display
         this.addLayer("levelimages", 9);
         this.addLayer("locks", 10);
         this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
@@ -67,12 +77,27 @@ export default class LevelSelect extends Scene {
 
 
         // Subscribe to the button events
-        this.receiver.subscribe("back");
+        this.receiver.subscribe("home");
+        this.receiver.subscribe("next");
+        this.receiver.subscribe("previous");
         for(let i=1 ; i <= NUM_LEVELS ; i++)
             this.receiver.subscribe("floor" + i);
 
         /* Tween Animation for Scene */
         UITweens.slideInScene(this.sceneUI, 30, new Vec2(2000, 0));
+    }
+
+    makePageButtons(position: Vec2, name: string){
+
+        const button = <Button>this.add.uiElement(UIElementType.BUTTON, "levelSelect", {position: position, text: name});
+        button.size.set(200, 50);
+        button.borderWidth = 2;
+        button.borderColor = Color.WHITE;
+        button.backgroundColor = new Color(50, 50, 70, 1);
+        button.onClickEventId = name.toLowerCase();
+        button.font = "Merriweather";
+        this.sceneUI.push(button);
+        return button
     }
 
     makeLevelButtons(position: Vec2, eventid: string, delay: number, text: string, locked: boolean, num: number){
@@ -119,9 +144,15 @@ export default class LevelSelect extends Scene {
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
             let event = this.receiver.getNextEvent();
 
-            if(event.type === "back")
+            if(event.type === "home"){
                 this.sceneManager.changeToScene(MainMenu, {});
-
+            }
+            else if(event.type === "next"){
+                this.sceneManager.changeToScene(LevelSelect, {page: this.page + 1});
+            }
+            else if(event.type === "previous"){
+                this.sceneManager.changeToScene(LevelSelect, {page: this.page - 1});
+            }
             /* Go To Character Select Screen */
             if(event.type.substring(0,5) === "floor"){
                 let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
