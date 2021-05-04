@@ -43,8 +43,8 @@ export default class MapScene extends Scene{
     }
 
     startScene(){
-        const floor_names = ["Floor 1: Engine Room", "Floor 2: Casino", "Floor 3: Event Room", "Floor 4: Dining Area", "Floor 5: Poolside", "Floor 6: The Bridge"];
-        const MAX_FLOOR_NUM = 6;
+        const floor_names = ["Floor 1: Engine Room", "Floor 2: Casino", "Floor 3: Event Room", "Floor 4: Dining Area", "Floor 5: Poolside", "Floor 6: The Bridge", "Floor 7: Boss"];
+        const MAX_FLOOR_NUM = 7;
         const center = this.viewport.getCenter();
 
         this.quitConfirmation = new Array<Label>();
@@ -243,10 +243,18 @@ export default class MapScene extends Scene{
             /* Move To Next Floor */
             if(event.type === "nextfloor"){
                 if(this.mapState.nextFloorOpen){
-                    this.mapState.nextFloor();
-                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
-                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                    this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                    if (this.mapState.currentFloor == 6){  // Boss Room
+                        this.mapState.nextFloor();
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+                        this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
+                    }
+                    else{
+                        this.mapState.nextFloor();
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+                        this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                    }
                 }
             }
 

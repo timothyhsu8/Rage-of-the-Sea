@@ -131,6 +131,16 @@ export default class BattleRoom extends Scene {
                         this.sceneManager.changeToScene(GameOver);
                         break;
                     }
+                    case GameEvents.WON_GAME:
+                    {
+                        this.viewport.setOffset(new Vec2(0, 0));
+                        this.viewport.setZoomLevel(1);
+                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                        this.sceneManager.changeToScene(GameOver);
+                        // Final Project TODO: add won game scene and art
+                        break; 
+                    }
                     case GameEvents.ROOM_CLEARED:
                     {
                         this.viewport.setOffset(new Vec2(0, 0));
@@ -177,8 +187,16 @@ export default class BattleRoom extends Scene {
         this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
 
         /* If all monsters are killed, advance */
-        if(this.numMonstersLeft <= 0)
-            this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
+        if(this.numMonstersLeft <= 0){
+            if (this.characterState.mapState.currentFloor == 7){
+                this.emitter.fireEvent(GameEvents.WON_GAME, {});
+
+            }
+            else{
+                this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
+            }
+
+        }
 
         /* Game Over screen on player death */
         if(health <= 0)
@@ -201,7 +219,8 @@ export default class BattleRoom extends Scene {
             GameEvents.ENEMY_DIED,
             GameEvents.PLAYER_DIED,
             GameEvents.ROOM_CLEARED,
-            GameEvents.SKIP_TO_ROOM
+            GameEvents.SKIP_TO_ROOM,
+            GameEvents.WON_GAME
         ]);
     }
 

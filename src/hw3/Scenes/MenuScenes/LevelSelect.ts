@@ -30,12 +30,13 @@ export default class LevelSelect extends Scene {
         this.load.image("level4image", "hw3_assets/sprites/levelselect/level4image.png");
         this.load.image("level5image", "hw3_assets/sprites/levelselect/level5image.png");
         this.load.image("level6image", "hw3_assets/sprites/levelselect/level6image.png");
+        this.load.image("level7image", "hw3_assets/sprites/levelselect/level7image.png");
 
         this.load.image("lock", "hw3_assets/sprites/levelselect/lock.png");
     }
 
     startScene(){
-        const NUM_LEVELS = 6;
+        const NUM_LEVELS = 7;
         
         this.sceneUI = new Array<GameNode>();
         const center = this.viewport.getCenter();
@@ -68,12 +69,19 @@ export default class LevelSelect extends Scene {
         // Final Project TODO: after adding additional levels / boss stage; conditional for which page to display
         this.addLayer("levelimages", 9);
         this.addLayer("locks", 10);
-        this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
-        this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2: Casino", true, 2);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Event Room", true, 3);
-        this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4: Dining Area", true, 4);
-        this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5: Poolside", true, 5);
-        this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6: The Bridge", true, 6);
+
+        if (this.page == 2){
+            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor7", 0, "Floor 7: Boss", true, 7);
+        }
+        else{
+            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
+            this.makeLevelButtons(new Vec2(center.x, center.y-150), "floor2", 0, "Floor 2: Casino", true, 2);
+            this.makeLevelButtons(new Vec2(center.x+500, center.y-150), "floor3", 0, "Floor 3: Event Room", true, 3);
+            this.makeLevelButtons(new Vec2(center.x-500, center.y+150), "floor4", 0, "Floor 4: Dining Area", true, 4);
+            this.makeLevelButtons(new Vec2(center.x, center.y+150), "floor5", 0, "Floor 5: Poolside", true, 5);
+            this.makeLevelButtons(new Vec2(center.x+500, center.y+150), "floor6", 0, "Floor 6: The Bridge", true, 6);
+        }
+
 
         // Subscribe to the button events
         this.receiver.subscribe("home");
@@ -153,6 +161,15 @@ export default class LevelSelect extends Scene {
                 this.sceneManager.changeToScene(LevelSelect, {page: this.page - 1});
             }
             /* Go To Character Select Screen */
+
+            // start scene to BattleRoom
+            
+            // if(event.type.substring(0,6) === "floor7"){
+            //     let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
+            //     this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
+
+            // }
+            // 
             if(event.type.substring(0,5) === "floor"){
                 let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
                 this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});

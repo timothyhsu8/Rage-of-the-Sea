@@ -35,6 +35,12 @@
             "requiredEnemies": ["sollasina_yellow", "sollasina_yellow", "kraken", "lizard"],
             "monsterTypes": ["kraken", "lizard", "sollasina_yellow"],
             "positions": [[175, 70],[240, 240], [250, 60], [250, 180], [300, 120], [350, 90], [370, 180], [450, 70], [460, 240]]
+        },
+        {
+            "numEnemies": [1],
+            "requiredEnemies": ["kraken"],
+            "monsterTypes": ["kraken"],
+            "positions": [[175, 70]]
         }
     ]
 }
