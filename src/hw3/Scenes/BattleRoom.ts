@@ -121,6 +121,18 @@ export default class BattleRoom extends Scene {
                         let owner = event.data.get("node");
                         owner.destroy();
                         this.numMonstersLeft--;
+
+                        if (owner.imageId == "Kraken"){
+                                // kraken respawns as sollasina
+                                this.respawnZombie(owner, "sollasina", "stillprojectiles")
+                                
+                                // update count
+                                this.numMonstersLeft++;
+
+                            
+                            }
+
+
                         break;
                     }
                     case GameEvents.PLAYER_DIED:
@@ -307,9 +319,14 @@ export default class BattleRoom extends Scene {
             let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
             this.enemies[i].position.set(randomPos[0], randomPos[1]);
 
+            console.log("MODE")
+            console.log(monsterInfo.mode)
+            console.log("TYPE")
+            console.log(monsterInfo.monsterType)
+            console.log("ABILITY")
+            console.log(monsterInfo.ability)
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
-
             let enemyOptions = {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
@@ -331,5 +348,49 @@ export default class BattleRoom extends Scene {
     /* Generates a random integer in the range [0,max) FINAL PROJECT TODO - Move this somewhere else ideally */
     randomInt(max: number): number{
         return Math.floor(Math.random() * max);
+    }
+
+    /* Spawn an enemytype monsterType with mode defaultMode at position of AnimatedSprite owner */
+    respawnZombie(owner: AnimatedSprite, monsterType: string, defaultMode: string){
+        let zombie = this.add.animatedSprite(monsterType, "primary")
+        zombie.active = true
+        // append zombie to list
+        this.enemies.push(zombie)
+
+        // use the same position as enemy that died
+        zombie.position.set(owner.position.x, owner.position.y);
+
+        // Activate physics
+        zombie.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
+        let monsterInfo = this.load.getObject(monsterType + "Data");
+
+        let enemyOptions = {
+            monsterType: monsterType,
+            defaultMode: defaultMode,
+            health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.2),
+            ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
+            player: this.player
+        }
+
+        /* Add Tweens */
+        zombie.tweens.add("death", {startDelay: 0, duration: 500, onEnd: GameEvents.ENEMY_DIED,
+            effects: [{property: TweenableProperties.alpha, start: 1.0, end: 0, ease: EaseFunctionType.OUT_SINE}]
+        });
+
+        zombie.addAI(EnemyAI, enemyOptions);
+        
+        // remove destroyed enemies from enemies list
+        let enemy_list = this.enemies.map(enemy => <BattlerAI>enemy._ai)
+        // https://www.techiedelight.com/remove-all-falsy-values-from-an-array-in-javascript/ referenced this site for filterout out undefined values 
+        let filtered = enemy_list.filter(function(x){
+            return x !== undefined;
+        });
+
+        this.enemies = this.enemies.filter(function(x){
+            return x.active != false;
+        });
+
+        this.battleManager.enemySprites = this.enemies;
+        this.battleManager.enemies = filtered
     }
 }
