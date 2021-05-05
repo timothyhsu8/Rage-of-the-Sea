@@ -42,6 +42,9 @@ export default class LoadScreen extends Scene {
         this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
         this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
         this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
+        this.load.image("dashcd", "hw3_assets/sprites/healthUI/dashcd.png");
+        this.load.image("dashborder", "hw3_assets/sprites/healthUI/dashborder.png");
+        this.load.image("dashbg", "hw3_assets/sprites/healthUI/dashbg.png");
 
         /* Load Enemies for each floor */
         this.load.object("floorEnemies", "hw3_assets/data/floorEnemies.json");
@@ -83,6 +86,9 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("portrait");
         this.load.keepImage("portraitborder");
         this.load.keepImage("healthbarborder");
+        this.load.keepImage("dashcd");
+        this.load.keepImage("dashborder");
+        this.load.keepImage("dashbg");
         this.load.keepImage("itemdescriptionbox");
 
         for(let i=0; i < this.itemData.numItems ; i++)
