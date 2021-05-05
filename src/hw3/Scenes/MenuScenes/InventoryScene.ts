@@ -97,10 +97,11 @@ export default class InventoryScene extends Scene {
         playerBackground.size.set(350, 650);
 
         let stats = this.characterState.stats;
-        let statNames = ["Health", "Attack", "Defense", "Speed", "Attack Multiplier", "Take Damage Multiplier"]
-        let statNumbers = [stats.health.toFixed(0) + "/" +stats.maxHealth+"", stats.attack.toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
+        let ability = this.characterState.getInventory().getBasicAttack();
+        let statNames = ["Ability", "Health", "Attack", "Defense", "Speed", "Attack Multiplier", "Take Damage Multiplier"]
+        let statNumbers = [ability.type.displayName, stats.health.toFixed(0) + "/" +stats.maxHealth+"", ability.type.damage.toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
         let statChanges = this.getStatChanges(stats);
-        this.makePlayerStats(new Vec2(center.x-550, 390), 65, statNames, statNumbers, statChanges);
+        this.makePlayerStats(new Vec2(center.x-550, 390), 55, statNames, statNumbers, statChanges);
 
         /* Item Icons Background */
         const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+150, center.y), text: ""});
@@ -201,10 +202,12 @@ export default class InventoryScene extends Scene {
             statNum.fontSize = 20;
             statNum.font = "Merriweather";
             
-            const statChangesText = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(pos.x+130, pos.y+25), text: "(" + statChanges[i] + ")"});
-            statChangesText.textColor = PancakeColor.BEIGE;
-            statChangesText.fontSize = 17;
-            statChangesText.font = "Merriweather";
+            if (i != 0){
+                const statChangesText = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(pos.x+130, pos.y+25), text: "(" + statChanges[i] + ")"});
+                statChangesText.textColor = PancakeColor.BEIGE;
+                statChangesText.fontSize = 17;
+                statChangesText.font = "Merriweather";
+            }
         }
     }
 
@@ -216,6 +219,6 @@ export default class InventoryScene extends Scene {
         (stats.speed >= 80)?(speed = "+" + speed):(speed = speed);
         let attackMult = "+" + (stats.attackMult-1).toFixed(1);
         let takeDamageMult = "-" + (1-stats.takeDamageMult).toFixed(1);
-        return [maxHealth, attack, defense, speed, attackMult, takeDamageMult];
+        return ["", maxHealth, attack, defense, speed, attackMult, takeDamageMult];
     }
 }

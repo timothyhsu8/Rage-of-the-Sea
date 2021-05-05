@@ -106,14 +106,17 @@ export default class MapScene extends Scene{
             nextFloor.visible = false;
 
         /* Inventory Button */
-        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
-        inventory.size.set(250, 50);
-        inventory.borderWidth = 2;
-        inventory.borderColor = Color.WHITE;
-        inventory.backgroundColor = new Color(50, 50, 70, 1);
-        inventory.onClickEventId = "inventory";
-        inventory.font = "Merriweather";
-        inventory.fontSize = 30;
+        if (this.characterState.getInventory().getBasicAttack() != null){  // Final Project TODO: After setting basicAttack in Character Select instead of BattleRoom, remove if statement
+            const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
+            inventory.size.set(250, 50);
+            inventory.borderWidth = 2;
+            inventory.borderColor = Color.WHITE;
+            inventory.backgroundColor = new Color(50, 50, 70, 1);
+            inventory.onClickEventId = "inventory";
+            inventory.font = "Merriweather";
+            inventory.fontSize = 30;
+        }
+
 
         /* Quit Button */
         const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
@@ -247,7 +250,7 @@ export default class MapScene extends Scene{
                         this.mapState.nextFloor();
                         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                        this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
+                        this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
                     }
                     else{
                         this.mapState.nextFloor();
@@ -279,7 +282,7 @@ export default class MapScene extends Scene{
                             }
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
-                            this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, roomButtons: this.roomButtons, roomArray:this.roomArray});
+                            this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
                         }
                 
                 /* Enable Next Floor Button */
