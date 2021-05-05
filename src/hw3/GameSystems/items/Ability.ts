@@ -26,16 +26,13 @@ export default class Ability {
 
     scene: Scene;
 
-    constructor(type: AbilityType, battleManager: BattleManager, scene: Scene){
+    constructor(type: AbilityType, scene: Scene){
 
         // Set the weapon type
         this.type = type;
 
         // Create an event emitter
         this.emitter = new Emitter();
-
-        // Save a reference to the battler manager
-        this.battleManager = battleManager;
 
         this.scene = scene;
 
@@ -99,7 +96,9 @@ export default class Ability {
 
     static createAbility(type: AbilityTypes, battleManager: BattleManager, scene: Scene){
         let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
-        return new Ability(abilityType, battleManager, scene);
+        let ret =  new Ability(abilityType, scene);
+        ret.setBattleManager(battleManager)
+        return ret
     }
 }
 
