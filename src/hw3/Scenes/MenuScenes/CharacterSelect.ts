@@ -108,8 +108,9 @@ export default class CharacterSelect extends Scene {
                 /* FOR BUG TESTING SPECIFIC ITEMS */
                 // const itemData = this.load.getObject("itemData");
                 // let allItems = itemData.allitems;
+                // let itemsToTest = ["raging_tide", "neptunes_trident", "engraved_dagger", "fury_gemstone"]
                 // for(let i=0 ; i < allItems.length ; i++)
-                //     if(allItems[i].key === "lost_divers_suit")
+                //     if(itemsToTest.includes(allItems[i].key))
                 //         characterState.addToInventory(allItems[i]);
                 
                 this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
