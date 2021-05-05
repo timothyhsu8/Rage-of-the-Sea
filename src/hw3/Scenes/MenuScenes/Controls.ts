@@ -58,7 +58,7 @@ export default class Controls extends Scene {
         controlsHeader.font = "Merriweather";
         this.sceneObjects.push(controlsHeader);
 
-        let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", ""];    // Right Mouse - Use Item
+        let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", "Spacebar + WASD - Dash"];    // Right Mouse - Use Item
         this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 200));
 
         /* How To Play */

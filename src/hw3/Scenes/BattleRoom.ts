@@ -205,7 +205,7 @@ export default class BattleRoom extends Scene {
 
         /* Skip Floor buttons pressed */
         if(HelpScreen.roomSkipping){
-            const NUM_FLOORS = 6;
+            const NUM_FLOORS = 6;   // FINAL PROJECT TODO - Include the boss room
             for(let i=1 ; i <= NUM_FLOORS ; i++)
                 if(Input.isJustPressed("floor"+i))
                     this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});
@@ -257,7 +257,8 @@ export default class BattleRoom extends Scene {
                 health: this.characterState.stats.health,
                 speed: this.characterState.stats.speed,
                 inventory: this.characterState.getInventory(),
-                tilemap: "Floor"
+                tilemap: "Floor",
+                walls: "Wall"
             });
         this.player.setImageOffset(new Vec2(0, 17));
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class

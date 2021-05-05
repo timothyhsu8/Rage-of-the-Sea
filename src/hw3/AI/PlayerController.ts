@@ -2,8 +2,10 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
+import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Inventory from "../GameSystems/Inventory";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import BattlerAI from "./BattlerAI";
@@ -29,8 +31,14 @@ export default class PlayerController implements BattlerAI {
     // Tilemap
     tilemap: OrthogonalTilemap;
 
+    walls: OrthogonalTilemap;
+
     // Array of tiles that player is currently standing on
     activeTile: Vec2;
+
+    dashIsReady: boolean;
+    
+    private dashVelocity: Vec2;
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
@@ -42,6 +50,8 @@ export default class PlayerController implements BattlerAI {
         this.inventory = options.inventory;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         this.activeTile = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
+        this.dashIsReady = true;
+        this.walls = this.owner.getScene().getTilemap(options.walls) as OrthogonalTilemap;
     }
 
     activate(options: Record<string, any>): void {}
@@ -53,6 +63,10 @@ export default class PlayerController implements BattlerAI {
         if(tileArray.x === itemToFind.x && tileArray.y === itemToFind.y)
             return true;
         return false;
+    }
+
+    setWalls(walls: OrthogonalTilemap){
+        this.walls = walls;
     }
 
     update(deltaT: number): void {
@@ -114,13 +128,81 @@ export default class PlayerController implements BattlerAI {
             }
         }
 
+        /* Use Dash */
+        if(this.dashIsReady && Input.isJustPressed("dash")){
+            let useDash = false;
+            let newPos = this.owner.position.clone();
+
+            this.dashVelocity = new Vec2(0, 0);
+            if(Input.isPressed("left")){
+                useDash = true;
+                newPos.x -= 50;
+                this.dashVelocity.x = -1.0;
+            }
+            else if(Input.isPressed("right")){
+                useDash = true;
+                newPos.x += 50;
+                this.dashVelocity.x = 1.0;
+            }
+            if(Input.isPressed("forward")){
+                useDash = true;
+                newPos.y -= 50;
+                this.dashVelocity.y = -1.0;
+            }
+            else if(Input.isPressed("backward")){
+                useDash = true;
+                newPos.y += 50;
+                this.dashVelocity.y = 1.0;
+            }
+
+            if(useDash){
+                this.owner.tweens.add("dash", {startDelay: 0, duration: 500,
+                    effects: [{
+                            property: TweenableProperties.posX,
+                            start: this.owner.position.x,
+                            end: newPos.x,
+                            ease: EaseFunctionType.OUT_SINE
+                        },
+                        {
+                            property: TweenableProperties.posY,
+                            start: this.owner.position.y,
+                            end: newPos.y,
+                            ease: EaseFunctionType.OUT_SINE
+                        }
+                        ]
+                    });
+                this.owner.tweens.play("dash");
+                this.owner.animation.playUninterruptable("DASH");
+                this.dashIsReady = false;
+                setTimeout(() => {
+                    this.dashIsReady = true;
+                }, 2500);
+            }
+        }
+
+        /* Prevent dash from going through walls */
+        let colrow = this.tilemap.getColRowAt(this.owner.position);
+        if(this.walls.isTileCollidable(colrow.x, colrow.y)){
+            this.owner.tweens.stop("dash");
+            if(this.dashVelocity.x > 0)
+                this.owner.position.x -= 8;
+
+            if(this.dashVelocity.x < 0)
+                this.owner.position.x += 8;
+
+            if(this.dashVelocity.y > 0)
+                this.owner.position.y -= 8;
+
+            if(this.dashVelocity.y < 0)
+                this.owner.position.y += 8;    
+        }
+
         // Use an Attack/Ability
         if(Input.isMouseJustPressed()){
             // Do Basic Attack on left click
             if(!Input.isMouseRightClick()){
                 // Rotate the player
                 this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-                console.log(this.owner.rotation);
                 if(this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection)){
                     (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
                     this.owner.animation.playIfNotAlready("ATTACK");
@@ -142,7 +224,6 @@ export default class PlayerController implements BattlerAI {
         this.lookDirection = this.owner.position.dirTo(Input.getGlobalMousePosition());
     }
 
-    /* FINAL PROJECT TODO - Implement */
     destroy(): void {
         // this.owner.destroy();
     }
