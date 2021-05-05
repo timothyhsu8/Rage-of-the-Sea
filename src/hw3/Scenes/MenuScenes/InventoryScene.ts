@@ -11,6 +11,7 @@ import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import Input from "../../../Wolfie2D/Input/Input";
 import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
 import Item from "../../GameSystems/items/Item";
+import Stats from "../../Stats";
 
 export default class InventoryScene extends Scene {
     private characterState: CharacterState;
@@ -61,12 +62,12 @@ export default class InventoryScene extends Scene {
         this.itemDescriptionBox = this.add.sprite("itemdescriptionbox", "itemdescriptionbox");
         this.itemDescriptionBox.visible = false;
 
-        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(950, 70), text: "Equipped Items"});
+        const currentlyEquipped = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(950, 75), text: "Equipped Items"});
         currentlyEquipped.textColor = PancakeColor.BEIGE;
         currentlyEquipped.fontSize = 35;
         currentlyEquipped.font = "Merriweather";
 
-        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(200, 345), text: "Diver"});
+        const inventoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: new Vec2(center.x-550, 345), text: "Diver"});
         inventoryHeader.textColor = Color.WHITE;
         inventoryHeader.font = "Merriweather";
 
@@ -80,12 +81,26 @@ export default class InventoryScene extends Scene {
         back.font = "Merriweather";
 
         /* Player Portrait */
-        let portrait = this.add.sprite(this.characterState.portrait, "primary");
+        let portrait = this.add.sprite(this.characterState.portrait, "inventory");
         portrait.scale = new Vec2(2, 2);
-        portrait.position = new Vec2(200, 240);
-        let portraitborder = this.add.sprite("portraitborder", "primary");
+        portrait.position = new Vec2(center.x-550, 240);
+        let portraitborder = this.add.sprite("portraitborder", "inventory");
         portraitborder.scale = new Vec2(2, 2);
-        portraitborder.position = new Vec2(200, 240);
+        portraitborder.position = new Vec2(center.x-550, 240);
+
+        /* Player Portrait Background */
+        const playerBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-550, center.y), text: ""});
+        playerBackground.backgroundColor = PancakeColor.colorFromIndex(5);
+        playerBackground.borderWidth = 2;
+        playerBackground.borderRadius = 10;
+        playerBackground.borderColor = Color.WHITE;
+        playerBackground.size.set(350, 650);
+
+        let stats = this.characterState.stats;
+        let statNames = ["Health", "Attack", "Defense", "Speed", "Attack Multiplier", "Take Damage Multiplier"]
+        let statNumbers = [stats.health.toFixed(0) + "/" +stats.maxHealth+"", stats.attack.toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
+        let statChanges = this.getStatChanges(stats);
+        this.makePlayerStats(new Vec2(center.x-550, 390), 65, statNames, statNumbers, statChanges);
 
         /* Item Icons Background */
         const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+150, center.y), text: ""});
@@ -98,7 +113,6 @@ export default class InventoryScene extends Scene {
         /* Item Icons */
         let width = 500;
         let height = 150;
-        var text = ""
         this.equippedItems = this.characterState.getInventory().getItems();
         for(let i=0 ; i < this.equippedItems.length ; i++){
             /* Item Icon */
@@ -171,5 +185,37 @@ export default class InventoryScene extends Scene {
                 this.hovering = false;
             }
         }
+    }
+
+    makePlayerStats(startPos: Vec2, yoffset: number, statNames: Array<string>, statNumbers: Array<string>, statChanges: Array<string>){
+        for(let i=0 ; i < statNames.length ; i++){
+            let pos = new Vec2(startPos.x, startPos.y + yoffset*i);
+
+            const stat = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: pos, text: statNames[i]});
+            stat.textColor = PancakeColor.BEIGE;
+            stat.fontSize = 20;
+            stat.font = "Merriweather";
+
+            const statNum = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(pos.x, pos.y+25), text: statNumbers[i]});
+            statNum.textColor = Color.WHITE;
+            statNum.fontSize = 20;
+            statNum.font = "Merriweather";
+            
+            const statChangesText = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(pos.x+130, pos.y+25), text: "(" + statChanges[i] + ")"});
+            statChangesText.textColor = PancakeColor.BEIGE;
+            statChangesText.fontSize = 17;
+            statChangesText.font = "Merriweather";
+        }
+    }
+
+    getStatChanges(stats: Stats){
+        let maxHealth = "+" + (stats.maxHealth-100);
+        let attack = "+" + stats.attack.toFixed(1);
+        let defense = "+" + stats.defense.toFixed(1);
+        let speed = "" + (stats.speed-80);
+        (stats.speed >= 80)?(speed = "+" + speed):(speed = speed);
+        let attackMult = "+" + (stats.attackMult-1).toFixed(1);
+        let takeDamageMult = "-" + (1-stats.takeDamageMult).toFixed(1);
+        return [maxHealth, attack, defense, speed, attackMult, takeDamageMult];
     }
 }
