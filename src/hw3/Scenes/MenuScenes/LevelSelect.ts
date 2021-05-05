@@ -71,7 +71,7 @@ export default class LevelSelect extends Scene {
         this.addLayer("locks", 10);
 
         if (this.page == 2){
-            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor7", 0, "Floor 7: Boss", true, 7);
+            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor7", 0, "Floor 7: Boss", false, 7);
         }
         else{
             this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
