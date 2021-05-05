@@ -22,6 +22,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import HelpScreen from "./MenuScenes/HelpScreen";
 import MainMenu from "./MenuScenes/MainMenu";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 
 export default class BattleRoom extends Scene {
     // The player
@@ -40,6 +41,8 @@ export default class BattleRoom extends Scene {
     private battleManager: BattleManager;
 
     private healthbar: Graphic;
+
+    private dashCD: Sprite;
 
     private tilemap: OrthogonalTilemap;
 
@@ -95,6 +98,20 @@ export default class BattleRoom extends Scene {
 
         // Create the battle manager
         this.battleManager = new BattleManager();
+
+        // UI for dash cooldown and border
+        this.addLayer("dashCD", 11);
+        let dashBorder =  this.add.sprite("dashborder", "dashCD");
+        dashBorder.position.set(260, 275);
+
+        this.dashCD = this.add.sprite("dashcd", "dashCD");
+        this.dashCD.scale.set(1.0, 1.0);
+        this.dashCD.position.set(260, 275);
+
+        let dashbg = this.add.sprite("dashbg", "primary");
+        dashbg.scale.set(1.0, 1.0);
+        dashbg.position.set(260, 275);
+
 
         // Initializations
         this.subscribeToEvents();
@@ -258,7 +275,8 @@ export default class BattleRoom extends Scene {
                 speed: this.characterState.stats.speed,
                 inventory: this.characterState.getInventory(),
                 tilemap: "Floor",
-                walls: "Wall"
+                walls: "Wall",
+                dashCD: this.dashCD
             });
         this.player.setImageOffset(new Vec2(0, 17));
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class

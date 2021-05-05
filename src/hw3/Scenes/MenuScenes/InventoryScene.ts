@@ -89,31 +89,31 @@ export default class InventoryScene extends Scene {
         portraitborder.position = new Vec2(center.x-550, 240);
 
         /* Player Portrait Background */
-        const playerBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-550, center.y), text: ""});
+        const playerBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-550, center.y+30), text: ""});
         playerBackground.backgroundColor = PancakeColor.colorFromIndex(5);
         playerBackground.borderWidth = 2;
         playerBackground.borderRadius = 10;
         playerBackground.borderColor = Color.WHITE;
-        playerBackground.size.set(350, 650);
+        playerBackground.size.set(350, 700);
 
         let stats = this.characterState.stats;
         let ability = this.characterState.getInventory().getBasicAttack();
         let statNames = ["Ability", "Health", "Attack", "Defense", "Speed", "Attack Multiplier", "Take Damage Multiplier"]
         let statNumbers = [ability.type.displayName, stats.health.toFixed(0) + "/" +stats.maxHealth+"", ability.type.damage.toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
         let statChanges = this.getStatChanges(stats);
-        this.makePlayerStats(new Vec2(center.x-550, 390), 55, statNames, statNumbers, statChanges);
+        this.makePlayerStats(new Vec2(center.x-550, 390), 65, statNames, statNumbers, statChanges);
 
         /* Item Icons Background */
-        const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+150, center.y), text: ""});
+        const iconBackground = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+150, center.y+25), text: ""});
         iconBackground.backgroundColor = PancakeColor.MAGENTA;
         iconBackground.borderWidth = 2;
         iconBackground.borderRadius = 2;
         iconBackground.borderColor = PancakeColor.PINK;
-        iconBackground.size.set(1000, 700);
+        iconBackground.size.set(1000, 725);
 
         /* Item Icons */
         let width = 500;
-        let height = 150;
+        let height = 160;
         this.equippedItems = this.characterState.getInventory().getItems();
         for(let i=0 ; i < this.equippedItems.length ; i++){
             /* Item Icon */

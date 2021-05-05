@@ -3,8 +3,11 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
+import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Inventory from "../GameSystems/Inventory";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
@@ -40,6 +43,8 @@ export default class PlayerController implements BattlerAI {
     
     private dashVelocity: Vec2;
 
+    private dashCD: Sprite;
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         this.direction = Vec2.ZERO;
@@ -52,6 +57,7 @@ export default class PlayerController implements BattlerAI {
         this.activeTile = this.tilemap.getColRowAt(new Vec2(this.owner.position.x, this.owner.position.y));
         this.dashIsReady = true;
         this.walls = this.owner.getScene().getTilemap(options.walls) as OrthogonalTilemap;
+        this.dashCD = options.dashCD;
     }
 
     activate(options: Record<string, any>): void {}
@@ -63,10 +69,6 @@ export default class PlayerController implements BattlerAI {
         if(tileArray.x === itemToFind.x && tileArray.y === itemToFind.y)
             return true;
         return false;
-    }
-
-    setWalls(walls: OrthogonalTilemap){
-        this.walls = walls;
     }
 
     update(deltaT: number): void {
@@ -154,8 +156,10 @@ export default class PlayerController implements BattlerAI {
                 newPos.y += 50;
                 this.dashVelocity.y = 1.0;
             }
-
+            
+            /* Uses dash if Spacebar + WASD was pressed */
             if(useDash){
+                this.putDashOnCooldown();
                 this.owner.tweens.add("dash", {startDelay: 0, duration: 500,
                     effects: [{
                             property: TweenableProperties.posX,
@@ -211,13 +215,13 @@ export default class PlayerController implements BattlerAI {
             }
 
             // Use Current Item on right click
-            else if(Input.isMouseRightClick())
-                if(!this.inventory.isEmpty()){
-                    this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-                    // this.owner.animation.playIfNotAlready("USEITEM");
-                    //this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
-                    this.owner.rotation = 0;
-                }
+            // else if(Input.isMouseRightClick())
+            //     if(!this.inventory.isEmpty()){
+            //         this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+            //         // this.owner.animation.playIfNotAlready("USEITEM");
+            //         //this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
+            //         this.owner.rotation = 0;
+            //     }
         }
 
         // Get the unit vector in the look direction
@@ -228,12 +232,24 @@ export default class PlayerController implements BattlerAI {
         // this.owner.destroy();
     }
 
+    putDashOnCooldown(): void{
+        this.dashCD.tweens.add("runCooldown", {startDelay: 0, duration: 2500,
+            effects: [{
+                    property: TweenableProperties.scaleX,
+                    start: 0,
+                    end: 1.0,
+                    ease: EaseFunctionType.IN_SINE
+                }]
+            });
+        this.dashCD.tweens.play("runCooldown");
+    }
+
     damage(damage: number): void {
         if(damage < 0)
             damage = 0;
 
-        if(!HelpScreen.invincibility && this.owner !== undefined){
-            if(this.owner.tweens.isStopped("takedamage")){
+        if(!HelpScreen.invincibility){
+            if(this.owner !== undefined && this.owner.tweens.isStopped("takedamage")){
                 this.health -= damage;
                 this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "playerdamage"});
                 this.owner.tweens.play("takedamage", true);
