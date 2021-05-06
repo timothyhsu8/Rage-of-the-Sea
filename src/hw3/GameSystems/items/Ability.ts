@@ -95,7 +95,7 @@ export default class Ability {
     }
 
     static createAbility(type: AbilityTypes, battleManager: BattleManager, scene: Scene){
-        let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);    // FINAL PROJECT TODO: Make sure this is getting what it needs
+        let abilityType = <AbilityType>RegistryManager.getRegistry("abilityTypes").get(type);
         let ret =  new Ability(abilityType, scene);
         ret.setBattleManager(battleManager)
         return ret

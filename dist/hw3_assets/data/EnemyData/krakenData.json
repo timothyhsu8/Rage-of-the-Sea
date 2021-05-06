@@ -2,5 +2,7 @@
     "monsterType": "kraken",
     "mode": "chase",
     "health": 7,
-    "ability": "groundslam"
+    "ability": "groundslam",
+    "speed": 65,
+    "damage": 13
 }

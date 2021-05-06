@@ -2,5 +2,7 @@
     "monsterType": "lizard",
     "mode": "chase",
     "health": 9,
-    "ability": "groundslam"
+    "ability": "groundslam",
+    "speed": 50,
+    "damage": 18
 }

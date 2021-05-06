@@ -9,31 +9,31 @@
         {
             "numEnemies": [5, 6, 7],
             "requiredEnemies": ["sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "carrier"],
             "positions": [[250, 120], [250, 180], [300, 120], [370, 45], [350, 230], [400, 130], [400, 45]]
         },
         {
             "numEnemies": [6, 7, 8],
             "requiredEnemies": ["sollasina_yellow", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow"],
+            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow", "carrier"],
             "positions": [[200, 60], [250, 60], [270, 200], [300, 120], [370, 60], [370, 220], [420, 50],  [450, 120]]
         },
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina_yellow", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina_yellow"],
+            "monsterTypes": ["kraken", "lizard", "sollasina_yellow", "carrier"],
             "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 130]]
         },
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina_yellow", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina_yellow"],
+            "monsterTypes": ["kraken", "lizard", "sollasina_yellow", "carrier"],
             "positions": [[175, 70], [250, 70], [250, 180], [300, 225], [350, 90], [370, 180], [460, 180], [450, 70]]
         },
         {
             "numEnemies": [8, 9],
             "requiredEnemies": ["sollasina_yellow", "sollasina_yellow", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina_yellow"],
+            "monsterTypes": ["kraken", "lizard", "sollasina_yellow", "carrier"],
             "positions": [[175, 70],[240, 240], [250, 60], [250, 180], [300, 120], [350, 90], [370, 180], [450, 70], [460, 240]]
         },
         {

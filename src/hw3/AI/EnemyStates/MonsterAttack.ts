@@ -24,6 +24,8 @@ export default class MonsterAttack extends EnemyState {
 
     monsterType: MonsterTypes;
 
+    dir: any;   // Direction of player
+
     constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
         super(parent, owner);
 
@@ -45,16 +47,14 @@ export default class MonsterAttack extends EnemyState {
     handleInput(event: GameEvent): void {}
 
     update(deltaT: number): void {
+        this.dir = this.player.position.clone().sub(this.owner.position).normalize();
         /* Find Monster Type and choose the appropriate attack state */
         switch(this.monsterType){
             case MonsterTypes.KRAKEN:
                 /* If within 20 pixels of the player, attack */
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
-                    let dir = this.player.position.clone().sub(this.owner.position).normalize();
-                    if(this.parent.ability.cast(this.owner, "enemy", dir))
+                    if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                         this.owner.animation.playUninterruptable("ATTACK");
-                    // if(this.parent.ability.cast(this.owner, "enemy", dir))
-                    //     this.owner.rotation = Vec2.UP.angleToCCW(dir);  // If we attacked, face that direction
                 }
                 else this.finished(EnemyStates.DEFAULT);
                 break;
@@ -62,8 +62,7 @@ export default class MonsterAttack extends EnemyState {
             /* FINAL PROJECT TODO - Give this enemy a unique ability */
             case MonsterTypes.LIZARD:  
                 if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
-                    let dir = this.player.position.clone().sub(this.owner.position).normalize();
-                    if(this.parent.ability.cast(this.owner, "enemy", dir))
+                    if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                         this.owner.animation.playUninterruptable("ATTACK");
                 }
                 else this.finished(EnemyStates.DEFAULT);
@@ -71,11 +70,16 @@ export default class MonsterAttack extends EnemyState {
             
             case MonsterTypes.SOLLASINA:
             case MonsterTypes.SOLLASINA_YELLOW:  
-                let dir = this.player.position.clone().sub(this.owner.position).normalize();    // Get player position
-                if(this.parent.ability.cast(this.owner, "enemy", dir))
+                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                 break;
 
+            case MonsterTypes.CARRIER:
+                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
+                    this.owner.animation.playUninterruptable("ATTACK");
+                    
+                else this.finished(EnemyStates.DEFAULT);
+                break;
             default:
                 this.finished(EnemyStates.DEFAULT);
                 break;

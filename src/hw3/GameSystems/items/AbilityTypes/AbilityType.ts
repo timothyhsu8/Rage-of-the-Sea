@@ -42,4 +42,8 @@ export default abstract class AbilityType {
 
     abstract hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean;
     abstract hits(node: GameNode, ...args: any): boolean;
+    
+    setDamage(damage: number){
+        this.damage = damage;
+    }
 }
