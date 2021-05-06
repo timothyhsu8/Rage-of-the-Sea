@@ -4,5 +4,6 @@
     "health": 4,
     "ability": "double_snipe",
     "speed": 0,
-    "damage": 15
+    "damage": 15,
+    "hitbox": [7, 8]
 }

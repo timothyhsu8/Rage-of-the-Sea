@@ -349,7 +349,7 @@ export default class BattleRoom extends Scene {
             // console.log("ABILITY")
             // console.log(monsterInfo.ability)
             // Activate physics
-            this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
+            this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(monsterInfo.hitbox[0], monsterInfo.hitbox[1])));    // Create enemy physics/hitboxes
             let enemyOptions = {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
@@ -388,9 +388,9 @@ export default class BattleRoom extends Scene {
         // use the same position as enemy that died
         zombie.position.set(owner.position.x, owner.position.y);
 
-        // Activate physics
-        zombie.addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
         let monsterInfo = this.load.getObject(monsterType + "Data");
+        // Activate physics
+        zombie.addPhysics(new AABB(Vec2.ZERO, new Vec2(monsterInfo.hitbox[0], monsterInfo.hitbox[1])));  ;
 
         let enemyOptions = {
             monsterType: monsterInfo.monsterType,

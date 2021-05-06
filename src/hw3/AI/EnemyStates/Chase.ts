@@ -62,9 +62,13 @@ export default class Chase extends EnemyState {
             }
 
             /* Follow Player */
-            else{   
+            else{          
+
+                /* Flip sprite when moving left or right (except for Kraken)  */  
+                if(this.owner.imageId !== "Kraken")   
+                    (this.owner._velocity.x >= 0.05) ? ((<AnimatedSprite>this.owner).invertX = true):((<AnimatedSprite>this.owner).invertX = false);
+
                 this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
-                
                 if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
                     this.owner.animation.playIfNotAlready("WALK", true);
             }
