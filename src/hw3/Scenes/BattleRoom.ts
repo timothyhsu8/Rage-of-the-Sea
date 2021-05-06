@@ -359,6 +359,7 @@ export default class BattleRoom extends Scene {
                 damage: monsterInfo.damage,
                 attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
                 range: monsterInfo.range,   // Only need if enemy's state is Chase
+                flippable: monsterInfo.flippable,
                 player: this.player
             }
 
@@ -401,6 +402,7 @@ export default class BattleRoom extends Scene {
             damage: monsterInfo.damage,
             attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
             range: monsterInfo.range,   // Only need if enemy's state is Chase
+            flippable: monsterInfo.flippable,
             player: this.player
         }
 

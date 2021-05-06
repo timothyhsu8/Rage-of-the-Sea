@@ -6,5 +6,6 @@
     "speed": 50,
     "damage": 18,
     "range": 35,
-    "hitbox": [6, 12]
+    "hitbox": [6, 12],
+    "flippable": true
 }

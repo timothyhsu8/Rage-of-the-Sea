@@ -38,11 +38,11 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
         /* Follow player but attack randomly */
         else if(options.defaultMode === "chaseandattack")
-            this.addState(EnemyStates.DEFAULT, new ChaseAndAttack(this, owner, options.player, options.monsterType, options.attackInterval));
+            this.addState(EnemyStates.DEFAULT, new ChaseAndAttack(this, owner, options.player, options.monsterType, options.attackInterval, options.flippable));
 
         /* Follow player and attack only when in range */
         else 
-            this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType, options.range));
+            this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType, options.range, options.flippable));
 
         this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 

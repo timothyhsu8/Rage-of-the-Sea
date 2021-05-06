@@ -3,8 +3,9 @@
     "mode": "chase",
     "health": 9,
     "ability": "spike_line",
-    "speed": 42,
+    "speed": 38,
     "damage": 15,
     "range": 70,
-    "hitbox": [15, 12]
+    "hitbox": [15, 12],
+    "flippable": true
 }

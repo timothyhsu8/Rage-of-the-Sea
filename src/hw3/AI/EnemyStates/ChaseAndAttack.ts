@@ -31,7 +31,11 @@ export default class ChaseAndAttack extends EnemyState {
 
     protected attackQueued: boolean;
 
-    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes, attackInterval: number){
+    protected spriteFlipped: boolean;
+
+    protected flippable: boolean;
+
+    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes, attackInterval: number, flippable: boolean){
         super(parent, owner);
         this.routeIndex = 0;
         this.player = player;
@@ -42,6 +46,7 @@ export default class ChaseAndAttack extends EnemyState {
         let navStack = new Stack<Vec2>();
         navStack.push(player.position);
         this.currentPath = new NavigationPath(navStack);
+        this.flippable = flippable;
     }
 
     onEnter(options: Record<string, any>): void {}
@@ -69,9 +74,18 @@ export default class ChaseAndAttack extends EnemyState {
         }
 
         /* Follow Player */
-        else{   
-            this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
+        else{
             
+            /* Flip sprite when moving left or right (If enemy is flippable) */  
+            if(this.flippable){
+                if(this.owner._velocity.x !== 0)
+                    (this.owner._velocity.x >= 0.01) ? (this.spriteFlipped = false):(this.spriteFlipped = true);
+
+                (this.spriteFlipped) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);
+            }
+            
+            /* Follow Player */
+            this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
             if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
                 this.owner.animation.playIfNotAlready("WALK", true);
         }
