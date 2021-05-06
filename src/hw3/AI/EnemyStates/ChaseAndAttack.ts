@@ -7,7 +7,7 @@ import EnemyState from "./EnemyState";
 import Stack from "../../../Wolfie2D/DataTypes/Stack";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 
-export default class Chase extends EnemyState {
+export default class ChaseAndAttack extends EnemyState {
 
     // The route this AI takes when patrolling
     protected route: Array<Vec2>;
@@ -27,11 +27,16 @@ export default class Chase extends EnemyState {
     // A reference to the current monster
     protected owner: AnimatedSprite;
 
-    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
+    protected attackInterval: number;
+
+    protected attackQueued: boolean;
+
+    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes, attackInterval: number){
         super(parent, owner);
         this.routeIndex = 0;
         this.player = player;
         this.owner = owner;
+        this.attackInterval = attackInterval;
 
         /* Set Navigation Path to follow player */
         let navStack = new Stack<Vec2>();
@@ -44,27 +49,33 @@ export default class Chase extends EnemyState {
     handleInput(event: GameEvent): void {}
 
     update(deltaT: number): void {
-        /* If player is close enough, stop and attack */
-        if(Math.abs(this.player.position.x - this.owner.position.x) <= 30 && Math.abs(this.player.position.y - this.owner.position.y) <= 30 )
-            this.finished(EnemyStates.MONSTERATTACK);
+        
+        /* Attack at the end of the timer */
+        if(!this.attackQueued){
+            this.attackQueued = true;
+            let state = this;
+            setTimeout(() => {
+                state.finished(EnemyStates.MONSTERATTACK);
+                this.attackQueued = false;
+            }, this.attackInterval);
+        }
 
         /* Chase Player */
-        else {
-            /* Reset navigation path if completed */
-            if(this.currentPath.isDone()){
-                let navStack = new Stack<Vec2>(this.route.length);
-                navStack.push(this.route[0]);
-                this.currentPath = new NavigationPath(navStack);
-            }
-
-            /* Follow Player */
-            else{   
-                this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
-                
-                if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
-                    this.owner.animation.playIfNotAlready("WALK", true);
-            }
+        /* Reset navigation path if completed */
+        if(this.currentPath.isDone()){
+            let navStack = new Stack<Vec2>(this.route.length);
+            navStack.push(this.route[0]);
+            this.currentPath = new NavigationPath(navStack);
         }
+
+        /* Follow Player */
+        else{   
+            this.owner.moveOnPath(this.parent.speed * deltaT, this.currentPath);
+            
+            if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
+                this.owner.animation.playIfNotAlready("WALK", true);
+        }
+        
     }
 
     onExit(): Record<string, any> {

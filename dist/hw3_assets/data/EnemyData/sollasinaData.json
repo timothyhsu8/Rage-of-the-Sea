@@ -2,5 +2,7 @@
     "monsterType": "sollasina",
     "mode": "stillprojectiles",
     "health": 4,
-    "ability": "snipe"
+    "ability": "snipe",
+    "speed": 0,
+    "damage": 15
 }

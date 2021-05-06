@@ -1,8 +1,8 @@
 {
-    "monsterType": "lizard",
+    "monsterType": "dagon",
     "mode": "chase",
-    "health": 9,
+    "health": 12,
     "ability": "groundslam",
     "speed": 50,
-    "damage": 18
+    "damage": 17
 }

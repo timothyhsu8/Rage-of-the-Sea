@@ -30,25 +30,6 @@ export default class InventoryManager {
         scene.addUILayer(this.slotLayer).setDepth(100);
         this.itemLayer = "items";
         scene.addUILayer(this.itemLayer).setDepth(101);
-
-        /* FINAL PROJECT TODO - Probably use something like this to add inventory items */
-
-        // Create the inventory slots
-        // for(let i = 0; i < size; i++){
-        //     this.inventorySlots[i] = scene.add.sprite(inventorySlot, this.slotLayer);
-        // }//
-
-        //this.slotSize = this.inventorySlots[0].size.clone();
-
-        // Position the inventory slots
-        // for(let i = 0; i < size; i++){
-        //     this.inventorySlots[i].position.set(position.x + i*(this.slotSize.x + this.padding), position.y);
-        // }
-
-        // Add a rect for the selected slot
-        //this.selectedSlot = <Rect>scene.add.graphic(GraphicType.RECT, "slots", {position: this.position.clone(), size: this.slotSize.clone().inc(-2)});
-        //this.selectedSlot.color = Color.WHITE;
-        //this.selectedSlot.color.a = 0.2;
     }
 
     getItem(): Item {

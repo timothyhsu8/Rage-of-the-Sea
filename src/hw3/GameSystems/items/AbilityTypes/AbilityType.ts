@@ -19,9 +19,6 @@ export default abstract class AbilityType {
     /** The amount of time this ability takes to charge before dealing damage */
     chargeTime: number;
 
-    /** How loud it is to use this weapon */
-    useVolume: number;
-
     hasTileAnimations: boolean;
 
     /**
@@ -42,4 +39,8 @@ export default abstract class AbilityType {
 
     abstract hitsSprite(targetRowCol: Vec2, damageTiles: Array<Vec2>): boolean;
     abstract hits(node: GameNode, ...args: any): boolean;
+    
+    setDamage(damage: number){
+        this.damage = damage;
+    }
 }

@@ -8,11 +8,11 @@ import BattlerAI from "./BattlerAI";
 import MonsterAttack from "./EnemyStates/MonsterAttack";
 import Chase from "./EnemyStates/Chase";
 import Ability from "../GameSystems/items/Ability";
-import {GameEvents} from "../Game_Enums"
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import StillProjectiles from "./EnemyStates/StillProjectiles";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import ChaseAndAttack from "./EnemyStates/ChaseAndAttack";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -22,7 +22,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     health: number;
 
     /** The default movement speed of this AI */
-    speed: number = 65;
+    speed: number;
 
     /** A reference to the player object */
     player: GameNode;
@@ -32,20 +32,25 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         
-        /* FINAL PROJECT TODO - Add more enemy states here */
-        if(options.defaultMode === "stillprojectiles"){
+        /* Stand still and shoot projectiles */
+        if(options.defaultMode === "stillprojectiles")
             this.addState(EnemyStates.DEFAULT, new StillProjectiles(this, owner, options.player, options.monsterType));
-        }
-        else {
-            // Default state is chase
+
+        /* Follow player but attack randomly */
+        else if(options.defaultMode === "chaseandattack")
+            this.addState(EnemyStates.DEFAULT, new ChaseAndAttack(this, owner, options.player, options.monsterType, options.attackInterval));
+
+        /* Follow player and attack only when in range */
+        else 
             this.addState(EnemyStates.DEFAULT, new Chase(this, owner, options.player, options.monsterType));
-        }
 
         this.addState(EnemyStates.MONSTERATTACK, new MonsterAttack(this, owner, options.player, options.monsterType));
 
         this.health = options.health;
         this.player = options.player;
         this.ability = options.ability;
+        this.speed = options.speed;
+        this.ability.type.setDamage(options.damage);
 
         // Initialize to the default state
         this.initialize(EnemyStates.DEFAULT);
@@ -135,16 +140,16 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
 export enum EnemyStates {
     DEFAULT = "default",
-    ALERT = "alert",
-    ATTACKING = "attacking",
-    PREVIOUS = "previous",
     MONSTERATTACK = "monsterattack",
-    CHASE = "chase"
+    CHASE = "chase",
+    CHASEANDATTACK = "chaseandattack"
 }
 
 export enum MonsterTypes {
     KRAKEN = "kraken",
     LIZARD = "lizard",
     SOLLASINA = "sollasina",
-    SOLLASINA_YELLOW = "sollasina_yellow"
+    SOLLASINA_YELLOW = "sollasina_yellow",
+    CARRIER = "carrier",
+    DAGON = "dagon"
 }

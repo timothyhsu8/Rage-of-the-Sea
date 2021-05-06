@@ -60,11 +60,15 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/sollasina.json");
         this.load.spritesheet("sollasina_yellow", "hw3_assets/spritesheets/enemies/sollasina_yellow.json");
+        this.load.spritesheet("carrier", "hw3_assets/spritesheets/enemies/carrier.json");
+        this.load.spritesheet("dagon", "hw3_assets/spritesheets/enemies/dagon.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
         this.load.audio("lizardDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
         this.load.audio("sollasinaDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
+        this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
@@ -74,6 +78,8 @@ export default class BattleRoom extends Scene {
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
         this.load.object("sollasina_yellowData", "hw3_assets/data/EnemyData/sollasina_yellowData.json");
+        this.load.object("carrierData", "hw3_assets/data/EnemyData/carrierData.json");
+        this.load.object("dagonData", "hw3_assets/data/EnemyData/dagonData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
@@ -139,12 +145,13 @@ export default class BattleRoom extends Scene {
                         owner.destroy();
                         this.numMonstersLeft--;
 
-                        if (owner.imageId == "Kraken"){
-                                // kraken respawns as sollasina
+                        /* If enemy is Carrier, spawn an enemy after death */
+                        if (owner.imageId == "Carrier"){
+                                // carrier respawns sollasina after death 
                                 this.respawnZombie(owner, "sollasina", "stillprojectiles")
                                 
                                 // update count
-                                this.numMonstersLeft++;                            
+                                this.numMonstersLeft++;
                             }
                         break;
                     }
@@ -333,6 +340,12 @@ export default class BattleRoom extends Scene {
             let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
             this.enemies[i].position.set(randomPos[0], randomPos[1]);
 
+            // console.log("MODE")
+            // console.log(monsterInfo.mode)
+            // console.log("TYPE")
+            // console.log(monsterInfo.monsterType)
+            // console.log("ABILITY")
+            // console.log(monsterInfo.ability)
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(5, 5)));
             let enemyOptions = {
@@ -340,6 +353,9 @@ export default class BattleRoom extends Scene {
                 defaultMode: monsterInfo.mode,
                 health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.2),
                 ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
+                speed: monsterInfo.speed,
+                damage: monsterInfo.damage,
+                attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
                 player: this.player
             }
 
@@ -353,13 +369,14 @@ export default class BattleRoom extends Scene {
         }
     }
 
-    /* Generates a random integer in the range [0,max) FINAL PROJECT TODO - Move this somewhere else ideally */
+    /* Generates a random integer in the range [0,max) */
     randomInt(max: number): number{
         return Math.floor(Math.random() * max);
     }
 
     /* Spawn an enemytype monsterType with mode defaultMode at position of AnimatedSprite owner */
     respawnZombie(owner: AnimatedSprite, monsterType: string, defaultMode: string){
+        console.log("respawn zombie");
         let zombie = this.add.animatedSprite(monsterType, "primary")
         zombie.active = true
         // append zombie to list
@@ -373,10 +390,13 @@ export default class BattleRoom extends Scene {
         let monsterInfo = this.load.getObject(monsterType + "Data");
 
         let enemyOptions = {
-            monsterType: monsterType,
-            defaultMode: defaultMode,
+            monsterType: monsterInfo.monsterType,
+            defaultMode: monsterInfo.mode,
             health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.2),
             ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
+            speed: monsterInfo.speed,
+            damage: monsterInfo.damage,
+            attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
             player: this.player
         }
 

@@ -2,5 +2,7 @@
     "monsterType": "sollasina_yellow",
     "mode": "stillprojectiles",
     "health": 4,
-    "ability": "double_snipe"
+    "ability": "double_snipe",
+    "speed": 0,
+    "damage": 15
 }
