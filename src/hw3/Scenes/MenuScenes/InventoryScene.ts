@@ -99,7 +99,7 @@ export default class InventoryScene extends Scene {
         let stats = this.characterState.stats;
         let ability = this.characterState.getInventory().getBasicAttack();
         let statNames = ["Ability", "Health", "Attack", "Defense", "Speed", "Attack Multiplier", "Take Damage Multiplier"]
-        let statNumbers = [ability.type.displayName, stats.health.toFixed(0) + "/" +stats.maxHealth+"", ability.type.damage.toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
+        let statNumbers = [ability.type.displayName, stats.health.toFixed(0) + "/" +stats.maxHealth+"", (ability.type.damage+stats.attack).toFixed(1), stats.defense.toFixed(1), stats.speed+"", stats.attackMult.toFixed(1), stats.takeDamageMult.toFixed(1)];
         let statChanges = this.getStatChanges(stats);
         this.makePlayerStats(new Vec2(center.x-550, 390), 65, statNames, statNumbers, statChanges);
 

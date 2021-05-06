@@ -19,9 +19,6 @@ export default abstract class AbilityType {
     /** The amount of time this ability takes to charge before dealing damage */
     chargeTime: number;
 
-    /** How loud it is to use this weapon */
-    useVolume: number;
-
     hasTileAnimations: boolean;
 
     /**

@@ -12,7 +12,6 @@ export default class GroundSlam extends AbilityType {
         this.chargeTime = options.chargeTime;
         this.displayName = options.displayName;
         this.spriteKey = options.spriteKey;
-        this.useVolume = options.useVolume;
         this.hasTileAnimations = false;
     }
 

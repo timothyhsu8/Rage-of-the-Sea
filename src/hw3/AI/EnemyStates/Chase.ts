@@ -45,7 +45,7 @@ export default class Chase extends EnemyState {
 
     update(deltaT: number): void {
         /* If player is close enough, stop and attack */
-        if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 )
+        if(Math.abs(this.player.position.x - this.owner.position.x) <= 30 && Math.abs(this.player.position.y - this.owner.position.y) <= 30 )
             this.finished(EnemyStates.MONSTERATTACK);
 
         /* Chase Player */

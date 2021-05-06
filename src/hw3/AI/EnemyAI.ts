@@ -150,5 +150,6 @@ export enum MonsterTypes {
     LIZARD = "lizard",
     SOLLASINA = "sollasina",
     SOLLASINA_YELLOW = "sollasina_yellow",
-    CARRIER = "carrier"
+    CARRIER = "carrier",
+    DAGON = "dagon"
 }

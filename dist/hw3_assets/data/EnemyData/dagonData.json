@@ -1,0 +1,8 @@
+{
+    "monsterType": "dagon",
+    "mode": "chase",
+    "health": 12,
+    "ability": "groundslam",
+    "speed": 50,
+    "damage": 17
+}

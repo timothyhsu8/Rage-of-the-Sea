@@ -14,9 +14,6 @@ export default abstract class WeaponType {
     /** The use cooldown of the weapon */
     cooldown: number;
 
-    /** How loud it is to use this weapon */
-    useVolume: number;
-
     /**
      * Initializes this weapon type with data
      */

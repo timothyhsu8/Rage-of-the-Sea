@@ -51,20 +51,17 @@ export default class MonsterAttack extends EnemyState {
         /* Find Monster Type and choose the appropriate attack state */
         switch(this.monsterType){
             case MonsterTypes.KRAKEN:
-                /* If within 20 pixels of the player, attack */
-                if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
-                    if(this.parent.ability.cast(this.owner, "enemy", this.dir))
-                        this.owner.animation.playUninterruptable("ATTACK");
-                }
+                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
+                    this.owner.animation.playUninterruptable("ATTACK");
+                
                 else this.finished(EnemyStates.DEFAULT);
                 break;
 
             /* FINAL PROJECT TODO - Give this enemy a unique ability */
             case MonsterTypes.LIZARD:  
-                if(Math.abs(this.player.position.x - this.owner.position.x) <= 20 && Math.abs(this.player.position.y - this.owner.position.y) <= 20 ){
-                    if(this.parent.ability.cast(this.owner, "enemy", this.dir))
-                        this.owner.animation.playUninterruptable("ATTACK");
-                }
+                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
+                    this.owner.animation.playUninterruptable("ATTACK");
+                
                 else this.finished(EnemyStates.DEFAULT);
                 break;
             
@@ -75,6 +72,13 @@ export default class MonsterAttack extends EnemyState {
                 break;
 
             case MonsterTypes.CARRIER:
+                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
+                    this.owner.animation.playUninterruptable("ATTACK");
+                    
+                else this.finished(EnemyStates.DEFAULT);
+                break;
+
+            case MonsterTypes.DAGON:
                 if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                     
