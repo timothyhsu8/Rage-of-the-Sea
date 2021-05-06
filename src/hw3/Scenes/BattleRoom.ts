@@ -413,7 +413,7 @@ export default class BattleRoom extends Scene {
         
         // remove destroyed enemies from enemies list
         let enemy_list = this.enemies.map(enemy => <BattlerAI>enemy._ai)
-        // https://www.techiedelight.com/remove-all-falsy-values-from-an-array-in-javascript/ referenced this site for filterout out undefined values 
+        // https://www.techiedelight.com/remove-all-falsy-values-from-an-array-in-javascript/ referenced this site for filtering out undefined values 
         let filtered = enemy_list.filter(function(x){
             return x !== undefined;
         });
