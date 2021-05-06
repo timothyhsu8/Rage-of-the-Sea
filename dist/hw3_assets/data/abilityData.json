@@ -1,5 +1,5 @@
 {
-    "numAbilities": 4,
+    "numAbilities": 5,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -38,6 +38,16 @@
             "animationSprite": "double_snipe",
             "spriteKey": "double_snipe",
             "damage": 15,
+            "cooldown": 2000,
+            "chargeTime": 1300
+        },
+        {
+            "abilityType": "spike_line",
+            "name": "spike_line",
+            "displayName": "Spike Line",
+            "animationSprite": "spike_line",
+            "spriteKey": "spike_line",
+            "damage": 17,
             "cooldown": 2000,
             "chargeTime": 1300
         }

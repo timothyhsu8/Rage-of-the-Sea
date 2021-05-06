@@ -5,6 +5,7 @@ import WeaponType from "../GameSystems/items/WeaponTypes/WeaponType";
 import AnchorSwing from "../GameSystems/items/AbilityTypes/AnchorSwing";
 import Snipe from "../GameSystems/items/AbilityTypes/Snipe";
 import Double_Snipe from "../GameSystems/items/AbilityTypes/Double_Snipe";
+import Spike_Line from "../GameSystems/items/AbilityTypes/SpikeLine";
 
 export default class AbilityTemplateRegistry extends Registry<WeaponConstructor> {
     
@@ -12,17 +13,19 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         const rm = ResourceManager.getInstance();
 
         // Load spritesheets
+        rm.spritesheet("slice", "hw3_assets/spritesheets/abilities/slice.json");
         rm.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
         rm.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
         rm.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
         rm.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
-        rm.spritesheet("slice", "hw3_assets/spritesheets/abilities/slice.json");
+        rm.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
         this.registerItem("anchorswing", AnchorSwing);
         this.registerItem("snipe", Snipe);
         this.registerItem("double_snipe", Double_Snipe);
+        this.registerItem("spike_line", Spike_Line);
     }
 
     // We don't need this for this assignment

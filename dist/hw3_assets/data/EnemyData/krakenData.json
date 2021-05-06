@@ -4,5 +4,6 @@
     "health": 7,
     "ability": "groundslam",
     "speed": 65,
-    "damage": 13
+    "damage": 13,
+    "range": 30
 }

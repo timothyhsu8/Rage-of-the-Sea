@@ -27,11 +27,14 @@ export default class Chase extends EnemyState {
     // A reference to the current monster
     protected owner: AnimatedSprite;
 
-    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
+    protected range: number;
+
+    constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes, range: number){
         super(parent, owner);
         this.routeIndex = 0;
         this.player = player;
         this.owner = owner;
+        this.range = range;
 
         /* Set Navigation Path to follow player */
         let navStack = new Stack<Vec2>();
@@ -45,7 +48,8 @@ export default class Chase extends EnemyState {
 
     update(deltaT: number): void {
         /* If player is close enough, stop and attack */
-        if(Math.abs(this.player.position.x - this.owner.position.x) <= 30 && Math.abs(this.player.position.y - this.owner.position.y) <= 30 )
+        
+        if(Math.abs(this.player.position.x - this.owner.position.x) <= this.range && Math.abs(this.player.position.y - this.owner.position.y) <= this.range )
             this.finished(EnemyStates.MONSTERATTACK);
 
         /* Chase Player */

@@ -67,13 +67,14 @@ export default class BattleRoom extends Scene {
         this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
         this.load.audio("lizardDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
         this.load.audio("sollasinaDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("sollasina_yellowDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
         this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
+        
         // Load in the enemy info
-        //this.load.object("floor1enemies", "hw3_assets/data/floor1enemies.json" ); 
         this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
@@ -86,6 +87,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
         this.load.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
+        this.load.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
     }
     unloadScene(){}
 
@@ -356,6 +358,7 @@ export default class BattleRoom extends Scene {
                 speed: monsterInfo.speed,
                 damage: monsterInfo.damage,
                 attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
+                range: monsterInfo.range,   // Only need if enemy's state is Chase
                 player: this.player
             }
 
@@ -397,6 +400,7 @@ export default class BattleRoom extends Scene {
             speed: monsterInfo.speed,
             damage: monsterInfo.damage,
             attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
+            range: monsterInfo.range,   // Only need if enemy's state is Chase
             player: this.player
         }
 
