@@ -135,7 +135,6 @@ export default class BattleRoom extends Scene {
         dashbg.scale.set(1.0, 1.0);
         dashbg.position.set(260, 275);
 
-
         // Initializations
         this.subscribeToEvents();
         this.initializePlayer();
@@ -357,14 +356,14 @@ export default class BattleRoom extends Scene {
             let randomPos = positions.splice(this.randomInt(positions.length), 1)[0]
             this.enemies[i].position.set(randomPos[0], randomPos[1]);
 
-            // console.log("MODE")
-            // console.log(monsterInfo.mode)
-            // console.log("TYPE")
-            // console.log(monsterInfo.monsterType)
-            // console.log("ABILITY")
-            // console.log(monsterInfo.ability)
+
             // Activate physics
             this.enemies[i].addPhysics(new AABB(Vec2.ZERO, new Vec2(monsterInfo.hitbox[0], monsterInfo.hitbox[1])));    // Create enemy physics/hitboxes
+            
+            /* Make stand-still enemies non-collidable */
+            if(monsterInfo.mode === "stillprojectiles")
+                this.enemies[i].isCollidable = false;
+
             let enemyOptions = {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
@@ -408,10 +407,14 @@ export default class BattleRoom extends Scene {
         // Activate physics
         zombie.addPhysics(new AABB(Vec2.ZERO, new Vec2(monsterInfo.hitbox[0], monsterInfo.hitbox[1])));  ;
 
+        /* Make stand-still enemies non-collidable */
+        if(monsterInfo.mode === "stillprojectiles")
+            zombie.isCollidable = false;
+
         let enemyOptions = {
             monsterType: monsterInfo.monsterType,
             defaultMode: monsterInfo.mode,
-            health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.2),
+            health: monsterInfo.health + (this.characterState.mapState.currentFloor*0.8),
             ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
             speed: monsterInfo.speed,
             damage: monsterInfo.damage,

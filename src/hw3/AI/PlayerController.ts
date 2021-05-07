@@ -156,6 +156,13 @@ export default class PlayerController implements BattlerAI {
                 newPos.y += 50;
                 this.dashVelocity.y = 1.0;
             }
+
+            /* Slightly reduce distance of diagonal dashes */
+            if(this.dashVelocity.x !== 0 && this.dashVelocity.y !== 0){
+                (this.dashVelocity.x > 0)?(newPos.x -= 12):(newPos.x += 12);
+                (this.dashVelocity.y > 0)?(newPos.y -= 12):(newPos.y += 12);
+            }
+
             
             /* Uses dash if Spacebar + WASD was pressed */
             if(useDash){

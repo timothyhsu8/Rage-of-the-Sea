@@ -5,7 +5,7 @@
     "ability": "groundslam",
     "speed": 50,
     "damage": 18,
-    "range": 35,
+    "range": 40,
     "hitbox": [6, 12],
     "flippable": true
 }

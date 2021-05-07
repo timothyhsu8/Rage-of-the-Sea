@@ -63,7 +63,7 @@ export default class Chase extends EnemyState {
             /* Reset navigation path if completed */
             if(this.currentPath.isDone()){
                 let navStack = new Stack<Vec2>();
-                navStack.push(this.route[0]);
+                navStack.push(this.player.position);
                 this.currentPath = new NavigationPath(navStack);
             }
 
