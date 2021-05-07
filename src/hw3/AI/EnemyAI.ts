@@ -67,6 +67,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         let enemyName = this.owner.imageId.toLowerCase();
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
 
+        let owner = this.owner;
+        owner.changeColor = true;
+        setTimeout(() => {
+            owner.changeColor = false;
+        }, 400);
+
         /* Enemy Dies */
         if(HelpScreen.instakill || this.health <= 0){
             this.owner.disablePhysics();

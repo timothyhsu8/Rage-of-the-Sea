@@ -65,6 +65,7 @@ export default class Spike_Line extends AbilityType {
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
         sprite.position = position;
+        sprite.position.y += 10;
         sprite.animation.play("SPIKES");
         sprite.animation.queue("NORMAL", true);
     }

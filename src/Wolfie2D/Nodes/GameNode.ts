@@ -52,6 +52,7 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 	group: number;
 	isPlayer: boolean;
 	isColliding: boolean = false;
+	changeColor: boolean;
 
 	/*---------- ACTOR ----------*/
 	_ai: AI;
@@ -85,6 +86,7 @@ export default abstract class GameNode implements Positioned, Unique, Updateable
 		this.emitter = new Emitter();
 		this.tweens = new TweenController(this);
 		this.rotation = 0;
+		this.changeColor = false;
 	}
 
 	getEmitter(){
