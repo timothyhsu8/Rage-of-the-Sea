@@ -23,6 +23,10 @@ import Input from "../../Wolfie2D/Input/Input";
 import HelpScreen from "./MenuScenes/HelpScreen";
 import MainMenu from "./MenuScenes/MainMenu";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
+import Label from "../../Wolfie2D/Nodes/UIElements/Label";
+import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import Color from "../../Wolfie2D/Utils/Color";
+import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 
 export default class BattleRoom extends Scene {
     // The player
@@ -47,6 +51,8 @@ export default class BattleRoom extends Scene {
     private tilemap: OrthogonalTilemap;
 
     private characterState: CharacterState;
+
+    private backgroundColor: Array<Color>;
 
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
@@ -102,6 +108,15 @@ export default class BattleRoom extends Scene {
         this.viewport.setOffset(new Vec2(11, 3));
         this.viewport.setZoomLevel(3);
         
+        // Set background color
+        const center = this.viewport.getCenter();
+        this.addLayer("background", -1);
+        this.backgroundColor = [new Color(20, 20, 20), new Color(8, 22, 8), new Color(35, 20, 20), new Color(35, 20, 20), 
+            new Color(30, 30, 40), new Color(30, 30, 40), new Color(30, 30, 40)];
+        const bgColor = <Label>this.add.uiElement(UIElementType.LABEL, "background", {position: center, text: ""});
+        bgColor.size.set(2000, 2000);
+        bgColor.backgroundColor = this.backgroundColor[this.characterState.mapState.currentFloor-1];
+
         this.addLayer("primary", 10);
 
         // Create the battle manager
