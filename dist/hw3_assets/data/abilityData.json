@@ -1,5 +1,5 @@
 {
-    "numAbilities": 5,
+    "numAbilities": 6,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -37,6 +37,16 @@
             "displayName": "Double Snipe",
             "animationSprite": "double_snipe",
             "spriteKey": "double_snipe",
+            "damage": 15,
+            "cooldown": 2000,
+            "chargeTime": 1300
+        },
+        {
+            "abilityType": "triple_snipe",
+            "name": "triple_snipe",
+            "displayName": "Triple Snipe",
+            "animationSprite": "triple_snipe",
+            "spriteKey": "triple_snipe",
             "damage": 15,
             "cooldown": 2000,
             "chargeTime": 1300

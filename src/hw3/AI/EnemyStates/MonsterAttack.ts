@@ -66,7 +66,8 @@ export default class MonsterAttack extends EnemyState {
                 break;
             
             case MonsterTypes.SOLLASINA:
-            case MonsterTypes.SOLLASINA_YELLOW:  
+            case MonsterTypes.SOLLASINA_YELLOW:
+            case MonsterTypes.SOLLASINA_GREEN:  
                 if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                 break;

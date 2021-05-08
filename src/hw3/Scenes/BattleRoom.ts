@@ -66,6 +66,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
         this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/sollasina.json");
         this.load.spritesheet("sollasina_yellow", "hw3_assets/spritesheets/enemies/sollasina_yellow.json");
+        this.load.spritesheet("sollasina_green", "hw3_assets/spritesheets/enemies/sollasina_green.json");
         this.load.spritesheet("carrier", "hw3_assets/spritesheets/enemies/carrier.json");
         this.load.spritesheet("dagon", "hw3_assets/spritesheets/enemies/dagon.json");
 
@@ -74,6 +75,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("lizardDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
         this.load.audio("sollasinaDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("sollasina_yellowDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("sollasina_greenDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
         this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
@@ -85,6 +87,7 @@ export default class BattleRoom extends Scene {
         this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
         this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
         this.load.object("sollasina_yellowData", "hw3_assets/data/EnemyData/sollasina_yellowData.json");
+        this.load.object("sollasina_greenData", "hw3_assets/data/EnemyData/sollasina_greenData.json");
         this.load.object("carrierData", "hw3_assets/data/EnemyData/carrierData.json");
         this.load.object("dagonData", "hw3_assets/data/EnemyData/dagonData.json");
 
@@ -93,6 +96,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
         this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
         this.load.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
+        this.load.spritesheet("triple_snipe", "hw3_assets/spritesheets/abilities/triple_snipe.json");
         this.load.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
     }
     unloadScene(){}
@@ -164,7 +168,13 @@ export default class BattleRoom extends Scene {
                         /* If enemy is Carrier, spawn an enemy after death */
                         if (owner.imageId == "Carrier"){
                                 // carrier respawns sollasina after death 
-                                this.respawnZombie(owner, "sollasina", "stillprojectiles")
+                                let enemyToRespawn = "sollasina";
+                                if(this.characterState.mapState.currentFloor >= 2)
+                                    enemyToRespawn = "sollasina_yellow";
+                                if(this.characterState.mapState.currentFloor >= 5)
+                                    enemyToRespawn = "sollasina_green"
+
+                                this.respawnZombie(owner, enemyToRespawn, "stillprojectiles")
                                 
                                 // update count
                                 this.numMonstersLeft++;
@@ -414,7 +424,7 @@ export default class BattleRoom extends Scene {
         let enemyOptions = {
             monsterType: monsterInfo.monsterType,
             defaultMode: monsterInfo.mode,
-            health: monsterInfo.health + (this.characterState.mapState.currentFloor*0.8),
+            health: (monsterInfo.health + (this.characterState.mapState.currentFloor*1.4))/2,
             ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
             speed: monsterInfo.speed,
             damage: monsterInfo.damage,
