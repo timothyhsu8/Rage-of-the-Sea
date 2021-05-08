@@ -10,25 +10,25 @@
             "numEnemies": [5, 6, 7],
             "requiredEnemies": ["sollasina", "kraken", "lizard"],
             "monsterTypes": ["kraken", "lizard", "sollasina", "carrier", "sollasina_yellow"],
-            "positions": [[250, 120], [250, 180], [300, 120], [370, 45], [350, 230], [400, 130], [400, 45]]
+            "positions": [[250, 120], [250, 180], [300, 120], [370, 45], [300, 230], [400, 130], [400, 45]]
         },
         {
             "numEnemies": [6, 7, 8],
             "requiredEnemies": ["sollasina_yellow", "dagon"],
             "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow", "carrier", "dagon"],
-            "positions": [[200, 60], [250, 60], [270, 200], [300, 120], [370, 60], [370, 220], [420, 50],  [450, 120]]
+            "positions": [[200, 60], [225, 225], [250, 60], [270, 200], [300, 180], [370, 220], [420, 50],  [450, 120]]
         },
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina_yellow", "dagon", "carrier"],
             "monsterTypes": ["kraken", "sollasina_yellow", "carrier", "dagon"],
-            "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 130]]
+            "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 140]]
         },
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina_yellow", "carrier", "dagon"],
             "monsterTypes": ["kraken", "sollasina_yellow", "carrier", "dagon"],
-            "positions": [[175, 70], [250, 70], [250, 180], [300, 225], [350, 90], [370, 180], [460, 180], [450, 70]]
+            "positions": [[175, 130], [250, 110], [250, 180], [300, 225], [350, 135], [370, 180], [460, 180], [450, 150]]
         },
         {
             "numEnemies": [8, 9],

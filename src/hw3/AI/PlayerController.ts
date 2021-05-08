@@ -163,7 +163,13 @@ export default class PlayerController implements BattlerAI {
                 (this.dashVelocity.y > 0)?(newPos.y -= 12):(newPos.y += 12);
             }
 
-            
+            /* If user presses SPACE without WASD, dash forward */
+            if(this.dashVelocity.x === 0 && this.dashVelocity.y === 0){
+                (this.owner.invertX)?(newPos.x -=50):(newPos.x +=50);
+                (this.owner.invertX)?(this.dashVelocity.x = -1.0):(this.dashVelocity.x = 1.0);
+                useDash = true;
+            }
+
             /* Uses dash if Spacebar + WASD was pressed */
             if(useDash){
                 this.putDashOnCooldown();

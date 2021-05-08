@@ -367,7 +367,7 @@ export default class BattleRoom extends Scene {
             let enemyOptions = {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
-                health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.2),
+                health: monsterInfo.health + (this.characterState.mapState.currentFloor*1.4),
                 ability: Ability.createAbility(monsterInfo.ability, this.battleManager, this),
                 speed: monsterInfo.speed,
                 damage: monsterInfo.damage,
