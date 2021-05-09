@@ -1,5 +1,5 @@
 {
-    "numAbilities": 6,
+    "numAbilities": 7,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -60,6 +60,16 @@
             "damage": 17,
             "cooldown": 2000,
             "chargeTime": 1300
+        },
+        {
+            "abilityType": "cross",
+            "name": "cross",
+            "displayName": "Cross",
+            "animationSprite": "cross",
+            "spriteKey": "cross",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1900
         }
     ]
 }

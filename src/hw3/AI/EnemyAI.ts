@@ -158,5 +158,6 @@ export enum MonsterTypes {
     SOLLASINA_YELLOW = "sollasina_yellow",
     SOLLASINA_GREEN = "sollasina_green",
     CARRIER = "carrier",
-    DAGON = "dagon"
+    DAGON = "dagon",
+    UMIBOZU = "umibozu"
 }

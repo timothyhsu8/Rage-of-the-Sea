@@ -69,6 +69,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("sollasina_green", "hw3_assets/spritesheets/enemies/sollasina_green.json");
         this.load.spritesheet("carrier", "hw3_assets/spritesheets/enemies/carrier.json");
         this.load.spritesheet("dagon", "hw3_assets/spritesheets/enemies/dagon.json");
+        this.load.spritesheet("umibozu", "hw3_assets/spritesheets/enemies/umibozu.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
@@ -78,6 +79,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("sollasina_greenDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
         this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("umibozuDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
@@ -90,6 +92,7 @@ export default class BattleRoom extends Scene {
         this.load.object("sollasina_greenData", "hw3_assets/data/EnemyData/sollasina_greenData.json");
         this.load.object("carrierData", "hw3_assets/data/EnemyData/carrierData.json");
         this.load.object("dagonData", "hw3_assets/data/EnemyData/dagonData.json");
+        this.load.object("umibozuData", "hw3_assets/data/EnemyData/umibozuData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
@@ -98,6 +101,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
         this.load.spritesheet("triple_snipe", "hw3_assets/spritesheets/abilities/triple_snipe.json");
         this.load.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
+        this.load.spritesheet("cross", "hw3_assets/spritesheets/abilities/cross.json");
     }
     unloadScene(){}
 

@@ -1,0 +1,11 @@
+{
+    "monsterType": "umibozu",
+    "mode": "chaseandattack",
+    "health": 7,
+    "ability": "cross",
+    "speed": 30,
+    "damage": 20,
+    "attackInterval": 4500,
+    "hitbox": [6, 14],
+    "flippable": true
+}
