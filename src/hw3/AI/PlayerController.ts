@@ -10,6 +10,7 @@ import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Inventory from "../GameSystems/Inventory";
+import { ItemType } from "../GameSystems/items/Item";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import BattlerAI from "./BattlerAI";
 
@@ -170,9 +171,21 @@ export default class PlayerController implements BattlerAI {
                 useDash = true;
             }
 
+            /* If player has Flowing Water item, increase dash distance */
+            if(this.inventory.hasItem(ItemType.FLOWING_WATER)){
+                if(this.dashVelocity.x !== 0)
+                    (this.dashVelocity.x > 0)?(newPos.x += 18):(newPos.x -= 18);
+
+                if(this.dashVelocity.y !== 0)
+                    (this.dashVelocity.y > 0)?(newPos.y += 18):(newPos.y -= 18);
+            }
+
             /* Uses dash if Spacebar + WASD was pressed */
             if(useDash){
-                this.putDashOnCooldown();
+                let dashCooldown = 0;
+                (this.inventory.hasItem(ItemType.BLESSING_OF_THE_TIDES))?(dashCooldown = 1800):(dashCooldown = 2500);
+
+                this.putDashOnCooldown(dashCooldown);
                 this.owner.tweens.add("dash", {startDelay: 0, duration: 500,
                     effects: [{
                             property: TweenableProperties.posX,
@@ -193,7 +206,7 @@ export default class PlayerController implements BattlerAI {
                 this.dashIsReady = false;
                 setTimeout(() => {
                     this.dashIsReady = true;
-                }, 2500);
+                }, dashCooldown);
             }
         }
 
@@ -245,8 +258,8 @@ export default class PlayerController implements BattlerAI {
         // this.owner.destroy();
     }
 
-    putDashOnCooldown(): void{
-        this.dashCD.tweens.add("runCooldown", {startDelay: 0, duration: 2500,
+    putDashOnCooldown(dashCD: number): void{
+        this.dashCD.tweens.add("runCooldown", {startDelay: 0, duration: dashCD,
             effects: [{
                     property: TweenableProperties.scaleX,
                     start: 0,

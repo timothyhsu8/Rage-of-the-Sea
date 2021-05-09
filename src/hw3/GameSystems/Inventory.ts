@@ -14,7 +14,7 @@ export default class Inventory{
 
     hasItem(itemToFind: ItemType): boolean{
         for(let i=0 ; i < this.items.length ; i++)
-            if(this.items[i].name === itemToFind)
+            if(this.items[i].key === itemToFind)
                 return true;
         return false;
     }

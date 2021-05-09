@@ -89,5 +89,7 @@ export enum ItemType {
     FURY_GEMSTONE = "fury_gemstone",
     RESILIENCE_GEMSTONE = "resilience_gemstone",
     SWIFTNESS_GEMSTONE = "swiftness_gemstone",
+    FLOWING_WATER = "flowing_water",
+    BLESSING_OF_THE_TIDES = "blessing_of_the_tides",
     NONE = "none"
 }
