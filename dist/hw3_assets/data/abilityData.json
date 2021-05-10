@@ -1,5 +1,5 @@
 {
-    "numAbilities": 7,
+    "numAbilities": 8,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -67,6 +67,16 @@
             "displayName": "Cross",
             "animationSprite": "cross",
             "spriteKey": "cross",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1900
+        },
+        {
+            "abilityType": "tentacle_sprout",
+            "name": "tentacle_sprout",
+            "displayName": "Tentacle Sprout",
+            "animationSprite": "tentacle_sprout",
+            "spriteKey": "tentacle_sprout",
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1900

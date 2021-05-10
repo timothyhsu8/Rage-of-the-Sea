@@ -73,19 +73,9 @@ export default class MonsterAttack extends EnemyState {
                 break;
 
             case MonsterTypes.CARRIER:
-                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
-                    this.owner.animation.playUninterruptable("ATTACK");
-                    
-                else this.finished(EnemyStates.DEFAULT);
-                break;
-
             case MonsterTypes.DAGON:
-                if(this.parent.ability.cast(this.owner, "enemy", this.dir))
-                    this.owner.animation.playUninterruptable("ATTACK");
-            
-                else this.finished(EnemyStates.DEFAULT);
-                break;
             case MonsterTypes.UMIBOZU:
+            case MonsterTypes.CTHULU:
                 if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                     
