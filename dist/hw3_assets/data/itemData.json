@@ -12,7 +12,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 8,
+        "speed": 6,
         "takeDamageMult": 0
     },
     {
@@ -68,7 +68,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 12,
+        "speed": 9,
         "takeDamageMult": 0
     },
     {
@@ -77,12 +77,12 @@
         "description": "Increased max health, defense, and speed",
         "rarity": "rare",
         "ability": null,
-        "maxHealth": 8,
+        "maxHealth": 12,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
-        "defense": 2,
-        "speed": 5,
+        "defense": 2.5,
+        "speed": 4,
         "takeDamageMult": 0
     },
     {
@@ -96,7 +96,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 9,
-        "speed": -20,
+        "speed": -15,
         "takeDamageMult": 0.8
     },
     {
@@ -105,12 +105,12 @@
         "description": "Increased max health and speed",
         "rarity": "rare",
         "ability": null,
-        "maxHealth": 15,
+        "maxHealth": 18,
         "health": 0,
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 10,
+        "speed": 8,
         "takeDamageMult": 0
     },
     {
@@ -149,7 +149,7 @@
         "ability": null,
         "maxHealth": 0,
         "health": 0,
-        "attack": 1,
+        "attack": 0.7,
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
@@ -177,7 +177,7 @@
         "ability": null,
         "maxHealth": 0,
         "health": 0,
-        "attack": 1.5,
+        "attack": 1.0,
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
@@ -191,7 +191,7 @@
         "ability": null,
         "maxHealth": 0,
         "health": 0,
-        "attack": 0.5,
+        "attack": 0.4,
         "attackMult": 0,
         "defense": 0,
         "speed": 0,
@@ -219,10 +219,10 @@
         "ability": null,
         "maxHealth": 0,
         "health": 0,
-        "attack": 1.0,
+        "attack": 0.7,
         "attackMult": 0,
         "defense": 0,
-        "speed": 7,
+        "speed": 6,
         "takeDamageMult": 0
     },
     {
@@ -357,12 +357,12 @@
         "description": "Increased speed and defense",
         "rarity": "Uncommon",
         "ability": null,
-        "maxHealth": 15,
+        "maxHealth": 0,
         "health": 0,
-        "attack": 0.5,
+        "attack": 0,
         "attackMult": 0,
         "defense": 3,
-        "speed": 9,
+        "speed": 6,
         "takeDamageMult": 0
     }
 ],

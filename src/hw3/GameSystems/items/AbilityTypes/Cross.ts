@@ -62,7 +62,8 @@ export default class Cross extends AbilityType {
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
         sprite.position = position;
-        sprite.animation.play("SNIPE");
+        sprite.position.y += 10;
+        sprite.animation.play("SWIRL");
         sprite.animation.queue("NORMAL", true);
     }
 
