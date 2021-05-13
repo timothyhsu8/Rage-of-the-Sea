@@ -25,42 +25,43 @@ export default class GameWon extends Scene {
         back.size.set(275, 50);
         back.fontSize = 26;
         back.borderWidth = 2;
-        back.borderColor = PancakeColor.PINK;
-        back.backgroundColor = PancakeColor.MAGENTA;
+        back.borderColor = PancakeColor.BEIGE;
+        back.backgroundColor = PancakeColor.colorFromIndex(6);
         back.font = "Merriweather";
         back.onClickEventId = "back";
 
         /* Game Over Artwork */
         this.addLayer("artwork", 9);
         let splashart = this.add.sprite("artwork", "artwork");
-        splashart.position.set(center.x, center.y-150);
+        splashart.position.set(center.x, center.y);
+        splashart.scale.set(3.34, 3.34);
         UITweens.fadeIn(splashart, 0, 500);
 
         /* Stats Label */
         const stats = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y+300), text: ""});
-        stats.backgroundColor = PancakeColor.MAGENTA;
-        stats.borderColor = PancakeColor.PINK;
-        stats.size.set(1600, 320);
+        stats.backgroundColor = PancakeColor.colorFromIndex(6);
+        stats.borderColor = PancakeColor.BEIGE;
+        stats.size.set(1100, 210);
         stats.borderWidth = 2;
-
-        const gameWon = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-625, center.y+200), text: ""});
         
         /* Game Won Text */
-        const text1 = "You defeated the creatures of the deep.";
+        const text1 = "You defeated the creatures of the deep";
         const text2 = "The lives of all the passengers on board the ship have been saved thanks to your efforts.";
         const text3 = "Thanks for playing!";
 
-        const textline1 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+200), text: text1});
+        const textline1 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+235), text: text1});
         textline1.textColor = PancakeColor.BEIGE;
         textline1.font = "Merriweather";
 
-        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+240), text: text2});
+        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+290), text: text2});
+        textline2.fontSize = 25;
         textline2.textColor = Color.WHITE;
         textline2.font = "Merriweather";
 
-        const textline3 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+400), text: text3});
+        const textline3 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+375), text: text3});
         textline3.textColor = PancakeColor.BEIGE;
         textline3.font = "Merriweather";
+        textline3.fontSize = 33;
 
         this.receiver.subscribe("back");
     }

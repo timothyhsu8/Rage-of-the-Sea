@@ -5,6 +5,7 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UITweens from "../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../Wolfie2D/Scene/Scene";
+import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import MainMenu from "./MenuScenes/MainMenu";
 
@@ -24,27 +25,43 @@ export default class GameOver extends Scene {
         back.size.set(275, 50);
         back.fontSize = 26;
         back.borderWidth = 2;
-        back.borderColor = PancakeColor.PINK;
-        back.backgroundColor = PancakeColor.MAGENTA;
+        back.borderColor = PancakeColor.BEIGE;
+        back.backgroundColor = PancakeColor.colorFromIndex(6);
         back.font = "Merriweather";
         back.onClickEventId = "back";
 
         /* Game Over Artwork */
         this.addLayer("artwork", 9);
         let splashart = this.add.sprite("artwork", "artwork");
-        splashart.position.set(center.x, center.y-150);
+        splashart.position.set(center.x, center.y);
+        splashart.scale.set(3.33, 3.33);
         UITweens.fadeIn(splashart, 0, 500);
 
         /* Stats Label */
         const stats = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y+300), text: ""});
-        stats.backgroundColor = PancakeColor.MAGENTA;
-        stats.borderColor = PancakeColor.PINK;
-        stats.size.set(1600, 320);
+        stats.backgroundColor = PancakeColor.colorFromIndex(6);
+        stats.borderColor = PancakeColor.BEIGE;
+        stats.size.set(1100, 210);
         stats.borderWidth = 2;
 
-        const gameOver = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-625, center.y+200), text: "You were defeated..."});
-        gameOver.textColor = PancakeColor.BEIGE;
-        gameOver.font = "Merriweather";
+
+        const text1 = "You were defeated";
+        const text2 = "The creatures of the deep have overtaken the ship";
+        const text3 = "Better luck next time...";
+
+        const textline1 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+235), text: text1});
+        textline1.textColor = PancakeColor.BEIGE;
+        textline1.font = "Merriweather";
+
+        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+290), text: text2});
+        textline2.fontSize = 25;
+        textline2.textColor = Color.WHITE;
+        textline2.font = "Merriweather";
+
+        const textline3 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+375), text: text3});
+        textline3.textColor = PancakeColor.BEIGE;
+        textline3.font = "Merriweather";
+        textline3.fontSize = 33;
 
         this.receiver.subscribe("back");
     }
