@@ -27,8 +27,14 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 
 export default class BattleRoom extends Scene {
+    // The Game Loop boolean
+    private gameLoop: boolean;
+
+    private quitConfirmation: Array<Label>
+
     // The player
     private player: AnimatedSprite;
 
@@ -56,6 +62,7 @@ export default class BattleRoom extends Scene {
 
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
+        this.gameLoop = true
     }
 
     loadScene(){
@@ -160,121 +167,152 @@ export default class BattleRoom extends Scene {
         // UI for healthbar
         this.addUILayer("healthbar");
         this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 10)});
+        this.addUILayer("quitConfirmation");
     }
 
     updateScene(deltaT: number): void {
-        /* Handles all game events */
-        while(this.receiver.hasNextEvent()){
-            let event = this.receiver.getNextEvent();
-                switch(event.type){
-                    case GameEvents.ENEMY_DIED:
-                    {
-                        let owner = event.data.get("node");
-                        owner.destroy();
-                        this.numMonstersLeft--;
-
-                        /* If enemy is Carrier, spawn an enemy after death */
-                        if (owner.imageId == "Carrier"){
-                                // carrier respawns sollasina after death 
-                                let enemyToRespawn = "sollasina";
-                                if(this.characterState.mapState.currentFloor >= 2)
-                                    enemyToRespawn = "sollasina_yellow";
-                                if(this.characterState.mapState.currentFloor >= 5)
-                                    enemyToRespawn = "sollasina_green"
-
-                                this.respawnZombie(owner, enemyToRespawn, "stillprojectiles")
-                                
-                                // update count
-                                this.numMonstersLeft++;
-                            }
-                        break;
-                    }
-                    case GameEvents.PLAYER_DIED:
-                    {
-                        this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1);
-                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                        this.sceneManager.changeToScene(GameOver);
-                        break;
-                    }
-                    case GameEvents.WON_GAME:
-                    {
-                        this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1);
-                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                        this.sceneManager.changeToScene(MainMenu, {});
-                        // Final Project TODO: add won game scene and art
-                        break; 
-                    }
-                    case GameEvents.ROOM_CLEARED:
-                    {
-                        this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1);
-                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-                        this.characterState.itemRotation++;
-                        
-                        /* Item Select Screen */
-                        if(this.characterState.itemRotation === 2){
-                            this.characterState.itemRotation = 0;
-                            this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
-                        }
-
-                        /* Map Screen */
-                        else this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
-                        break;
-                    }
-                    case GameEvents.SKIP_TO_ROOM:
-                    {
-                        let floorNum = event.data.get("floor");
-                        this.viewport.setOffset(new Vec2(0, 0));
-                        this.viewport.setZoomLevel(1);
-                        this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
-
-                        /* Sets Floor */
-                        if(this.characterState.mapState.currentFloor !== floorNum){
-                            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + floorNum +"music", loop:"true", holdReference: true});
-                            this.characterState.mapState.currentFloor = floorNum;
-                            this.characterState.mapState.resetMap();
-                        }
-                        this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
-                        break;
-                    }
-                    default:
-                        break;
+        if (Input.isJustPressed("pause")){
+            this.gameLoop = !this.gameLoop
+            if (this.gameLoop){ // unpause game
+                for (var enemy of this.enemies){
+                    enemy.enablePhysics()
+                    enemy.setAIActive(true, {})
                 }
-        }
-
-        // Update Healthbar GUI
-        let health = (<BattlerAI>this.player._ai).health;
-        let multiplier = this.characterState.stats.maxHealth/100;
-        this.healthbar.size = new Vec2((health*2)/multiplier, 10);
-        this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
-
-        /* If all monsters are killed, advance */
-        if(this.numMonstersLeft <= 0){
-            if (this.characterState.mapState.currentFloor == 7){
-                this.emitter.fireEvent(GameEvents.WON_GAME, {});
-
+                this.player.unfreeze()
+                this.unpauseScreen()
+                console.log(this.quitConfirmation)
             }
             else{
-                this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
-            }
+                for (var enemy of this.enemies){ // pause game
+                    // console.log(enemy)
+                    enemy.disablePhysics()
+                    // enemy.freeze()
+                    // enemy.tweens.pause
+                    enemy.setAIActive(false, {})  // stop the attacking
+                    this.player.freeze()
+                }
+                this.pauseScreen()
 
+                
+
+        
+            }
         }
 
-        /* Game Over screen on player death */
-        if(health <= 0)
-            this.emitter.fireEvent(GameEvents.PLAYER_DIED, {});
+        if (this.gameLoop){
+            /* Handles all game events */
+            while(this.receiver.hasNextEvent()){
+                let event = this.receiver.getNextEvent();
+                    switch(event.type){
+                        case GameEvents.ENEMY_DIED:
+                        {
+                            let owner = event.data.get("node");
+                            owner.destroy();
+                            this.numMonstersLeft--;
 
-        /* Skip Floor buttons pressed */
-        if(HelpScreen.roomSkipping){
-            const NUM_FLOORS = 6;   // FINAL PROJECT TODO - Include the boss room
-            for(let i=1 ; i <= NUM_FLOORS ; i++)
-                if(Input.isJustPressed("floor"+i))
-                    this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});
+                            /* If enemy is Carrier, spawn an enemy after death */
+                            if (owner.imageId == "Carrier"){
+                                    // carrier respawns sollasina after death 
+                                    let enemyToRespawn = "sollasina";
+                                    if(this.characterState.mapState.currentFloor >= 2)
+                                        enemyToRespawn = "sollasina_yellow";
+                                    if(this.characterState.mapState.currentFloor >= 5)
+                                        enemyToRespawn = "sollasina_green"
+
+                                    this.respawnZombie(owner, enemyToRespawn, "stillprojectiles")
+                                    
+                                    // update count
+                                    this.numMonstersLeft++;
+                                }
+                            break;
+                        }
+                        case GameEvents.PLAYER_DIED:
+                        {
+                            this.viewport.setOffset(new Vec2(0, 0));
+                            this.viewport.setZoomLevel(1);
+                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+                            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                            this.sceneManager.changeToScene(GameOver);
+                            break;
+                        }
+                        case GameEvents.WON_GAME:
+                        {
+                            this.viewport.setOffset(new Vec2(0, 0));
+                            this.viewport.setZoomLevel(1);
+                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+                            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                            this.sceneManager.changeToScene(MainMenu, {});
+                            // Final Project TODO: add won game scene and art
+                            break; 
+                        }
+                        case GameEvents.ROOM_CLEARED:
+                        {
+                            this.viewport.setOffset(new Vec2(0, 0));
+                            this.viewport.setZoomLevel(1);
+                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+                            this.characterState.itemRotation++;
+                            
+                            /* Item Select Screen */
+                            if(this.characterState.itemRotation === 2){
+                                this.characterState.itemRotation = 0;
+                                this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
+                            }
+
+                            /* Map Screen */
+                            else this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                            break;
+                        }
+                        case GameEvents.SKIP_TO_ROOM:
+                        {
+                            let floorNum = event.data.get("floor");
+                            this.viewport.setOffset(new Vec2(0, 0));
+                            this.viewport.setZoomLevel(1);
+                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
+
+                            /* Sets Floor */
+                            if(this.characterState.mapState.currentFloor !== floorNum){
+                                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
+                                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + floorNum +"music", loop:"true", holdReference: true});
+                                this.characterState.mapState.currentFloor = floorNum;
+                                this.characterState.mapState.resetMap();
+                            }
+                            this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+            }
+
+            // Update Healthbar GUI
+            let health = (<BattlerAI>this.player._ai).health;
+            let multiplier = this.characterState.stats.maxHealth/100;
+            this.healthbar.size = new Vec2((health*2)/multiplier, 10);
+            this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
+
+            /* If all monsters are killed, advance */
+            if(this.numMonstersLeft <= 0){
+                if (this.characterState.mapState.currentFloor == 7){
+                    this.emitter.fireEvent(GameEvents.WON_GAME, {});
+
+                }
+                else{
+                    this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
+                }
+
+            }
+
+            /* Game Over screen on player death */
+            if(health <= 0)
+                this.emitter.fireEvent(GameEvents.PLAYER_DIED, {});
+
+            /* Skip Floor buttons pressed */
+            if(HelpScreen.roomSkipping){
+                const NUM_FLOORS = 6;   // FINAL PROJECT TODO - Include the boss room
+                for(let i=1 ; i <= NUM_FLOORS ; i++)
+                    if(Input.isJustPressed("floor"+i))
+                        this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});
+            }
         }
     }
 
@@ -462,5 +500,54 @@ export default class BattleRoom extends Scene {
 
         this.battleManager.enemySprites = this.enemies;
         this.battleManager.enemies = filtered
+    }
+
+    pauseScreen(){
+        this.quitConfirmation = new Array<Label>();
+        const center = this.viewport.getCenter();
+        const quitConfirmation = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y), text:""});
+        quitConfirmation.size.set(500, 325);
+        quitConfirmation.borderColor = PancakeColor.PINK;
+        quitConfirmation.backgroundColor = PancakeColor.MAGENTA;
+        quitConfirmation.visible = false;
+
+        const areYouSure = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y-25), text:"Game Paused"});
+        areYouSure.fontSize = 30;
+        areYouSure.textColor = PancakeColor.BEIGE;
+        areYouSure.font = "Merriweather";
+        areYouSure.visible = false;
+
+        const resume = <Button>this.add.uiElement(UIElementType.BUTTON, "quitConfirmation", {position: new Vec2(center.x-60, center.y+25), text: "Resume"});
+        resume.size.set(110, 50);
+        resume.borderWidth = 2;
+        resume.borderColor = Color.WHITE;
+        resume.backgroundColor = new Color(50, 50, 70, 1);
+        resume.onClickEventId = "resume";
+        resume.font = "Merriweather";
+        resume.fontSize = 25;
+        resume.visible = false;
+
+        const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "quitConfirmation", {position: new Vec2(center.x+60, center.y+25), text: "Quit"});
+        quit.size.set(110, 50);
+        quit.borderWidth = 2;
+        quit.borderColor = Color.WHITE;
+        quit.backgroundColor = new Color(50, 50, 70, 1);
+        quit.onClickEventId = "quit";
+        quit.font = "Merriweather";
+        quit.fontSize = 25;
+        quit.visible = false;
+
+        this.quitConfirmation.push(quitConfirmation);
+        this.quitConfirmation.push(areYouSure);
+        // this.quitConfirmation.push(progress);
+        this.quitConfirmation.push(resume);
+        this.quitConfirmation.push(quit);
+        for(let i=0 ; i < this.quitConfirmation.length ; i++)
+        this.quitConfirmation[i].visible = true;
+    }
+
+    unpauseScreen(){
+        for(let i=0 ; i < this.quitConfirmation.length ; i++)
+        this.quitConfirmation[i].visible = false;
     }
 }
