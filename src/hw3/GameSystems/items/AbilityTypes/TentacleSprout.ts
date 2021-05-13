@@ -1,11 +1,10 @@
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
-import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
 import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
 import AbilityType from "./AbilityType";
 
-export default class Cross extends AbilityType {
+export default class TentacleSprout extends AbilityType {
 
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
@@ -18,7 +17,7 @@ export default class Cross extends AbilityType {
 
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
-        let damageTiles = new Array<Vec2>();
+        let damageTiles = [ownerPositionRowCol.clone()];
 
         let furthestRightTile = 14, furthestLeftTile = 0;
         let furthestUpTile = 0, furthestDownTile = 7;
@@ -51,6 +50,9 @@ export default class Cross extends AbilityType {
                 newTile.y += i;
                 damageTiles.push(newTile);
             }
+            let newTile = ownerPositionRowCol.clone();
+            newTile.x += 1;
+            damageTiles.push(newTile);
         }
 
         /* Left Tiles */
@@ -61,6 +63,9 @@ export default class Cross extends AbilityType {
                 newTile.y += i;
                 damageTiles.push(newTile);
             }
+            let newTile = ownerPositionRowCol.clone();
+            newTile.x -= 1;
+            damageTiles.push(newTile);
         }
 
 

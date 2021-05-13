@@ -106,16 +106,16 @@ export default class MapScene extends Scene{
             nextFloor.visible = false;
 
         /* Inventory Button */
-        if (this.characterState.getInventory().getBasicAttack() != null){  // Final Project TODO: After setting basicAttack in Character Select instead of BattleRoom, remove if statement
-            const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
-            inventory.size.set(250, 50);
-            inventory.borderWidth = 2;
-            inventory.borderColor = Color.WHITE;
-            inventory.backgroundColor = new Color(50, 50, 70, 1);
-            inventory.onClickEventId = "inventory";
-            inventory.font = "Merriweather";
-            inventory.fontSize = 30;
-        }
+        // if (this.characterState.getInventory().getBasicAttack() != null){  // Final Project TODO: After setting basicAttack in Character Select instead of BattleRoom, remove if statement
+        const inventory = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x-575, center.y+400), text: "View Inventory"});
+        inventory.size.set(250, 50);
+        inventory.borderWidth = 2;
+        inventory.borderColor = Color.WHITE;
+        inventory.backgroundColor = new Color(50, 50, 70, 1);
+        inventory.onClickEventId = "inventory";
+        inventory.font = "Merriweather";
+        inventory.fontSize = 30;
+        // }
 
 
         /* Quit Button */

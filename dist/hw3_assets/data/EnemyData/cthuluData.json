@@ -5,7 +5,7 @@
     "ability": "tentacle_sprout",
     "speed": 40,
     "damage": 20,
-    "attackInterval": 2500,
-    "hitbox": [6, 12],
+    "attackInterval": 3750,
+    "hitbox": [10, 14],
     "flippable": true
 }
