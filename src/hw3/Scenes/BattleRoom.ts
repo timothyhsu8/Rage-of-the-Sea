@@ -172,7 +172,7 @@ export default class BattleRoom extends Scene {
     }
 
     updateScene(deltaT: number): void {
-        if (Input.isJustPressed("pause")){
+        if (Input.isJustPressed("escape")){
             this.gameLoop = !this.gameLoop
             if (this.gameLoop){ // unpause game
                 for (var enemy of this.enemies){
@@ -191,10 +191,6 @@ export default class BattleRoom extends Scene {
                     this.player.disablePhysics()
                 }
                 this.pauseScreen()
-
-                
-
-        
             }
         }
 
@@ -297,7 +293,6 @@ export default class BattleRoom extends Scene {
                 else{
                     this.emitter.fireEvent(GameEvents.ROOM_CLEARED, {});
                 }
-
             }
 
             /* Game Over screen on player death */

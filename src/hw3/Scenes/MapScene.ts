@@ -215,6 +215,19 @@ export default class MapScene extends Scene{
         UITweens.fadeInScene(this.sceneObjects);
     }
     updateScene(){
+        if (Input.isJustPressed("escape")){
+            if (this.quitLabelVisible == true){
+                this.quitLabelVisible = false;
+                for(let i=0 ; i < this.quitConfirmation.length ; i++)
+                    this.quitConfirmation[i].visible = false;
+            }
+            else{
+                this.quitLabelVisible = true;
+                for(let i=0 ; i < this.quitConfirmation.length ; i++)
+                    this.quitConfirmation[i].visible = true;
+            }
+        }
+        
         const LAST_ROOM_COL = 6;
 
         while(this.receiver.hasNextEvent()){

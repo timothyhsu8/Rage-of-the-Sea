@@ -1,5 +1,6 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
+import Input from "../../../Wolfie2D/Input/Input";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
@@ -120,34 +121,39 @@ export default class HelpScreen extends Scene {
     }
 
     updateScene(){
-        while(this.receiver.hasNextEvent()){
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
-            let event = this.receiver.getNextEvent();
-
-            /* Back Button */
-            if(event.type === "back")
-                this.sceneManager.changeToScene(MainMenu, {});
-
-            /* Cheat Codes */
-            for(let i = 0 ; i < this.cheatEventNames.length; i++)
-                if(event.type === this.cheatEventNames[i])
-                    (this.cheatList[i])?(this.cheatList[i]=false):(this.cheatList[i]=true);
+        if (Input.isJustPressed("escape")){
+            this.sceneManager.changeToScene(MainMenu, {});
         }
+        else{
+            while(this.receiver.hasNextEvent()){
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
+                let event = this.receiver.getNextEvent();
 
-        /* Change color of cheat buttons if they're on/off */
-        for(let i = 0 ; i < this.cheatList.length ; i++){
-            if(this.cheatList[i])
-                this.cheatButtonLabels[i].backgroundColor = new Color(50, 100, 70, 1);
-            
-            else this.cheatButtonLabels[i].backgroundColor = new Color(50, 50, 70, 1);
+                /* Back Button */
+                if(event.type === "back")
+                    this.sceneManager.changeToScene(MainMenu, {});
+
+                /* Cheat Codes */
+                for(let i = 0 ; i < this.cheatEventNames.length; i++)
+                    if(event.type === this.cheatEventNames[i])
+                        (this.cheatList[i])?(this.cheatList[i]=false):(this.cheatList[i]=true);
+            }
+
+            /* Change color of cheat buttons if they're on/off */
+            for(let i = 0 ; i < this.cheatList.length ; i++){
+                if(this.cheatList[i])
+                    this.cheatButtonLabels[i].backgroundColor = new Color(50, 100, 70, 1);
+                
+                else this.cheatButtonLabels[i].backgroundColor = new Color(50, 50, 70, 1);
+            }
+
+            /* Sets values of the static variables (since the cheatList array only stores the variables by value, not reference)*/
+            (this.cheatList[0])?(HelpScreen.allLevelsUnlocked = true):(HelpScreen.allLevelsUnlocked = false);
+            (this.cheatList[1])?(HelpScreen.allowInvincibility = true):(HelpScreen.allowInvincibility = false);
+            (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
+            (this.cheatList[3])?(HelpScreen.roomSkipping = true):(HelpScreen.roomSkipping = false);
+            (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
         }
-
-        /* Sets values of the static variables (since the cheatList array only stores the variables by value, not reference)*/
-        (this.cheatList[0])?(HelpScreen.allLevelsUnlocked = true):(HelpScreen.allLevelsUnlocked = false);
-        (this.cheatList[1])?(HelpScreen.allowInvincibility = true):(HelpScreen.allowInvincibility = false);
-        (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
-        (this.cheatList[3])?(HelpScreen.roomSkipping = true):(HelpScreen.roomSkipping = false);
-        (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
     }
 
     createBackstoryText(startPos: Vec2, text:Array<string>, fontSize: number, spacing: number){

@@ -1,5 +1,6 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
+import Input from "../../../Wolfie2D/Input/Input";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
@@ -147,32 +148,37 @@ export default class LevelSelect extends Scene {
     }
     
     updateScene(){
-        while(this.receiver.hasNextEvent()){
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
-            let event = this.receiver.getNextEvent();
+        if (Input.isJustPressed("escape")){
+            this.sceneManager.changeToScene(MainMenu, {});
+        }
+        else{
+            while(this.receiver.hasNextEvent()){
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
+                let event = this.receiver.getNextEvent();
 
-            if(event.type === "home"){
-                this.sceneManager.changeToScene(MainMenu, {});
-            }
-            else if(event.type === "next"){
-                this.sceneManager.changeToScene(LevelSelect, {page: this.page + 1});
-            }
-            else if(event.type === "previous"){
-                this.sceneManager.changeToScene(LevelSelect, {page: this.page - 1});
-            }
-            /* Go To Character Select Screen */
+                if(event.type === "home"){
+                    this.sceneManager.changeToScene(MainMenu, {});
+                }
+                else if(event.type === "next"){
+                    this.sceneManager.changeToScene(LevelSelect, {page: this.page + 1});
+                }
+                else if(event.type === "previous"){
+                    this.sceneManager.changeToScene(LevelSelect, {page: this.page - 1});
+                }
+                /* Go To Character Select Screen */
 
-            // start scene to BattleRoom
-            
-            // if(event.type.substring(0,6) === "floor7"){
-            //     let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
-            //     this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
+                // start scene to BattleRoom
+                
+                // if(event.type.substring(0,6) === "floor7"){
+                //     let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
+                //     this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
 
-            // }
-            // 
-            if(event.type.substring(0,5) === "floor"){
-                let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
-                this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
+                // }
+                // 
+                if(event.type.substring(0,5) === "floor"){
+                    let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
+                    this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
+                }
             }
         }
     }

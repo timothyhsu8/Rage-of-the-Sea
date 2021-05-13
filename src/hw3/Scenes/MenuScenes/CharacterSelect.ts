@@ -12,6 +12,7 @@ import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import BattleRoom from "../BattleRoom";
+import Input from "../../../Wolfie2D/Input/Input";
 
 
 export default class CharacterSelect extends Scene {
@@ -98,37 +99,42 @@ export default class CharacterSelect extends Scene {
     }
 
     updateScene(){
-        while(this.receiver.hasNextEvent()){
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
-            let event = this.receiver.getNextEvent();
+        if (Input.isJustPressed("escape")){
+            this.sceneManager.changeToScene(MainMenu, {});
+        }
+        else {
+            while(this.receiver.hasNextEvent()){
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
+                let event = this.receiver.getNextEvent();
 
-            if(event.type === "select"){
-                let inventory = new Inventory(this);
-                let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
-                
+                if(event.type === "select"){
+                    let inventory = new Inventory(this);
+                    let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
+                    
 
-                /* FOR BUG TESTING SPECIFIC ITEMS */
-                // const itemData = this.load.getObject("itemData");
-                // let allItems = itemData.allitems;
-                // let itemsToTest = ["raging_tide", "neptunes_trident", "engraved_dagger", "fury_gemstone"]
-                // for(let i=0 ; i < allItems.length ; i++)
-                //     if(itemsToTest.includes(allItems[i].key))
-                //         characterState.addToInventory(allItems[i]);
+                    /* FOR BUG TESTING SPECIFIC ITEMS */
+                    // const itemData = this.load.getObject("itemData");
+                    // let allItems = itemData.allitems;
+                    // let itemsToTest = ["raging_tide", "neptunes_trident", "engraved_dagger", "fury_gemstone"]
+                    // for(let i=0 ; i < allItems.length ; i++)
+                    //     if(itemsToTest.includes(allItems[i].key))
+                    //         characterState.addToInventory(allItems[i]);
 
-                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
-                
-                if (characterState.mapState.currentFloor === 7){ // hard coded for now
-                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                    this.sceneManager.changeToScene(BattleRoom, {characterState: characterState});
+                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
+                    
+                    if (characterState.mapState.currentFloor === 7){ // hard coded for now
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+                        this.sceneManager.changeToScene(BattleRoom, {characterState: characterState});
+                    }
+                    else{
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+                        this.sceneManager.changeToScene(MapScene, {characterState: characterState});
+                    }
                 }
-                else{
-                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                    this.sceneManager.changeToScene(MapScene, {characterState: characterState});
-                }
+
+                if(event.type === "back")
+                    this.sceneManager.changeToScene(MainMenu, {});
             }
-
-            if(event.type === "back")
-                this.sceneManager.changeToScene(MainMenu, {});
         }
     }
 }
