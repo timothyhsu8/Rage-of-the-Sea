@@ -3,9 +3,9 @@
     "mode": "chaseandattack",
     "health": 12,
     "ability": "tentacle_sprout",
-    "speed": 40,
+    "speed": 46,
     "damage": 20,
-    "attackInterval": 3750,
+    "attackInterval": 4250,
     "hitbox": [10, 14],
     "flippable": true
 }

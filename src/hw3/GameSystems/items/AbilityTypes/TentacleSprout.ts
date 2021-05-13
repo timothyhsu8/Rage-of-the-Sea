@@ -79,7 +79,7 @@ export default class TentacleSprout extends AbilityType {
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
         sprite.position = position;
         sprite.position.y += 10;
-        sprite.animation.play("SWIRL");
+        sprite.animation.play("SPROUT");
         sprite.animation.queue("NORMAL", true);
     }
 

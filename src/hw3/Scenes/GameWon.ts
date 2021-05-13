@@ -5,13 +5,14 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import UITweens from "../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../Wolfie2D/Scene/Scene";
+import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import MainMenu from "./MenuScenes/MainMenu";
 
-export default class GameOver extends Scene {
+export default class GameWon extends Scene {
 
     loadScene(){
-        this.load.image("artwork", "hw3_assets/sprites/backgroundart/gameover.png");
+        this.load.image("artwork", "hw3_assets/sprites/backgroundart/gamewon.png");
     }
 
     startScene() {
@@ -42,9 +43,24 @@ export default class GameOver extends Scene {
         stats.size.set(1600, 320);
         stats.borderWidth = 2;
 
-        const gameOver = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-625, center.y+200), text: "You were defeated..."});
-        gameOver.textColor = PancakeColor.BEIGE;
-        gameOver.font = "Merriweather";
+        const gameWon = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-625, center.y+200), text: ""});
+        
+        /* Game Won Text */
+        const text1 = "You defeated the creatures of the deep.";
+        const text2 = "The lives of all the passengers on board the ship have been saved thanks to your efforts.";
+        const text3 = "Thanks for playing!";
+
+        const textline1 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+200), text: text1});
+        textline1.textColor = PancakeColor.BEIGE;
+        textline1.font = "Merriweather";
+
+        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+240), text: text2});
+        textline2.textColor = Color.WHITE;
+        textline2.font = "Merriweather";
+
+        const textline3 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+400), text: text3});
+        textline3.textColor = PancakeColor.BEIGE;
+        textline3.font = "Merriweather";
 
         this.receiver.subscribe("back");
     }

@@ -28,6 +28,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import GameWon from "./GameWon";
 
 export default class BattleRoom extends Scene {
     // The Game Loop boolean
@@ -241,8 +242,7 @@ export default class BattleRoom extends Scene {
                             this.viewport.setZoomLevel(1);
                             this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                            this.sceneManager.changeToScene(MainMenu, {});
-                            // Final Project TODO: add won game scene and art
+                            this.sceneManager.changeToScene(GameWon, {});
                             break; 
                         }
                         case GameEvents.ROOM_CLEARED:

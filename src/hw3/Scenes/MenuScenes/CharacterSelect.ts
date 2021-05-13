@@ -115,13 +115,13 @@ export default class CharacterSelect extends Scene {
                 //     if(itemsToTest.includes(allItems[i].key))
                 //         characterState.addToInventory(allItems[i]);
 
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
                 
-                if (characterState.mapState.currentFloor == 7){ // hard coded for now
+                if (characterState.mapState.currentFloor === 7){ // hard coded for now
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                     this.sceneManager.changeToScene(BattleRoom, {characterState: characterState});
                 }
                 else{
-                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
                     this.sceneManager.changeToScene(MapScene, {characterState: characterState});
                 }

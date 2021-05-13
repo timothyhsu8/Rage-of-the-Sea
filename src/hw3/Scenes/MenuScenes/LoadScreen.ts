@@ -21,6 +21,8 @@ export default class LoadScreen extends Scene {
         this.load.audio("level4music", "hw3_assets/music/level4music.mp3");
         this.load.audio("level5music", "hw3_assets/music/level5music.mp3");
         this.load.audio("level6music", "hw3_assets/music/level6music.mp3");
+        this.load.audio("level7music", "hw3_assets/music/level6music.mp3");
+
         this.load.audio("anchorswing_sound", "hw3_assets/sounds/anchorswing.mp3");
         this.load.audio("snipe_sound", "hw3_assets/sounds/snipe.mp3")
         this.load.audio("playerdamage", "hw3_assets/sounds/playerdamage.mp3")
@@ -68,6 +70,8 @@ export default class LoadScreen extends Scene {
         this.load.keepAudio("level4music");
         this.load.keepAudio("level5music");
         this.load.keepAudio("level6music");
+        this.load.keepAudio("level7music");
+
         this.load.keepAudio("anchorswing_sound");
         this.load.keepAudio("snipe_sound");
         this.load.keepAudio("playerdamage");
