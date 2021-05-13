@@ -181,16 +181,11 @@ export default class BattleRoom extends Scene {
                 }
                 this.player.unfreeze()
                 this.player.enablePhysics()
-
                 this.unpauseScreen()
-                // console.log(this.quitConfirmation)
             }
             else{
                 for (var enemy of this.enemies){ // pause game
-                    // console.log(enemy)
                     enemy.disablePhysics()
-                    // enemy.freeze()
-                    // enemy.tweens.pause
                     enemy.setAIActive(false, {})  // stop the attacking
                     this.player.freeze()
                     this.player.disablePhysics()
@@ -207,7 +202,6 @@ export default class BattleRoom extends Scene {
             /* Handles all game events */
             while(this.receiver.hasNextEvent()){
                 let event = this.receiver.getNextEvent();
-                console.log(event.type)
                     switch(event.type){
                         case GameEvents.ENEMY_DIED:
                         {
@@ -515,7 +509,7 @@ export default class BattleRoom extends Scene {
         quitConfirmation.backgroundColor = PancakeColor.MAGENTA;
         quitConfirmation.visible = false;
 
-        const areYouSure = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y-25), text:"Game Paused, Exc to Resume"});
+        const areYouSure = <Label>this.add.uiElement(UIElementType.LABEL, "quitConfirmation", {position: new Vec2(center.x, center.y-25), text:"Game Paused, Esc to Resume"});
         areYouSure.fontSize = 30;
         areYouSure.textColor = PancakeColor.BEIGE;
         areYouSure.font = "Merriweather";
