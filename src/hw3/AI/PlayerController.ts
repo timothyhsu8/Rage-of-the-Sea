@@ -231,13 +231,16 @@ export default class PlayerController implements BattlerAI {
         if(Input.isMouseJustPressed()){
             // Do Basic Attack on left click
             if(!Input.isMouseRightClick()){
-                // Rotate the player
-                this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-                if(this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection)){
-                    (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
-                    this.owner.animation.playIfNotAlready("ATTACK");
+                if (this.owner.active){ // make sure the player has physics enabled
+                    // Rotate the player
+                    this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+                    if(this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection)){
+                        (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
+                        this.owner.animation.playIfNotAlready("ATTACK");
+                    }
+                    this.owner.rotation = 0;
                 }
-                this.owner.rotation = 0;
+                
             }
 
             // Use Current Item on right click
