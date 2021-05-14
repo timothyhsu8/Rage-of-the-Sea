@@ -1,5 +1,5 @@
 {
-    "numAbilities": 9,
+    "numAbilities": 10,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -90,6 +90,16 @@
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1300
+        },
+        {
+            "abilityType": "leviathan_whirlpool",
+            "name": "leviathan_whirlpool",
+            "displayName": "Leviathan Whirlpool",
+            "animationSprite": "leviathan_whirlpool",
+            "spriteKey": "leviathan_whirlpool",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1900
         }
     ]
 }

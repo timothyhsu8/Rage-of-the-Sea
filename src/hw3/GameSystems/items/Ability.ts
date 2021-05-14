@@ -26,6 +26,8 @@ export default class Ability {
 
     scene: Scene;
 
+    firstTimeCast: boolean;
+
     constructor(type: AbilityType, scene: Scene){
 
         // Set the weapon type
@@ -41,6 +43,7 @@ export default class Ability {
 
         this.assets = this.type.createRequiredAssets(scene);
 
+        this.firstTimeCast = true;
     }
 
     setBattleManager(bm: BattleManager){
@@ -104,6 +107,6 @@ export default class Ability {
 
 export enum AbilityTypes {
     PLAYER_ANCHORSWING = "anchorswing",
-    TRIPLE_SNIPE = "triple_snipe",
-    LEVIATHAN_SPIKES = "leviathan_spikes"
+    LEVIATHAN_SPIKES = "leviathan_spikes",
+    LEVIATHAN_WHIRLPOOL = "leviathan_whirlpool"
 }

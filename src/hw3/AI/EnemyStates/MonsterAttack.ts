@@ -83,7 +83,7 @@ export default class MonsterAttack extends EnemyState {
                 break;
 
             case MonsterTypes.LEVIATHAN:  
-
+                //let randomNum = Math.floor(Math.random() * 2);
                 if(this.parent.abilityList[0].cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                         
@@ -98,5 +98,4 @@ export default class MonsterAttack extends EnemyState {
     onExit(): Record<string, any> {
         return this.retObj;
     }
-
 }
