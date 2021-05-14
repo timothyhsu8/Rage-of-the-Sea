@@ -90,7 +90,7 @@ export default class ItemSelectScene extends Scene {
         this.makeItemButtons(new Vec2(center.x+500, center.y), 2);
 
         /* Heal Button */
-        const heal = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-500, center.y+350), text: "Heal for 1/4 of Max HP"});
+        const heal = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-500, center.y+350), text: "Heal for 1/3 of Max HP"});
         heal.size.set(300, 100);
         heal.borderWidth = 2;
         heal.borderColor = PancakeColor.PINK;
@@ -132,9 +132,9 @@ export default class ItemSelectScene extends Scene {
             if(event.type === "select"){
                 if(this.itemSelected !== -1)
                 {
-                    /* Heal Player for 1/4 of Max HP */
+                    /* Heal Player for 1/3 of Max HP */
                     if(this.itemSelected === 3)
-                        this.characterState.healPlayer(this.characterState.stats.maxHealth * (1/4));
+                        this.characterState.healPlayer(this.characterState.stats.maxHealth * (1/3));
 
                     /* Add selected item to inventory, remove it from pool */
                     else{

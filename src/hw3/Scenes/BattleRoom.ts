@@ -257,7 +257,7 @@ export default class BattleRoom extends Scene {
                             this.characterState.itemRotation++;
                             
                             /* Item Select Screen */
-                            if(this.characterState.itemRotation === 2){
+                            if(HelpScreen.itemEveryRoom || this.characterState.itemRotation === 2){
                                 this.characterState.itemRotation = 0;
                                 this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState});
                             }
@@ -280,7 +280,10 @@ export default class BattleRoom extends Scene {
                                 this.characterState.mapState.currentFloor = floorNum;
                                 this.characterState.mapState.resetMap();
                             }
-                            this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+
+                            /* If next room is boss room load it, otherwise load next floor as normal */
+                            (this.characterState.mapState.currentFloor === 7)?(this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState})):
+                                (this.sceneManager.changeToScene(MapScene, {characterState: this.characterState}));
                             break;
                         }
                         default:
@@ -311,7 +314,7 @@ export default class BattleRoom extends Scene {
 
             /* Skip Floor buttons pressed */
             if(HelpScreen.roomSkipping){
-                const NUM_FLOORS = 6;   // FINAL PROJECT TODO - Include the boss room
+                const NUM_FLOORS = 7;   // FINAL PROJECT TODO - Include the boss room
                 for(let i=1 ; i <= NUM_FLOORS ; i++)
                     if(Input.isJustPressed("floor"+i))
                         this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});

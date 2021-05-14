@@ -19,7 +19,7 @@ export default class HelpScreen extends Scene {
     static allowInvincibility: boolean = false;
     static instakill: boolean = false;
     static roomSkipping: boolean = false;
-    static cheat5: boolean = false;
+    static itemEveryRoom: boolean = false;
 
     static invincibility: boolean = false;
 
@@ -37,7 +37,7 @@ export default class HelpScreen extends Scene {
         backgroundart.position.set(center.x, center.y);
 
         /* Initializes the list of cheats */
-        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.allowInvincibility, HelpScreen.instakill, HelpScreen.roomSkipping, HelpScreen.cheat5];
+        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.allowInvincibility, HelpScreen.instakill, HelpScreen.roomSkipping, HelpScreen.itemEveryRoom];
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-650, center.y-375), text: "Home"});
@@ -110,7 +110,7 @@ export default class HelpScreen extends Scene {
         this.createBackstoryText(new Vec2(center.x-350, center.y+220), devnames, 25, 40);
 
         /* Create Cheat Code Buttons */
-        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-7]", "Cheat 5"];
+        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-7]", "Find Item Every Room"];
         this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5"];
         this.createCheatButtons(5, center, cheatTextArray, 110, this.cheatEventNames);
 
@@ -152,7 +152,7 @@ export default class HelpScreen extends Scene {
             (this.cheatList[1])?(HelpScreen.allowInvincibility = true):(HelpScreen.allowInvincibility = false);
             (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
             (this.cheatList[3])?(HelpScreen.roomSkipping = true):(HelpScreen.roomSkipping = false);
-            (this.cheatList[4])?(HelpScreen.cheat5 = true):(HelpScreen.cheat5 = false);
+            (this.cheatList[4])?(HelpScreen.itemEveryRoom = true):(HelpScreen.itemEveryRoom = false);
         }
     }
 

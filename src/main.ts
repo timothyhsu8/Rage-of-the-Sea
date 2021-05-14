@@ -26,6 +26,7 @@ import SplashScreen from "./hw3/Scenes/MenuScenes/SplashScreen";
             {name: "floor4", keys: ["4"]},
             {name: "floor5", keys: ["5"]},
             {name: "floor6", keys: ["6"]},
+            {name: "floor7", keys: ["7"]},
             {name: "escape", keys: ["escape"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl

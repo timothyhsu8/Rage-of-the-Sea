@@ -259,18 +259,12 @@ export default class MapScene extends Scene{
             /* Move To Next Floor */
             if(event.type === "nextfloor"){
                 if(this.mapState.nextFloorOpen){
-                    if (this.mapState.currentFloor == 6){  // Boss Room
-                        this.mapState.nextFloor();
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
-                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                        this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
-                    }
-                    else{
-                        this.mapState.nextFloor();
-                        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
-                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
-                        this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
-                    }
+                    this.mapState.nextFloor();
+                    this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor-1) + "music"});
+                    this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+
+                    /* If next room is boss room load it, otherwise load next floor as normal */
+                    (this.mapState.currentFloor === 7)?(this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState})):(this.sceneManager.changeToScene(MapScene, {characterState: this.characterState}));
                 }
             }
 
@@ -316,6 +310,15 @@ export default class MapScene extends Scene{
                         this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
                     }
                 }
+            
+            /* Boss Room */
+            if(Input.isJustPressed("floor7")){
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + (this.characterState.mapState.currentFloor) + "music"});
+                this.characterState.mapState.currentFloor = 7;
+                this.characterState.mapState.resetMap();
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
+                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState})
+            }
         }
     }
 
