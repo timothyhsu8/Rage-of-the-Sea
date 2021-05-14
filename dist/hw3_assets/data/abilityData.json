@@ -1,5 +1,5 @@
 {
-    "numAbilities": 8,
+    "numAbilities": 9,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -80,6 +80,16 @@
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1900
+        },
+        {
+            "abilityType": "leviathan_spikes",
+            "name": "leviathan_spikes",
+            "displayName": "Leviathan Spikes",
+            "animationSprite": "leviathan_spikes",
+            "spriteKey": "leviathan_spikes",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1300
         }
     ]
 }

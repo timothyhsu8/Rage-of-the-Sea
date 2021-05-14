@@ -9,6 +9,7 @@ import Spike_Line from "../GameSystems/items/AbilityTypes/SpikeLine";
 import Triple_Snipe from "../GameSystems/items/AbilityTypes/Triple_Snipe";
 import Cross from "../GameSystems/items/AbilityTypes/Cross";
 import TentacleSprout from "../GameSystems/items/AbilityTypes/TentacleSprout";
+import LeviathanSpikes from "../GameSystems/items/AbilityTypes/LeviathanSpikes";
 
 export default class AbilityTemplateRegistry extends Registry<WeaponConstructor> {
     
@@ -25,6 +26,7 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         rm.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
         rm.spritesheet("cross", "hw3_assets/spritesheets/abilities/cross.json");
         rm.spritesheet("tentacle_sprout", "hw3_assets/spritesheets/abilities/tentacle_sprout.json");
+        rm.spritesheet("leviathan_spikes", "hw3_assets/spritesheets/abilities/leviathan_spikes.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
@@ -35,6 +37,7 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         this.registerItem("spike_line", Spike_Line);
         this.registerItem("cross", Cross);
         this.registerItem("tentacle_sprout", TentacleSprout);
+        this.registerItem("leviathan_spikes", LeviathanSpikes);
     }
 
     // We don't need this for this assignment

@@ -117,6 +117,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
         this.load.spritesheet("cross", "hw3_assets/spritesheets/abilities/cross.json");
         this.load.spritesheet("tentacle_sprout", "hw3_assets/spritesheets/abilities/tentacle_sprout.json");
+        this.load.spritesheet("leviathan_spikes", "hw3_assets/spritesheets/abilities/leviathan_spikes.json");
     }
     unloadScene(){}
 
@@ -420,6 +421,10 @@ export default class BattleRoom extends Scene {
             if(monsterInfo.mode === "stillprojectiles")
                 this.enemies[i].isCollidable = false;
 
+
+            /* Ability List (If applicable) */
+            let abilityList = this.setAbilityList(monsterInfo.monsterType);
+
             let enemyOptions = {
                 monsterType: monsterInfo.monsterType,
                 defaultMode: monsterInfo.mode,
@@ -430,6 +435,7 @@ export default class BattleRoom extends Scene {
                 attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
                 range: monsterInfo.range,   // Only need if enemy's state is Chase
                 flippable: monsterInfo.flippable,
+                abilityList: abilityList,
                 player: this.player
             }
 
@@ -467,6 +473,9 @@ export default class BattleRoom extends Scene {
         if(monsterInfo.mode === "stillprojectiles")
             zombie.isCollidable = false;
 
+        /* Ability List (If applicable) */
+        let abilityList = this.setAbilityList(monsterInfo.monsterType);
+
         let enemyOptions = {
             monsterType: monsterInfo.monsterType,
             defaultMode: monsterInfo.mode,
@@ -477,6 +486,7 @@ export default class BattleRoom extends Scene {
             attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
             range: monsterInfo.range,   // Only need if enemy's state is Chase
             flippable: monsterInfo.flippable,
+            abilityList: abilityList,
             player: this.player
         }
 
@@ -549,5 +559,17 @@ export default class BattleRoom extends Scene {
     unpauseScreen(){
         for(let i=0 ; i < this.quitConfirmation.length ; i++)
         this.quitConfirmation[i].visible = false;
+    }
+
+    setAbilityList(monsterType: string){
+        let abilityList = new Array<Ability>();
+        if(monsterType === "leviathan"){
+            abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_SPIKES, this.battleManager, this));
+            abilityList.push(Ability.createAbility(AbilityTypes.TRIPLE_SNIPE, this.battleManager, this));
+        }
+
+        else abilityList = null;
+
+        return abilityList;
     }
 }

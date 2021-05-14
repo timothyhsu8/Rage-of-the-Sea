@@ -29,6 +29,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     ability: Ability;
 
+    abilityList: Array<Ability>;
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         
@@ -51,6 +53,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.ability = options.ability;
         this.speed = options.speed;
         this.ability.type.setDamage(options.damage);
+        this.abilityList = options.abilityList; // Only Leviathan has an ability list right now
 
         // Initialize to the default state
         this.initialize(EnemyStates.DEFAULT);
@@ -78,6 +81,10 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.owner.disablePhysics();
             this.owner.tweens.play("death");
         }
+    }
+
+    setAbilityList(abilityList: Array<Ability>){
+        this.abilityList = abilityList;
     }
 
     playKnockbackTween() {

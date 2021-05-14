@@ -38,8 +38,8 @@
         },
         {
             "numEnemies": [1],
-            "requiredEnemies": ["dagon"],
-            "monsterTypes": ["dagon"],
+            "requiredEnemies": ["leviathan"],
+            "monsterTypes": ["leviathan"],
             "positions": [[175, 70]]
         }
     ]

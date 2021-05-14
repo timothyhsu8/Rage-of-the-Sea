@@ -2,7 +2,7 @@
     "monsterType": "leviathan",
     "mode": "chaseandattack",
     "health": 150,
-    "ability": "spike_line",
+    "ability": "leviathan_spikes",
     "speed": 15,
     "damage": 20,
     "attackInterval": 2000,
