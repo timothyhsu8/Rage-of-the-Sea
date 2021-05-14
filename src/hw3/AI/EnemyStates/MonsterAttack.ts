@@ -83,8 +83,8 @@ export default class MonsterAttack extends EnemyState {
                 break;
 
             case MonsterTypes.LEVIATHAN:  
-                //let randomNum = Math.floor(Math.random() * 2);
-                if(this.parent.abilityList[0].cast(this.owner, "enemy", this.dir))
+                let randomNum = Math.floor(Math.random() * 3);
+                if(!this.owner.animation.isPlaying("ATTACK") && this.parent.abilityList[randomNum].cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
                         
                 else this.finished(EnemyStates.DEFAULT);

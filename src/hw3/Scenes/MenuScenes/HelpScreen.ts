@@ -110,7 +110,7 @@ export default class HelpScreen extends Scene {
         this.createBackstoryText(new Vec2(center.x-350, center.y+220), devnames, 25, 40);
 
         /* Create Cheat Code Buttons */
-        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-6]", "Cheat 5"];
+        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-7]", "Cheat 5"];
         this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5"];
         this.createCheatButtons(5, center, cheatTextArray, 110, this.cheatEventNames);
 

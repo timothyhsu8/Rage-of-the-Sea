@@ -11,6 +11,7 @@ import Cross from "../GameSystems/items/AbilityTypes/Cross";
 import TentacleSprout from "../GameSystems/items/AbilityTypes/TentacleSprout";
 import LeviathanSpikes from "../GameSystems/items/AbilityTypes/LeviathanSpikes";
 import LeviathanWhirlpool from "../GameSystems/items/AbilityTypes/LeviathanWhirlpool";
+import LeviathanRain from "../GameSystems/items/AbilityTypes/LeviathanRain";
 
 export default class AbilityTemplateRegistry extends Registry<WeaponConstructor> {
     
@@ -29,6 +30,7 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         rm.spritesheet("tentacle_sprout", "hw3_assets/spritesheets/abilities/tentacle_sprout.json");
         rm.spritesheet("leviathan_spikes", "hw3_assets/spritesheets/abilities/leviathan_spikes.json");
         rm.spritesheet("leviathan_whirlpool", "hw3_assets/spritesheets/abilities/leviathan_whirlpool.json");
+        rm.spritesheet("leviathan_rain", "hw3_assets/spritesheets/abilities/leviathan_rain.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
@@ -41,6 +43,7 @@ export default class AbilityTemplateRegistry extends Registry<WeaponConstructor>
         this.registerItem("tentacle_sprout", TentacleSprout);
         this.registerItem("leviathan_spikes", LeviathanSpikes);
         this.registerItem("leviathan_whirlpool", LeviathanWhirlpool);
+        this.registerItem("leviathan_rain", LeviathanRain);
     }
 
     // We don't need this for this assignment

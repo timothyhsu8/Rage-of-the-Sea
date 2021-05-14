@@ -72,7 +72,7 @@ export default class LevelSelect extends Scene {
         this.addLayer("locks", 10);
 
         if (this.page == 2){
-            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor7", 0, "Floor 7: Boss", false, 7);
+            this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor7", 0, "Floor 7: Leviathan", true, 7);
         }
         else{
             this.makeLevelButtons(new Vec2(center.x-500, center.y-150), "floor1", 0, "Floor 1: Engine Room", false, 1);
@@ -165,16 +165,7 @@ export default class LevelSelect extends Scene {
                 else if(event.type === "previous"){
                     this.sceneManager.changeToScene(LevelSelect, {page: this.page - 1});
                 }
-                /* Go To Character Select Screen */
 
-                // start scene to BattleRoom
-                
-                // if(event.type.substring(0,6) === "floor7"){
-                //     let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
-                //     this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});
-
-                // }
-                // 
                 if(event.type.substring(0,5) === "floor"){
                     let floorLevel = parseInt(event.type.substring(5)); // Obtains floor level that user chose
                     this.sceneManager.changeToScene(CharacterSelect, {startingLevel: floorLevel});

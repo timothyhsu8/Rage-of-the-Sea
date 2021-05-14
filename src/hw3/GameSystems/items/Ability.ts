@@ -15,6 +15,8 @@ export default class Ability {
     /** A list of assets this weapon needs to be animated */
     assets: Array<any>;
 
+    assetList: Array<any>;
+
     /** An event emitter to hook into the EventQueue */
     emitter: Emitter
 
@@ -29,6 +31,7 @@ export default class Ability {
     firstTimeCast: boolean;
 
     constructor(type: AbilityType, scene: Scene){
+        this.assetList = new Array<any>();
 
         // Set the weapon type
         this.type = type;
@@ -68,6 +71,15 @@ export default class Ability {
         
         /* Play animations on tiles to be hit */
         if(damageTiles !== undefined){
+            /* Creates assets on the first cast of the ability */
+            if(this.firstTimeCast || this.assetList.length < damageTiles.length){
+                for(let i=0 ; i < damageTiles.length ; i++){
+                    let asset = this.type.createRequiredAssets(this.scene)
+                    this.assetList[i] = asset;
+                }
+                this.firstTimeCast = false;
+            }
+
             /* Adjust animation to center of tile */
             for(let i=0 ; i < damageTiles.length ; i++){
                 damageTiles[i].x = damageTiles[i].x+16
@@ -76,8 +88,7 @@ export default class Ability {
 
             /* Play Animation */
             for(let i=0 ; i < damageTiles.length ; i++){
-                let asset = this.type.createRequiredAssets(this.scene);
-                this.type.doIndicatorAnimations(damageTiles[i], asset[0]);
+                this.type.doIndicatorAnimations(damageTiles[i], this.assetList[i][0]);
             }
         }
 
@@ -108,5 +119,7 @@ export default class Ability {
 export enum AbilityTypes {
     PLAYER_ANCHORSWING = "anchorswing",
     LEVIATHAN_SPIKES = "leviathan_spikes",
-    LEVIATHAN_WHIRLPOOL = "leviathan_whirlpool"
+    LEVIATHAN_WHIRLPOOL = "leviathan_whirlpool",
+    TRIPLE_SNIPE = "triple_snipe",
+    LEVIATHAN_RAIN = "leviathan_rain"
 }

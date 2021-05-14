@@ -119,6 +119,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("tentacle_sprout", "hw3_assets/spritesheets/abilities/tentacle_sprout.json");
         this.load.spritesheet("leviathan_spikes", "hw3_assets/spritesheets/abilities/leviathan_spikes.json");
         this.load.spritesheet("leviathan_whirlpool", "hw3_assets/spritesheets/abilities/leviathan_whirlpool.json");
+        this.load.spritesheet("leviathan_rain", "hw3_assets/spritesheets/abilities/leviathan_rain.json");
     }
     unloadScene(){}
 
@@ -567,6 +568,7 @@ export default class BattleRoom extends Scene {
         if(monsterType === "leviathan"){
             abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_SPIKES, this.battleManager, this));
             abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_WHIRLPOOL, this.battleManager, this));
+            abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_RAIN, this.battleManager, this));
         }
 
         else abilityList = null;

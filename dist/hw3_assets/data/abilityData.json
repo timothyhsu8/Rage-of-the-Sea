@@ -1,5 +1,5 @@
 {
-    "numAbilities": 10,
+    "numAbilities": 11,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -100,6 +100,16 @@
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1900
+        },
+        {
+            "abilityType": "leviathan_rain",
+            "name": "leviathan_rain",
+            "displayName": "Leviathan Rain",
+            "animationSprite": "leviathan_rain",
+            "spriteKey": "leviathan_rain",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1300
         }
     ]
 }
