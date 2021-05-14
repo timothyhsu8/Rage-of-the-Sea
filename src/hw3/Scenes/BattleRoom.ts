@@ -79,6 +79,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("dagon", "hw3_assets/spritesheets/enemies/dagon.json");
         this.load.spritesheet("umibozu", "hw3_assets/spritesheets/enemies/umibozu.json");
         this.load.spritesheet("cthulu", "hw3_assets/spritesheets/enemies/cthulu.json");
+        this.load.spritesheet("leviathan", "hw3_assets/spritesheets/enemies/leviathan.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
@@ -90,6 +91,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
         this.load.audio("umibozuDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
         this.load.audio("cthuluDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("leviathanDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
@@ -104,6 +106,7 @@ export default class BattleRoom extends Scene {
         this.load.object("dagonData", "hw3_assets/data/EnemyData/dagonData.json");
         this.load.object("umibozuData", "hw3_assets/data/EnemyData/umibozuData.json");
         this.load.object("cthuluData", "hw3_assets/data/EnemyData/cthuluData.json");
+        this.load.object("leviathanData", "hw3_assets/data/EnemyData/leviathanData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
@@ -178,18 +181,22 @@ export default class BattleRoom extends Scene {
                 for (var enemy of this.enemies){
                     enemy.enablePhysics()
                     enemy.setAIActive(true, {})
+                    enemy.animation.resume();
                 }
                 this.player.unfreeze()
                 this.player.enablePhysics()
+                this.player.animation.resume();
                 this.unpauseScreen()
             }
             else{
                 for (var enemy of this.enemies){ // pause game
                     enemy.disablePhysics()
                     enemy.setAIActive(false, {})  // stop the attacking
-                    this.player.freeze()
-                    this.player.disablePhysics()
+                    enemy.animation.pause();
                 }
+                this.player.freeze()
+                this.player.disablePhysics()
+                this.player.animation.pause();
                 this.pauseScreen()
             }
         }

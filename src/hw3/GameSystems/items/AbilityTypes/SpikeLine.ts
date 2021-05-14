@@ -24,7 +24,7 @@ export default class Spike_Line extends AbilityType {
         if(direction.y >= 0.5 || direction.y <= -0.5){
             let xPos: number;
             (direction.x >= 0)?(xPos = 1):(xPos = -1);
-            for(let i=0 ; i < 3 ; i++){
+            for(let i=0 ; i < 4 ; i++){
                  /* Attack Up */
                  if(direction.y <= -0.5){
                     damageTiles.push(new Vec2(ownerPos.x, ownerPos.y-(i+1)));
@@ -42,7 +42,7 @@ export default class Spike_Line extends AbilityType {
         else if(direction.x >= 0.5 || direction.x <= -0.5){
             let yPos: number;
             (direction.y >= 0)?(yPos = 1):(yPos = -1);
-            for(let i=0 ; i < 3 ; i++){
+            for(let i=0 ; i < 4 ; i++){
                 /* Attack Left */
                 if(direction.x <= -0.5){
                     damageTiles.push(new Vec2(ownerPos.x-(i+1), ownerPos.y))

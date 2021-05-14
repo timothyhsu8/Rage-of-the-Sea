@@ -38,8 +38,8 @@
         },
         {
             "numEnemies": [1],
-            "requiredEnemies": ["umibozu"],
-            "monsterTypes": ["umibozu"],
+            "requiredEnemies": ["dagon"],
+            "monsterTypes": ["dagon"],
             "positions": [[175, 70]]
         }
     ]

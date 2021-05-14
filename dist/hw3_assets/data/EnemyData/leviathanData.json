@@ -1,0 +1,11 @@
+{
+    "monsterType": "leviathan",
+    "mode": "chaseandattack",
+    "health": 150,
+    "ability": "spike_line",
+    "speed": 15,
+    "damage": 20,
+    "attackInterval": 2000,
+    "hitbox": [15, 12],
+    "flippable": true
+}
