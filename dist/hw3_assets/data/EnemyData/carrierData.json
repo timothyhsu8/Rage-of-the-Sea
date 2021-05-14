@@ -1,7 +1,7 @@
 {
     "monsterType": "carrier",
     "mode": "chaseandattack",
-    "health": 6,
+    "health": 8,
     "ability": "groundslam",
     "speed": 35,
     "damage": 15,

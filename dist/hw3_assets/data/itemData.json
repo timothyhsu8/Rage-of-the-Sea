@@ -68,7 +68,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 9,
+        "speed": 8,
         "takeDamageMult": 0
     },
     {
@@ -116,11 +116,11 @@
     {
         "name": "Health Pack",
         "key": "health_pack",
-        "description": "Heal for 50 HP",
+        "description": "Heal for 60 HP",
         "rarity": "uncommon",
         "ability": null,
         "maxHealth": 0,
-        "health": 50,
+        "health": 60,
         "attack": 0,
         "attackMult": 0,
         "defense": 0,

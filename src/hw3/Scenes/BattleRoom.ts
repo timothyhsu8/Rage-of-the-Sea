@@ -88,9 +88,9 @@ export default class BattleRoom extends Scene {
         this.load.audio("sollasina_yellowDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("sollasina_greenDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
         this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
-        this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
-        this.load.audio("umibozuDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
-        this.load.audio("cthuluDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/dagondamage.mp3");
+        this.load.audio("umibozuDamage", "hw3_assets/sounds/enemysounds/umibozudamage.mp3");
+        this.load.audio("cthuluDamage", "hw3_assets/sounds/enemysounds/cthuludamage.mp3");
         this.load.audio("leviathanDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
@@ -221,7 +221,7 @@ export default class BattleRoom extends Scene {
                                     let enemyToRespawn = "sollasina";
                                     if(this.characterState.mapState.currentFloor >= 2)
                                         enemyToRespawn = "sollasina_yellow";
-                                    if(this.characterState.mapState.currentFloor >= 5)
+                                    if(this.characterState.mapState.currentFloor >= 4)
                                         enemyToRespawn = "sollasina_green"
 
                                     this.respawnZombie(owner, enemyToRespawn, "stillprojectiles")

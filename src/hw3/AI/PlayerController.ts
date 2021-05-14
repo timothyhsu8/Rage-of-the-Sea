@@ -207,6 +207,7 @@ export default class PlayerController implements BattlerAI {
                     this.owner.tweens.play("dash");
                     this.owner.animation.playUninterruptable("DASH");
                     this.dashIsReady = false;
+                    this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "dash_sound"});
                     setTimeout(() => {
                         this.dashIsReady = true;
                     }, dashCooldown);

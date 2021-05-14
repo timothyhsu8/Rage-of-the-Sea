@@ -1,7 +1,7 @@
 {
     "monsterType": "umibozu",
     "mode": "chaseandattack",
-    "health": 8,
+    "health": 13,
     "ability": "cross",
     "speed": 30,
     "damage": 20,

@@ -8,8 +8,8 @@
         },
         {
             "numEnemies": [5, 6, 7],
-            "requiredEnemies": ["sollasina", "kraken", "lizard"],
-            "monsterTypes": ["kraken", "lizard", "sollasina", "carrier", "sollasina_yellow"],
+            "requiredEnemies": ["sollasina_yellow", "kraken", "lizard"],
+            "monsterTypes": ["kraken", "lizard", "carrier", "sollasina_yellow"],
             "positions": [[250, 120], [250, 180], [300, 120], [300, 230], [370, 45], [385, 145], [400, 45]]
         },
         {

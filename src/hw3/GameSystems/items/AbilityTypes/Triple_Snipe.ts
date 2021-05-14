@@ -44,6 +44,13 @@ export default class Triple_Snipe extends AbilityType {
         (randomY2 > 0.33)?(damageTile3.y +=2):(damageTile3.y -= 2);
         damageTiles.push(damageTile3);
 
+        let damageTile4 = playerPos.clone();
+        let randomX3 = Math.random();
+        let randomY3 = Math.random();
+        (randomX3 > 0.33)?(damageTile4.x +=2):(damageTile4.x -= 2);
+        (randomY3 > 0.33)?(damageTile4.y +=2):(damageTile4.y -= 2);
+        damageTiles.push(damageTile4);
+
         return damageTiles;
     }
 

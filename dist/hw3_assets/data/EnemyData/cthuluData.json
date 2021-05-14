@@ -1,7 +1,7 @@
 {
     "monsterType": "cthulu",
     "mode": "chaseandattack",
-    "health": 12,
+    "health": 20,
     "ability": "tentacle_sprout",
     "speed": 46,
     "damage": 20,
