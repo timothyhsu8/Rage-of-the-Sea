@@ -16,10 +16,10 @@ export default class Controls extends Scene {
     private sceneObjects: Array<GameNode>;
 
     loadScene(){
-        this.load.image("image1", "hw3_assets/sprites/howtoplay/tutorial1.png");
-        this.load.image("image2", "hw3_assets/sprites/howtoplay/tutorial2.png");
-        this.load.image("image3", "hw3_assets/sprites/howtoplay/tutorial3.png");
-        this.load.image("image4", "hw3_assets/sprites/howtoplay/tutorial4.png");
+        this.load.image("image1", "game_assets/sprites/howtoplay/tutorial1.png");
+        this.load.image("image2", "game_assets/sprites/howtoplay/tutorial2.png");
+        this.load.image("image3", "game_assets/sprites/howtoplay/tutorial3.png");
+        this.load.image("image4", "game_assets/sprites/howtoplay/tutorial4.png");
     }
 
     startScene(){

@@ -26,7 +26,7 @@ export default class MainMenu extends Scene {
     static image: string;
     
     loadScene(){
-        this.load.object("itemData", "hw3_assets/data/itemData.json");
+        this.load.object("itemData", "game_assets/data/itemData.json");
     }
 
     unloadScene(){

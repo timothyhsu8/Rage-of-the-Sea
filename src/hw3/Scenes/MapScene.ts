@@ -39,7 +39,7 @@ export default class MapScene extends Scene{
     }
 
     loadScene(){
-        //this.load.image("portrait", "hw3_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
+        //this.load.image("portrait", "game_assets/sprites/healthUI/" + this.characterState.portrait + ".png");
     }
 
     startScene(){
@@ -116,7 +116,6 @@ export default class MapScene extends Scene{
         inventory.font = "Merriweather";
         inventory.fontSize = 30;
         // }
-
 
         /* Quit Button */
         const quit = <Button>this.add.uiElement(UIElementType.BUTTON, "map", {position: new Vec2(center.x + 600, center.y+400), text: "Quit"});
@@ -275,7 +274,7 @@ export default class MapScene extends Scene{
                         if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
                             this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
 
-                            /* Turn next1 node grey */  // FINAL PROJECT TODO - Fix this to work with the boss room
+                            /* Turn next1 node grey */
                             if(this.roomArray[i][j].next1 !== null && this.roomArray[i][j].next1.roomType !== RoomTypes.BOSS_ROOM){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())

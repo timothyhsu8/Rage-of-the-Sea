@@ -14,54 +14,57 @@ export default class LoadScreen extends Scene {
     private itemData: any;
 
     loadScene(){
-        /* Load Audio */
-        this.load.audio("level1music", "hw3_assets/music/level1music.mp3");
-        this.load.audio("level2music", "hw3_assets/music/level2music.mp3");
-        this.load.audio("level3music", "hw3_assets/music/level3music.mp3");
-        this.load.audio("level4music", "hw3_assets/music/level4music.mp3");
-        this.load.audio("level5music", "hw3_assets/music/level5music.mp3");
-        this.load.audio("level6music", "hw3_assets/music/level6music.mp3");
-        this.load.audio("level7music", "hw3_assets/music/level6music.mp3");
+        /* Music */
+        this.load.audio("level1music", "game_assets/music/level1music.mp3");
+        this.load.audio("level2music", "game_assets/music/level2music.mp3");
+        this.load.audio("level3music", "game_assets/music/level3music.mp3");
+        this.load.audio("level4music", "game_assets/music/level4music.mp3");
+        this.load.audio("level5music", "game_assets/music/level5music.mp3");
+        this.load.audio("level6music", "game_assets/music/level6music.mp3");
+        this.load.audio("level7music", "game_assets/music/level6music.mp3");
 
-        this.load.audio("anchorswing_sound", "hw3_assets/sounds/anchorswing.mp3");
-        this.load.audio("dash_sound", "hw3_assets/sounds/dash.mp3");
-        this.load.audio("snipe_sound", "hw3_assets/sounds/snipe.mp3")
-        this.load.audio("playerdamage", "hw3_assets/sounds/playerdamage.mp3")
+        /* Player Audio */
+        this.load.audio("anchorswing_sound", "game_assets/sounds/anchorswing.mp3");
+        this.load.audio("dash_sound", "game_assets/sounds/dash.mp3");
+        this.load.audio("playerdamage", "game_assets/sounds/playerdamage.mp3")
+
+        /* Ability Audio */
+        this.load.audio("snipe_sound", "game_assets/sounds/snipe.mp3")
 
         /* Load Menu Images */
-        this.load.image("menubackground", "hw3_assets/sprites/backgroundart/menubackground.png");
-        this.load.image("defaultbackground", "hw3_assets/sprites/backgroundart/defaultbackground.png");
-        this.load.image("darkbackground", "hw3_assets/sprites/backgroundart/darkbackground.png");
-        this.load.image("itemdescriptionbox", "hw3_assets/sprites/itemicons/itemdescriptionbox.png");
+        this.load.image("menubackground", "game_assets/sprites/backgroundart/menubackground.png");
+        this.load.image("defaultbackground", "game_assets/sprites/backgroundart/defaultbackground.png");
+        this.load.image("darkbackground", "game_assets/sprites/backgroundart/darkbackground.png");
+        this.load.image("itemdescriptionbox", "game_assets/sprites/itemicons/itemdescriptionbox.png");
         
         /* Load Map */
-        this.load.image("mapBackground", "hw3_assets/sprites/map/map.png");
-        this.load.image("battleIcon", "hw3_assets/sprites/map/battleicon.png");
+        this.load.image("mapBackground", "game_assets/sprites/map/map.png");
+        this.load.image("battleIcon", "game_assets/sprites/map/battleicon.png");
 
         /* Load Player Spritesheet */
-        this.load.spritesheet("player", "hw3_assets/spritesheets/player.json");
+        this.load.spritesheet("player", "game_assets/spritesheets/player.json");
 
         /* Load Player Portraits */
-        this.load.image("portrait", "hw3_assets/sprites/healthUI/diverportrait.png");
-        this.load.image("portraitborder", "hw3_assets/sprites/healthUI/portraitborder.png");
-        this.load.image("healthbarborder", "hw3_assets/sprites/healthUI/healthbarborder.png");
-        this.load.image("dashcd", "hw3_assets/sprites/healthUI/dashcd.png");
-        this.load.image("dashborder", "hw3_assets/sprites/healthUI/dashborder.png");
-        this.load.image("dashbg", "hw3_assets/sprites/healthUI/dashbg.png");
+        this.load.image("portrait", "game_assets/sprites/healthUI/diverportrait.png");
+        this.load.image("portraitborder", "game_assets/sprites/healthUI/portraitborder.png");
+        this.load.image("healthbarborder", "game_assets/sprites/healthUI/healthbarborder.png");
+        this.load.image("dashcd", "game_assets/sprites/healthUI/dashcd.png");
+        this.load.image("dashborder", "game_assets/sprites/healthUI/dashborder.png");
+        this.load.image("dashbg", "game_assets/sprites/healthUI/dashbg.png");
 
         /* Load Enemies for each floor */
-        this.load.object("floorEnemies", "hw3_assets/data/floorEnemies.json");
+        this.load.object("floorEnemies", "game_assets/data/floorEnemies.json");
 
         /* Load Items and Abilities  */
-        this.load.object("abilityData", "hw3_assets/data/abilityData.json");
+        this.load.object("abilityData", "game_assets/data/abilityData.json");
 
         this.itemData = this.load.getObject("itemInfo");
         for(let i=0; i < this.itemData.numItems ; i++){
-            this.load.image(this.itemData.allitems[i].key, "hw3_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
+            this.load.image(this.itemData.allitems[i].key, "game_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
         }
         
         /* Load Inventory Slots */
-        this.load.image("inventorySlot", "hw3_assets/sprites/inventory.png");   // FINAL PROJECT TODO - Actually make this
+        this.load.image("inventorySlot", "game_assets/sprites/inventory.png");
     }
 
     unloadScene(){
@@ -75,8 +78,8 @@ export default class LoadScreen extends Scene {
 
         this.load.keepAudio("anchorswing_sound");
         this.load.keepAudio("dash_sound");
-        this.load.keepAudio("snipe_sound");
         this.load.keepAudio("playerdamage");
+        this.load.keepAudio("snipe_sound");
 
         this.load.keepSpritesheet("player");
 

@@ -159,13 +159,13 @@ export default class InventoryScene extends Scene {
                     this.hoveredItem = this.itemIcons[i];
 
                     /* Item name */
-                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-95);
+                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-92);
                     this.itemName.text = this.equippedItems[i].name + " (" + Item.getRarityText(this.equippedItems[i].rarity) + ")"; 
                     this.itemName.textColor = Item.getRarityColor(this.equippedItems[i].rarity);
                     this.itemName.visible = true;
                     
                     /* Description */
-                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-70);
+                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-67);
                     this.itemDescription.text = this.equippedItems[i].description; 
                     this.itemDescription.visible = true;
 

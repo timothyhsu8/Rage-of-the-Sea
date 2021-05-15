@@ -20,20 +20,20 @@ export default class LevelSelect extends Scene {
 
     initScene(init: Record<string, any>): void {
         this.page = init.page;
-        this.maxPages = 2 // Final Project TODO: after we determine how many levels pages
+        this.maxPages = 2
     }
 
     loadScene(){
         // Final Project TODO: add conditionals if additional levels / boss room are added
-        this.load.image("level1image", "hw3_assets/sprites/levelselect/level1image.png");
-        this.load.image("level2image", "hw3_assets/sprites/levelselect/level2image.png");
-        this.load.image("level3image", "hw3_assets/sprites/levelselect/level3image.png");
-        this.load.image("level4image", "hw3_assets/sprites/levelselect/level4image.png");
-        this.load.image("level5image", "hw3_assets/sprites/levelselect/level5image.png");
-        this.load.image("level6image", "hw3_assets/sprites/levelselect/level6image.png");
-        this.load.image("level7image", "hw3_assets/sprites/levelselect/level7image.png");
+        this.load.image("level1image", "game_assets/sprites/levelselect/level1image.png");
+        this.load.image("level2image", "game_assets/sprites/levelselect/level2image.png");
+        this.load.image("level3image", "game_assets/sprites/levelselect/level3image.png");
+        this.load.image("level4image", "game_assets/sprites/levelselect/level4image.png");
+        this.load.image("level5image", "game_assets/sprites/levelselect/level5image.png");
+        this.load.image("level6image", "game_assets/sprites/levelselect/level6image.png");
+        this.load.image("level7image", "game_assets/sprites/levelselect/level7image.png");
 
-        this.load.image("lock", "hw3_assets/sprites/levelselect/lock.png");
+        this.load.image("lock", "game_assets/sprites/levelselect/lock.png");
     }
 
     startScene(){

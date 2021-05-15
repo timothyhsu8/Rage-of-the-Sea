@@ -67,59 +67,57 @@ export default class BattleRoom extends Scene {
     }
 
     loadScene(){
-        /* FINAL PROJECT TODO - Maybe add conditionals here and use this scene to load every room for every floor */
-
         // Load Enemy Spritesheets
-        this.load.spritesheet("kraken", "hw3_assets/spritesheets/enemies/kraken.json");
-        this.load.spritesheet("lizard", "hw3_assets/spritesheets/enemies/lizard.json");
-        this.load.spritesheet("sollasina", "hw3_assets/spritesheets/enemies/sollasina.json");
-        this.load.spritesheet("sollasina_yellow", "hw3_assets/spritesheets/enemies/sollasina_yellow.json");
-        this.load.spritesheet("sollasina_green", "hw3_assets/spritesheets/enemies/sollasina_green.json");
-        this.load.spritesheet("carrier", "hw3_assets/spritesheets/enemies/carrier.json");
-        this.load.spritesheet("dagon", "hw3_assets/spritesheets/enemies/dagon.json");
-        this.load.spritesheet("umibozu", "hw3_assets/spritesheets/enemies/umibozu.json");
-        this.load.spritesheet("cthulu", "hw3_assets/spritesheets/enemies/cthulu.json");
-        this.load.spritesheet("leviathan", "hw3_assets/spritesheets/enemies/leviathan.json");
+        this.load.spritesheet("kraken", "game_assets/spritesheets/enemies/kraken.json");
+        this.load.spritesheet("lizard", "game_assets/spritesheets/enemies/lizard.json");
+        this.load.spritesheet("sollasina", "game_assets/spritesheets/enemies/sollasina.json");
+        this.load.spritesheet("sollasina_yellow", "game_assets/spritesheets/enemies/sollasina_yellow.json");
+        this.load.spritesheet("sollasina_green", "game_assets/spritesheets/enemies/sollasina_green.json");
+        this.load.spritesheet("carrier", "game_assets/spritesheets/enemies/carrier.json");
+        this.load.spritesheet("dagon", "game_assets/spritesheets/enemies/dagon.json");
+        this.load.spritesheet("umibozu", "game_assets/spritesheets/enemies/umibozu.json");
+        this.load.spritesheet("cthulu", "game_assets/spritesheets/enemies/cthulu.json");
+        this.load.spritesheet("leviathan", "game_assets/spritesheets/enemies/leviathan.json");
 
         // Load Enemy Audio
-        this.load.audio("krakenDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
-        this.load.audio("lizardDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
-        this.load.audio("sollasinaDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
-        this.load.audio("sollasina_yellowDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
-        this.load.audio("sollasina_greenDamage", "hw3_assets/sounds/enemysounds/sollasinadamage.mp3");
-        this.load.audio("carrierDamage", "hw3_assets/sounds/enemysounds/krakendamage.mp3");
-        this.load.audio("dagonDamage", "hw3_assets/sounds/enemysounds/dagondamage.mp3");
-        this.load.audio("umibozuDamage", "hw3_assets/sounds/enemysounds/umibozudamage.mp3");
-        this.load.audio("cthuluDamage", "hw3_assets/sounds/enemysounds/cthuludamage.mp3");
-        this.load.audio("leviathanDamage", "hw3_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("krakenDamage", "game_assets/sounds/enemysounds/krakendamage.mp3");
+        this.load.audio("lizardDamage", "game_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("sollasinaDamage", "game_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("sollasina_yellowDamage", "game_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("sollasina_greenDamage", "game_assets/sounds/enemysounds/sollasinadamage.mp3");
+        this.load.audio("carrierDamage", "game_assets/sounds/enemysounds/krakendamage.mp3");
+        this.load.audio("dagonDamage", "game_assets/sounds/enemysounds/dagondamage.mp3");
+        this.load.audio("umibozuDamage", "game_assets/sounds/enemysounds/umibozudamage.mp3");
+        this.load.audio("cthuluDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
+        this.load.audio("leviathanDamage", "game_assets/sounds/enemysounds/lizarddamage.mp3");
 
         // Load the tilemaps
-        this.load.tilemap("level", "hw3_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
+        this.load.tilemap("level", "game_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
         
         // Load in the enemy info
-        this.load.object("krakenData", "hw3_assets/data/EnemyData/krakenData.json");
-        this.load.object("lizardData", "hw3_assets/data/EnemyData/lizardData.json");
-        this.load.object("sollasinaData", "hw3_assets/data/EnemyData/sollasinaData.json");
-        this.load.object("sollasina_yellowData", "hw3_assets/data/EnemyData/sollasina_yellowData.json");
-        this.load.object("sollasina_greenData", "hw3_assets/data/EnemyData/sollasina_greenData.json");
-        this.load.object("carrierData", "hw3_assets/data/EnemyData/carrierData.json");
-        this.load.object("dagonData", "hw3_assets/data/EnemyData/dagonData.json");
-        this.load.object("umibozuData", "hw3_assets/data/EnemyData/umibozuData.json");
-        this.load.object("cthuluData", "hw3_assets/data/EnemyData/cthuluData.json");
-        this.load.object("leviathanData", "hw3_assets/data/EnemyData/leviathanData.json");
+        this.load.object("krakenData", "game_assets/data/EnemyData/krakenData.json");
+        this.load.object("lizardData", "game_assets/data/EnemyData/lizardData.json");
+        this.load.object("sollasinaData", "game_assets/data/EnemyData/sollasinaData.json");
+        this.load.object("sollasina_yellowData", "game_assets/data/EnemyData/sollasina_yellowData.json");
+        this.load.object("sollasina_greenData", "game_assets/data/EnemyData/sollasina_greenData.json");
+        this.load.object("carrierData", "game_assets/data/EnemyData/carrierData.json");
+        this.load.object("dagonData", "game_assets/data/EnemyData/dagonData.json");
+        this.load.object("umibozuData", "game_assets/data/EnemyData/umibozuData.json");
+        this.load.object("cthuluData", "game_assets/data/EnemyData/cthuluData.json");
+        this.load.object("leviathanData", "game_assets/data/EnemyData/leviathanData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
-        this.load.spritesheet("anchorswing", "hw3_assets/spritesheets/abilities/anchorswing.json");
-        this.load.spritesheet("groundslam", "hw3_assets/spritesheets/abilities/groundslam.json");
-        this.load.spritesheet("snipe", "hw3_assets/spritesheets/abilities/snipe.json");
-        this.load.spritesheet("double_snipe", "hw3_assets/spritesheets/abilities/double_snipe.json");
-        this.load.spritesheet("triple_snipe", "hw3_assets/spritesheets/abilities/triple_snipe.json");
-        this.load.spritesheet("spike_line", "hw3_assets/spritesheets/abilities/spike_line.json");
-        this.load.spritesheet("cross", "hw3_assets/spritesheets/abilities/cross.json");
-        this.load.spritesheet("tentacle_sprout", "hw3_assets/spritesheets/abilities/tentacle_sprout.json");
-        this.load.spritesheet("leviathan_spikes", "hw3_assets/spritesheets/abilities/leviathan_spikes.json");
-        this.load.spritesheet("leviathan_whirlpool", "hw3_assets/spritesheets/abilities/leviathan_whirlpool.json");
-        this.load.spritesheet("leviathan_rain", "hw3_assets/spritesheets/abilities/leviathan_rain.json");
+        this.load.spritesheet("anchorswing", "game_assets/spritesheets/abilities/anchorswing.json");
+        this.load.spritesheet("groundslam", "game_assets/spritesheets/abilities/groundslam.json");
+        this.load.spritesheet("snipe", "game_assets/spritesheets/abilities/snipe.json");
+        this.load.spritesheet("double_snipe", "game_assets/spritesheets/abilities/double_snipe.json");
+        this.load.spritesheet("triple_snipe", "game_assets/spritesheets/abilities/triple_snipe.json");
+        this.load.spritesheet("spike_line", "game_assets/spritesheets/abilities/spike_line.json");
+        this.load.spritesheet("cross", "game_assets/spritesheets/abilities/cross.json");
+        this.load.spritesheet("tentacle_sprout", "game_assets/spritesheets/abilities/tentacle_sprout.json");
+        this.load.spritesheet("leviathan_spikes", "game_assets/spritesheets/abilities/leviathan_spikes.json");
+        this.load.spritesheet("leviathan_whirlpool", "game_assets/spritesheets/abilities/leviathan_whirlpool.json");
+        this.load.spritesheet("leviathan_rain", "game_assets/spritesheets/abilities/leviathan_rain.json");
     }
     unloadScene(){}
 
@@ -314,7 +312,7 @@ export default class BattleRoom extends Scene {
 
             /* Skip Floor buttons pressed */
             if(HelpScreen.roomSkipping){
-                const NUM_FLOORS = 7;   // FINAL PROJECT TODO - Include the boss room
+                const NUM_FLOORS = 7;
                 for(let i=1 ; i <= NUM_FLOORS ; i++)
                     if(Input.isJustPressed("floor"+i))
                         this.emitter.fireEvent(GameEvents.SKIP_TO_ROOM, {floor:i});
@@ -340,7 +338,7 @@ export default class BattleRoom extends Scene {
         let inventory = new Inventory(this);
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         inventory.setBasicAttack(basicAttack);
-        this.characterState.getInventory().setBasicAttack(basicAttack); // FINAL PROJECT TODO - Ideally this should be able to be done from character select
+        this.characterState.getInventory().setBasicAttack(basicAttack);
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
@@ -387,7 +385,7 @@ export default class BattleRoom extends Scene {
     }
     
     initializeEnemies(){
-        const monsterData = this.load.getObject("floorEnemies").enemies[this.characterState.mapState.currentFloor-1];// FINAL PROJECT TODO - Probably add enemy movement speed into the individual json files (and damage maybe?)
+        const monsterData = this.load.getObject("floorEnemies").enemies[this.characterState.mapState.currentFloor-1];
         
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
         let positions = [...monsterData.positions];

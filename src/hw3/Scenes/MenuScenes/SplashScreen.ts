@@ -14,14 +14,14 @@ export default class SplashScreen extends Scene {
 
     loadScene(){
         /* Load Audio */
-        this.load.audio("click", "hw3_assets/sounds/click.mp3");
-        this.load.audio("mainmenu_music", "hw3_assets/music/mainmenu.mp3");
+        this.load.audio("click", "game_assets/sounds/click.mp3");
+        this.load.audio("mainmenu_music", "game_assets/music/mainmenu.mp3");
 
-        this.load.image("clicktoplay", "hw3_assets/sprites/backgroundart/clicktoplay.png");
-        this.load.image("splashart", "hw3_assets/sprites/backgroundart/splashscreen.png");
+        this.load.image("clicktoplay", "game_assets/sprites/backgroundart/clicktoplay.png");
+        this.load.image("splashart", "game_assets/sprites/backgroundart/splashscreen.png");
         
         /* Load Item Data */
-        this.load.object("itemInfo", "hw3_assets/data/itemData.json");
+        this.load.object("itemInfo", "game_assets/data/itemData.json");
     }
 
     unloadScene(){

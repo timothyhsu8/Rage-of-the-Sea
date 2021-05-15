@@ -25,8 +25,8 @@ export default class CharacterSelect extends Scene {
     }
 
     loadScene(){
-        this.load.image("diversplash", "hw3_assets/sprites/characterselect/diversplashart.png");
-        this.load.image("splashborder", "hw3_assets/sprites/characterselect/splashartborder.png");
+        this.load.image("diversplash", "game_assets/sprites/characterselect/diversplashart.png");
+        this.load.image("splashborder", "game_assets/sprites/characterselect/splashartborder.png");
     }
 
     startScene(){this.addUILayer("characterSelect");

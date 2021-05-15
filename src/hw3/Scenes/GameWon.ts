@@ -12,7 +12,7 @@ import MainMenu from "./MenuScenes/MainMenu";
 export default class GameWon extends Scene {
 
     loadScene(){
-        this.load.image("artwork", "hw3_assets/sprites/backgroundart/gamewon.png");
+        this.load.image("artwork", "game_assets/sprites/backgroundart/gamewon.png");
     }
 
     startScene() {

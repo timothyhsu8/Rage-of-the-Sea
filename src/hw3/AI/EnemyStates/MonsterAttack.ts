@@ -57,7 +57,6 @@ export default class MonsterAttack extends EnemyState {
                 else this.finished(EnemyStates.DEFAULT);
                 break;
 
-            /* FINAL PROJECT TODO - Give this enemy a unique ability */
             case MonsterTypes.LIZARD:  
                 if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");
