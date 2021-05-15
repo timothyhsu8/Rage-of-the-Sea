@@ -118,6 +118,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("leviathan_spikes", "game_assets/spritesheets/abilities/leviathan_spikes.json");
         this.load.spritesheet("leviathan_whirlpool", "game_assets/spritesheets/abilities/leviathan_whirlpool.json");
         this.load.spritesheet("leviathan_rain", "game_assets/spritesheets/abilities/leviathan_rain.json");
+        this.load.spritesheet("leviathan_cross", "game_assets/spritesheets/abilities/leviathan_cross.json");
     }
     unloadScene(){}
 
@@ -571,6 +572,7 @@ export default class BattleRoom extends Scene {
             abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_SPIKES, this.battleManager, this));
             abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_WHIRLPOOL, this.battleManager, this));
             abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_RAIN, this.battleManager, this));
+            abilityList.push(Ability.createAbility(AbilityTypes.LEVIATHAN_CROSS, this.battleManager, this));
         }
 
         else abilityList = null;

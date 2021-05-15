@@ -72,16 +72,21 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         
         let knockbackDist = 0;
         (this.knockbackable)?(knockbackDist=4):(knockbackDist=1);
+        if(this.owner.imageId === "Leviathan")
+            knockbackDist = 0;
+
         this.playKnockbackTween(knockbackDist);
 
         let enemyName = this.owner.imageId.toLowerCase();
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
 
-        let owner = this.owner;
-        owner.changeColor = true;
-        setTimeout(() => {
-            owner.changeColor = false;
-        }, 400);
+        if(this.owner.imageId === "Leviathan"){
+            let owner = this.owner;
+            owner.changeColor = true;
+            setTimeout(() => {
+                owner.changeColor = false;
+            }, 400);
+        }
 
         /* Enemy Dies */
         if(HelpScreen.instakill || this.health <= 0){

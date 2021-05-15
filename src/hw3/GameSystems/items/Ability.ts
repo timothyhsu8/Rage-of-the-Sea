@@ -121,5 +121,6 @@ export enum AbilityTypes {
     LEVIATHAN_SPIKES = "leviathan_spikes",
     LEVIATHAN_WHIRLPOOL = "leviathan_whirlpool",
     TRIPLE_SNIPE = "triple_snipe",
-    LEVIATHAN_RAIN = "leviathan_rain"
+    LEVIATHAN_RAIN = "leviathan_rain",
+    LEVIATHAN_CROSS = "leviathan_cross"
 }

@@ -40,7 +40,7 @@
             "numEnemies": [1],
             "requiredEnemies": ["leviathan"],
             "monsterTypes": ["leviathan"],
-            "positions": [[175, 70]]
+            "positions": [[260, 70]]
         }
     ]
 }

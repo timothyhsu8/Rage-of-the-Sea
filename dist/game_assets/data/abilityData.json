@@ -1,5 +1,5 @@
 {
-    "numAbilities": 11,
+    "numAbilities": 12,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -110,6 +110,16 @@
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1300
+        },
+        {
+            "abilityType": "leviathan_cross",
+            "name": "leviathan_cross",
+            "displayName": "Leviathan Cross",
+            "animationSprite": "leviathan_cross",
+            "spriteKey": "leviathan_cross",
+            "damage": 20,
+            "cooldown": 2000,
+            "chargeTime": 1900 
         }
     ]
 }

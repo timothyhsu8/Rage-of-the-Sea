@@ -4,7 +4,7 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
 import AbilityType from "./AbilityType";
 
-export default class Cross extends AbilityType {
+export default class LeviathanCross extends AbilityType {
 
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
@@ -19,37 +19,29 @@ export default class Cross extends AbilityType {
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
         let damageTiles = new Array<Vec2>();
 
-        let furthestRightTile = 14, furthestLeftTile = 0;
-        let furthestUpTile = 0, furthestDownTile = 7;
+        let furthestRightTile = 14, furthestLeftTile = 1;
+        let furthestUpTile = 1, furthestDownTile = 7;
+        let damageTileBase = new Vec2();
 
-        /* Right Tiles */
-        for(let i=0 ; i <= furthestRightTile-ownerPositionRowCol.x ; i++){
-            let rightTile = ownerPositionRowCol.clone();
-            rightTile.x += i;
-            damageTiles.push(rightTile);
-        }
+        /* Vertical Middle */
+        // for(let i=7 ; i <= 8 ; i++)
+        //     for(let j=furthestUpTile ; j <= furthestDownTile ; j++){
+        //         let damageTile = damageTileBase.clone();
+        //         damageTile.x = i;
+        //         damageTile.y = j;
+        //         damageTiles.push(damageTile);
+        //     }
 
-        /* Left Tiles */
-        for(let i=0 ; i < ownerPositionRowCol.x-furthestLeftTile ; i++){
-            let leftTile = ownerPositionRowCol.clone();
-            leftTile.x -= i;
-            damageTiles.push(leftTile);
-        }
-
-        /* Up Tiles */
-        for(let i=0 ; i < ownerPositionRowCol.y-furthestUpTile ; i++){
-            let upTile = ownerPositionRowCol.clone();
-            upTile.y -= i;
-            damageTiles.push(upTile);
-        }
-
-        /* Down Tiles */
-        for(let i=0 ; i <= furthestDownTile-ownerPositionRowCol.y ; i++){
-            let downTile = ownerPositionRowCol.clone();
-            downTile.y += i;
-            damageTiles.push(downTile);
-        }
-
+        /* Horizontal Middle */
+        for(let i=furthestUpTile ; i <= furthestDownTile ; i++)
+            for(let j=furthestLeftTile ; j <= furthestRightTile ; j++){
+                if(j !== i && j !== i+6 ){
+                    let damageTile = damageTileBase.clone();
+                    damageTile.x = j;
+                    damageTile.y = i;
+                    damageTiles.push(damageTile);
+                }
+            }
 
 
         return damageTiles;
@@ -67,7 +59,7 @@ export default class Cross extends AbilityType {
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let snipe = scene.add.animatedSprite("cross", "primary");
+        let snipe = scene.add.animatedSprite("leviathan_cross", "primary");
         snipe.animation.play("NORMAL");
         return [snipe];
     }

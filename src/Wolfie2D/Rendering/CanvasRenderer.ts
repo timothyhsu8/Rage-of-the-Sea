@@ -209,6 +209,20 @@ export default class CanvasRenderer extends RenderingManager {
                 image draw start -> -w/2, -h/2
                 image draw size  -> w, h
         */        
+
+        if(sprite.changeColor){
+            this.ctx.globalCompositeOperation = "luminosity";
+            this.ctx.fillStyle = "red";
+            this.ctx.globalAlpha = 0.6;
+            this.ctx.drawImage(image,
+                sprite.imageOffset.x + animationOffset.x, sprite.imageOffset.y + animationOffset.y,
+                sprite.size.x, sprite.size.y,
+                (-sprite.size.x*sprite.scale.x/2)*this.zoom, (-sprite.size.y*sprite.scale.y/2)*this.zoom,
+                sprite.size.x * sprite.scale.x*this.zoom, sprite.size.y * sprite.scale.y*this.zoom);
+
+            this.ctx.globalCompositeOperation = "source-over";
+        }
+
         this.ctx.drawImage(image,
             sprite.imageOffset.x + animationOffset.x, sprite.imageOffset.y + animationOffset.y,
             sprite.size.x, sprite.size.y,
@@ -218,7 +232,7 @@ export default class CanvasRenderer extends RenderingManager {
         // if(sprite.changeColor){
         //     this.ctx.globalCompositeOperation = "luminosity";
         //     this.ctx.fillStyle = "red";
-        //     //this.ctx.globalAlpha = 0.5
+        //     this.ctx.globalAlpha = 0.5
         //     this.ctx.drawImage(image,
         //         sprite.imageOffset.x + animationOffset.x, sprite.imageOffset.y + animationOffset.y,
         //         sprite.size.x, sprite.size.y,

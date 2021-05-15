@@ -12,6 +12,7 @@ import LeviathanSpikes from "../GameSystems/items/AbilityTypes/LeviathanSpikes";
 import LeviathanWhirlpool from "../GameSystems/items/AbilityTypes/LeviathanWhirlpool";
 import LeviathanRain from "../GameSystems/items/AbilityTypes/LeviathanRain";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType";
+import LeviathanCross from "../GameSystems/items/AbilityTypes/LeviathanCross";
 
 export default class AbilityTemplateRegistry extends Registry<AbilityConstructor> {
     
@@ -31,6 +32,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         rm.spritesheet("leviathan_spikes", "game_assets/spritesheets/abilities/leviathan_spikes.json");
         rm.spritesheet("leviathan_whirlpool", "game_assets/spritesheets/abilities/leviathan_whirlpool.json");
         rm.spritesheet("leviathan_rain", "game_assets/spritesheets/abilities/leviathan_rain.json");
+        rm.spritesheet("leviathan_cross", "game_assets/spritesheets/abilities/leviathan_cross.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
@@ -44,6 +46,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         this.registerItem("leviathan_spikes", LeviathanSpikes);
         this.registerItem("leviathan_whirlpool", LeviathanWhirlpool);
         this.registerItem("leviathan_rain", LeviathanRain);
+        this.registerItem("leviathan_cross", LeviathanCross);
     }
 
     // We don't need this for this assignment
