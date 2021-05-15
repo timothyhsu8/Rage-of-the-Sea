@@ -12,7 +12,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 6,
+        "speed": 3,
         "takeDamageMult": 0
     },
     {
@@ -68,7 +68,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 8,
+        "speed": 7,
         "takeDamageMult": 0
     },
     {
@@ -96,7 +96,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 9,
-        "speed": -15,
+        "speed": -10,
         "takeDamageMult": 0.8
     },
     {
@@ -110,7 +110,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 8,
+        "speed": 6,
         "takeDamageMult": 0
     },
     {
@@ -222,7 +222,7 @@
         "attack": 0.7,
         "attackMult": 0,
         "defense": 0,
-        "speed": 6,
+        "speed": 4,
         "takeDamageMult": 0
     },
     {
@@ -306,7 +306,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 5,
+        "speed": 3,
         "takeDamageMult": 0
     },
     {
@@ -362,7 +362,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 3,
-        "speed": 6,
+        "speed": 3,
         "takeDamageMult": 0
     }
 ],

@@ -37,19 +37,9 @@ export default class Triple_Snipe extends AbilityType {
 
         damageTiles.push(damageTile2);
 
-        let damageTile3 = playerPos.clone();
-        let randomX2 = Math.random();
-        let randomY2 = Math.random();
-        (randomX2 > 0.33)?(damageTile3.x +=2):(damageTile3.x -= 2);
-        (randomY2 > 0.33)?(damageTile3.y +=2):(damageTile3.y -= 2);
-        damageTiles.push(damageTile3);
-
-        let damageTile4 = playerPos.clone();
-        let randomX3 = Math.random();
-        let randomY3 = Math.random();
-        (randomX3 > 0.33)?(damageTile4.x +=2):(damageTile4.x -= 2);
-        (randomY3 > 0.33)?(damageTile4.y +=2):(damageTile4.y -= 2);
-        damageTiles.push(damageTile4);
+        damageTiles.push(this.randomTile(playerPos, 1));
+        damageTiles.push(this.randomTile(playerPos, 2));
+        damageTiles.push(this.randomTile(playerPos, 2));
 
         return damageTiles;
     }
@@ -80,5 +70,14 @@ export default class Triple_Snipe extends AbilityType {
 
     hits(node: GameNode, abilitySprite: AnimatedSprite): boolean {
         return abilitySprite.boundary.overlaps(node.collisionShape);
+    }
+
+    randomTile(playerPos: Vec2, dist: number): Vec2{
+        let damageTile = playerPos.clone();
+        let randomX = Math.random();
+        let randomY = Math.random();
+        (randomX > 0.33)?(damageTile.x +=dist):(damageTile.x -= dist);
+        (randomY > 0.33)?(damageTile.y +=dist):(damageTile.y -= dist);
+        return damageTile;
     }
 }

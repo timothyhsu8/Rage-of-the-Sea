@@ -30,6 +30,9 @@ export default class TentacleSprout extends AbilityType {
                 newTile.y -= 2;
                 damageTiles.push(newTile);
             }
+            let newTile = ownerPositionRowCol.clone();
+            newTile.y -= 3;
+            damageTiles.push(newTile);
         }
 
         /* Down Tiles */
@@ -40,6 +43,9 @@ export default class TentacleSprout extends AbilityType {
                 newTile.y += 2;
                 damageTiles.push(newTile);
             }
+            let newTile = ownerPositionRowCol.clone();
+            newTile.y += 3;
+            damageTiles.push(newTile);
         }
 
         /* Right Tiles */
@@ -53,6 +59,10 @@ export default class TentacleSprout extends AbilityType {
             let newTile = ownerPositionRowCol.clone();
             newTile.x += 1;
             damageTiles.push(newTile);
+
+            let newTile2 = ownerPositionRowCol.clone();
+            newTile2.x += 3;
+            damageTiles.push(newTile2);
         }
 
         /* Left Tiles */
@@ -66,6 +76,10 @@ export default class TentacleSprout extends AbilityType {
             let newTile = ownerPositionRowCol.clone();
             newTile.x -= 1;
             damageTiles.push(newTile);
+            
+            let newTile2 = ownerPositionRowCol.clone();
+            newTile2.x -= 3;
+            damageTiles.push(newTile2);
         }
 
 

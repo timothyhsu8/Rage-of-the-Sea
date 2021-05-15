@@ -34,7 +34,10 @@ export default class CharacterState{
     addItemStats(item: Item){
         this.stats.attack += item.stats.attack;
         this.stats.defense += item.stats.defense;
-        this.stats.speed += item.stats.speed;
+        
+        
+        /* Speed (Doesn't exceed 110) */
+        (this.stats.speed+item.stats.speed >= 108)?(this.stats.speed = 108):(this.stats.speed += item.stats.speed);
 
         this.stats.maxHealth += item.stats.maxHealth;
         this.healPlayer(item.stats.maxHealth);

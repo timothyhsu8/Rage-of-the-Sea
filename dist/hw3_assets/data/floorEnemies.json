@@ -8,14 +8,14 @@
         },
         {
             "numEnemies": [5, 6, 7],
-            "requiredEnemies": ["sollasina_yellow", "kraken", "lizard"],
+            "requiredEnemies": ["sollasina_yellow", "carrier", "lizard"],
             "monsterTypes": ["kraken", "lizard", "carrier", "sollasina_yellow"],
             "positions": [[250, 120], [250, 180], [300, 120], [300, 230], [370, 45], [385, 145], [400, 45]]
         },
         {
             "numEnemies": [6, 7, 8],
             "requiredEnemies": ["sollasina_yellow", "dagon"],
-            "monsterTypes": ["kraken", "lizard", "sollasina", "sollasina_yellow", "carrier", "dagon"],
+            "monsterTypes": ["lizard", "sollasina", "sollasina_yellow", "carrier", "dagon"],
             "positions": [[200, 60], [225, 225], [250, 60], [270, 200], [300, 180], [370, 220], [420, 50],  [450, 120]]
         },
         {
