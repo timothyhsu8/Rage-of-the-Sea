@@ -27,7 +27,7 @@
         {
             "numEnemies": [7, 8],
             "requiredEnemies": ["sollasina_green", "sollasina_green", "carrier", "dagon", "umibozu", "cthulu"],
-            "monsterTypes": ["kraken", "sollasina_green", "carrier", "dagon", "umibozu", "cthulu"],
+            "monsterTypes": ["sollasina_green", "carrier", "dagon", "umibozu", "cthulu"],
             "positions": [[175, 130], [250, 110], [250, 180], [300, 225], [350, 135], [370, 180], [460, 180], [450, 200]]
         },
         {

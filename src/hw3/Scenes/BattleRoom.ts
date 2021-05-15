@@ -440,6 +440,7 @@ export default class BattleRoom extends Scene {
                 attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
                 range: monsterInfo.range,   // Only need if enemy's state is Chase
                 flippable: monsterInfo.flippable,
+                knockbackable: monsterInfo.knockbackable,
                 abilityList: abilityList,
                 player: this.player
             }
@@ -461,7 +462,6 @@ export default class BattleRoom extends Scene {
 
     /* Spawn an enemytype monsterType with mode defaultMode at position of AnimatedSprite owner */
     respawnZombie(owner: AnimatedSprite, monsterType: string, defaultMode: string){
-        console.log("respawn zombie");
         let zombie = this.add.animatedSprite(monsterType, "primary")
         zombie.active = true
         // append zombie to list
@@ -491,6 +491,7 @@ export default class BattleRoom extends Scene {
             attackInterval: monsterInfo.attackInterval, // Only needed if enemy's state is ChaseAndAttack
             range: monsterInfo.range,   // Only need if enemy's state is Chase
             flippable: monsterInfo.flippable,
+            knockbackable: monsterInfo.knockbackable,
             abilityList: abilityList,
             player: this.player
         }

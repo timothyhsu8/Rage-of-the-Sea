@@ -29,6 +29,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     ability: Ability;
 
+    knockbackable: boolean;
+
     abilityList: Array<Ability>;
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
@@ -52,6 +54,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.player = options.player;
         this.ability = options.ability;
         this.speed = options.speed;
+        this.knockbackable = options.knockbackable;
+
         this.ability.type.setDamage(options.damage);
         this.abilityList = options.abilityList; // Only Leviathan has an ability list right now
 
@@ -65,7 +69,10 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     damage(damage: number): void {
         this.health -= damage;
-        this.playKnockbackTween();      /* FINAL PROJECT TODO - Add property to enemies to make them knockbackable */
+        
+        let knockbackDist = 0;
+        (this.knockbackable)?(knockbackDist=4):(knockbackDist=1);
+        this.playKnockbackTween(knockbackDist);
 
         let enemyName = this.owner.imageId.toLowerCase();
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
@@ -87,9 +94,9 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.abilityList = abilityList;
     }
 
-    playKnockbackTween() {
+    playKnockbackTween(knockbackDist: number) {
         let endPosX = this.owner.position.x;
-        (this.player.position.x >= this.owner.position.x)?(endPosX-=4):(endPosX+=4);
+        (this.player.position.x >= this.owner.position.x)?(endPosX-=knockbackDist):(endPosX+=knockbackDist);
         this.owner.tweens.add("knockback", {
                 startDelay: 0,
                     duration: 500,

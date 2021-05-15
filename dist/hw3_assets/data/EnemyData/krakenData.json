@@ -7,5 +7,6 @@
     "damage": 13,
     "range": 35,
     "hitbox": [7, 8],
-    "flippable": false
+    "flippable": false,
+    "knockbackable": true
 }

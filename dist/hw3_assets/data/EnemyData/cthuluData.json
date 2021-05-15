@@ -7,5 +7,6 @@
     "damage": 20,
     "attackInterval": 4250,
     "hitbox": [10, 14],
-    "flippable": true
+    "flippable": true,
+    "knockbackable": false
 }

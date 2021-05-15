@@ -50,18 +50,18 @@ export default class GameOver extends Scene {
         const text3 = "Better luck next time...";
 
         const textline1 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+235), text: text1});
-        textline1.textColor = PancakeColor.BEIGE;
+        textline1.textColor = PancakeColor.colorFromIndex(29);
         textline1.font = "Merriweather";
 
-        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+295), text: text2});
+        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+300), text: text2});
         textline2.fontSize = 25;
-        textline2.textColor = Color.WHITE;
+        textline2.textColor = PancakeColor.colorFromIndex(31);
         textline2.font = "Merriweather";
 
         const textline3 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+375), text: text3});
         textline3.textColor = PancakeColor.BEIGE;
         textline3.font = "Merriweather";
-        textline3.fontSize = 33;
+        textline3.fontSize = 32;
 
         this.receiver.subscribe("back");
     }
