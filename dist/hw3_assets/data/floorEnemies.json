@@ -15,8 +15,8 @@
         {
             "numEnemies": [6, 7, 8],
             "requiredEnemies": ["sollasina_yellow", "dagon"],
-            "monsterTypes": ["lizard", "sollasina", "sollasina_yellow", "carrier", "dagon"],
-            "positions": [[200, 60], [225, 225], [250, 60], [270, 200], [300, 180], [370, 220], [420, 50],  [450, 120]]
+            "monsterTypes": ["lizard", "sollasina_yellow", "carrier", "dagon"],
+            "positions": [[200, 60], [225, 225], [250, 60], [300, 180], [370, 225], [400, 47], [450, 170], [450, 120]]
         },
         {
             "numEnemies": [7, 8],

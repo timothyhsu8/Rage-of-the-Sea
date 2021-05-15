@@ -53,7 +53,7 @@ export default class GameOver extends Scene {
         textline1.textColor = PancakeColor.BEIGE;
         textline1.font = "Merriweather";
 
-        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+290), text: text2});
+        const textline2 =  <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x, center.y+295), text: text2});
         textline2.fontSize = 25;
         textline2.textColor = Color.WHITE;
         textline2.font = "Merriweather";

@@ -179,29 +179,29 @@ export default class BattleRoom extends Scene {
 
     updateScene(deltaT: number): void {
         if (Input.isJustPressed("escape")){
-            this.gameLoop = !this.gameLoop
-            if (this.gameLoop){ // unpause game
-                for (var enemy of this.enemies){
-                    enemy.enablePhysics()
-                    enemy.setAIActive(true, {})
-                    enemy.animation.resume();
-                }
-                this.player.unfreeze()
-                this.player.enablePhysics()
-                this.player.animation.resume();
-                this.unpauseScreen()
-            }
-            else{
-                for (var enemy of this.enemies){ // pause game
-                    enemy.disablePhysics()
-                    enemy.setAIActive(false, {})  // stop the attacking
-                    enemy.animation.pause();
-                }
-                this.player.freeze()
-                this.player.disablePhysics()
-                this.player.animation.pause();
-                this.pauseScreen()
-            }
+            // this.gameLoop = !this.gameLoop
+            // if (this.gameLoop){ // unpause game
+            //     for (var enemy of this.enemies){
+            //         enemy.enablePhysics()
+            //         enemy.setAIActive(true, {})
+            //         enemy.animation.resume();
+            //     }
+            //     this.player.unfreeze()
+            //     this.player.enablePhysics()
+            //     this.player.animation.resume();
+            //     this.unpauseScreen()
+            // }
+            // else{
+            //     for (var enemy of this.enemies){ // pause game
+            //         enemy.disablePhysics()
+            //         enemy.setAIActive(false, {})  // stop the attacking
+            //         enemy.animation.pause();
+            //     }
+            //     this.player.freeze()
+            //     this.player.disablePhysics()
+            //     this.player.animation.pause();
+            //     this.pauseScreen()
+            // }
         }
 
         if (this.gameLoop){
