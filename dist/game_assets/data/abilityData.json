@@ -89,7 +89,7 @@
             "spriteKey": "leviathan_spikes",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1300
+            "chargeTime": 1000
         },
         {
             "abilityType": "leviathan_whirlpool",

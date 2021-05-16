@@ -21,12 +21,17 @@ export default class LeviathanWhirlpool extends AbilityType {
         let damageTileBase = new Vec2();
 
         for(let i=playerPos.y-3 ; i < playerPos.y+3 ; i++)
-            for(let j=playerPos.x-3 ; j < playerPos.x+3 ; j++){
+            for(let j=playerPos.x-3 ; j < playerPos.x+4 ; j++){
                 let damageTile = damageTileBase.clone();
                 damageTile.x = j;
                 damageTile.y = i;
                 damageTiles.push(damageTile);
             }
+
+        damageTiles.push(this.makeTile(damageTileBase, playerPos.x+4, playerPos.y));
+        damageTiles.push(this.makeTile(damageTileBase, playerPos.x-4, playerPos.y));
+        damageTiles.push(this.makeTile(damageTileBase, playerPos.x, playerPos.y+3));
+        damageTiles.push(this.makeTile(damageTileBase, playerPos.x, playerPos.y-4));
         return damageTiles;
     }
 
@@ -57,5 +62,12 @@ export default class LeviathanWhirlpool extends AbilityType {
 
     hits(node: GameNode, abilitySprite: AnimatedSprite): boolean {
         return abilitySprite.boundary.overlaps(node.collisionShape);
+    }
+
+    makeTile(baseTile: Vec2, posX: number, posY: number):Vec2{
+        let damageTile = baseTile.clone();
+        damageTile.x = posX;
+        damageTile.y = posY;
+        return damageTile;
     }
 }
