@@ -282,8 +282,9 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        if(damage < 0)
-            damage = 0;
+        console.log(damage);
+        if(damage <= 0)
+            damage = 1;
 
         if(!HelpScreen.invincibility){
             if(this.owner.tweens !== undefined && this.owner.tweens.isStopped("takedamage")){

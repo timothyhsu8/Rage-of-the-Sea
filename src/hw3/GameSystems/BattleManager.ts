@@ -64,7 +64,7 @@ export default class BattleManager {
             setTimeout(function(){
                 // Check if player is hit by attack by comparing player tile to damage tiles
                 if(ability.hitsSprite(tilemap.getColRowAt(playerPos), damageTiles))
-                    playerAI.damage((((ability.type.damage*(level*0.75)) - playerStats.defense) * playerStats.takeDamageMult  ));
+                    playerAI.damage((((ability.type.damage*(level*0.5)) - playerStats.defense) * playerStats.takeDamageMult  ));
 
                 /* Set floor tiles back to normal */
                 for(let i = 0 ; i < damageTiles.length ; i++){

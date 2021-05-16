@@ -4,7 +4,7 @@
     "health": 17,
     "ability": "spike_line",
     "speed": 42,
-    "damage": 16,
+    "damage": 18,
     "range": 85,
     "hitbox": [15, 12],
     "flippable": true,

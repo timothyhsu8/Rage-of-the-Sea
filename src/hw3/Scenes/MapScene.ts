@@ -99,6 +99,10 @@ export default class MapScene extends Scene{
         nextFloor.onClickEventId = "nextfloor";
         nextFloor.fontSize = 30;
         nextFloor.font = "Merriweather";
+        
+        if(this.characterState.mapState.currentFloor === 6)
+            nextFloor.text = "Boss Room";
+
         (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
 
         /* Disables 'Next Floor' button on the last  floor */

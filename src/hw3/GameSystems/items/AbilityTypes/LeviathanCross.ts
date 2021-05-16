@@ -35,7 +35,7 @@ export default class LeviathanCross extends AbilityType {
         /* Horizontal Middle */
         for(let i=furthestUpTile ; i <= furthestDownTile ; i++)
             for(let j=furthestLeftTile ; j <= furthestRightTile ; j++){
-                if(j !== i && j !== i+6 ){
+                if(j !== i && j !== (i+2)+(13-2*i) ){
                     let damageTile = damageTileBase.clone();
                     damageTile.x = j;
                     damageTile.y = i;
