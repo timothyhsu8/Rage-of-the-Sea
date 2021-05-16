@@ -120,6 +120,16 @@
             "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1400 
+        },
+        {
+            "abilityType": "hastur_flame",
+            "name": "flame_line",
+            "displayName": "Flame Line",
+            "animationSprite": "hastur_flame",
+            "spriteKey": "hastur_flame",
+            "damage": 25,
+            "cooldown": 2000,
+            "chargeTime": 1400
         }
     ]
 }

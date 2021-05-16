@@ -180,5 +180,6 @@ export enum MonsterTypes {
     DAGON = "dagon",
     UMIBOZU = "umibozu",
     CTHULU = "cthulu",
-    LEVIATHAN = "leviathan"
+    LEVIATHAN = "leviathan",
+    HASTUR = "hastur"
 }

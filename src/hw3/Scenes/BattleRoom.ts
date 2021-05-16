@@ -77,6 +77,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("umibozu", "game_assets/spritesheets/enemies/umibozu.json");
         this.load.spritesheet("cthulu", "game_assets/spritesheets/enemies/cthulu.json");
         this.load.spritesheet("leviathan", "game_assets/spritesheets/enemies/leviathan.json");
+        this.load.spritesheet("hastur", "game_assets/spritesheets/enemies/hastur.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "game_assets/sounds/enemysounds/krakendamage.mp3");
@@ -89,6 +90,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("umibozuDamage", "game_assets/sounds/enemysounds/umibozudamage.mp3");
         this.load.audio("cthuluDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
         this.load.audio("leviathanDamage", "game_assets/sounds/enemysounds/leviathandamage.mp3");
+        this.load.audio("hasturDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "game_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
@@ -104,6 +106,7 @@ export default class BattleRoom extends Scene {
         this.load.object("umibozuData", "game_assets/data/EnemyData/umibozuData.json");
         this.load.object("cthuluData", "game_assets/data/EnemyData/cthuluData.json");
         this.load.object("leviathanData", "game_assets/data/EnemyData/leviathanData.json");
+        this.load.object("hasturData", "game_assets/data/EnemyData/hasturData.json");
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "game_assets/spritesheets/abilities/anchorswing.json");
@@ -118,6 +121,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("leviathan_whirlpool", "game_assets/spritesheets/abilities/leviathan_whirlpool.json");
         this.load.spritesheet("leviathan_rain", "game_assets/spritesheets/abilities/leviathan_rain.json");
         this.load.spritesheet("leviathan_cross", "game_assets/spritesheets/abilities/leviathan_cross.json");
+        this.load.spritesheet("hastur_flame", "game_assets/spritesheets/abilities/hastur_flame.json");
     }
     unloadScene(){}
 
