@@ -51,6 +51,8 @@ export default class LoadScreen extends Scene {
         this.load.image("dashcd", "game_assets/sprites/healthUI/dashcd.png");
         this.load.image("dashborder", "game_assets/sprites/healthUI/dashborder.png");
         this.load.image("dashbg", "game_assets/sprites/healthUI/dashbg.png");
+        this.load.image("bosshp", "game_assets/sprites/healthUI/bosshp.png");
+        this.load.image("bosshpbg", "game_assets/sprites/healthUI/bosshpbg.png");
 
         /* Load Enemies for each floor */
         this.load.object("floorEnemies", "game_assets/data/floorEnemies.json");
@@ -99,6 +101,8 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("dashborder");
         this.load.keepImage("dashbg");
         this.load.keepImage("itemdescriptionbox");
+        this.load.keepImage("bosshp");
+        this.load.keepImage("bosshpbg");
 
         for(let i=0; i < this.itemData.numItems ; i++)
             this.load.keepImage(this.itemData.allitems[i].key);

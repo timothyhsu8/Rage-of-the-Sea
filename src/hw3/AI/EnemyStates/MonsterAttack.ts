@@ -24,6 +24,8 @@ export default class MonsterAttack extends EnemyState {
 
     monsterType: MonsterTypes;
 
+    attackReady: boolean;
+
     dir: any;   // Direction of player
 
     constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes){
@@ -35,6 +37,7 @@ export default class MonsterAttack extends EnemyState {
         // Regularly update the player location
         this.pollTimer = new Timer(100);
         this.exitTimer = new Timer(1000);
+        this.attackReady = true;
     }
 
     onEnter(options: Record<string, any>): void {
@@ -84,10 +87,15 @@ export default class MonsterAttack extends EnemyState {
 
             case MonsterTypes.LEVIATHAN:  
                 let randomNum = Math.floor(Math.random() * 4);
-                if(!this.owner.animation.isPlaying("ATTACK") && this.parent.abilityList[randomNum].cast(this.owner, "enemy", this.dir))
+                if(this.attackReady && this.parent.abilityList[randomNum].cast(this.owner, "enemy", this.dir)){
                     this.owner.animation.playUninterruptable("ATTACK");
+
+                    this.attackReady = false;
+                    setTimeout(() => {
+                        this.attackReady = true;
+                    }, 2350);
+                }
                         
-                else this.finished(EnemyStates.DEFAULT);
                 break;
             default:
                 this.finished(EnemyStates.DEFAULT);

@@ -52,6 +52,8 @@ export default class BattleRoom extends Scene {
 
     private healthbar: Graphic;
 
+    private bossHealthbar: Graphic;
+
     private dashCD: Sprite;
 
     private tilemap: OrthogonalTilemap;
@@ -177,6 +179,21 @@ export default class BattleRoom extends Scene {
         this.addUILayer("healthbar");
         this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 10)});
         this.addUILayer("quitConfirmation");
+
+        // UI for boss healthbar (if on floor 7)
+        if(this.characterState.mapState.currentFloor === 7){
+            this.addLayer("bossHP", 12);
+
+            let bosshpborder =  this.add.sprite("bosshp", "bossHP");
+            bosshpborder.position.set(261, 260);
+            bosshpborder.scale.set(6/10, 6/10);
+
+            let bosshpbg =  this.add.sprite("bosshpbg", "primary");
+            bosshpbg.position.set(261, 260);
+            bosshpbg.scale.set(6/10, 6/10);
+            
+            this.bossHealthbar = this.add.graphic(GraphicType.RECT, "bossHP", {position: new Vec2(260, 260), size: new Vec2((<BattlerAI>this.enemies[0]._ai).health/2, 6)});
+        }
     }
 
     updateScene(deltaT: number): void {
@@ -298,6 +315,16 @@ export default class BattleRoom extends Scene {
             let multiplier = this.characterState.stats.maxHealth/100;
             this.healthbar.size = new Vec2((health*2)/multiplier, 10);
             this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
+
+            /* Boss Healthbar */
+            if(this.characterState.mapState.currentFloor === 7){
+                if(this.enemies[0]._ai !== undefined){
+                    let bosshealth = (<BattlerAI>this.enemies[0]._ai).health/2;
+                    (bosshealth > 0)?(this.bossHealthbar.size.x = bosshealth):(this.bossHealthbar.size.x = 0);
+                }
+                
+                else this.bossHealthbar.size.x = 0;
+            }
 
             /* If all monsters are killed, advance */
             if(this.numMonstersLeft <= 0){
