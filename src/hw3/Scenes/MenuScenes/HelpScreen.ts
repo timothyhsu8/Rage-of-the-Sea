@@ -1,9 +1,11 @@
 import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import Input from "../../../Wolfie2D/Input/Input";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
 import Button from "../../../Wolfie2D/Nodes/UIElements/Button";
 import Label from "../../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../../Wolfie2D/Nodes/UIElements/UIElementTypes";
+import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import Scene from "../../../Wolfie2D/Scene/Scene";
 import Color from "../../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../../Wolfie2D/Utils/PancakeColor";
@@ -11,6 +13,8 @@ import MainMenu from "./MainMenu";
 
 export default class HelpScreen extends Scene {
     
+    private sceneObjects: Array<GameNode>;
+
     cheatButtonLabels: Array<Button>;   // UI Buttons for cheats
     cheatList: Array<boolean>;          // Holds the booleans for each cheat
     cheatEventNames: Array<string>;     // Holds the event names for each cheat
@@ -26,6 +30,7 @@ export default class HelpScreen extends Scene {
     loadScene(){}
 
     startScene(){
+        this.sceneObjects = new Array<GameNode>();
         this.addLayer("primary", 10);
         this.addLayer("text", 11);
 
@@ -47,6 +52,7 @@ export default class HelpScreen extends Scene {
         back.backgroundColor = new Color(50, 50, 70, 1);
         back.onClickEventId = "back";
         back.font = "Merriweather";
+        this.sceneObjects.push(back)
 
         /* Backstory */
         let backstory = [
@@ -69,11 +75,13 @@ export default class HelpScreen extends Scene {
         backstoryBox.borderColor = PancakeColor.PINK;
         backstoryBox.backgroundColor = PancakeColor.MAGENTA;
         backstoryBox.fontSize = 20;
+        this.sceneObjects.push(backstoryBox)
 
         const backstoryHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-350, center.y-250), text:"Backstory"});
         backstoryHeader.textColor = PancakeColor.BEIGE;
         backstoryHeader.fontSize = 35;
         backstoryHeader.font = "Merriweather";
+        this.sceneObjects.push(backstoryHeader)
 
         /* Cheat Codes */
         const cheats = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+350, center.y+50), text:""});
@@ -85,11 +93,13 @@ export default class HelpScreen extends Scene {
         cheats.fontSize = 20;
         cheats.font = "Merriweather";
         cheats.borderWidth = 2;
+        this.sceneObjects.push(cheats)
 
         const cheatsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x+350, center.y-250), text:"Cheats"});
         cheatsHeader.textColor = PancakeColor.BEIGE;
         cheatsHeader.fontSize = 35;
         cheatsHeader.font = "Merriweather";
+        this.sceneObjects.push(cheatsHeader)
         
         /* Developers */
         const developers = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-350, center.y+235), text:""});
@@ -100,11 +110,14 @@ export default class HelpScreen extends Scene {
         developers.borderColor = PancakeColor.PINK;
         developers.backgroundColor = PancakeColor.MAGENTA;
         developers.fontSize = 20;
+        this.sceneObjects.push(developers)
 
         const devsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "text", {position: new Vec2(center.x-350, center.y+150), text:"Developers"});
         devsHeader.textColor = PancakeColor.BEIGE;
         devsHeader.fontSize = 35;
         devsHeader.font = "Merriweather";
+        this.sceneObjects.push(devsHeader);
+
 
         let devnames = ["Timothy Hsu", "Edward Huang", "Michael Carpenzano"];
         this.createBackstoryText(new Vec2(center.x-350, center.y+220), devnames, 25, 40);
@@ -118,6 +131,8 @@ export default class HelpScreen extends Scene {
         this.receiver.subscribe("back");
         for(let i = 0 ; i < this.cheatEventNames.length ; i++)
             this.receiver.subscribe(this.cheatEventNames[i]);
+        UITweens.slideInScene(this.sceneObjects, 30, new Vec2(2000, 0));
+
     }
 
     updateScene(){
@@ -162,6 +177,7 @@ export default class HelpScreen extends Scene {
             textline.textColor = Color.WHITE;
             textline.fontSize = fontSize;
             textline.font = "Merriweather";
+            this.sceneObjects.push(textline)
         }
     }
 
@@ -179,6 +195,7 @@ export default class HelpScreen extends Scene {
             cheat.fontSize = 25;
             cheat.onClickEventId = onClickEvent[i];
             this.cheatButtonLabels[i] = cheat;
+            this.sceneObjects.push(cheat)
         }
     }
 }
