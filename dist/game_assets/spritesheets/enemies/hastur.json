@@ -1,0 +1,27 @@
+{
+    "name": "Hastur",
+    "spriteSheetImage": "hastur.png",
+    "spriteWidth": 64,
+    "spriteHeight": 64,
+    "columns": 5,
+    "rows": 3,
+    "durationType": "time",
+    "animations": [
+        { 
+            "name": "IDLE",
+            "frames": [ {"index": 0, "duration": 1} ]
+        },
+        {
+            "name": "WALK",
+            "frames": [ {"index": 0, "duration": 15}, {"index": 1, "duration": 15} ]
+        },
+        {
+            "name": "TAKEDAMAGE",
+            "frames": [ {"index": 5, "duration": 16} ]
+        },
+        {
+            "name": "ATTACK",
+            "frames": [ {"index": 10, "duration": 5}, {"index": 11, "duration": 15}, {"index": 12, "duration": 33}, {"index": 13, "duration": 15}, {"index": 14, "duration":5}]
+        }
+    ]
+}
