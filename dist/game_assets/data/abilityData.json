@@ -89,7 +89,7 @@
             "spriteKey": "leviathan_spikes",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1000
+            "chargeTime": 800
         },
         {
             "abilityType": "leviathan_whirlpool",
@@ -99,7 +99,7 @@
             "spriteKey": "leviathan_whirlpool",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1900
+            "chargeTime": 1700
         },
         {
             "abilityType": "leviathan_rain",
@@ -109,7 +109,7 @@
             "spriteKey": "leviathan_rain",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1300
+            "chargeTime": 1150
         },
         {
             "abilityType": "leviathan_cross",
@@ -119,7 +119,7 @@
             "spriteKey": "leviathan_cross",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1900 
+            "chargeTime": 1400 
         }
     ]
 }

@@ -21,7 +21,6 @@ import MapScene from "./MapScene";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import HelpScreen from "./MenuScenes/HelpScreen";
-import MainMenu from "./MenuScenes/MainMenu";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
@@ -89,7 +88,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("dagonDamage", "game_assets/sounds/enemysounds/dagondamage.mp3");
         this.load.audio("umibozuDamage", "game_assets/sounds/enemysounds/umibozudamage.mp3");
         this.load.audio("cthuluDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
-        this.load.audio("leviathanDamage", "game_assets/sounds/enemysounds/lizarddamage.mp3");
+        this.load.audio("leviathanDamage", "game_assets/sounds/enemysounds/leviathandamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "game_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");

@@ -6,7 +6,7 @@
     "speed": 0,
     "damage": 20,
     "attackInterval": 2000,
-    "hitbox": [50, 40],
+    "hitbox": [50, 43],
     "flippable": false,
     "knockbackable": false
 }

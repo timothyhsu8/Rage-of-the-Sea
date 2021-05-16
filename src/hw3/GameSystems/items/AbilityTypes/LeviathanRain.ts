@@ -27,7 +27,7 @@ export default class LeviathanRain extends AbilityType {
         for(let i=furthestUpTile ; i <= furthestDownTile ; i++){
             for(let j=furthestLeftTile ; j <= furthestRightTile ; j++){
                 let randomInt = Math.random();
-                if(randomInt >= 0.25){
+                if(randomInt >= 0.2){
                     let damageTile = damageTileBase.clone();
                     damageTile.x = j;
                     damageTile.y = i;
