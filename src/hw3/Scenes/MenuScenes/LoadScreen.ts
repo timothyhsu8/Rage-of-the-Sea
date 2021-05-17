@@ -21,7 +21,7 @@ export default class LoadScreen extends Scene {
         this.load.audio("level4music", "game_assets/music/level4music.mp3");
         this.load.audio("level5music", "game_assets/music/level5music.mp3");
         this.load.audio("level6music", "game_assets/music/level6music.mp3");
-        this.load.audio("level7music", "game_assets/music/level6music.mp3");
+        this.load.audio("level7music", "game_assets/music/level7music.mp3");
 
         /* Player Audio */
         this.load.audio("anchorswing_sound", "game_assets/sounds/anchorswing.mp3");
