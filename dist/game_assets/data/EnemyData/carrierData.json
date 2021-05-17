@@ -5,7 +5,7 @@
     "ability": "groundslam",
     "speed": 38,
     "damage": 17,
-    "attackInterval": 2500,
+    "attackInterval": 3250,
     "hitbox": [7, 8],
     "flippable": false,
     "knockbackable": true

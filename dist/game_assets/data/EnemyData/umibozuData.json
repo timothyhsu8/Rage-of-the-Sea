@@ -5,7 +5,7 @@
     "ability": "cross",
     "speed": 30,
     "damage": 20,
-    "attackInterval": 3500,
+    "attackInterval": 3700,
     "hitbox": [6, 14],
     "flippable": true,
     "knockbackable": true
