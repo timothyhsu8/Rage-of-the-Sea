@@ -140,12 +140,17 @@ export default class InventoryScene extends Scene {
     }
 
     updateScene(deltaT: number): void {
-        while(this.receiver.hasNextEvent()){
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
-            let event = this.receiver.getNextEvent();
+        if (Input.isJustPressed("escape")){
+            this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+        }
+        else{            
+            while(this.receiver.hasNextEvent()){
+                this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "click"});
+                let event = this.receiver.getNextEvent();
 
-            if(event.type === "back")
-                this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+                if(event.type === "back")
+                    this.sceneManager.changeToScene(MapScene, {characterState: this.characterState});
+            }
         }
 
         /* Check if mouse is hovering over item */
