@@ -13,7 +13,7 @@
         },
         {
             "name": "FLAME",
-            "frames": [ {"index": 1, "duration": 6}, {"index": 2, "duration": 6}, {"index": 3, "duration": 6}, {"index": 4, "duration": 6}, 
+            "frames": [ {"index": 1, "duration": 30}, {"index": 2, "duration": 30}, {"index": 3, "duration": 6}, {"index": 4, "duration": 6}, 
                 {"index": 5, "duration": 6}, {"index": 6, "duration": 25} ]
         }
     ]

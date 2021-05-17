@@ -19,33 +19,26 @@ export default class HasturFlame extends AbilityType {
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
         let damageTiles = new Array<Vec2>();
-        let furthestRightTile = 14, furthestLeftTile = 1;
-        let furthestUpTile = 1, furthestDownTile = 7;
-        let damageTileBase = new Vec2();
+        let furthestLeftTile = 0;
 
-        /* Horizontal Lines */
-        for(let i=furthestUpTile ; i <= furthestDownTile ; i++){
-            for(let j=furthestLeftTile ; j <= furthestRightTile ; j++){
-                let randomInt = Math.random();
-                if(randomInt >= 0.2){
-                    let damageTile = damageTileBase.clone();
-                    damageTile.x = j;
-                    damageTile.y = i;
-                    damageTiles.push(damageTile);
-                }
-            }
+        /* Left Tiles */
+        for(let i=0 ; i < ownerPositionRowCol.x-furthestLeftTile ; i++){
+            let leftTile = ownerPositionRowCol.clone();
+            leftTile.x -= i;
+            damageTiles.push(leftTile);
         }
 
         return damageTiles;
     }
 
     doAnimation(attacker: GameNode, direction: Vec2, abilitySprite: AnimatedSprite): void {
-        attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "snipe_sound"});
+        //attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "snipe_sound"});
     }
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
         sprite.position = position;
-        sprite.animation.play("SNIPE");
+        sprite.position.y += 18;
+        sprite.animation.play("FLAME");
         sprite.animation.queue("NORMAL", true);
     }
 

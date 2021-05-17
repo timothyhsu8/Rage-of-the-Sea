@@ -13,6 +13,7 @@ import LeviathanWhirlpool from "../GameSystems/items/AbilityTypes/LeviathanWhirl
 import LeviathanRain from "../GameSystems/items/AbilityTypes/LeviathanRain";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType";
 import LeviathanCross from "../GameSystems/items/AbilityTypes/LeviathanCross";
+import HasturFlame from "../GameSystems/items/AbilityTypes/HasturFlame";
 
 export default class AbilityTemplateRegistry extends Registry<AbilityConstructor> {
     
@@ -33,6 +34,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         rm.spritesheet("leviathan_whirlpool", "game_assets/spritesheets/abilities/leviathan_whirlpool.json");
         rm.spritesheet("leviathan_rain", "game_assets/spritesheets/abilities/leviathan_rain.json");
         rm.spritesheet("leviathan_cross", "game_assets/spritesheets/abilities/leviathan_cross.json");
+        rm.spritesheet("hastur_flame", "game_assets/spritesheets/abilities/hastur_flame.json");
 
         // Register default types
         this.registerItem("groundslam", GroundSlam);
@@ -47,6 +49,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         this.registerItem("leviathan_whirlpool", LeviathanWhirlpool);
         this.registerItem("leviathan_rain", LeviathanRain);
         this.registerItem("leviathan_cross", LeviathanCross);
+        this.registerItem("hastur_flame", HasturFlame);
     }
 
     // We don't need this for this assignment

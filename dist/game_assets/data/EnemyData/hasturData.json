@@ -2,11 +2,11 @@
     "monsterType": "hastur",
     "mode": "chaseandattack",
     "health": 20,
-    "ability": "flame_line",
+    "ability": "hastur_flame",
     "speed": 30,
     "damage": 25,
-    "attackInterval":2000,
-    "hitbox": [12, 15],
+    "attackInterval":2500,
+    "hitbox": [12, 18],
     "flippable": true,
     "knockbackable": false
 }

@@ -1,5 +1,5 @@
 {
-    "numAbilities": 12,
+    "numAbilities": 13,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -123,7 +123,7 @@
         },
         {
             "abilityType": "hastur_flame",
-            "name": "flame_line",
+            "name": "hastur_flame",
             "displayName": "Flame Line",
             "animationSprite": "hastur_flame",
             "spriteKey": "hastur_flame",
