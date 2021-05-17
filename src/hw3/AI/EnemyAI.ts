@@ -87,7 +87,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.owner.tweens.play("death");
         }
 
-        else if(this.owner.imageId === "Leviathan"){
+        else{
             let owner = this.owner;
             owner.changeColor = true;
             setTimeout(() => {

@@ -20,6 +20,7 @@ import SplashScreen from "./hw3/Scenes/MenuScenes/SplashScreen";
             {name: "right", keys: ["d"]},
             {name: "dash", keys: ["space"]},
             {name: "invincibility", keys: ["i"]},
+            {name: "killall", keys: ["k"]},
             {name: "floor1", keys: ["1"]},
             {name: "floor2", keys: ["2"]},
             {name: "floor3", keys: ["3"]},

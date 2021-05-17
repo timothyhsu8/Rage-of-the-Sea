@@ -317,7 +317,7 @@ export default class BattleRoom extends Scene {
             this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
 
             /* Boss Healthbar */
-            if(this.characterState.mapState.currentFloor === 7){
+            if(this.characterState.mapState.currentFloor === 7 && this.bossHealthbar !== undefined){
                 if(this.enemies[0]._ai !== undefined){
                     let bosshealth = (<BattlerAI>this.enemies[0]._ai).health/2;
                     (bosshealth > 0)?(this.bossHealthbar.size.x = bosshealth):(this.bossHealthbar.size.x = 0);
