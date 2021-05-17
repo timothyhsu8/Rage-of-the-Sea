@@ -19,7 +19,15 @@ export default class HasturFlame extends AbilityType {
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
         let damageTiles = new Array<Vec2>();
-        let furthestLeftTile = 0;
+
+        let furthestRightTile = 14, furthestLeftTile = 0;
+
+        /* Right Tiles */
+        for(let i=0 ; i <= furthestRightTile-ownerPositionRowCol.x ; i++){
+            let rightTile = ownerPositionRowCol.clone();
+            rightTile.x += i;
+            damageTiles.push(rightTile);
+        }
 
         /* Left Tiles */
         for(let i=0 ; i < ownerPositionRowCol.x-furthestLeftTile ; i++){
