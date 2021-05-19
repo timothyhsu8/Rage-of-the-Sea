@@ -13,6 +13,8 @@ import MapScene from "./MapScene";
 
 export default class ItemSelectScene extends Scene {
     private characterState: CharacterState;
+    private specialItems: boolean;
+
     private selections: Array<Button>;
     private selectButton: Button;
     private itemSelected: number;
@@ -22,6 +24,7 @@ export default class ItemSelectScene extends Scene {
     
     initScene(init: Record<string, any>): void {
         this.characterState = init.characterState;
+        this.specialItems = init.specialItems;
     }
 
     loadScene(){}
@@ -29,7 +32,7 @@ export default class ItemSelectScene extends Scene {
     startScene(){
         /* Determine random items to offer the player */
         const itemData = this.load.getObject("itemData");
-        this.allItems = itemData.allitems;
+        (this.specialItems)?(this.allItems = itemData.specialitems):(this.allItems = itemData.allitems);
 
         /* Assigns random items to the selection */
         this.itemChoices = new Array<any>(3);

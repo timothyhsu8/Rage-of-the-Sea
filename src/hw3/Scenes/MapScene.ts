@@ -21,6 +21,7 @@ import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import UITweens from "../../Wolfie2D/Rendering/Animations/UITweens";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
+import ItemSelectScene from "./ItemSelectScene";
 
 export default class MapScene extends Scene{
     private sceneObjects: Array<GameNode>;
@@ -267,7 +268,7 @@ export default class MapScene extends Scene{
                     this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level" + this.characterState.mapState.currentFloor +"music", loop:"true", holdReference: true});
 
                     /* If next room is boss room load it, otherwise load next floor as normal */
-                    (this.mapState.currentFloor === 7)?(this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState})):(this.sceneManager.changeToScene(MapScene, {characterState: this.characterState}));
+                    (this.mapState.currentFloor === 7)?(this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState})):(this.sceneManager.changeToScene(ItemSelectScene, {characterState: this.characterState, specialItems: true}));
                 }
             }
 

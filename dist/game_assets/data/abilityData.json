@@ -10,7 +10,7 @@
             "damage": 0.75,
             "cooldown": 400,
             "chargeTime": 1000,
-            "knockback": 4
+            "knockback": 3
         },
         {
             "abilityType": "anchorpush",
@@ -18,7 +18,7 @@
             "displayName": "Anchor Push",
             "animationSprite": "anchorpush",
             "spriteKey": "anchorpush",
-            "damage": 0.5,
+            "damage": 0.25,
             "cooldown": 3000,
             "chargeTime": 1000,
             "knockback": 16

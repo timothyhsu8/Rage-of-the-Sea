@@ -361,10 +361,8 @@ export default class BattleRoom extends Scene {
 
     initializePlayer(): void {
         // Create the inventory
-        let inventory = new Inventory(this);
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         this.characterState.getInventory().setBasicAttack(basicAttack);
-        //inventory.setBasicAttack(basicAttack);
 
         let secondaryAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORPUSH, this.battleManager, this);
         this.characterState.getInventory().setSecondaryAttack(secondaryAttack);

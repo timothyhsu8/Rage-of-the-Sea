@@ -66,6 +66,10 @@ export default class LoadScreen extends Scene {
         for(let i=0; i < this.itemData.numItems ; i++){
             this.load.image(this.itemData.allitems[i].key, "game_assets/sprites/itemicons/" + this.itemData.allitems[i].key + ".png");
         }
+
+        for(let i=0; i < this.itemData.numSpecialItems ; i++){
+            this.load.image(this.itemData.specialitems[i].key, "game_assets/sprites/itemicons/" + this.itemData.specialitems[i].key + ".png");
+        }
         
         /* Load Inventory Slots */
         this.load.image("inventorySlot", "game_assets/sprites/inventory.png");
@@ -110,6 +114,9 @@ export default class LoadScreen extends Scene {
 
         for(let i=0; i < this.itemData.numItems ; i++)
             this.load.keepImage(this.itemData.allitems[i].key);
+
+        for(let i=0; i < this.itemData.numSpecialItems ; i++)
+            this.load.keepImage(this.itemData.specialitems[i].key);
     }
 
     startScene(){

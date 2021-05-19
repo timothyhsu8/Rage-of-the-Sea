@@ -46,18 +46,20 @@ export default class AnchorSwing extends AbilityType {
         sliceSprite.position = attacker.position.clone().add(direction.scaled(20));
 
         if(this.rotation === 0){
+            sliceSprite.scale.set(1, 1);
             sliceSprite.animation.play("SWING");
             sliceSprite.animation.queue("NORMAL", true);
         }
 
         else if(this.rotation === 1){
+            sliceSprite.position = attacker.position.clone().add(direction.scaled(25));
             sliceSprite.animation.play("SWING2");
             sliceSprite.animation.queue("NORMAL", true);
         }
 
         else{
             sliceSprite.position = attacker.position.clone().add(direction.scaled(25));
-            sliceSprite.scale.set(1.20, 1.20);
+            sliceSprite.scale.set(1.25, 1.25);
             sliceSprite.animation.play("SWING3");
             sliceSprite.animation.queue("NORMAL", true);
         }

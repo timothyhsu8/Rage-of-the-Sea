@@ -1,5 +1,5 @@
 {
-    "numItems": 26,
+    "numItems": 24,
     "allitems": [
     {
         "name": "Normal Boots",
@@ -240,34 +240,6 @@
         "takeDamageMult": 0
     },
     {
-        "name": "Flowing Water",
-        "key": "flowing_water",
-        "description": "Increased dash distance",
-        "rarity": "rare",
-        "ability": null,
-        "maxHealth": 0,
-        "health": 0,
-        "attack": 0,
-        "attackMult": 0,
-        "defense": 0,
-        "speed": 0,
-        "takeDamageMult": 0
-    },
-    {
-        "name": "Blessing of the Tides",
-        "key": "blessing_of_the_tides",
-        "description": "Reduced dash cooldown",
-        "rarity": "rare",
-        "ability": null,
-        "maxHealth": 0,
-        "health": 0,
-        "attack": 0,
-        "attackMult": 0,
-        "defense": 0,
-        "speed": 0,
-        "takeDamageMult": 0
-    },
-    {
         "name": "Mask of Ebirah",
         "key": "mask_of_ebirah",
         "description": "Moderate increase to all stats",
@@ -366,6 +338,39 @@
         "takeDamageMult": 0
     }
 ],
+
+    "numSpecialItems": 2,
+    "specialitems": [
+    {
+        "name": "Blessing of the Tides",
+        "key": "blessing_of_the_tides",
+        "description": "Reduced dash cooldown",
+        "rarity": "rare",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Flowing Water",
+        "key": "flowing_water",
+        "description": "Increased dash distance",
+        "rarity": "rare",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    }
+],
+
 
     "none":{
         "name": "None",
