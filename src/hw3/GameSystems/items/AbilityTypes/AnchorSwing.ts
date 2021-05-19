@@ -6,8 +6,10 @@ import Scene from "../../../../Wolfie2D/Scene/Scene";
 import AbilityType from "./AbilityType";
 
 export default class AnchorSwing extends AbilityType {
-
+    
     knockback: number;
+
+    rotation: number;
 
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
@@ -17,6 +19,7 @@ export default class AnchorSwing extends AbilityType {
         this.spriteKey = options.spriteKey;
         this.hasTileAnimations = false;
         this.knockback = options.knockback;
+        this.rotation = 0;
     }
 
     /* Calculates the squares to damage and returns them as an array */
@@ -42,15 +45,28 @@ export default class AnchorSwing extends AbilityType {
         // Move the slice out from the player
         sliceSprite.position = attacker.position.clone().add(direction.scaled(20));
 
-        // Play the slice animation w/o loop, but queue the normal animation
-        sliceSprite.animation.play("SWING");
-        sliceSprite.animation.queue("NORMAL", true);
+        if(this.rotation === 0){
+            sliceSprite.animation.play("SWING");
+            sliceSprite.animation.queue("NORMAL", true);
+        }
+
+        else if(this.rotation === 1){
+            sliceSprite.animation.play("SWING2");
+            sliceSprite.animation.queue("NORMAL", true);
+        }
+
+        else{
+            sliceSprite.position = attacker.position.clone().add(direction.scaled(25));
+            sliceSprite.scale.set(1.20, 1.20);
+            sliceSprite.animation.play("SWING3");
+            sliceSprite.animation.queue("NORMAL", true);
+        }
+
+        // Swing Rotation (1st swing, 2nd swing, 3rd swing)
+        (this.rotation === 2)?(this.rotation = 0):(this.rotation++);
     }
 
-    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
-        // sprite.position = position;
-        // sprite.animation.play("SLICE");
-    }
+    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{}
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let swing = scene.add.animatedSprite("anchorswing", "primary");
@@ -69,4 +85,5 @@ export default class AnchorSwing extends AbilityType {
     hits(node: GameNode, sliceSprite: AnimatedSprite): boolean {
         return sliceSprite.boundary.overlaps(node.collisionShape);
     }
+
 }

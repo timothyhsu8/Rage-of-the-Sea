@@ -41,17 +41,14 @@ export default class AnchorPush extends AbilityType {
         sliceSprite.scale.set(1.3, 1.3);
 
         // Move the slice out from the player
-        sliceSprite.position = attacker.position.clone().add(direction.scaled(20));
+        sliceSprite.position = attacker.position.clone().add(direction.scaled(25));
 
         // Play the slice animation w/o loop, but queue the normal animation
         sliceSprite.animation.play("SWING");
         sliceSprite.animation.queue("NORMAL", true);
     }
 
-    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
-        // sprite.position = position;
-        // sprite.animation.play("SLICE");
-    }
+    doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{}
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let swing = scene.add.animatedSprite("anchorpush", "primary");

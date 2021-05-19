@@ -79,7 +79,7 @@ export default class ItemSelectScene extends Scene {
         portraitborder.position = new Vec2(62, 45);
 
         /* Header */
-        const header = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y - 300), text: "Select an item to obtain"});
+        const header = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x, center.y - 315), text: "Select an item to obtain"});
         header.textColor = Color.WHITE;
         header.fontSize = 35;
         header.font = "Merriweather";
