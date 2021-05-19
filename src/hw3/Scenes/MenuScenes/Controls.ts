@@ -43,9 +43,9 @@ export default class Controls extends Scene {
         this.sceneObjects.push(back);
     
         /* Controls */
-        const controls = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-560, center.y-150), text: ""});
+        const controls = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x-555, center.y-130), text: ""});
         controls.textColor = Color.WHITE;
-        controls.size.set(400, 350);
+        controls.size.set(460, 375);
         controls.borderRadius = 2;
         controls.borderColor = PancakeColor.PINK;
         controls.backgroundColor = PancakeColor.MAGENTA;
@@ -59,8 +59,8 @@ export default class Controls extends Scene {
         controlsHeader.font = "Merriweather";
         this.sceneObjects.push(controlsHeader);
 
-        let controlsText = ["WASD - Move", "Left Mouse - Basic Attack", "Spacebar + WASD - Dash"];    // Right Mouse - Use Item
-        this.makeTextLabels(controlsText, 75, new Vec2(center.x-560, center.y - 200));
+        let controlsText = ["WASD - Move", "Left Click - Basic Attack", "Right Click - Secondary Attack", "Spacebar + WASD - Dash"];    // Right Mouse - Use Item
+        this.makeTextLabels(controlsText, 75, new Vec2(center.x-555, center.y - 200));
 
         /* How To Play */
         const tutorial = <Label>this.add.uiElement(UIElementType.LABEL, "primary", {position: new Vec2(center.x+230, center.y+45), text:""});

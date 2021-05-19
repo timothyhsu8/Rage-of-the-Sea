@@ -49,8 +49,10 @@ export default class LoadScreen extends Scene {
         this.load.image("portraitborder", "game_assets/sprites/healthUI/portraitborder.png");
         this.load.image("healthbarborder", "game_assets/sprites/healthUI/healthbarborder.png");
         this.load.image("dashcd", "game_assets/sprites/healthUI/dashcd.png");
+        this.load.image("secondarycd", "game_assets/sprites/healthUI/secondarycd.png");
         this.load.image("dashborder", "game_assets/sprites/healthUI/dashborder.png");
         this.load.image("dashbg", "game_assets/sprites/healthUI/dashbg.png");
+        this.load.image("secondarybg", "game_assets/sprites/healthUI/secondarybg.png");
         this.load.image("bosshp", "game_assets/sprites/healthUI/bosshp.png");
         this.load.image("bosshpbg", "game_assets/sprites/healthUI/bosshpbg.png");
 
@@ -98,8 +100,10 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("portraitborder");
         this.load.keepImage("healthbarborder");
         this.load.keepImage("dashcd");
+        this.load.keepImage("secondarycd");
         this.load.keepImage("dashborder");
         this.load.keepImage("dashbg");
+        this.load.keepImage("secondarybg");
         this.load.keepImage("itemdescriptionbox");
         this.load.keepImage("bosshp");
         this.load.keepImage("bosshpbg");

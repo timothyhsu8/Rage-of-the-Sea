@@ -56,6 +56,8 @@ export default class BattleRoom extends Scene {
 
     private dashCD: Sprite;
 
+    private secondaryCD: Sprite;
+
     private tilemap: OrthogonalTilemap;
 
     private characterState: CharacterState;
@@ -153,18 +155,10 @@ export default class BattleRoom extends Scene {
         // Create the battle manager
         this.battleManager = new BattleManager();
 
-        // UI for dash cooldown and border
+        // UI for dash and secondary attack cooldowns
         this.addLayer("dashCD", 11);
-        let dashBorder =  this.add.sprite("dashborder", "dashCD");
-        dashBorder.position.set(260, 275);
-
-        this.dashCD = this.add.sprite("dashcd", "dashCD");
-        this.dashCD.scale.set(1.0, 1.0);
-        this.dashCD.position.set(260, 275);
-
-        let dashbg = this.add.sprite("dashbg", "primary");
-        dashbg.scale.set(1.0, 1.0);
-        dashbg.position.set(260, 275);
+        this.makeDashUI();
+        this.makeSecondaryAttackUI();
 
         // Initializations
         this.subscribeToEvents();
@@ -402,7 +396,8 @@ export default class BattleRoom extends Scene {
                 inventory: this.characterState.getInventory(),
                 tilemap: "Floor",
                 walls: "Wall",
-                dashCD: this.dashCD
+                dashCD: this.dashCD,
+                secondaryCD: this.secondaryCD
             });
         this.player.setImageOffset(new Vec2(0, 17));
         this.tilemap = this.getTilemap("Floor") as OrthogonalTilemap;   // Sets tilemap in scene class
@@ -612,5 +607,32 @@ export default class BattleRoom extends Scene {
         else abilityList = null;
 
         return abilityList;
+    }
+
+    makeDashUI(): void{
+        let dashBorder =  this.add.sprite("dashborder", "dashCD");
+        dashBorder.position.set(260, 275);
+
+        this.dashCD = this.add.sprite("dashcd", "dashCD");
+        this.dashCD.scale.set(1.0, 1.0);
+        this.dashCD.position.set(260, 275);
+
+        let dashbg = this.add.sprite("dashbg", "primary");
+        dashbg.scale.set(1.0, 1.0);
+        dashbg.position.set(260, 275);
+    }
+
+    makeSecondaryAttackUI(): void{
+        let cdBorder =  this.add.sprite("dashborder", "dashCD");
+        cdBorder.position.set(260, 260);
+        cdBorder.scale.set(3/4, 3/4);
+
+        this.secondaryCD = this.add.sprite("secondarycd", "dashCD");
+        this.secondaryCD.scale.set(3/4, 3/4);
+        this.secondaryCD.position.set(260, 260);
+
+        let CDbg = this.add.sprite("secondarybg", "primary");
+        CDbg.scale.set(3/4, 3/4);
+        CDbg.position.set(260, 260);
     }
 }

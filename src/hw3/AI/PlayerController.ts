@@ -46,6 +46,8 @@ export default class PlayerController implements BattlerAI {
 
     private dashCD: Sprite;
 
+    private secondaryCD: Sprite;
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         this.direction = Vec2.ZERO;
@@ -59,6 +61,7 @@ export default class PlayerController implements BattlerAI {
         this.dashIsReady = true;
         this.walls = this.owner.getScene().getTilemap(options.walls) as OrthogonalTilemap;
         this.dashCD = options.dashCD;
+        this.secondaryCD = options.secondaryCD;
     }
 
     activate(options: Record<string, any>): void {}
@@ -135,84 +138,8 @@ export default class PlayerController implements BattlerAI {
             }
 
             /* Use Dash */
-            if(this.dashIsReady && Input.isJustPressed("dash")){
-                let useDash = false;
-                let newPos = this.owner.position.clone();
-
-                this.dashVelocity = new Vec2(0, 0);
-                if(Input.isPressed("left")){
-                    useDash = true;
-                    newPos.x -= 50;
-                    this.dashVelocity.x = -1.0;
-                }
-                else if(Input.isPressed("right")){
-                    useDash = true;
-                    newPos.x += 50;
-                    this.dashVelocity.x = 1.0;
-                }
-                if(Input.isPressed("forward")){
-                    useDash = true;
-                    newPos.y -= 50;
-                    this.dashVelocity.y = -1.0;
-                }
-                else if(Input.isPressed("backward")){
-                    useDash = true;
-                    newPos.y += 50;
-                    this.dashVelocity.y = 1.0;
-                }
-
-                /* Slightly reduce distance of diagonal dashes */
-                if(this.dashVelocity.x !== 0 && this.dashVelocity.y !== 0){
-                    (this.dashVelocity.x > 0)?(newPos.x -= 12):(newPos.x += 12);
-                    (this.dashVelocity.y > 0)?(newPos.y -= 12):(newPos.y += 12);
-                }
-
-                /* If user presses SPACE without WASD, dash forward */
-                if(this.dashVelocity.x === 0 && this.dashVelocity.y === 0){
-                    (this.owner.invertX)?(newPos.x -=50):(newPos.x +=50);
-                    (this.owner.invertX)?(this.dashVelocity.x = -1.0):(this.dashVelocity.x = 1.0);
-                    useDash = true;
-                }
-
-                /* If player has Flowing Water item, increase dash distance */
-                if(this.inventory.hasItem(ItemType.FLOWING_WATER)){
-                    if(this.dashVelocity.x !== 0)
-                        (this.dashVelocity.x > 0)?(newPos.x += 18):(newPos.x -= 18);
-
-                    if(this.dashVelocity.y !== 0)
-                        (this.dashVelocity.y > 0)?(newPos.y += 18):(newPos.y -= 18);
-                }
-
-                /* Uses dash if Spacebar + WASD was pressed */
-                if(useDash){
-                    let dashCooldown = 0;
-                    (this.inventory.hasItem(ItemType.BLESSING_OF_THE_TIDES))?(dashCooldown = 1800):(dashCooldown = 2500);
-
-                    this.putDashOnCooldown(dashCooldown);
-                    this.owner.tweens.add("dash", {startDelay: 0, duration: 500,
-                        effects: [{
-                                property: TweenableProperties.posX,
-                                start: this.owner.position.x,
-                                end: newPos.x,
-                                ease: EaseFunctionType.OUT_SINE
-                            },
-                            {
-                                property: TweenableProperties.posY,
-                                start: this.owner.position.y,
-                                end: newPos.y,
-                                ease: EaseFunctionType.OUT_SINE
-                            }
-                            ]
-                        });
-                    this.owner.tweens.play("dash");
-                    this.owner.animation.playUninterruptable("DASH");
-                    this.dashIsReady = false;
-                    this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "dash_sound"});
-                    setTimeout(() => {
-                        this.dashIsReady = true;
-                    }, dashCooldown);
-                }
-            }
+            if(this.dashIsReady && Input.isJustPressed("dash"))
+                this.useDash();
 
             /* Prevent dash from going through walls */
             let colrow = this.tilemap.getColRowAt(this.owner.position);
@@ -246,13 +173,14 @@ export default class PlayerController implements BattlerAI {
                     
                 }
 
-                // Use knockback swing on right click
+                // Use secondary attack on right click
                 else if(Input.isMouseRightClick())
                     if (this.owner.active){ // make sure the player has physics enabled
                         this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);   // Rotate the player
                         if(this.inventory.getSecondaryAttack().cast(this.owner, "player", this.lookDirection)){
                             (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
                             this.owner.animation.playIfNotAlready("ATTACK");
+                            this.putOnCooldown(this.secondaryCD, 3000, 0.75);
                         }
                         this.owner.rotation = 0;
                     }
@@ -270,16 +198,95 @@ export default class PlayerController implements BattlerAI {
         // this.owner.destroy();
     }
 
-    putDashOnCooldown(dashCD: number): void{
-        this.dashCD.tweens.add("runCooldown", {startDelay: 0, duration: dashCD,
+    useDash(): void{
+        let useDash = false;
+        let newPos = this.owner.position.clone();
+
+        this.dashVelocity = new Vec2(0, 0);
+        if(Input.isPressed("left")){
+            useDash = true;
+            newPos.x -= 50;
+            this.dashVelocity.x = -1.0;
+        }
+        else if(Input.isPressed("right")){
+            useDash = true;
+            newPos.x += 50;
+            this.dashVelocity.x = 1.0;
+        }
+        if(Input.isPressed("forward")){
+            useDash = true;
+            newPos.y -= 50;
+            this.dashVelocity.y = -1.0;
+        }
+        else if(Input.isPressed("backward")){
+            useDash = true;
+            newPos.y += 50;
+            this.dashVelocity.y = 1.0;
+        }
+
+        /* Slightly reduce distance of diagonal dashes */
+        if(this.dashVelocity.x !== 0 && this.dashVelocity.y !== 0){
+            (this.dashVelocity.x > 0)?(newPos.x -= 12):(newPos.x += 12);
+            (this.dashVelocity.y > 0)?(newPos.y -= 12):(newPos.y += 12);
+        }
+
+        /* If user presses SPACE without WASD, dash forward */
+        if(this.dashVelocity.x === 0 && this.dashVelocity.y === 0){
+            (this.owner.invertX)?(newPos.x -=50):(newPos.x +=50);
+            (this.owner.invertX)?(this.dashVelocity.x = -1.0):(this.dashVelocity.x = 1.0);
+            useDash = true;
+        }
+
+        /* If player has Flowing Water item, increase dash distance */
+        if(this.inventory.hasItem(ItemType.FLOWING_WATER)){
+            if(this.dashVelocity.x !== 0)
+                (this.dashVelocity.x > 0)?(newPos.x += 18):(newPos.x -= 18);
+
+            if(this.dashVelocity.y !== 0)
+                (this.dashVelocity.y > 0)?(newPos.y += 18):(newPos.y -= 18);
+        }
+
+        /* Uses dash if Spacebar + WASD was pressed */
+        if(useDash){
+            let dashCooldown = 0;
+            (this.inventory.hasItem(ItemType.BLESSING_OF_THE_TIDES))?(dashCooldown = 1800):(dashCooldown = 2500);
+
+            this.putOnCooldown(this.dashCD, dashCooldown, 1.0);
+            this.owner.tweens.add("dash", {startDelay: 0, duration: 500,
+                effects: [{
+                        property: TweenableProperties.posX,
+                        start: this.owner.position.x,
+                        end: newPos.x,
+                        ease: EaseFunctionType.OUT_SINE
+                    },
+                    {
+                        property: TweenableProperties.posY,
+                        start: this.owner.position.y,
+                        end: newPos.y,
+                        ease: EaseFunctionType.OUT_SINE
+                    }
+                    ]
+                });
+            this.owner.tweens.play("dash");
+            this.owner.animation.playUninterruptable("DASH");
+            this.dashIsReady = false;
+            this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "dash_sound"});
+            setTimeout(() => {
+                this.dashIsReady = true;
+            }, dashCooldown);
+        }
+    }
+
+    putOnCooldown(sprite: Sprite, cooldown: number, endScale: number): void{
+        sprite.tweens.add("runCooldown", {startDelay: 0, duration: cooldown,
             effects: [{
                     property: TweenableProperties.scaleX,
                     start: 0,
-                    end: 1.0,
+                    end: endScale,
                     ease: EaseFunctionType.IN_SINE
                 }]
             });
-        this.dashCD.tweens.play("runCooldown");
+        sprite.tweens.play("runCooldown");
     }
 
     damage(damage: number): void {
