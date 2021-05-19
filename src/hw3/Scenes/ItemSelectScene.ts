@@ -39,9 +39,19 @@ export default class ItemSelectScene extends Scene {
         for(let i=0 ; i < this.itemChoices.length ;){
             if(this.allItems.length !== 0){
                 let randomNum = this.randomInt(this.allItems.length);
-                
+
+                // each additional item of same type has half the chance of appearing as the previous one
+                let multiplier = 1.0  
+                // checks the inventory to see how many items are of this type
+                let characterInventory = this.characterState.getInventory().getItems()
+                for (var index = 0; index < characterInventory.length; index ++){ 
+                    if (this.allItems[randomNum].key === characterInventory[index].key){
+                        multiplier *= 0.5 
+                    }
+                }
+
                 /* Item passes rarity test, add to inventory */
-                if(this.passRarityTest(this.allItems[randomNum].rarity)){
+                if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
                     this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
                     i++;
                 }
@@ -142,7 +152,7 @@ export default class ItemSelectScene extends Scene {
                     /* Add selected item to inventory, remove it from pool */
                     else{
                         this.characterState.addToInventory(this.itemChoices[this.itemSelected]);
-                        this.itemChoices[this.itemSelected] = null;
+                        // this.itemChoices[this.itemSelected] = null; Final Project TODO - figure out stacking
                     }
 
                     /* Put non-selected items back into the pool */
@@ -217,7 +227,8 @@ export default class ItemSelectScene extends Scene {
 
     }
 
-    passRarityTest(rarity: string): boolean{
+    passRarityTest(rarity: string, multiplier: any): boolean{
+        // console.log(multiplier)
         let chance = 100;
         if(rarity === "common")
             chance = 100;
@@ -227,8 +238,8 @@ export default class ItemSelectScene extends Scene {
             chance = 28;
         else if(rarity === "ultra_rare")
             chance = 7;
-        
-        if(this.randomInt(101) < chance)
+        // console.log(chance*multiplier)  
+        if(this.randomInt(101) < chance * multiplier) // decreases chance each time item is found
             return true;
         return false;
     }

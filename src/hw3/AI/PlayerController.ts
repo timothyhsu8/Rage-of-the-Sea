@@ -290,7 +290,7 @@ export default class PlayerController implements BattlerAI {
     }
 
     damage(damage: number): void {
-        console.log(damage);
+        // console.log(damage);
         if(damage <= 0)
             damage = 1;
 
