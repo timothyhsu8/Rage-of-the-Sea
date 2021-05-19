@@ -21,6 +21,8 @@ export default abstract class AbilityType {
 
     hasTileAnimations: boolean;
 
+    knockback: number;
+
     /**
      * Initializes this weapon type with data
      */

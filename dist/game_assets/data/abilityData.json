@@ -9,7 +9,8 @@
             "spriteKey": "anchorswing",
             "damage": 1,
             "cooldown": 500,
-            "chargeTime": 1000
+            "chargeTime": 1000,
+            "knockback": 4
         },
         {
             "abilityType": "anchorpush",
@@ -18,8 +19,9 @@
             "animationSprite": "anchorpush",
             "spriteKey": "anchorpush",
             "damage": 0.25,
-            "cooldown": 2000,
-            "chargeTime": 1000
+            "cooldown": 2500,
+            "chargeTime": 1000,
+            "knockback": 16
         },
         {
             "abilityType": "groundslam",

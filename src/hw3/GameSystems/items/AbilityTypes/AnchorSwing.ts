@@ -7,6 +7,8 @@ import AbilityType from "./AbilityType";
 
 export default class AnchorSwing extends AbilityType {
 
+    knockback: number;
+
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
         this.cooldown = options.cooldown;
@@ -14,6 +16,7 @@ export default class AnchorSwing extends AbilityType {
         this.displayName = options.displayName;
         this.spriteKey = options.spriteKey;
         this.hasTileAnimations = false;
+        this.knockback = options.knockback;
     }
 
     /* Calculates the squares to damage and returns them as an array */
@@ -52,7 +55,6 @@ export default class AnchorSwing extends AbilityType {
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
         let swing = scene.add.animatedSprite("anchorswing", "primary");
         swing.animation.play("NORMAL", true);
-
         return [swing];
     }
 

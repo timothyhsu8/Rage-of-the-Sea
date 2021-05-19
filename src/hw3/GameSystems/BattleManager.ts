@@ -33,12 +33,13 @@ export default class BattleManager {
             setTimeout(function(){
                 for(let i = 0 ; i < enemies.length ; i++){
                     if(enemies[i].owner !== undefined && (HelpScreen.instakill || ability.hits(enemies[i].owner))  ){
-                        enemies[i].damage((ability.type.damage) * playerStats.attackMult + (playerStats.attack));
+                        enemies[i].damage((ability.type.damage) * playerStats.attackMult + (playerStats.attack), ability.type.knockback);
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
                     }
                 }
             }, 200);
         } 
+        
         /* Attacker is a Monster */
         else {
             let damageTiles = ability.type.findHitArea(this.tilemap.getColRowAt(attacker.position), direction, this.tilemap.getColRowAt(this.player.position));
@@ -64,7 +65,7 @@ export default class BattleManager {
             setTimeout(function(){
                 // Check if player is hit by attack by comparing player tile to damage tiles
                 if(ability.hitsSprite(tilemap.getColRowAt(playerPos), damageTiles))
-                    playerAI.damage((((ability.type.damage*(level*0.5)) - playerStats.defense) * playerStats.takeDamageMult  ));
+                    playerAI.damage((((ability.type.damage*(level*0.5)) - playerStats.defense) * playerStats.takeDamageMult), 0);
 
                 /* Set floor tiles back to normal */
                 for(let i = 0 ; i < damageTiles.length ; i++){

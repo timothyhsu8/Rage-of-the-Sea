@@ -67,11 +67,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     activate(options: Record<string, any>): void {}
 
-    damage(damage: number): void {
+    damage(damage: number, knockback: number): void {
         this.health -= damage;
         
+        /* Determine Knockback Distance */
         let knockbackDist = 0;
-        (this.knockbackable)?(knockbackDist=4):(knockbackDist=1);
+        (this.knockbackable)?(knockbackDist=knockback):(knockbackDist=knockback/2);
         if(this.owner.imageId === "Leviathan")
             knockbackDist = 0;
 
@@ -87,6 +88,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             this.owner.tweens.play("death");
         }
 
+        /* Turn Semitransparent */
         else{
             let owner = this.owner;
             owner.changeColor = true;
