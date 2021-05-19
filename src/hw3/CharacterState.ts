@@ -24,7 +24,7 @@ export default class CharacterState{
     addToInventory(itemChoice: any){
         if(itemChoice.key !== "none"){
             let newItem = new Item(itemChoice.name, itemChoice.key, itemChoice.ability, itemChoice.maxHealth, itemChoice.health, itemChoice.attack,
-                itemChoice.attackMult, itemChoice.defense, itemChoice.speed, itemChoice.takeDamageMult, itemChoice.description, itemChoice.rarity);
+                itemChoice.attackMult, itemChoice.defense, itemChoice.speed, itemChoice.takeDamageMult, itemChoice.description, itemChoice.stats, itemChoice.rarity);
             this.addItemStats(newItem);
             this.inventory.addItem(newItem);
         }

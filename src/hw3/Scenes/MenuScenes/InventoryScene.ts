@@ -20,6 +20,7 @@ export default class InventoryScene extends Scene {
     
     private itemName: Label;
     private itemDescription: Label;
+    private itemStats: Label;
     private itemDescriptionBox: Sprite;
     private hovering: boolean;
     private hoveredItem: Sprite;
@@ -58,6 +59,13 @@ export default class InventoryScene extends Scene {
         this.itemDescription.visible = false;
         this.itemDescription.fontSize = 15;
 
+        /* Item stats on item hover */
+        this.itemStats = <Label>this.add.uiElement(UIElementType.LABEL, "itemdescriptions", {position: new Vec2(-100, -100), text: ""});
+        this.itemStats.textColor = Color.WHITE;
+        this.itemStats.font = "Merriweather";
+        this.itemStats.visible = false;
+
+        this.itemStats.fontSize = 15;
         /* Item Description Box */
         this.itemDescriptionBox = this.add.sprite("itemdescriptionbox", "itemdescriptionbox");
         this.itemDescriptionBox.visible = false;
@@ -116,6 +124,9 @@ export default class InventoryScene extends Scene {
         let height = 160;
         this.equippedItems = this.characterState.getInventory().getItems();
         for(let i=0 ; i < this.equippedItems.length ; i++){
+
+            // Final Project TODO - implement stacking 
+
             /* Item Icon */
             let icon = this.add.sprite(this.equippedItems[i].key, "inventory");
             icon.scale.set(1/2, 1/2);
@@ -164,15 +175,20 @@ export default class InventoryScene extends Scene {
                     this.hoveredItem = this.itemIcons[i];
 
                     /* Item name */
-                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-92);
+                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-95);
                     this.itemName.text = this.equippedItems[i].name + " (" + Item.getRarityText(this.equippedItems[i].rarity) + ")"; 
                     this.itemName.textColor = Item.getRarityColor(this.equippedItems[i].rarity);
                     this.itemName.visible = true;
                     
                     /* Description */
-                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-67);
+                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);
                     this.itemDescription.text = this.equippedItems[i].description; 
                     this.itemDescription.visible = true;
+
+                    this.itemStats.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-65);
+                    this.itemStats.text = this.equippedItems[i].statsString; 
+                    this.itemStats.visible = true;
+
 
                     /* Description Box */
                     this.itemDescriptionBox.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);
@@ -188,6 +204,7 @@ export default class InventoryScene extends Scene {
                 this.itemName.visible = false;
                 this.itemDescriptionBox.visible = false;
                 this.itemDescription.visible = false;
+                this.itemStats.visible = false;
                 this.hovering = false;
             }
         }

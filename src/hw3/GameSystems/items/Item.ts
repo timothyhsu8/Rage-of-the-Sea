@@ -15,15 +15,17 @@ export default class Item {
     sprite: Sprite;
     ability: Ability;
     damage: number;
+    statsString: string;
 
     /* Stats */
     stats: Stats;
 
     constructor(name: string, key:ItemType, ability: Ability, maxHealth: number, health: number, attack: number, 
-        attackMult: number, defense: number, speed:number, takeDamageMult: number, description: string, rarity: string){
+        attackMult: number, defense: number, speed:number, takeDamageMult: number, description: string, statsString: string, rarity: string){
         this.name = name;
         this.key = key;
         this.description = description;
+        this.statsString = statsString
         this.rarity = rarity;
         this.ability = ability;
         this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);

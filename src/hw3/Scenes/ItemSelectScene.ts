@@ -206,6 +206,15 @@ export default class ItemSelectScene extends Scene {
         item1description.textColor = PancakeColor.BEIGE;
         item1description.fontSize = 20;
         item1description.font = "Merriweather";
+
+        if (this.itemChoices[itemChoice] != this.load.getObject("itemData").none){
+            // /* Stats */
+            const item1stats = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+120), text:this.itemChoices[itemChoice].stats});
+            item1stats.textColor = Color.WHITE;
+            item1stats.fontSize = 20;
+            item1stats.font = "Merriweather";
+        }
+
     }
 
     passRarityTest(rarity: string): boolean{
