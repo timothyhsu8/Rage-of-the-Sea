@@ -4,7 +4,8 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 
 export default class Inventory{
     private items: Array<Item>;
-    basicAttack: Ability; 
+    basicAttack: Ability;
+    secondaryAttack: Ability;
     currentItem: number;
 
     constructor(scene: Scene){
@@ -35,6 +36,14 @@ export default class Inventory{
 
     getBasicAttack(): Ability{
         return this.basicAttack;
+    }
+
+    setSecondaryAttack(ability: Ability): void{
+        this.secondaryAttack = ability;
+    }
+
+    getSecondaryAttack(): Ability{
+        return this.secondaryAttack;
     }
 
     addItem(item: Item): void{

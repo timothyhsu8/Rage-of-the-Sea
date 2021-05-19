@@ -118,6 +118,7 @@ export default class Ability {
 
 export enum AbilityTypes {
     PLAYER_ANCHORSWING = "anchorswing",
+    PLAYER_ANCHORPUSH = "anchorpush",
     LEVIATHAN_SPIKES = "leviathan_spikes",
     LEVIATHAN_WHIRLPOOL = "leviathan_whirlpool",
     TRIPLE_SNIPE = "triple_snipe",

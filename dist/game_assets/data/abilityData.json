@@ -1,5 +1,5 @@
 {
-    "numAbilities": 13,
+    "numAbilities": 14,
     "abilities": [
         {
             "abilityType": "anchorswing",
@@ -9,6 +9,16 @@
             "spriteKey": "anchorswing",
             "damage": 1,
             "cooldown": 500,
+            "chargeTime": 1000
+        },
+        {
+            "abilityType": "anchorpush",
+            "name": "anchorpush",
+            "displayName": "Anchor Push",
+            "animationSprite": "anchorpush",
+            "spriteKey": "anchorpush",
+            "damage": 0.25,
+            "cooldown": 2000,
             "chargeTime": 1000
         },
         {

@@ -5,7 +5,7 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
 import AbilityType from "./AbilityType";
 
-export default class AnchorSwing extends AbilityType {
+export default class AnchorPush extends AbilityType {
 
     initialize(options: Record<string, any>): void {
         this.damage = options.damage;
@@ -35,6 +35,7 @@ export default class AnchorSwing extends AbilityType {
 
         // Rotate this with the game node
         sliceSprite.rotation = attacker.rotation;
+        sliceSprite.scale.set(1.3, 1.3);
 
         // Move the slice out from the player
         sliceSprite.position = attacker.position.clone().add(direction.scaled(20));
@@ -50,9 +51,8 @@ export default class AnchorSwing extends AbilityType {
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let swing = scene.add.animatedSprite("anchorswing", "primary");
+        let swing = scene.add.animatedSprite("anchorpush", "primary");
         swing.animation.play("NORMAL", true);
-
         return [swing];
     }
 

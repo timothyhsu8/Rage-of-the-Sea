@@ -14,6 +14,7 @@ import LeviathanRain from "../GameSystems/items/AbilityTypes/LeviathanRain";
 import AbilityType from "../GameSystems/items/AbilityTypes/AbilityType";
 import LeviathanCross from "../GameSystems/items/AbilityTypes/LeviathanCross";
 import HasturFlame from "../GameSystems/items/AbilityTypes/HasturFlame";
+import AnchorPush from "../GameSystems/items/AbilityTypes/AnchorPush";
 
 export default class AbilityTemplateRegistry extends Registry<AbilityConstructor> {
     
@@ -24,6 +25,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         rm.spritesheet("slice", "game_assets/spritesheets/abilities/slice.json");
         rm.spritesheet("groundslam", "game_assets/spritesheets/abilities/groundslam.json");
         rm.spritesheet("anchorswing", "game_assets/spritesheets/abilities/anchorswing.json");
+        rm.spritesheet("anchorpush", "game_assets/spritesheets/abilities/anchorpush.json");
         rm.spritesheet("snipe", "game_assets/spritesheets/abilities/snipe.json");
         rm.spritesheet("double_snipe", "game_assets/spritesheets/abilities/double_snipe.json");
         rm.spritesheet("triple_snipe", "game_assets/spritesheets/abilities/triple_snipe.json");
@@ -39,6 +41,7 @@ export default class AbilityTemplateRegistry extends Registry<AbilityConstructor
         // Register default types
         this.registerItem("groundslam", GroundSlam);
         this.registerItem("anchorswing", AnchorSwing);
+        this.registerItem("anchorpush", AnchorPush);
         this.registerItem("snipe", Snipe);
         this.registerItem("double_snipe", Double_Snipe);
         this.registerItem("triple_snipe", Triple_Snipe);

@@ -236,8 +236,7 @@ export default class PlayerController implements BattlerAI {
                 // Do Basic Attack on left click
                 if(!Input.isMouseRightClick()){
                     if (this.owner.active){ // make sure the player has physics enabled
-                        // Rotate the player
-                        this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
+                        this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);   // Rotate the player
                         if(this.inventory.getBasicAttack().cast(this.owner, "player", this.lookDirection)){
                             (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
                             this.owner.animation.playIfNotAlready("ATTACK");
@@ -247,14 +246,16 @@ export default class PlayerController implements BattlerAI {
                     
                 }
 
-                // Use Current Item on right click
-                // else if(Input.isMouseRightClick())
-                //     if(!this.inventory.isEmpty()){
-                //         this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);
-                //         // this.owner.animation.playIfNotAlready("USEITEM");
-                //         //this.inventory.getCurrentItem().use(this.owner, "player", this.lookDirection);
-                //         this.owner.rotation = 0;
-                //     }
+                // Use knockback swing on right click
+                else if(Input.isMouseRightClick())
+                    if (this.owner.active){ // make sure the player has physics enabled
+                        this.owner.rotation = Vec2.UP.angleToCCW(this.lookDirection);   // Rotate the player
+                        if(this.inventory.getSecondaryAttack().cast(this.owner, "player", this.lookDirection)){
+                            (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
+                            this.owner.animation.playIfNotAlready("ATTACK");
+                        }
+                        this.owner.rotation = 0;
+                    }
             }
 
             // Get the unit vector in the look direction

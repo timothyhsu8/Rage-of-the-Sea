@@ -1,6 +1,6 @@
 {
-    "name": "anchorswing",
-    "spriteSheetImage": "anchorswing.png",
+    "name": "anchorpush",
+    "spriteSheetImage": "anchorpush.png",
     "spriteWidth": 64,
     "spriteHeight": 64,
     "columns": 6,

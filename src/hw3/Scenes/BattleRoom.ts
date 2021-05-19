@@ -112,6 +112,7 @@ export default class BattleRoom extends Scene {
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "game_assets/spritesheets/abilities/anchorswing.json");
+        this.load.spritesheet("anchorpush", "game_assets/spritesheets/abilities/anchorpush.json");
         this.load.spritesheet("groundslam", "game_assets/spritesheets/abilities/groundslam.json");
         this.load.spritesheet("snipe", "game_assets/spritesheets/abilities/snipe.json");
         this.load.spritesheet("double_snipe", "game_assets/spritesheets/abilities/double_snipe.json");
@@ -368,8 +369,11 @@ export default class BattleRoom extends Scene {
         // Create the inventory
         let inventory = new Inventory(this);
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
-        inventory.setBasicAttack(basicAttack);
         this.characterState.getInventory().setBasicAttack(basicAttack);
+        //inventory.setBasicAttack(basicAttack);
+
+        let secondaryAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORPUSH, this.battleManager, this);
+        this.characterState.getInventory().setSecondaryAttack(secondaryAttack);
 
         /* Sprite for character portrait */
         let portrait = this.add.sprite("portrait", "primary");
