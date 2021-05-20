@@ -1,4 +1,5 @@
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
+import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
 import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Scene from "../../../../Wolfie2D/Scene/Scene";
@@ -56,7 +57,7 @@ export default class Cross extends AbilityType {
     }
 
     doAnimation(attacker: GameNode, direction: Vec2, abilitySprite: AnimatedSprite): void {
-        //attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "snipe_sound"});
+        //attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "cross_sound"});
     }
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{

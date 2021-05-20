@@ -60,7 +60,7 @@ export default class Spike_Line extends AbilityType {
     }
 
     doAnimation(attacker: GameNode, direction: Vec2, abilitySprite: AnimatedSprite): void {
-        attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "spikeline_sound"});
+        //attacker.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "spikeline_sound"});
     }
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
