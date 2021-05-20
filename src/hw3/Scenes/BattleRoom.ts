@@ -272,6 +272,10 @@ export default class BattleRoom extends Scene {
                             this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                             this.characterState.itemRotation++;
                             
+                            /* Slight heal if player has Amphitrite's Protection */
+                            if(this.characterState.getInventory().hasItem(ItemType.AMPHITRITES_PROTECTION))
+                                this.characterState.healPlayer(4);
+
                             /* Item Select Screen */
                             if(HelpScreen.itemEveryRoom || this.characterState.itemRotation === 2){
                                 this.characterState.itemRotation = 0;
