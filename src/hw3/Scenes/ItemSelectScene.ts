@@ -196,7 +196,7 @@ export default class ItemSelectScene extends Scene {
 
             /* Rarity Text */
             let rarityText = "(" + Item.getRarityText(rarity) + ")";
-            const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+32), text:rarityText});
+            const item1description = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y+35), text:rarityText});
             item1description.textColor = rarityColor;
             item1description.fontSize = 20;
             item1description.font = "Merriweather";

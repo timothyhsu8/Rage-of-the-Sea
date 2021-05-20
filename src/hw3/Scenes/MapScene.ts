@@ -291,6 +291,12 @@ export default class MapScene extends Scene{
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
                             }
+
+                            /* Turn other column nodes grey */
+                            for(let k=0 ; k < this.roomButtons[i].length ; k++)
+                                if(k !== j)
+                                    this.roomButtons[i][k].backgroundColor = new Color(91, 95, 99);
+
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
                             this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
@@ -362,14 +368,14 @@ export default class MapScene extends Scene{
             for(let j = 0; j < floor.roomArray[i].length; j++){
                 if (floor.roomArray[i][j].next1 != null){  // check if next1 is null
                     if (floor.roomArray[i][j].next1.position != null){  // check if the position is null
-                        let line = <Line>this.add.graphic(GraphicType.LINE, "rooms", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next1.position});
-                        line.color = Color.WHITE;
+                        let line = <Line>this.add.graphic(GraphicType.LINE, "map", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next1.position});
+                        line.color = new Color(76, 78, 82);
                     }
                 }
                 if (floor.roomArray[i][j].next2 != null){  // check if next2 is null
                     if (floor.roomArray[i][j].next2.position != null){  // check if position is null
-                        let line2 = <Line>this.add.graphic(GraphicType.LINE, "rooms", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next2.position});
-                        line2.color = Color.WHITE;
+                        let line2 = <Line>this.add.graphic(GraphicType.LINE, "map", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next2.position});
+                        line2.color = new Color(76, 78, 82);
                     }
                 }
             }

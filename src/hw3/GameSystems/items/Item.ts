@@ -76,11 +76,11 @@ export default class Item {
             case "uncommon":
                 return PancakeColor.LIGHT_GREEN;
             case "rare":
-                return PancakeColor.TURQUOISE;
+                return new Color(104, 164, 247);
             case "ultra_rare":
                 return PancakeColor.YELLOW;
             case "special":
-                return PancakeColor.TURQUOISE;
+                return new Color(218, 149, 232);
             default:
                 return Color.WHITE;
         }

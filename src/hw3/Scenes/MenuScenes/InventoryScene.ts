@@ -181,13 +181,13 @@ export default class InventoryScene extends Scene {
                     this.itemName.visible = true;
                     
                     /* Description */
-                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);
+                    this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-78);
                     this.itemDescription.text = this.equippedItems[i].description; 
                     this.itemDescription.visible = true;
                     this.itemDescription.fontSize = 14;
 
                     /* Exact Stats */
-                    this.itemStats.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-60);
+                    this.itemStats.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-58);
                     this.itemStats.text = this.equippedItems[i].statsString; 
                     this.itemStats.visible = true;
                     this.itemStats.fontSize = 14;
