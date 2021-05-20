@@ -28,6 +28,7 @@ import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import GameWon from "./GameWon";
+import Timer from "../../Wolfie2D/Timing/Timer";
 
 export default class BattleRoom extends Scene {
     // The Game Loop boolean
@@ -180,14 +181,14 @@ export default class BattleRoom extends Scene {
             this.addLayer("bossHP", 12);
 
             let bosshpborder =  this.add.sprite("bosshp", "bossHP");
-            bosshpborder.position.set(261, 260);
+            bosshpborder.position.set(261, 250);
             bosshpborder.scale.set(6/10, 6/10);
 
             let bosshpbg =  this.add.sprite("bosshpbg", "primary");
-            bosshpbg.position.set(261, 260);
+            bosshpbg.position.set(261, 250);
             bosshpbg.scale.set(6/10, 6/10);
             
-            this.bossHealthbar = this.add.graphic(GraphicType.RECT, "bossHP", {position: new Vec2(260, 260), size: new Vec2((<BattlerAI>this.enemies[0]._ai).health/2, 6)});
+            this.bossHealthbar = this.add.graphic(GraphicType.RECT, "bossHP", {position: new Vec2(260, 250), size: new Vec2((<BattlerAI>this.enemies[0]._ai).health/2, 6)});
         }
     }
 
@@ -363,6 +364,7 @@ export default class BattleRoom extends Scene {
         // Create the inventory
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         this.characterState.getInventory().setBasicAttack(basicAttack);
+        //basicAttack.cooldownTimer = new Timer(29); // If has item that increases attack speed
 
         let secondaryAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORPUSH, this.battleManager, this);
         this.characterState.getInventory().setSecondaryAttack(secondaryAttack);

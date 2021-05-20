@@ -175,7 +175,7 @@ export default class InventoryScene extends Scene {
                     this.hoveredItem = this.itemIcons[i];
 
                     /* Item name */
-                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-95);
+                    this.itemName.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-100);
                     this.itemName.text = this.equippedItems[i].name + " (" + Item.getRarityText(this.equippedItems[i].rarity) + ")"; 
                     this.itemName.textColor = Item.getRarityColor(this.equippedItems[i].rarity);
                     this.itemName.visible = true;
@@ -184,11 +184,13 @@ export default class InventoryScene extends Scene {
                     this.itemDescription.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);
                     this.itemDescription.text = this.equippedItems[i].description; 
                     this.itemDescription.visible = true;
+                    this.itemDescription.fontSize = 14;
 
-                    this.itemStats.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-65);
+                    /* Exact Stats */
+                    this.itemStats.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-60);
                     this.itemStats.text = this.equippedItems[i].statsString; 
                     this.itemStats.visible = true;
-
+                    this.itemStats.fontSize = 14;
 
                     /* Description Box */
                     this.itemDescriptionBox.position.set(this.itemIcons[i].position.x, this.itemIcons[i].position.y-80);

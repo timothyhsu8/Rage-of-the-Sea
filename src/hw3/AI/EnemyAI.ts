@@ -68,33 +68,36 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     activate(options: Record<string, any>): void {}
 
     damage(damage: number, knockback: number): void {
-        this.health -= damage;
-        
-        /* Determine Knockback Distance */
-        let knockbackDist = 0;
-        (this.knockbackable)?(knockbackDist=knockback):(knockbackDist=knockback/2);
-        if(this.owner.imageId === "Leviathan")
-            knockbackDist = 0;
+        if(this.owner.hasPhysics){
+            this.health -= damage;
+            
+            /* Determine Knockback Distance */
+            let knockbackDist = 0;
+            (this.knockbackable)?(knockbackDist=knockback):(knockbackDist=knockback/2);
+            if(this.owner.imageId === "Leviathan")
+                knockbackDist = 0;
 
-        this.playKnockbackTween(knockbackDist);
+            this.playKnockbackTween(knockbackDist);
 
-        let enemyName = this.owner.imageId.toLowerCase();
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
+            let enemyName = this.owner.imageId.toLowerCase();
+            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
 
 
-        /* Enemy Dies */
-        if(HelpScreen.instakill || this.health <= 0){
-            this.owner.disablePhysics();
-            this.owner.tweens.play("death");
-        }
+            /* Enemy Dies */
+            if(HelpScreen.instakill || this.health <= 0){
+                this.owner.disablePhysics();
+                console.log(this.owner.hasPhysics);
+                this.owner.tweens.play("death");
+            }
 
-        /* Turn Semitransparent */
-        else{
-            let owner = this.owner;
-            owner.changeColor = true;
-            setTimeout(() => {
-                owner.changeColor = false;
-            }, 400);
+            /* Turn Semitransparent */
+            else{
+                let owner = this.owner;
+                owner.changeColor = true;
+                setTimeout(() => {
+                    owner.changeColor = false;
+                }, 400);
+            }
         }
     }
 

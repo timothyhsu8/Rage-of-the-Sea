@@ -25,7 +25,7 @@ export default class Item {
         this.name = name;
         this.key = key;
         this.description = description;
-        this.statsString = statsString
+        this.statsString = statsString;
         this.rarity = rarity;
         this.ability = ability;
         this.stats = new Stats(maxHealth, health, attack, attackMult, defense, speed, takeDamageMult);
@@ -62,6 +62,8 @@ export default class Item {
                 return "Rare";
             case "ultra_rare":
                 return "Ultra Rare";
+            case "special":
+                return "Special";
             default:
                 return "Common";
         }
@@ -77,6 +79,8 @@ export default class Item {
                 return PancakeColor.TURQUOISE;
             case "ultra_rare":
                 return PancakeColor.YELLOW;
+            case "special":
+                return PancakeColor.TURQUOISE;
             default:
                 return Color.WHITE;
         }

@@ -152,7 +152,9 @@ export default class ItemSelectScene extends Scene {
                     /* Add selected item to inventory, remove it from pool */
                     else{
                         this.characterState.addToInventory(this.itemChoices[this.itemSelected]);
-                        // this.itemChoices[this.itemSelected] = null; Final Project TODO - figure out stacking
+                        
+                        if(this.itemChoices[this.itemSelected].rarity === "special")
+                            this.itemChoices[this.itemSelected] = null; //Final Project TODO - figure out stacking
                     }
 
                     /* Put non-selected items back into the pool */
@@ -235,7 +237,7 @@ export default class ItemSelectScene extends Scene {
         else if(rarity === "uncommon")
             chance = 60;
         else if(rarity === "rare")
-            chance = 28;
+            chance = 30;
         else if(rarity === "ultra_rare")
             chance = 7;
         // console.log(chance*multiplier)  
