@@ -97,5 +97,9 @@ export enum ItemType {
     SWIFTNESS_GEMSTONE = "swiftness_gemstone",
     FLOWING_WATER = "flowing_water",
     BLESSING_OF_THE_TIDES = "blessing_of_the_tides",
+    IRON_GRIP = "iron_grip",
+    TWISTING_CYCLONE = "twisting_cyclone",
+    BRONZE_HOURGLASS = "bronze_hourglass",
+    HEAVY_SWINGS = "heavy_swings",
     NONE = "none"
 }

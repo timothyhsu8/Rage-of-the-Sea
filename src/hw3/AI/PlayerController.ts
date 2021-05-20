@@ -180,7 +180,10 @@ export default class PlayerController implements BattlerAI {
                         if(this.inventory.getSecondaryAttack().cast(this.owner, "player", this.lookDirection)){
                             (this.owner.rotation > 2) ? ((<AnimatedSprite>this.owner).invertX = false):((<AnimatedSprite>this.owner).invertX = true);   // Rotate player to face direction of swing
                             this.owner.animation.playIfNotAlready("ATTACK");
-                            this.putOnCooldown(this.secondaryCD, 3000, 0.75);
+
+                            let secondarycooldown = 0;
+                            (this.inventory.hasItem(ItemType.BRONZE_HOURGLASS))?(secondarycooldown = 2000):(secondarycooldown = 3000);
+                            this.putOnCooldown(this.secondaryCD, secondarycooldown, 0.75);
                         }
                         this.owner.rotation = 0;
                     }

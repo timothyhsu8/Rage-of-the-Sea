@@ -29,6 +29,7 @@ import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import GameWon from "./GameWon";
 import Timer from "../../Wolfie2D/Timing/Timer";
+import { ItemType } from "../GameSystems/items/Item";
 
 export default class BattleRoom extends Scene {
     // The Game Loop boolean
@@ -364,7 +365,6 @@ export default class BattleRoom extends Scene {
         // Create the inventory
         let basicAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORSWING, this.battleManager, this);
         this.characterState.getInventory().setBasicAttack(basicAttack);
-        //basicAttack.cooldownTimer = new Timer(29); // If has item that increases attack speed
 
         let secondaryAttack = Ability.createAbility(AbilityTypes.PLAYER_ANCHORPUSH, this.battleManager, this);
         this.characterState.getInventory().setSecondaryAttack(secondaryAttack);
@@ -412,6 +412,20 @@ export default class BattleRoom extends Scene {
                 }
             ]
         });
+
+        
+        /* Check for Special Item Effects  */
+        if(this.characterState.getInventory().hasItem(ItemType.TWISTING_CYCLONE))   // Increased attack speed
+            basicAttack.cooldownTimer = new Timer(350);
+
+        if(this.characterState.getInventory().hasItem(ItemType.IRON_GRIP))  // Increased knockback on basic attack
+            basicAttack.type.knockback = 9;
+
+        if(this.characterState.getInventory().hasItem(ItemType.BRONZE_HOURGLASS))  // Increased knockback on basic attack
+            secondaryAttack.cooldownTimer = new Timer(2000);
+
+        if(this.characterState.getInventory().hasItem(ItemType.HEAVY_SWINGS))  // Increased knockback on basic attack
+            secondaryAttack.type.knockback = 24;    
     }
     
     initializeEnemies(){
