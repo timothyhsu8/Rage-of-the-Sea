@@ -97,14 +97,18 @@ export default class MapGenerator {
                 }
             }
         }
-
         return newFloor;
     }
 
     static createRandomRoom(roomNum: number, level: number): Room {
         // TODO - add weights and random choice of room when
         // more room types are implemented
+        let randomNum = Math.floor(Math.random() * 100);
+        if (randomNum < 7){  // 7% chance for shrine room, subject to change
+            return new Room(RoomTypes.SHRINE_ROOM, roomNum, level);
+        }
         return new Room(RoomTypes.BATTLE_ROOM, roomNum, level);
+
     }
 
     static createBossRoom(roomNum: number, level: number): Room {

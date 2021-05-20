@@ -275,21 +275,33 @@ export default class MapScene extends Scene{
             /* Showing completion of rooms */
             if(event.type.substring(0, 4) === "room" && !this.quitLabelVisible){
                 for(let i=0 ; i < this.roomButtons.length ; i++)
-                    for(let j=0 ; j < this.roomButtons[i].length ; j++)
-                        if(this.roomButtons[i][j].onClickEventId === event.type && this.roomButtons[i][j].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString()){
+                    for(let j=0 ; j < this.roomButtons[i].length ; j++){
+                        let buttonColor = this.roomButtons[i][j].backgroundColor.toString()
+                        if(this.roomButtons[i][j].onClickEventId === event.type && (buttonColor === PancakeColor.LIGHT_GRAY.toString() || 
+                            buttonColor === PancakeColor.RED.toString())){ // shrine room
                             this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
 
-                            /* Turn next1 node grey */
+                            /* Turn next1 node grey, check for room type */
                             if(this.roomArray[i][j].next1 !== null && this.roomArray[i][j].next1.roomType !== RoomTypes.BOSS_ROOM){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
-                                    this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                                    if(this.roomArray[i][j].next1 !== null && this.roomArray[i][j].next1.roomType === RoomTypes.SHRINE_ROOM){
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.RED;
+                                    }    
+                                    else{
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                                    }
                             }
-                            /* Turn next2 node grey */
+                            /* Turn next2 node grey, check for room type */
                             if(this.roomArray[i][j].next2 !== null && this.roomArray[i][j].next2.roomType !== RoomTypes.BOSS_ROOM){
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next2.roomNum);
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
-                                    this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                                    if (this.roomArray[i][j].next2.roomType === RoomTypes.SHRINE_ROOM){
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.RED;
+                                    }   
+                                    else{
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
+                                    }
                             }
 
                             /* Turn other column nodes grey */
@@ -299,8 +311,15 @@ export default class MapScene extends Scene{
 
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
-                            this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
+                            if (buttonColor == PancakeColor.RED.toString()){  // Final Project TODO - change scene to shrine room
+                                // console.log("Shrine Room")
+                                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
+                            }
+                            else if (buttonColor == PancakeColor.LIGHT_GRAY.toString()){
+                                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
+                            }
                         }
+                    }
                 
                 /* Enable Next Floor Button */
                 if(parseInt(event.type.substring(4,5)) === LAST_ROOM_COL)
@@ -358,8 +377,14 @@ export default class MapScene extends Scene{
                 this.roomButtons[i][j] = room;
 
                 /* Sets first column of rooms as available */
-                if(i === 0)
-                    room.backgroundColor = PancakeColor.LIGHT_GRAY;
+                if(i === 0){
+                    if (floor.roomArray[i][j].roomType == RoomTypes.SHRINE_ROOM){
+                        room.backgroundColor = PancakeColor.RED;
+                    }
+                    else{
+                        room.backgroundColor = PancakeColor.LIGHT_GRAY;
+                    }
+                }
             }
         }
 
