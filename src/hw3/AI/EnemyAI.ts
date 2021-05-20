@@ -13,6 +13,7 @@ import StillProjectiles from "./EnemyStates/StillProjectiles";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import ChaseAndAttack from "./EnemyStates/ChaseAndAttack";
+import Idle from "./EnemyStates/Idle";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -43,6 +44,9 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         /* Follow player but attack randomly */
         else if(options.defaultMode === "chaseandattack")
             this.addState(EnemyStates.DEFAULT, new ChaseAndAttack(this, owner, options.player, options.monsterType, options.attackInterval, options.flippable));
+
+        else if(options.defaultMode === "idle")
+            this.addState(EnemyStates.DEFAULT, new Idle(this, owner, options.player));
 
         /* Follow player and attack only when in range */
         else 
@@ -173,7 +177,8 @@ export enum EnemyStates {
     DEFAULT = "default",
     MONSTERATTACK = "monsterattack",
     CHASE = "chase",
-    CHASEANDATTACK = "chaseandattack"
+    CHASEANDATTACK = "chaseandattack",
+    IDLE = "idle"
 }
 
 export enum MonsterTypes {
@@ -187,5 +192,6 @@ export enum MonsterTypes {
     UMIBOZU = "umibozu",
     CTHULU = "cthulu",
     LEVIATHAN = "leviathan",
-    HASTUR = "hastur"
+    HASTUR = "hastur",
+    CHEST = "chest"
 }

@@ -1,0 +1,19 @@
+{
+    "name": "chest",
+    "spriteSheetImage": "chest.png",
+    "spriteWidth": 100,
+    "spriteHeight": 90,
+    "columns": 2,
+    "rows": 1,
+    "durationType": "time",
+    "animations": [
+        { 
+            "name": "IDLE",
+            "frames": [ {"index": 0, "duration": 1} ]
+        },
+        {
+            "name": "TAKEDAMAGE",
+            "frames": [ {"index": 1, "duration": 16} ]
+        }
+    ]
+}

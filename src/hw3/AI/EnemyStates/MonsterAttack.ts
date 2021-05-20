@@ -53,6 +53,8 @@ export default class MonsterAttack extends EnemyState {
         this.dir = this.player.position.clone().sub(this.owner.position).normalize();
         /* Find Monster Type and choose the appropriate attack state */
         switch(this.monsterType){
+            case MonsterTypes.CHEST:  
+                break;
             case MonsterTypes.KRAKEN:
                 if(this.parent.ability.cast(this.owner, "enemy", this.dir))
                     this.owner.animation.playUninterruptable("ATTACK");

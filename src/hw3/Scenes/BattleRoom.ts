@@ -84,6 +84,7 @@ export default class BattleRoom extends Scene {
         this.load.spritesheet("cthulu", "game_assets/spritesheets/enemies/cthulu.json");
         this.load.spritesheet("leviathan", "game_assets/spritesheets/enemies/leviathan.json");
         this.load.spritesheet("hastur", "game_assets/spritesheets/enemies/hastur.json");
+        this.load.spritesheet("chest", "game_assets/spritesheets/enemies/chest.json");
 
         // Load Enemy Audio
         this.load.audio("krakenDamage", "game_assets/sounds/enemysounds/krakendamage.mp3");
@@ -113,6 +114,8 @@ export default class BattleRoom extends Scene {
         this.load.object("cthuluData", "game_assets/data/EnemyData/cthuluData.json");
         this.load.object("leviathanData", "game_assets/data/EnemyData/leviathanData.json");
         this.load.object("hasturData", "game_assets/data/EnemyData/hasturData.json");
+        this.load.object("chestData", "game_assets/data/EnemyData/chestData.json");
+
 
         /* Load abilities - FINAL PROJECT TODO - Do this in loading screen or load from json */
         this.load.spritesheet("anchorswing", "game_assets/spritesheets/abilities/anchorswing.json");
