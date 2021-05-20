@@ -35,6 +35,8 @@ export default class BattleRoom extends Scene {
     // The Game Loop boolean
     private gameLoop: boolean;
 
+    private shrineRoom: boolean;
+
     private quitConfirmation: Array<Label>
 
     // The player
@@ -67,6 +69,12 @@ export default class BattleRoom extends Scene {
     private backgroundColor: Array<Color>;
 
     initScene(init: Record<string, any>): void {
+        if (init.shrineRoom == "shrine"){
+            this.shrineRoom = true
+        }
+        else{
+            this.shrineRoom = false
+        }
         this.characterState = init.characterState;
         this.gameLoop = true
     }
@@ -270,6 +278,9 @@ export default class BattleRoom extends Scene {
                         }
                         case GameEvents.ROOM_CLEARED:
                         {
+                            // Final Project TODO - if it is shrine room, then do a special item select
+
+                            
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
                             this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
@@ -436,8 +447,11 @@ export default class BattleRoom extends Scene {
     }
     
     initializeEnemies(){
-        const monsterData = this.load.getObject("floorEnemies").enemies[this.characterState.mapState.currentFloor-1];
-        
+        let monsterData = this.load.getObject("floorEnemies").enemies[this.characterState.mapState.currentFloor-1];
+        if (this.shrineRoom){
+            monsterData = this.load.getObject("floorEnemies").enemies[this.load.getObject("floorEnemies").enemies.length - 1]; // shrine room is last room in floor enemies
+        }
+
         let numEnemies = monsterData.numEnemies[this.randomInt(monsterData.numEnemies.length)];
         let positions = [...monsterData.positions];
 

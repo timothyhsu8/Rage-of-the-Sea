@@ -125,8 +125,6 @@ export default class InventoryScene extends Scene {
         this.equippedItems = this.characterState.getInventory().getItems();
         for(let i=0 ; i < this.equippedItems.length ; i++){
 
-            // Final Project TODO - implement stacking 
-
             /* Item Icon */
             let icon = this.add.sprite(this.equippedItems[i].key, "inventory");
             icon.scale.set(1/2, 1/2);

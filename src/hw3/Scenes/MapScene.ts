@@ -313,7 +313,8 @@ export default class MapScene extends Scene{
                             this.mapState.savedButtons = this.roomButtons;
                             if (buttonColor == PancakeColor.RED.toString()){  // Final Project TODO - change scene to shrine room
                                 // console.log("Shrine Room")
-                                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});
+                                this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, shrineRoom: "shrine"});
+
                             }
                             else if (buttonColor == PancakeColor.LIGHT_GRAY.toString()){
                                 this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState});

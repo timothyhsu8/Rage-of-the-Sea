@@ -41,6 +41,12 @@
             "requiredEnemies": ["leviathan"],
             "monsterTypes": ["leviathan"],
             "positions": [[260, 70]]
+        },
+        {
+            "numEnemies": [1],
+            "requiredEnemies": ["chest"],
+            "monsterTypes": ["chest"],
+            "positions": [[260, 70]]
         }
     ]
 }
