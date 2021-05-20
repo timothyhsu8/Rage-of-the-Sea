@@ -101,5 +101,8 @@ export enum ItemType {
     TWISTING_CYCLONE = "twisting_cyclone",
     BRONZE_HOURGLASS = "bronze_hourglass",
     HEAVY_SWINGS = "heavy_swings",
+    HEALTH_PACK = "health_pack",
+    SAND_FLOWER = "sand_flower",
+    AMPHITRITES_PROTECTION = "amphitrites_protection",
     NONE = "none"
 }

@@ -363,7 +363,7 @@
     }
 ],
 
-    "numSpecialItems": 6,
+    "numSpecialItems": 8,
     "specialitems": [
     {
         "name": "Blessing of the Tides",
@@ -444,6 +444,36 @@
         "name": "Heavy Swings",
         "key": "heavy_swings",
         "description": "Increased knockback on secondary attack",
+        "stats": "No stat effects",
+        "rarity": "special",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Sand Flower",
+        "key": "sand_flower",
+        "description": "Full Heal",
+        "stats": "No stat effects",
+        "rarity": "special",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 10000,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Amphitrite's Protection",
+        "key": "amphitrites_protection",
+        "description": "Slight heal after every battle room",
         "stats": "No stat effects",
         "rarity": "special",
         "ability": null,

@@ -30,6 +30,7 @@ export default class LoadScreen extends Scene {
 
         /* Ability Audio */
         this.load.audio("snipe_sound", "game_assets/sounds/snipe.mp3")
+        this.load.audio("spikeline_sound", "game_assets/sounds/spikeline.mp3")
 
         /* Load Menu Images */
         this.load.image("menubackground", "game_assets/sprites/backgroundart/menubackground.png");
@@ -88,6 +89,7 @@ export default class LoadScreen extends Scene {
         this.load.keepAudio("dash_sound");
         this.load.keepAudio("playerdamage");
         this.load.keepAudio("snipe_sound");
+        this.load.keepAudio("spikeline_sound");
 
         this.load.keepSpritesheet("player");
 

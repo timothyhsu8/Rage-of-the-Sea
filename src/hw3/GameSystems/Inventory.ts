@@ -47,7 +47,7 @@ export default class Inventory{
     }
 
     addItem(item: Item): void{
-        if (item.name != "Health Pack"){
+        if (item.key !== ItemType.HEALTH_PACK && item.key !== ItemType.SAND_FLOWER){
             this.items.push(item);
         }
     }
