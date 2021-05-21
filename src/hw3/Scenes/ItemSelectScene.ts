@@ -8,8 +8,9 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import PancakeColor from "../../Wolfie2D/Utils/PancakeColor";
 import CharacterState from "../CharacterState";
-import Item from "../GameSystems/items/Item";
+import Item, { ItemType } from "../GameSystems/items/Item";
 import MapScene from "./MapScene";
+import HelpScreen from "./MenuScenes/HelpScreen";
 
 export default class ItemSelectScene extends Scene {
     private characterState: CharacterState;
@@ -49,11 +50,14 @@ export default class ItemSelectScene extends Scene {
                         multiplier *= 0.5 
                     }
                 }
-
-                /* Item passes rarity test, add to inventory */
-                if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
-                    this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
-                    i++;
+                
+                // if invincibility is allowed in help screen then don't drop cloak of invincibility
+                if (this.allItems[randomNum].key != ItemType.CLOAK_OF_INVINCIBILITY || !HelpScreen.allowInvincibility){
+                    /* Item passes rarity test, add to inventory */
+                    if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
+                        this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
+                        i++;
+                    }
                 }
             }
 

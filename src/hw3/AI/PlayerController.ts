@@ -270,6 +270,11 @@ export default class PlayerController implements BattlerAI {
                     }
                     ]
                 });
+            
+            // item doesn't drop if help screen's allow invincibility is on
+            if (this.inventory.hasItem(ItemType.CLOAK_OF_INVINCIBILITY)){
+                HelpScreen.invincibility = true
+            }
             this.owner.tweens.play("dash");
             this.owner.animation.playUninterruptable("DASH");
             this.dashIsReady = false;
@@ -277,6 +282,12 @@ export default class PlayerController implements BattlerAI {
             setTimeout(() => {
                 this.dashIsReady = true;
             }, dashCooldown);
+            // if cloak is in inventory, set invincibility
+            if (this.inventory.hasItem(ItemType.CLOAK_OF_INVINCIBILITY)){
+                setTimeout(() => {
+                    HelpScreen.invincibility = false
+                }, 500)
+            }
         }
     }
 

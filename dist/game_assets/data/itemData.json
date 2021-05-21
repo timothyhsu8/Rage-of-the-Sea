@@ -260,7 +260,7 @@
         "name": "Mask of Ebirah",
         "key": "mask_of_ebirah",
         "description": "Moderate increase to all stats",
-        "stats": "+15 max HP, x1.5 ATK, +3 DEF, +4 speed, 20% DR",
+        "stats": "+15 max HP, x1.5 ATK, +3 DEF, +4 SPD, 20% DR",
         "rarity": "ultra_rare",
         "ability": null,
         "maxHealth": 15,
@@ -363,7 +363,7 @@
     }
 ],
 
-    "numSpecialItems": 8,
+    "numSpecialItems": 9,
     "specialitems": [
     {
         "name": "Blessing of the Tides",
@@ -474,6 +474,21 @@
         "name": "Amphitrite's Protection",
         "key": "amphitrites_protection",
         "description": "Slight heal after every battle room",
+        "stats": "No stat effects",
+        "rarity": "special",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 0,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Cloak of Invincibility",
+        "key": "cloak_of_invincibility",
+        "description": "Become invincible when dashing",
         "stats": "No stat effects",
         "rarity": "special",
         "ability": null,
