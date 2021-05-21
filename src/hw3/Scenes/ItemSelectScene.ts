@@ -51,13 +51,15 @@ export default class ItemSelectScene extends Scene {
                     }
                 }
                 
-                // if invincibility is allowed in help screen then don't drop cloak of invincibility
-                if (this.allItems[randomNum].key != ItemType.CLOAK_OF_INVINCIBILITY || !HelpScreen.allowInvincibility){
-                    /* Item passes rarity test, add to inventory */
-                    if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
-                        this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
-                        i++;
-                    }
+                /* If Cloak and invincibility cheat are on, remove cloak from pool */
+                if(this.allItems[randomNum].key === ItemType.CLOAK_OF_INVINCIBILITY && HelpScreen.allowInvincibility === true)
+                    this.allItems.splice(randomNum, 1)[0];
+
+
+                /* Item passes rarity test, add to item choices */
+                if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
+                    this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
+                    i++;
                 }
             }
 
