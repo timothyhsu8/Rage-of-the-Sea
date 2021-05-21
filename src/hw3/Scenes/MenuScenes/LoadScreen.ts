@@ -129,7 +129,7 @@ export default class LoadScreen extends Scene {
         this.load.keepImage("commonBorder");    
         this.load.keepImage("uncommonBorder");
         this.load.keepImage("rareBorder");
-        this.load.keepImage("ultrarareBorder");
+        this.load.keepImage("ultra_rareBorder");
         this.load.keepImage("specialBorder");
     }
 
