@@ -104,7 +104,7 @@ export default class MapScene extends Scene{
         if(this.characterState.mapState.currentFloor === 6)
             nextFloor.text = "Boss Room";
 
-        (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.GREEN):(nextFloor.backgroundColor = Color.TRANSPARENT);
+        (HelpScreen.roomSkipping || this.mapState.nextFloorOpen)?(nextFloor.backgroundColor = PancakeColor.colorFromIndex(16)):(nextFloor.backgroundColor = Color.TRANSPARENT);
 
         /* Disables 'Next Floor' button on the last  floor */
         if(this.mapState.currentFloor === MAX_FLOOR_NUM)
@@ -182,6 +182,18 @@ export default class MapScene extends Scene{
         currentFloor.textColor = PancakeColor.MAGENTA;
         currentFloor.fontSize = 40;
         currentFloor.font = "PixelSimple";
+
+        /* Start Text */
+        const start = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x-460, center.y-220), text: "Start"});
+        start.textColor = PancakeColor.MAGENTA;
+        start.fontSize = 21;
+        start.font = "PixelSimple";
+
+        /* End Text */
+        const end = <Label>this.add.uiElement(UIElementType.LABEL, "map", {position: new Vec2(center.x+442, center.y-220), text: "Finish"});
+        end.textColor = PancakeColor.MAGENTA;
+        end.fontSize = 22;
+        end.font = "PixelSimple";
 
         // healthbar
         /* Healthbar and Healthbar Border*/
@@ -395,13 +407,13 @@ export default class MapScene extends Scene{
                 if (floor.roomArray[i][j].next1 != null){  // check if next1 is null
                     if (floor.roomArray[i][j].next1.position != null){  // check if the position is null
                         let line = <Line>this.add.graphic(GraphicType.LINE, "map", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next1.position});
-                        line.color = new Color(76, 78, 82);
+                        line.color = new Color(133, 90, 80);
                     }
                 }
                 if (floor.roomArray[i][j].next2 != null){  // check if next2 is null
                     if (floor.roomArray[i][j].next2.position != null){  // check if position is null
                         let line2 = <Line>this.add.graphic(GraphicType.LINE, "map", {start: floor.roomArray[i][j].position, end: floor.roomArray[i][j].next2.position});
-                        line2.color = new Color(76, 78, 82);
+                        line2.color = new Color(133, 90, 80);
                     }
                 }
             }

@@ -73,8 +73,12 @@ export default class LoadScreen extends Scene {
             this.load.image(this.itemData.specialitems[i].key, "game_assets/sprites/itemicons/" + this.itemData.specialitems[i].key + ".png");
         }
         
-        /* Load Inventory Slots */
-        this.load.image("inventorySlot", "game_assets/sprites/inventory.png");
+        /* Load Rarity Borders */
+        this.load.image("commonBorder", "game_assets/sprites/rarityborders/common.png");
+        this.load.image("uncommonBorder", "game_assets/sprites/rarityborders/uncommon.png");
+        this.load.image("rareBorder", "game_assets/sprites/rarityborders/rare.png");
+        this.load.image("ultra_rareBorder", "game_assets/sprites/rarityborders/ultra_rare.png");
+        this.load.image("specialBorder", "game_assets/sprites/rarityborders/special.png");
     }
 
     unloadScene(){
@@ -121,6 +125,12 @@ export default class LoadScreen extends Scene {
 
         for(let i=0; i < this.itemData.numSpecialItems ; i++)
             this.load.keepImage(this.itemData.specialitems[i].key);
+
+        this.load.keepImage("commonBorder");    
+        this.load.keepImage("uncommonBorder");
+        this.load.keepImage("rareBorder");
+        this.load.keepImage("ultrarareBorder");
+        this.load.keepImage("specialBorder");
     }
 
     startScene(){

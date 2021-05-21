@@ -159,6 +159,7 @@ export default class ItemSelectScene extends Scene {
                     else{
                         this.characterState.addToInventory(this.itemChoices[this.itemSelected]);
                         
+                        /* If selected item is special, remove it from the pool */
                         if(this.itemChoices[this.itemSelected].rarity === "special")
                             this.itemChoices[this.itemSelected] = null; //Final Project TODO - figure out stacking
                     }
@@ -192,13 +193,16 @@ export default class ItemSelectScene extends Scene {
             let itemicon = this.add.sprite(this.itemChoices[itemChoice].key, "descriptions");
             itemicon.position.set(position.x, position.y-125);
 
+            let bordericon = this.add.sprite(this.itemChoices[itemChoice].rarity + "Border", "descriptions");
+            bordericon.position.set(position.x, position.y-125);
+
             /* Item Icon Border */
             let rarity = this.itemChoices[itemChoice].rarity;
             let rarityColor = Item.getRarityColor(rarity);
-            const border = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y-125), text:""});
-            border.borderWidth = 4;
-            border.size = new Vec2(175, 175);
-            border.borderColor = rarityColor;
+            // const border = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(position.x, position.y-125), text:""});
+            // border.borderWidth = 4;
+            // border.size = new Vec2(175, 175);
+            // border.borderColor = rarityColor;
 
             /* Rarity Text */
             let rarityText = "(" + Item.getRarityText(rarity) + ")";
@@ -246,6 +250,8 @@ export default class ItemSelectScene extends Scene {
             chance = 30;
         else if(rarity === "ultra_rare")
             chance = 7;
+        else if(rarity === "special")
+            chance = 5;
         // console.log(chance*multiplier)  
         if(this.randomInt(101) < chance * multiplier) // decreases chance each time item is found
             return true;
