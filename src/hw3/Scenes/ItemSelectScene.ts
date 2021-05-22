@@ -57,9 +57,11 @@ export default class ItemSelectScene extends Scene {
 
 
                 /* Item passes rarity test, add to item choices */
-                if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
-                    this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
-                    i++;
+                if (this.allItems[randomNum] != null){
+                    if(this.passRarityTest(this.allItems[randomNum].rarity, multiplier)){
+                        this.itemChoices[i] = this.allItems.splice(randomNum, 1)[0];
+                        i++;
+                    }
                 }
             }
 
