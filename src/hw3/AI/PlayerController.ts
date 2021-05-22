@@ -3,11 +3,9 @@ import GameEvent from "../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import Input from "../../Wolfie2D/Input/Input";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
-import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import Inventory from "../GameSystems/Inventory";
 import { ItemType } from "../GameSystems/items/Item";
@@ -305,8 +303,9 @@ export default class PlayerController implements BattlerAI {
 
     damage(damage: number): void {
         // console.log(damage);
-        if(damage <= 0)
-            damage = 1;
+        let minDamage = 8;
+        if(damage <= minDamage)
+            damage = minDamage;
 
         if(!HelpScreen.invincibility){
             if(this.owner.tweens !== undefined && this.owner.tweens.isStopped("takedamage")){

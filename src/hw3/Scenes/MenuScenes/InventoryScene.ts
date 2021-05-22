@@ -135,7 +135,7 @@ export default class InventoryScene extends Scene {
             const border = <Label>this.add.uiElement(UIElementType.LABEL, "inventory", {position: icon.position, text: ""});
             border.size = new Vec2(icon.size.x/2, icon.size.y/2);
             border.borderRadius = 2;
-            border.borderColor = Color.WHITE;
+            border.borderColor = Item.getRarityColor(this.equippedItems[i].rarity);
             border.borderWidth = 2;
 
             width += 100
