@@ -35,6 +35,8 @@ export default class ChaseAndAttack extends EnemyState {
 
     protected flippable: boolean;
 
+    protected firstAttack: boolean;
+
     constructor(parent: EnemyAI, owner: AnimatedSprite, player: GameNode, monsterType: MonsterTypes, attackInterval: number, flippable: boolean){
         super(parent, owner);
         this.routeIndex = 0;
@@ -47,6 +49,7 @@ export default class ChaseAndAttack extends EnemyState {
         navStack.push(player.position);
         this.currentPath = new NavigationPath(navStack);
         this.flippable = flippable;
+        this.firstAttack = true;
     }
 
     onEnter(options: Record<string, any>): void {}
@@ -59,10 +62,23 @@ export default class ChaseAndAttack extends EnemyState {
         if(!this.attackQueued){
             this.attackQueued = true;
             let state = this;
-            setTimeout(() => {
-                state.finished(EnemyStates.MONSTERATTACK);
-                this.attackQueued = false;
-            }, this.attackInterval);
+
+            /* Random interval for the first attack */
+            if(this.firstAttack){
+                this.firstAttack = false;
+                let randomNum = (Math.random()*2000)+1000;
+                setTimeout(() => {
+                    state.finished(EnemyStates.MONSTERATTACK);
+                    this.attackQueued = false;
+                }, randomNum)
+            }
+
+            else{
+                setTimeout(() => {
+                    state.finished(EnemyStates.MONSTERATTACK);
+                    this.attackQueued = false;
+                }, this.attackInterval);
+            }
         }
 
         /* Chase Player */

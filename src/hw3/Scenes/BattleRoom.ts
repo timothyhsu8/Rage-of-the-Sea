@@ -434,7 +434,7 @@ export default class BattleRoom extends Scene {
         
         /* Check for Special Item Effects  */
         if(this.characterState.getInventory().hasItem(ItemType.TWISTING_CYCLONE))   // Increased attack speed
-            basicAttack.cooldownTimer = new Timer(350);
+            basicAttack.cooldownTimer = new Timer(340);
 
         if(this.characterState.getInventory().hasItem(ItemType.IRON_GRIP))  // Increased knockback on basic attack
             basicAttack.type.knockback = 9;
