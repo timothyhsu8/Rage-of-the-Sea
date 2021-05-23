@@ -290,7 +290,7 @@ export default class MapScene extends Scene{
                     for(let j=0 ; j < this.roomButtons[i].length ; j++){
                         let buttonColor = this.roomButtons[i][j].backgroundColor.toString()
                         if(this.roomButtons[i][j].onClickEventId === event.type && (buttonColor === PancakeColor.LIGHT_GRAY.toString() || 
-                            buttonColor === PancakeColor.RED.toString())){ // shrine room
+                            buttonColor === PancakeColor.colorFromIndex(19).toString())){ // shrine room
                             this.roomButtons[i][j].backgroundColor = PancakeColor.GREEN;
 
                             /* Turn next1 node grey, check for room type */
@@ -298,7 +298,7 @@ export default class MapScene extends Scene{
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next1.roomNum);
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     if(this.roomArray[i][j].next1 !== null && this.roomArray[i][j].next1.roomType === RoomTypes.SHRINE_ROOM){
-                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.RED;
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.colorFromIndex(19);
                                     }    
                                     else{
                                         this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
@@ -309,7 +309,7 @@ export default class MapScene extends Scene{
                                 let roomIndex = this.findRoomRowCol(this.roomArray, this.roomArray[i][j].next2.roomNum);
                                 if(roomIndex !== null && this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor.toString() !== PancakeColor.GREEN.toString())
                                     if (this.roomArray[i][j].next2.roomType === RoomTypes.SHRINE_ROOM){
-                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.RED;
+                                        this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.colorFromIndex(19);
                                     }   
                                     else{
                                         this.roomButtons[roomIndex.x][roomIndex.y].backgroundColor = PancakeColor.LIGHT_GRAY;
@@ -323,7 +323,7 @@ export default class MapScene extends Scene{
 
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
-                            if (buttonColor == PancakeColor.RED.toString()){  // Final Project TODO - change scene to shrine room
+                            if (buttonColor == PancakeColor.colorFromIndex(19).toString()){  // Final Project TODO - change scene to shrine room
                                 // console.log("Shrine Room")
                                 this.sceneManager.changeToScene(BattleRoom, {characterState: this.characterState, shrineRoom: "shrine"});
 
@@ -371,8 +371,11 @@ export default class MapScene extends Scene{
             for(let j = 0; j < floor.roomArray[i].length; j++){
                 var position = new Vec2(i*150 + 350 - 20*Math.random(), j*90 + 300 - 20*Math.random())
                 let room = <Button>this.add.uiElement(UIElementType.BUTTON, "rooms" , 
-                {position: position, text: ""}) ;
-                let levelimage = this.add.sprite("battleIcon", "rooms"); // draw battle icon as a placeholder until more kinds of rooms are added
+                {position: position, text: ""});
+
+                let icon = "";
+                (floor.roomArray[i][j].roomType === RoomTypes.SHRINE_ROOM)?(icon = "shrineIcon"):(icon = "battleIcon");
+                let levelimage = this.add.sprite(icon, "rooms"); // draw battle icon as a placeholder until more kinds of rooms are added
                 levelimage.position.set(position.x, position.y);
                 levelimage.size.set(64, 64)
                 this.sceneObjects.push(levelimage);
@@ -392,7 +395,7 @@ export default class MapScene extends Scene{
                 /* Sets first column of rooms as available */
                 if(i === 0){
                     if (floor.roomArray[i][j].roomType == RoomTypes.SHRINE_ROOM){
-                        room.backgroundColor = PancakeColor.RED;
+                        room.backgroundColor = PancakeColor.colorFromIndex(19);
                     }
                     else{
                         room.backgroundColor = PancakeColor.LIGHT_GRAY;

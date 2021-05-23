@@ -42,6 +42,7 @@ export default class LoadScreen extends Scene {
         /* Load Map */
         this.load.image("mapBackground", "game_assets/sprites/map/map.png");
         this.load.image("battleIcon", "game_assets/sprites/map/battleicon.png");
+        this.load.image("shrineIcon", "game_assets/sprites/map/shrineicon.png");
 
         /* Load Player Spritesheet */
         this.load.spritesheet("player", "game_assets/spritesheets/player.json");
@@ -103,11 +104,12 @@ export default class LoadScreen extends Scene {
         this.load.keepObject("floorEnemies");
 
         this.load.keepImage("battleIcon");
+        this.load.keepImage("shrineIcon");
+
         this.load.keepImage("menubackground");
         this.load.keepImage("defaultbackground");
         this.load.keepImage("darkbackground");
         this.load.keepImage("mapBackground");
-        this.load.keepImage("battleIcon");
         this.load.keepImage("portrait");
         this.load.keepImage("portraitborder");
         this.load.keepImage("healthbarborder");

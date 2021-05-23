@@ -88,13 +88,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
 
             /* Enemy Dies */
-            if(HelpScreen.instakill || this.health <= 0){
+            if(HelpScreen.instakill || enemyName === "chest" || this.health <= 0){
                 this.owner.disablePhysics();
-                console.log(this.owner.hasPhysics);
                 this.owner.tweens.play("death");
             }
 
-            /* Turn Semitransparent */
+            /* Turn Semitransparent on hit */
             else{
                 let owner = this.owner;
                 owner.changeColor = true;

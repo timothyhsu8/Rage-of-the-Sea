@@ -11,7 +11,6 @@ import BattlerAI from "../AI/BattlerAI";
 import GameOver from "./GameOver";
 import Graphic from "../../Wolfie2D/Nodes/Graphic";
 import Ability, {AbilityTypes} from "../GameSystems/items/Ability";
-import Inventory from "../GameSystems/Inventory";
 import { GameEvents } from "../Game_Enums";
 import CharacterState from "../CharacterState";
 import ItemSelectScene from "./ItemSelectScene";
@@ -239,6 +238,7 @@ export default class BattleRoom extends Scene {
                         case GameEvents.ENEMY_DIED:
                         {
                             let owner = event.data.get("node");
+                            let ownerPos = owner.position;
                             owner.destroy();
                             this.numMonstersLeft--;
 
@@ -505,6 +505,7 @@ export default class BattleRoom extends Scene {
                 flippable: monsterInfo.flippable,
                 knockbackable: monsterInfo.knockbackable,
                 abilityList: abilityList,
+                characterState: this.characterState,
                 player: this.player
             }
 

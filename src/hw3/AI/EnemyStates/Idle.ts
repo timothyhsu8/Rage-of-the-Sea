@@ -26,7 +26,9 @@ export default class Idle extends EnemyState {
 
     handleInput(event: GameEvent): void {}
 
-    update(deltaT: number): void {        
+    update(deltaT: number): void {
+        if(!this.owner.animation.isPlaying("TAKEDAMAGE"))
+            this.owner.animation.playIfNotAlready("IDLE", true);
     }
 
     onExit(): Record<string, any> {
