@@ -121,11 +121,11 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         if(allItems.length !== 0 && chosenItem !== null){
             let itemicon = scene.add.sprite(chosenItem.key, "dashCD");
             itemicon.position = this.owner.position;
-            itemicon.scale.set(1/5, 1/5);
+            itemicon.scale.set(1/6, 1/6);
 
             let bordericon = scene.add.sprite(chosenItem.rarity + "Border", "dashCD");
             bordericon.position = this.owner.position;
-            bordericon.scale.set(1/5, 1/5);
+            bordericon.scale.set(1/6, 1/6);
 
             this.characterState.addToInventory(chosenItem);
         }

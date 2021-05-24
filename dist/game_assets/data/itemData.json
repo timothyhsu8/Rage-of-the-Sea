@@ -245,7 +245,7 @@
         "name": "Seafloor Anchor",
         "key": "seafloor_anchor",
         "description": "Increased max health and damage",
-        "stats": "+0.5 max health, +0.5 attack",
+        "stats": "+5 max health, +0.5 attack",
         "rarity": "uncommon",
         "ability": null,
         "maxHealth": 5,

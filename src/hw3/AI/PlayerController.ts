@@ -305,7 +305,7 @@ export default class PlayerController implements BattlerAI {
 
     damage(damage: number): void {
         // console.log(damage);
-        let minDamage = 8;
+        let minDamage = this.characterState.stats.maxHealth/12;
         if(damage <= minDamage)
             damage = minDamage;
 

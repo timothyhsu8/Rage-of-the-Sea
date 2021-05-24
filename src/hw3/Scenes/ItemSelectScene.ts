@@ -180,7 +180,7 @@ export default class ItemSelectScene extends Scene {
         if(this.itemSelected !== -1){
             for(let i=0 ; i < this.selections.length ; i++){
                 if(i === this.itemSelected)
-                    this.selections[i].backgroundColor = new Color(50, 100, 70, 1);
+                    this.selections[i].backgroundColor = PancakeColor.colorFromIndex(17);
 
                 else this.selections[i].backgroundColor = PancakeColor.MAGENTA;;
             }
