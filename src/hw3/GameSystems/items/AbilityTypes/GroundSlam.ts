@@ -32,11 +32,15 @@ export default class GroundSlam extends AbilityType {
         abilitySprite.position = attacker.position.clone();   // Move the slice out from the player
 
         /* Play the slice animation w/o loop, but queue the normal animation */
-        abilitySprite.animation.play("GROUNDSLAM");
+        //abilitySprite.animation.play("GROUNDSLAM");
         // abilitySprite.animation.queue("NORMAL", true);
     }
 
     doIndicatorAnimations(position: Vec2, sprite: AnimatedSprite): void{
+        sprite.position = position;
+        sprite.position.y += 2
+        sprite.animation.play("GROUNDSLAM");
+        sprite.animation.queue("NORMAL", true);
         // sprite.position = position;
         // sprite.animation.play("GROUNDSLAM");
     }
@@ -55,8 +59,11 @@ export default class GroundSlam extends AbilityType {
     }
 
     createRequiredAssets(scene: Scene): [AnimatedSprite] {
-        let ability = scene.add.animatedSprite("groundslam", "primary");
-        ability.animation.play("NORMAL");
-        return [ability];
+        let rain = scene.add.animatedSprite("groundslam", "primary");
+        rain.animation.play("NORMAL");
+        return [rain];
+        // let ability = scene.add.animatedSprite("groundslam", "primary");
+        // ability.animation.play("NORMAL");
+        // return [ability];
     }
 }

@@ -109,7 +109,7 @@ export default class CharacterSelect extends Scene {
 
                 if(event.type === "select"){
                     let inventory = new Inventory(this);
-                    let characterState = new CharacterState(100, 0, 0, 80, inventory, "portrait", this.startingLevel);
+                    let characterState = new CharacterState(100, 0, 0, 77, inventory, "portrait", this.startingLevel);
                     
 
                     /* FOR BUG TESTING SPECIFIC ITEMS */

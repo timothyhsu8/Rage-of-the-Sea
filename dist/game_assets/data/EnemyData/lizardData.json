@@ -3,7 +3,7 @@
     "mode": "chase",
     "health": 6,
     "ability": "groundslam",
-    "speed": 50,
+    "speed": 55,
     "damage": 20,
     "range": 40,
     "hitbox": [6, 12],

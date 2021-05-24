@@ -1,11 +1,11 @@
 {
     "monsterType": "cthulu",
     "mode": "chaseandattack",
-    "health": 20,
+    "health": 28,
     "ability": "tentacle_sprout",
     "speed": 38,
     "damage": 20,
-    "attackInterval": 4750,
+    "attackInterval": 4250,
     "hitbox": [10, 14],
     "flippable": true,
     "knockbackable": false

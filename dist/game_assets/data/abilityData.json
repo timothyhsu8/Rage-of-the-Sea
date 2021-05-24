@@ -139,7 +139,7 @@
             "displayName": "Flame Line",
             "animationSprite": "hastur_flame",
             "spriteKey": "hastur_flame",
-            "damage": 25,
+            "damage": 20,
             "cooldown": 2000,
             "chargeTime": 1400
         }
