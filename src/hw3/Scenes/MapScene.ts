@@ -326,7 +326,8 @@ export default class MapScene extends Scene{
                             if(this.roomArray[i][j].next1.roomType !== RoomTypes.BOSS_ROOM){
                                 let nextRoomAvailable = false;
                                 for(let k=0 ; k < this.roomArray[i+1].length ; k++)
-                                    if(this.roomButtons[i+1][k].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString())
+                                    if(this.roomButtons[i+1][k].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString() ||
+                                        this.roomButtons[i+1][k].backgroundColor.toString() === PancakeColor.colorFromIndex(19).toString())
                                         nextRoomAvailable = true;
 
                                 if(!nextRoomAvailable){

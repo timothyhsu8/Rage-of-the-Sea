@@ -1,7 +1,7 @@
 {
     "monsterType": "dagon",
     "mode": "chase",
-    "health": 17,
+    "health": 19,
     "ability": "spike_line",
     "speed": 42,
     "damage": 18,

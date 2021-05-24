@@ -1,7 +1,7 @@
 {
     "monsterType": "hastur",
     "mode": "chaseandattack",
-    "health": 20,
+    "health": 22,
     "ability": "hastur_flame",
     "speed": 30,
     "damage": 25,

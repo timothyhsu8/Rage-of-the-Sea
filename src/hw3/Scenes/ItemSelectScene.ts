@@ -251,7 +251,7 @@ export default class ItemSelectScene extends Scene {
         else if(rarity === "rare")
             chance = 30;
         else if(rarity === "ultra_rare")
-            chance = 7;
+            chance = 6;
         else if(rarity === "special")
             chance = 5;
         // console.log(chance*multiplier)  
