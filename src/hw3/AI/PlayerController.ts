@@ -7,6 +7,7 @@ import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
+import CharacterState from "../CharacterState";
 import Inventory from "../GameSystems/Inventory";
 import { ItemType } from "../GameSystems/items/Item";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
@@ -14,8 +15,7 @@ import BattlerAI from "./BattlerAI";
 
 export default class PlayerController implements BattlerAI {
 
-    // Fields from BattlerAI
-    health: number;
+    health: number; // From BattlerAI (Not being used)
 
     // The actual player sprite
     owner: AnimatedSprite;
@@ -39,6 +39,8 @@ export default class PlayerController implements BattlerAI {
     activeTile: Vec2;
 
     dashIsReady: boolean;
+
+    characterState: CharacterState;
     
     private dashVelocity: Vec2;
 
@@ -51,7 +53,7 @@ export default class PlayerController implements BattlerAI {
         this.direction = Vec2.ZERO;
         this.lookDirection = Vec2.ZERO;
         this.speed = options.speed;
-        this.health = options.health;
+        this.characterState = options.characterState;
 
         this.inventory = options.inventory;
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
@@ -309,7 +311,7 @@ export default class PlayerController implements BattlerAI {
 
         if(!HelpScreen.invincibility){
             if(this.owner.tweens !== undefined && this.owner.tweens.isStopped("takedamage")){
-                this.health -= damage;
+                this.characterState.stats.health -= damage;
                 this.owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: "playerdamage"});
                 this.owner.tweens.play("takedamage", true);
                 setTimeout(() => {

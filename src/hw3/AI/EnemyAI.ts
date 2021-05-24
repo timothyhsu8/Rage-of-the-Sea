@@ -14,6 +14,7 @@ import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import ChaseAndAttack from "./EnemyStates/ChaseAndAttack";
 import Idle from "./EnemyStates/Idle";
+import CharacterState from "../CharacterState";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -33,6 +34,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     knockbackable: boolean;
 
     abilityList: Array<Ability>;
+
+    characterState: CharacterState
 
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
@@ -59,6 +62,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.ability = options.ability;
         this.speed = options.speed;
         this.knockbackable = options.knockbackable;
+        this.characterState = options.characterState;
 
         this.ability.type.setDamage(options.damage);
         this.abilityList = options.abilityList; // Only Leviathan has an ability list right now
@@ -89,6 +93,9 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
             /* Enemy Dies */
             if(HelpScreen.instakill || enemyName === "chest" || this.health <= 0){
+                if(this.owner.imageId === "Chest")
+                    this.chestDeath();
+
                 this.owner.disablePhysics();
                 this.owner.tweens.play("death");
             }
@@ -101,6 +108,26 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
                     owner.changeColor = false;
                 }, 400);
             }
+        }
+    }
+
+    chestDeath(): void{
+        let scene = this.owner.getScene();
+        const itemData = scene.load.getObject("itemData");
+        let allItems = itemData.allitems;
+        let randomNum = Math.floor(Math.random() * allItems.length);
+        let chosenItem = allItems[randomNum];
+
+        if(allItems.length !== 0 && chosenItem !== null){
+            let itemicon = scene.add.sprite(chosenItem.key, "dashCD");
+            itemicon.position = this.owner.position;
+            itemicon.scale.set(1/5, 1/5);
+
+            let bordericon = scene.add.sprite(chosenItem.rarity + "Border", "dashCD");
+            bordericon.position = this.owner.position;
+            bordericon.scale.set(1/5, 1/5);
+
+            this.characterState.addToInventory(chosenItem);
         }
     }
 
@@ -171,6 +198,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     // State machine defers updates and event handling to its children
     // Check super classes for details
 }
+
 
 export enum EnemyStates {
     DEFAULT = "default",

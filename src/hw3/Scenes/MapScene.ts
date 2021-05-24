@@ -316,11 +316,25 @@ export default class MapScene extends Scene{
                                     }
                             }
 
-                            /* Turn other column nodes grey */
+                            /* Make other rooms in this column unavailable */
                             for(let k=0 ; k < this.roomButtons[i].length ; k++)
                                 if(k !== j)
                                     this.roomButtons[i][k].backgroundColor = new Color(91, 95, 99);
 
+
+                            /* Check if this is a glitched room with no neighbors. If it is, set whole next column as available */
+                            if(this.roomArray[i][j].next1.roomType !== RoomTypes.BOSS_ROOM){
+                                let nextRoomAvailable = false;
+                                for(let k=0 ; k < this.roomArray[i+1].length ; k++)
+                                    if(this.roomButtons[i+1][k].backgroundColor.toString() === PancakeColor.LIGHT_GRAY.toString())
+                                        nextRoomAvailable = true;
+
+                                if(!nextRoomAvailable){
+                                    for(let k=0 ; k < this.roomArray[i+1].length ; k++)
+                                        this.roomButtons[i+1][k].backgroundColor = PancakeColor.LIGHT_GRAY;
+                                }
+                            }
+                            
                             /* Save button colors and load into the battle scene */
                             this.mapState.savedButtons = this.roomButtons;
                             if (buttonColor == PancakeColor.colorFromIndex(19).toString()){  // Final Project TODO - change scene to shrine room

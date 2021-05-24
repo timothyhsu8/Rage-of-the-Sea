@@ -184,7 +184,7 @@ export default class BattleRoom extends Scene {
 
         // UI for healthbar
         this.addUILayer("healthbar");
-        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2((<BattlerAI>this.player._ai).health, 10)});
+        this.healthbar = this.add.graphic(GraphicType.RECT, "healthbar", {position: new Vec2(80, 5), size: new Vec2(this.characterState.stats.health, 10)});
         this.addUILayer("quitConfirmation");
 
         // UI for boss healthbar (if on floor 7)
@@ -237,11 +237,17 @@ export default class BattleRoom extends Scene {
                     switch(event.type){
                         case GameEvents.ENEMY_DIED:
                         {
+                            /* Destroy Enemy */
                             let owner = event.data.get("node");
-                            let ownerPos = owner.position;
                             owner.destroy();
-                            this.numMonstersLeft--;
 
+                            /* Delay registering Chest death so player can see what item they obtained */
+                            let deathDelay = 0;
+                            (owner.imageId === "Chest")?(deathDelay = 1000):(deathDelay = 0);
+                            setTimeout(() => {
+                                this.numMonstersLeft--;
+                            }, deathDelay);
+                        
                             /* If enemy is Carrier, spawn an enemy after death */
                             if (owner.imageId == "Carrier"){
                                     // carrier respawns sollasina after death 
@@ -262,7 +268,6 @@ export default class BattleRoom extends Scene {
                         {
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
-                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                             this.sceneManager.changeToScene(GameOver);
                             break;
@@ -271,19 +276,14 @@ export default class BattleRoom extends Scene {
                         {
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
-                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
                             this.sceneManager.changeToScene(GameWon, {});
                             break; 
                         }
                         case GameEvents.ROOM_CLEARED:
                         {
-                            // Final Project TODO - if it is shrine room, then do a special item select
-
-                            
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
-                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
                             this.characterState.itemRotation++;
                             
                             /* Slight heal if player has Amphitrite's Protection */
@@ -305,7 +305,6 @@ export default class BattleRoom extends Scene {
                             let floorNum = event.data.get("floor");
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
-                            this.characterState.stats.health = ((<BattlerAI>this.player._ai).health);
 
                             /* Sets Floor */
                             if(this.characterState.mapState.currentFloor !== floorNum){
@@ -326,7 +325,7 @@ export default class BattleRoom extends Scene {
             }
 
             // Update Healthbar GUI
-            let health = (<BattlerAI>this.player._ai).health;
+            let health = this.characterState.stats.health;
             let multiplier = this.characterState.stats.maxHealth/100;
             this.healthbar.size = new Vec2((health*2)/multiplier, 10);
             this.healthbar.position = new Vec2((health+(42*multiplier))/multiplier, 22);
@@ -409,6 +408,7 @@ export default class BattleRoom extends Scene {
 
         this.player.addAI(PlayerController,
             {
+                characterState: this.characterState,
                 health: this.characterState.stats.health,
                 speed: this.characterState.stats.speed,
                 inventory: this.characterState.getInventory(),
@@ -557,6 +557,7 @@ export default class BattleRoom extends Scene {
             flippable: monsterInfo.flippable,
             knockbackable: monsterInfo.knockbackable,
             abilityList: abilityList,
+            characterState: this.characterState,
             player: this.player
         }
 
