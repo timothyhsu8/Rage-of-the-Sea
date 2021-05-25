@@ -7,6 +7,7 @@ export default class MapGenerator {
     static floors: Array<Floor>; //the array that holds all generated floors
     static FLOOR_COUNT: number = 1; //number of floors in the game
     static FLOOR_LENGTHS: Array<number> = [8]; //number of levels in the graph
+    static numShrines: number;
 
     static generateAllFloors(): void {
         return null;
@@ -15,6 +16,7 @@ export default class MapGenerator {
     static generateFloor(floorNum: number): Floor {
         let newFloor: Floor = new Floor();
         let count: number = 1;
+        MapGenerator.numShrines = 0;
 
         // add rooms to the floor map
         for (let i=0; i<(this.FLOOR_LENGTHS[floorNum] - 1); i++){
@@ -104,7 +106,8 @@ export default class MapGenerator {
         // TODO - add weights and random choice of room when
         // more room types are implemented
         let randomNum = Math.floor(Math.random() * 100);
-        if (randomNum < 7){  // 7% chance for shrine room, subject to change
+        if (!(roomNum <= 5) && MapGenerator.numShrines < 4 && randomNum < 7){  // 7% chance for shrine room, subject to change. Limited to 4 shrines per floor, first column can't be shrines.
+            MapGenerator.numShrines += 1;
             return new Room(RoomTypes.SHRINE_ROOM, roomNum, level);
         }
         return new Room(RoomTypes.BATTLE_ROOM, roomNum, level);

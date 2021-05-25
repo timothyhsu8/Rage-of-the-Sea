@@ -237,7 +237,7 @@ export default class InventoryScene extends Scene {
         let maxHealth = "+" + (stats.maxHealth-100);
         let attack = "+" + stats.attack.toFixed(1);
         let defense = "+" + stats.defense.toFixed(1);
-        let speed = "" + (stats.speed-80);
+        let speed = "" + (stats.speed-75);
         (stats.speed >= 80)?(speed = "+" + speed):(speed = speed);
         let attackMult = "+" + (stats.attackMult-1).toFixed(1);
         let takeDamageMult = "-" + (1-stats.takeDamageMult).toFixed(1);

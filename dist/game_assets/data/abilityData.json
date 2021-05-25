@@ -111,7 +111,7 @@
             "spriteKey": "leviathan_whirlpool",
             "damage": 20,
             "cooldown": 2000,
-            "chargeTime": 1700
+            "chargeTime": 1500
         },
         {
             "abilityType": "leviathan_rain",

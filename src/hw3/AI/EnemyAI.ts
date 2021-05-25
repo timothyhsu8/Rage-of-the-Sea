@@ -15,6 +15,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import ChaseAndAttack from "./EnemyStates/ChaseAndAttack";
 import Idle from "./EnemyStates/Idle";
 import CharacterState from "../CharacterState";
+import ItemSelectScene from "../Scenes/ItemSelectScene";
 
 export default class EnemyAI extends StateMachineAI implements BattlerAI {
     /** The owner of this AI */
@@ -117,17 +118,30 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         let allItems = itemData.allitems;
         let randomNum = Math.floor(Math.random() * allItems.length);
         let chosenItem = allItems[randomNum];
+        let itemConfirmed = false;
+
 
         if(allItems.length !== 0 && chosenItem !== null){
-            let itemicon = scene.add.sprite(chosenItem.key, "dashCD");
-            itemicon.position = this.owner.position;
-            itemicon.scale.set(1/6, 1/6);
+            
+            while(!itemConfirmed){
+                // Rarity test passed, give item to player
+                if(chosenItem !== null && ItemSelectScene.passChestRarityTest(chosenItem.rarity)){
+                    let itemicon = scene.add.sprite(chosenItem.key, "dashCD");
+                    itemicon.position = this.owner.position;
+                    itemicon.scale.set(1/6, 1/6);
 
-            let bordericon = scene.add.sprite(chosenItem.rarity + "Border", "dashCD");
-            bordericon.position = this.owner.position;
-            bordericon.scale.set(1/6, 1/6);
+                    let bordericon = scene.add.sprite(chosenItem.rarity + "Border", "dashCD");
+                    bordericon.position = this.owner.position;
+                    bordericon.scale.set(1/6, 1/6);
 
-            this.characterState.addToInventory(chosenItem);
+                    this.characterState.addToInventory(chosenItem);
+                    itemConfirmed = true;
+                }
+
+                // Find a new random item if rarity test is failed
+                else
+                    chosenItem = allItems[Math.floor(Math.random() * allItems.length)];
+            }
         }
     }
 

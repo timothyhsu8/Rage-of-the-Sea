@@ -260,6 +260,24 @@ export default class ItemSelectScene extends Scene {
         return false;
     }
 
+    /* Separate rarity values for shrine room items */
+    static passChestRarityTest(rarity: string): boolean{
+        let chance = 100;
+        if(rarity === "common")
+            chance = 100;
+        else if(rarity === "uncommon")
+            chance = 80;
+        else if(rarity === "rare")
+            chance = 50;
+        else if(rarity === "ultra_rare")
+            chance = 25;
+        else if(rarity === "special")
+            chance = 20;
+        if(Math.floor(Math.random() * 101) < chance)
+            return true;
+        return false;
+    }
+
     randomInt(max: number): number{
         return Math.floor(Math.random() * max);
     }

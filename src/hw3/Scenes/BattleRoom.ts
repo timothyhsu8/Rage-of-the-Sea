@@ -284,7 +284,9 @@ export default class BattleRoom extends Scene {
                         {
                             this.viewport.setOffset(new Vec2(0, 0));
                             this.viewport.setZoomLevel(1);
-                            this.characterState.itemRotation++;
+                            
+                            if(!this.shrineRoom)
+                                this.characterState.itemRotation++;
                             
                             /* Slight heal if player has Amphitrite's Protection */
                             if(this.characterState.getInventory().hasItem(ItemType.AMPHITRITES_PROTECTION))
