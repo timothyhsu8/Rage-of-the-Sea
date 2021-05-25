@@ -161,6 +161,11 @@ export default class AnimationManager {
         this.play(animation, false, "uninterruptable");
     }
 
+    playOverride(animation: string): void{
+        this.uninterruptable = false;
+        this.play(animation, false, "uninterruptable");
+    }
+
     /**
      * Plays the specified animation. Does not restart it if it is already playing
      * @param animation The name of the animation to play

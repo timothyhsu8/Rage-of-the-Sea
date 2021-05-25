@@ -267,7 +267,8 @@ export default class BattleRoom extends Scene {
                         case GameEvents.PLAYER_DIED:
                         {
                             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                            this.player.animation.playUninterruptable("DEATH");
+                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "gameover", loop:"true", holdReference: true});
+                            this.player.animation.playOverride("DEATH");
                             this.player.disablePhysics();
                             this.gameLoop = false;
 

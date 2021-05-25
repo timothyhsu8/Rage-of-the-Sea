@@ -72,6 +72,7 @@ export default class GameOver extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back"){
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "gameover"});
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "mainmenu_music", loop:"true", holdReference: true});
                 this.sceneManager.changeToScene(MainMenu, {});
             }
