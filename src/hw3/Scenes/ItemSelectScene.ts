@@ -111,15 +111,22 @@ export default class ItemSelectScene extends Scene {
         this.makeItemButtons(new Vec2(center.x+500, center.y), 2);
 
         /* Heal Button */
-        const heal = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-500, center.y+350), text: "Heal for 1/3 of Max HP"});
-        heal.size.set(300, 100);
+        const heal = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-490, center.y+350), text: ""});
+        heal.size.set(400, 100);
         heal.borderWidth = 2;
         heal.borderColor = PancakeColor.PINK;
         heal.backgroundColor = PancakeColor.MAGENTA;
         heal.onClickEventId = "item4";
-        heal.fontSize = 25;
-        heal.font = "Merriweather";
         this.selections[3] = heal;
+
+        const healText = <Label>this.add.uiElement(UIElementType.LABEL, "descriptions", {position: new Vec2(center.x-525, center.y+350), text: "Heal for 1/3 of Max HP"});
+        healText.fontSize = 25;
+        healText.font = "Merriweather";
+        healText.textColor = Color.WHITE;
+
+        let health_icon = this.add.sprite("health_icon", "descriptions");
+        health_icon.position = new Vec2(center.x-330, center.y+350);
+        health_icon.scale.set(1.35, 1.35);
 
         /* Select */
         const select = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x, center.y+350), text: "SELECT"});

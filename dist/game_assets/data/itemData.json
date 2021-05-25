@@ -1,5 +1,5 @@
 {
-    "numItems": 24,
+    "numItems": 25,
     "allitems": [
     {
         "name": "Normal Boots",
@@ -28,6 +28,21 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 2.5,
+        "speed": 0,
+        "takeDamageMult": 0
+    },
+    {
+        "name": "Crab Shell",
+        "key": "crab_shell",
+        "description": "Increased defense",
+        "stats": "+1.5 defense",
+        "rarity": "common",
+        "ability": null,
+        "maxHealth": 0,
+        "health": 0,
+        "attack": 0,
+        "attackMult": 0,
+        "defense": 1.5,
         "speed": 0,
         "takeDamageMult": 0
     },
