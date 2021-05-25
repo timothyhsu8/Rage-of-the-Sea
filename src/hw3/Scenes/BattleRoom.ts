@@ -266,10 +266,20 @@ export default class BattleRoom extends Scene {
                         }
                         case GameEvents.PLAYER_DIED:
                         {
-                            this.viewport.setOffset(new Vec2(0, 0));
-                            this.viewport.setZoomLevel(1);
                             this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level" + this.characterState.mapState.currentFloor + "music"});
-                            this.sceneManager.changeToScene(GameOver);
+                            this.player.animation.playUninterruptable("DEATH");
+                            this.player.disablePhysics();
+                            this.gameLoop = false;
+
+                            for (var enemy of this.enemies){ // pause game
+                                enemy.setAIActive(false, {})  // stop the attacking
+                            }
+
+                            setTimeout(() => {
+                                this.viewport.setOffset(new Vec2(0, 0));
+                                this.viewport.setZoomLevel(1);
+                                this.sceneManager.changeToScene(GameOver);
+                            }, 2500);
                             break;
                         }
                         case GameEvents.WON_GAME:
