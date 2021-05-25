@@ -23,6 +23,7 @@ export default class LoadScreen extends Scene {
         this.load.audio("level6music", "game_assets/music/level6music.mp3");
         this.load.audio("level7music", "game_assets/music/level7music.mp3");
         this.load.audio("gameover", "game_assets/music/gameover.mp3");
+        this.load.audio("gamewon", "game_assets/music/gamewon.mp3");
 
         /* Player Audio */
         this.load.audio("anchorswing_sound", "game_assets/sounds/anchorswing.mp3");
@@ -93,6 +94,7 @@ export default class LoadScreen extends Scene {
         this.load.keepAudio("level6music");
         this.load.keepAudio("level7music");
         this.load.keepAudio("gameover");
+        this.load.keepAudio("gamewon");
 
         this.load.keepAudio("anchorswing_sound");
         this.load.keepAudio("dash_sound");

@@ -13,6 +13,7 @@ export default class GameWon extends Scene {
 
     loadScene(){
         this.load.image("artwork", "game_assets/sprites/backgroundart/gamewon.png");
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "gamewon", loop:"true", holdReference: true});
     }
 
     startScene() {
@@ -72,6 +73,7 @@ export default class GameWon extends Scene {
             let event = this.receiver.getNextEvent();
 
             if(event.type === "back"){
+                this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "gamewon"});
                 this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "mainmenu_music", loop:"true", holdReference: true});
                 this.sceneManager.changeToScene(MainMenu, {});
             }
