@@ -52,6 +52,27 @@ export default class Cross extends AbilityType {
         }
 
 
+        let topRight = ownerPositionRowCol.clone();
+        topRight.x += 1;
+        topRight.y -= 1;
+
+        let bottomRight = ownerPositionRowCol.clone();
+        bottomRight.x += 1;
+        bottomRight.y += 1;
+
+        let topLeft = ownerPositionRowCol.clone();
+        topLeft.x -= 1;
+        topLeft.y -= 1;
+
+        let bottomLeft = ownerPositionRowCol.clone();
+        bottomLeft.x -= 1;
+        bottomLeft.y += 1;
+
+        damageTiles.push(topRight);
+        damageTiles.push(bottomRight);
+        damageTiles.push(topLeft);
+        damageTiles.push(bottomLeft);
+
 
         return damageTiles;
     }

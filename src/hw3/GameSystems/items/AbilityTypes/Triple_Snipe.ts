@@ -38,6 +38,7 @@ export default class Triple_Snipe extends AbilityType {
         damageTiles.push(damageTile2);
 
         damageTiles.push(this.randomTile(playerPos, 1));
+        damageTiles.push(this.randomTile(playerPos, 1));
         damageTiles.push(this.randomTile(playerPos, 2));
         damageTiles.push(this.randomTile(playerPos, 2));
 
