@@ -4,7 +4,7 @@
     "health": 4,
     "ability": "double_snipe",
     "speed": 0,
-    "damage": 15,
+    "damage": 19,
     "hitbox": [7, 8],
     "flippable": false,
     "knockbackable": false

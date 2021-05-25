@@ -4,7 +4,7 @@
     "health": 6,
     "ability": "groundslam",
     "speed": 55,
-    "damage": 20,
+    "damage": 21,
     "range": 40,
     "hitbox": [6, 12],
     "flippable": true,

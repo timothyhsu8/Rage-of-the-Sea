@@ -1,8 +1,8 @@
 {
     "enemies": [
         {
-            "numEnemies": [4, 5],
-            "requiredEnemies": ["kraken", "sollasina"],
+            "numEnemies": [1],
+            "requiredEnemies": ["lizard"],
             "monsterTypes": ["kraken", "lizard", "sollasina"],
             "positions": [[250, 60], [250, 180], [370, 60], [370, 150], [300, 120], [400, 120], [400, 50]]
         },

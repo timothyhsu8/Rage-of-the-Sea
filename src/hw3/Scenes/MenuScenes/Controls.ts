@@ -86,8 +86,9 @@ export default class Controls extends Scene {
         this.makeTutorialImage("image4", new Vec2(center.x+500, center.y+205));
 
         /* Image Captions */
-        this.makeTutorialCaption(22, "Fight enemies using attacks and items", new Vec2(center.x-40, center.y+15));
-        
+        this.makeTutorialCaption(22, "Fight enemies using your basic", new Vec2(center.x-40, center.y+15));
+        this.makeTutorialCaption(22, "and secondary attacks", new Vec2(center.x-40, center.y+45));
+
         this.makeTutorialCaption(21, "Yellow tiles indicate where an enemy is planning", new Vec2(center.x+500, center.y+15));
         this.makeTutorialCaption(21, "to attack. Avoid these to save your health", new Vec2(center.x+500, center.y+45));
 

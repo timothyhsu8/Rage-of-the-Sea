@@ -3,9 +3,9 @@
     "mode": "chaseandattack",
     "health": 10,
     "ability": "groundslam",
-    "speed": 38,
-    "damage": 17,
-    "attackInterval": 3250,
+    "speed": 42,
+    "damage": 20,
+    "attackInterval": 3000,
     "hitbox": [7, 8],
     "flippable": false,
     "knockbackable": true

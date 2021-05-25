@@ -4,8 +4,8 @@
     "health": 26,
     "ability": "hastur_flame",
     "speed": 30,
-    "damage": 20,
-    "attackInterval": 3750,
+    "damage": 21,
+    "attackInterval": 3400,
     "hitbox": [12, 14],
     "flippable": true,
     "knockbackable": false
