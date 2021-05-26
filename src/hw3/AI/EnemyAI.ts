@@ -113,6 +113,8 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
     }
 
     chestDeath(): void{
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "chestopen"});
+
         let scene = this.owner.getScene();
         const itemData = scene.load.getObject("itemData");
         let allItems = itemData.allitems;

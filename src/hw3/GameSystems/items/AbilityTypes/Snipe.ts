@@ -19,6 +19,23 @@ export default class Snipe extends AbilityType {
     /* Calculates the squares to damage and returns them as an array */
     findHitArea(ownerPositionRowCol: Vec2, direction: Vec2, playerPos: Vec2) : Array<Vec2>{
         let damageTiles: Array<Vec2> = [playerPos];
+
+        /* Calculate random 2nd spot to snipe */
+        let damageTile2 = playerPos.clone();
+        let sameSpot = false;
+        let randomX = Math.random();
+        let randomY = Math.random();
+        (randomX > 0.33)?(damageTile2.x +=1):(damageTile2.x -= 1);
+        if(randomX > 0.66){
+            damageTile2.x -= 1;
+            sameSpot = true;
+        }
+
+        (randomY > 0.33)?(damageTile2.y +=1):(damageTile2.y -= 1);
+        if(randomY > 0.66 && !sameSpot)
+            damageTile2.y -=1;
+
+        damageTiles.push(damageTile2);
         return damageTiles;
     }
 
