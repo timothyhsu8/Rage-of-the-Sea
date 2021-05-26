@@ -35,7 +35,7 @@ export default class BattleManager {
             setTimeout(function(){
                 for(let i = 0 ; i < enemies.length ; i++){
                     if(enemies[i].owner !== undefined && (HelpScreen.instakill || ability.hits(enemies[i].owner))  ){
-                        enemies[i].damage((ability.type.damage) * playerStats.attackMult + (playerStats.attack), ability.type.knockback);
+                        let enemyDied = enemies[i].damage((ability.type.damage) * playerStats.attackMult + (playerStats.attack), ability.type.knockback);
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
 
 
@@ -44,7 +44,7 @@ export default class BattleManager {
                         if(enemyName === "carrier") // Use same damage sound for carrier as kraken
                             enemyName = "kraken";
 
-                        if(!playedSounds.includes(enemyName)){
+                        if(!playedSounds.includes(enemyName) && (enemyDied || enemySprites[i].hasPhysics)){
                             enemies[i].owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
                             playedSounds.push(enemyName);
                         }

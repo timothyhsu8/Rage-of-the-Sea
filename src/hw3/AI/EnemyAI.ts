@@ -86,7 +86,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     activate(options: Record<string, any>): void {}
 
-    damage(damage: number, knockback: number): void {
+    damage(damage: number, knockback: number): boolean {
         if(this.owner.hasPhysics){
             this.health -= damage;
             
@@ -114,6 +114,7 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
                 this.owner.disablePhysics();
                 this.owner.tweens.play("death");
+                return true;
             }
 
             /* Turn Semitransparent on hit */
@@ -123,8 +124,10 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
                 setTimeout(() => {
                     owner.changeColor = false;
                 }, 400);
+                return false;
             }
         }
+        return false;
     }
 
     chestDeath(): void{

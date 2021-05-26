@@ -14,18 +14,18 @@
         },
         {
             "numEnemies": [6, 7, 8],
-            "requiredEnemies": ["sollasina_yellow", "dagon"],
+            "requiredEnemies": ["sollasina_yellow", "sollasina_yellow", "dagon"],
             "monsterTypes": ["lizard", "sollasina_yellow", "carrier", "dagon"],
             "positions": [[200, 60], [225, 225], [250, 60], [300, 180], [370, 225], [400, 47], [450, 170], [450, 120]]
         },
         {
-            "numEnemies": [7, 8],
-            "requiredEnemies": ["sollasina_green", "dagon", "carrier"],
-            "monsterTypes": ["kraken", "sollasina_green", "carrier", "dagon", "umibozu", "hastur"],
+            "numEnemies": [8],
+            "requiredEnemies": ["sollasina_green", "sollasina_green", "dagon", "carrier", "kraken"],
+            "monsterTypes": ["sollasina_green", "carrier", "dagon", "umibozu", "hastur"],
             "positions": [[200, 55], [250, 60], [270, 210], [300, 120], [345, 220], [370, 140], [400, 50], [450, 140]]
         },
         {
-            "numEnemies": [7, 8],
+            "numEnemies": [8],
             "requiredEnemies": ["sollasina_green", "sollasina_green", "carrier", "dagon", "umibozu", "cthulu", "hastur"],
             "monsterTypes": ["sollasina_green", "carrier", "dagon", "umibozu", "cthulu", "hastur"],
             "positions": [[175, 130], [250, 110], [250, 180], [300, 225], [350, 135], [370, 180], [460, 180], [450, 200]]

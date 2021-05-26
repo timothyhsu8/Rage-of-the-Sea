@@ -303,7 +303,7 @@ export default class PlayerController implements BattlerAI {
         sprite.tweens.play("runCooldown");
     }
 
-    damage(damage: number): void {
+    damage(damage: number): boolean {
 
         let minDamage = this.characterState.stats.maxHealth/10;
         if(damage <= minDamage)
@@ -328,5 +328,6 @@ export default class PlayerController implements BattlerAI {
                 }
             }
         }
+        return false;
     }
 }

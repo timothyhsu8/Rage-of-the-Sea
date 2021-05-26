@@ -24,7 +24,7 @@ export default class TentacleSprout extends AbilityType {
 
         /* Up Tiles */
         if(ownerPositionRowCol.y-2 > furthestUpTile){
-            for(let i=-1 ; i < 2 ; i++){
+            for(let i=-2 ; i < 3 ; i++){
                 let newTile = ownerPositionRowCol.clone();
                 newTile.x += i;
                 newTile.y -= 2;
@@ -37,7 +37,7 @@ export default class TentacleSprout extends AbilityType {
 
         /* Down Tiles */
         if(ownerPositionRowCol.y+2 <= furthestDownTile){
-            for(let i=-1 ; i < 2 ; i++){
+            for(let i=-2 ; i < 3 ; i++){
                 let newTile = ownerPositionRowCol.clone();
                 newTile.x += i;
                 newTile.y += 2;
