@@ -5,6 +5,7 @@ import Ability from "./items/Ability";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import CharacterState from "../CharacterState";
 import HelpScreen from "../Scenes/MenuScenes/HelpScreen";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 export default class BattleManager {
     playerAI: BattlerAI;
@@ -30,11 +31,23 @@ export default class BattleManager {
             // Check for collisions with enemies
             let enemies = this.enemies;
             let enemySprites = this.enemySprites;
+            let playedSounds: Array<string> = [];
             setTimeout(function(){
                 for(let i = 0 ; i < enemies.length ; i++){
                     if(enemies[i].owner !== undefined && (HelpScreen.instakill || ability.hits(enemies[i].owner))  ){
                         enemies[i].damage((ability.type.damage) * playerStats.attackMult + (playerStats.attack), ability.type.knockback);
                         enemySprites[i].animation.playIfNotAlready("TAKEDAMAGE");
+
+
+                        /* Play Enemy Sound if not already playing */
+                        let enemyName = enemySprites[i].imageId.toLowerCase();
+                        if(enemyName === "carrier") // Use same damage sound for carrier as kraken
+                            enemyName = "kraken";
+
+                        if(!playedSounds.includes(enemyName)){
+                            enemies[i].owner.getEmitter().fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
+                            playedSounds.push(enemyName);
+                        }
                     }
                 }
             }, 200);

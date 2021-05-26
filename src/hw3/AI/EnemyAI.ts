@@ -101,10 +101,10 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
                 this.playKnockbackTween(knockbackDist);
 
             let enemyName = this.owner.imageId.toLowerCase();
-            if(enemyName === "carrier") // Use same damage sound for carrier as kraken
-                enemyName = "kraken";
+            // if(enemyName === "carrier") // Use same damage sound for carrier as kraken
+            //     enemyName = "kraken";
 
-            this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
+            // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
 
 
             /* Enemy Dies */
