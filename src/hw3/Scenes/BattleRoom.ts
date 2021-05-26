@@ -104,7 +104,7 @@ export default class BattleRoom extends Scene {
         this.load.audio("umibozuDamage", "game_assets/sounds/enemysounds/umibozudamage.mp3");
         this.load.audio("cthuluDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
         this.load.audio("leviathanDamage", "game_assets/sounds/enemysounds/leviathandamage.mp3");
-        this.load.audio("hasturDamage", "game_assets/sounds/enemysounds/cthuludamage.mp3");
+        this.load.audio("hasturDamage", "game_assets/sounds/enemysounds/hasturdamage.mp3");
 
         // Load the tilemaps
         this.load.tilemap("level", "game_assets/tilemaps/Floor" + this.characterState.mapState.currentFloor + ".json");
