@@ -80,7 +80,7 @@
         "name": "Swiftness Gemstone",
         "key": "swiftness_gemstone",
         "description": "Moderately increased speed",
-        "stats": "+4 speed",
+        "stats": "+3 speed",
         "rarity": "rare",
         "ability": null,
         "maxHealth": 0,
@@ -88,7 +88,7 @@
         "attack": 0,
         "attackMult": 0,
         "defense": 0,
-        "speed": 4,
+        "speed": 3,
         "takeDamageMult": 0
     },
     {

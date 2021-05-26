@@ -519,6 +519,8 @@ export default class BattleRoom extends Scene {
                 knockbackable: monsterInfo.knockbackable,
                 abilityList: abilityList,
                 characterState: this.characterState,
+                tilemap: "Floor",
+                walls: "Wall",
                 player: this.player
             }
 
@@ -571,6 +573,8 @@ export default class BattleRoom extends Scene {
             knockbackable: monsterInfo.knockbackable,
             abilityList: abilityList,
             characterState: this.characterState,
+            tilemap: "Floor",
+            walls: "Wall",
             player: this.player
         }
 

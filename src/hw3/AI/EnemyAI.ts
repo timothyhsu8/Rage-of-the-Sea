@@ -38,6 +38,12 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
 
     characterState: CharacterState
 
+    tilemap: OrthogonalTilemap;
+
+    walls: OrthogonalTilemap;
+
+    inWall: boolean;
+
     initializeAI(owner: AnimatedSprite, options: Record<string, any>): void {
         this.owner = owner;
         
@@ -68,6 +74,10 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
         this.ability.type.setDamage(options.damage);
         this.abilityList = options.abilityList; // Only Leviathan has an ability list right now
 
+        this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
+        this.walls = this.owner.getScene().getTilemap(options.walls) as OrthogonalTilemap;
+
+        this.inWall = false;
         // Initialize to the default state
         this.initialize(EnemyStates.DEFAULT);
 
@@ -86,7 +96,9 @@ export default class EnemyAI extends StateMachineAI implements BattlerAI {
             if(this.owner.imageId === "Leviathan")
                 knockbackDist = 0;
 
-            this.playKnockbackTween(knockbackDist);
+            let colrow = this.tilemap.getColRowAt(this.owner.position);
+            if(!this.walls.isTileCollidable(colrow.x, colrow.y))
+                this.playKnockbackTween(knockbackDist);
 
             let enemyName = this.owner.imageId.toLowerCase();
             this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: enemyName + "Damage"});
