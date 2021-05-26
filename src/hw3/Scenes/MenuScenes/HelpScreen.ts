@@ -24,6 +24,7 @@ export default class HelpScreen extends Scene {
     static instakill: boolean = false;
     static roomSkipping: boolean = false;
     static itemEveryRoom: boolean = false;
+    static fillInventory: boolean = false;
 
     static invincibility: boolean = false;
 
@@ -42,7 +43,7 @@ export default class HelpScreen extends Scene {
         backgroundart.position.set(center.x, center.y);
 
         /* Initializes the list of cheats */
-        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.allowInvincibility, HelpScreen.instakill, HelpScreen.roomSkipping, HelpScreen.itemEveryRoom];
+        this.cheatList = [HelpScreen.allLevelsUnlocked, HelpScreen.allowInvincibility, HelpScreen.instakill, HelpScreen.roomSkipping, HelpScreen.itemEveryRoom, HelpScreen.fillInventory];
 
         /* Back Button */
         const back = <Button>this.add.uiElement(UIElementType.BUTTON, "primary", {position: new Vec2(center.x-650, center.y-375), text: "Home"});
@@ -123,9 +124,9 @@ export default class HelpScreen extends Scene {
         this.createBackstoryText(new Vec2(center.x-350, center.y+220), devnames, 25, 40);
 
         /* Create Cheat Code Buttons */
-        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-7]", "Find Item Every Room"];
-        this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5"];
-        this.createCheatButtons(5, center, cheatTextArray, 110, this.cheatEventNames);
+        let cheatTextArray = ["Unlock All Levels", "Invincibility [I]", "Kill All Enemies [LMB]", "Room Skipping [1-7]", "Find Item Every Room", "Fill Inventory"];
+        this.cheatEventNames = ["cheat1", "cheat2", "cheat3", "cheat4", "cheat5", "cheat6"];
+        this.createCheatButtons(6, center, cheatTextArray, 100, this.cheatEventNames);
 
         // Subscribe to the button events
         this.receiver.subscribe("back");
@@ -168,6 +169,7 @@ export default class HelpScreen extends Scene {
             (this.cheatList[2])?(HelpScreen.instakill = true):(HelpScreen.instakill = false);
             (this.cheatList[3])?(HelpScreen.roomSkipping = true):(HelpScreen.roomSkipping = false);
             (this.cheatList[4])?(HelpScreen.itemEveryRoom = true):(HelpScreen.itemEveryRoom = false);
+            (this.cheatList[5])?(HelpScreen.fillInventory = true):(HelpScreen.fillInventory = false);
         }
     }
 
@@ -187,7 +189,7 @@ export default class HelpScreen extends Scene {
         for(let i = 0 ; i < numCheats ; i++){
             /* Buttons */
             const cheat = <Button>this.add.uiElement(UIElementType.BUTTON, "text", {position: new Vec2(center.x+350, (center.y-175)+(i*posOffset)), text: text[i]});
-            cheat.size.set(320, 75);
+            cheat.size.set(320, 65);
             cheat.borderWidth = 2;
             cheat.borderColor = Color.WHITE;
             cheat.backgroundColor = new Color(50, 50, 70, 1);

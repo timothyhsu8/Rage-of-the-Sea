@@ -13,6 +13,7 @@ import UITweens from "../../../Wolfie2D/Rendering/Animations/UITweens";
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
 import BattleRoom from "../BattleRoom";
 import Input from "../../../Wolfie2D/Input/Input";
+import HelpScreen from "./HelpScreen";
 
 
 export default class CharacterSelect extends Scene {
@@ -113,12 +114,16 @@ export default class CharacterSelect extends Scene {
                     
 
                     /* FOR BUG TESTING SPECIFIC ITEMS */
-                    // const itemData = this.load.getObject("itemData");
-                    // let allItems = itemData.allitems;
-                    // let itemsToTest = ["resilience_gemstone", "captains_hat", "octopus_tentacle", "kraken_head", "lobster_claw", "seafloor_anchor", "conch_shell", "iron_plating", "seaweed_coverings", "lost_divers_suit", "mask_of_ebirah", "spirit_of_eri"]
-                    // for(let i=0 ; i < allItems.length ; i++)
-                    //     if(itemsToTest.includes(allItems[i].key))
-                    //         characterState.addToInventory(allItems[i]);
+                    if(HelpScreen.fillInventory){
+                        const itemData = this.load.getObject("itemData");
+                        let allItems = itemData.allitems;
+                        let itemsToTest = ["resilience_gemstone", "captains_hat", "neptunes_trident", "octopus_tentacle", "kraken_head", "lobster_claw", 
+                        "seafloor_anchor", "conch_shell", "iron_plating", "seaweed_coverings", "lost_divers_suit", "mask_of_ebirah",
+                        "raging_tide", "fury_gemstone", "engraved_dagger", "sharktooth_dagger", "oceans_call"]
+                        for(let i=0 ; i < allItems.length ; i++)
+                            if(itemsToTest.includes(allItems[i].key))
+                                characterState.addToInventory(allItems[i]);
+                    }
 
                     this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "mainmenu_music"});
                     
