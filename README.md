@@ -3,12 +3,12 @@
 </p>
 
 # Rage of the Sea
-Rage of the Sea is a 2D sidescrolling rogue-like game where you battle against sea monsters in order to escape a capsizing cruise ship. Battle through 7 floors of enemies, collecting various items and upgrades along the way to help you on your journey.
+Rage of the Sea is a 2D sidescrolling rogue-like game. Battle against various sea monsters in order to escape a capsizing cruise ship. Fight through 7 floors of enemies, collecting various items and upgrades along the way to help you on your journey.
 
 Finalist at the 17th Annual Stony Brook University Game Programming Competition.
 
-<b> Game: </b> https://rage-of-the-sea.firebaseapp.com/ <br/>
-<b> Trailer: </b> https://www.youtube.com/watch?v=iRpCPjn_f2s
+### Game: https://rage-of-the-sea.firebaseapp.com/
+### Trailer: https://www.youtube.com/watch?v=iRpCPjn_f2s
 
 # Screenshots
 ## Battle
